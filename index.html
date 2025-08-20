@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SWE Portfolio - Interactive Experience</title>
+  <title>Daniel Azran</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -717,14 +717,14 @@
     }, { threshold: 0.15 });
     tlItems.forEach(el => io.observe(el));
 
-    // -------- smooth scrolling with snappier feel --------
+    // -------- smooth scrolling animation --------
     function smoothScrollTo(target, offset = 0) {
       const start = window.scrollY;
       const end = target.getBoundingClientRect().top + window.scrollY - offset;
-      const duration = 420; // was 600 — shorter = snappier
+      const duration = 420; // Make smaller for snappier transition
       const startTime = performance.now();
 
-      // cubic easing with quicker ramp-up
+    
       function easeInOutCubic(t) {
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       }
