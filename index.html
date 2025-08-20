@@ -30,33 +30,38 @@
 
         /* Custom Cursor */
         .cursor {
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
+            width: 10px;
+            height: 10px;
+            background: #ff6b35;
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 10000;
-            transition: transform 0.15s, background-color 0.3s;
-            mix-blend-mode: screen;
+            transition: transform 0.2s, background 0.3s;
             transform: translate(-50%, -50%);
         }
 
         .cursor.hover {
-            transform: translate(-50%, -50%) scale(2.5);
-            background: var(--accent);
+            transform: translate(-50%, -50%) scale(2);
+            background: linear-gradient(45deg, #ff6b35, #f7931e, #fdc830);
+            animation: colorShift 1s ease infinite;
+        }
+
+        @keyframes colorShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(30deg); }
         }
 
         /* Trail dots */
         .trail-dot {
             position: fixed;
-            width: 6px;
-            height: 6px;
-            background: var(--primary);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, rgba(255, 248, 220, 0.8), rgba(255, 215, 0, 0.4));
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            mix-blend-mode: screen;
+            transform: translate(-50%, -50%);
         }
 
         /* Particle Canvas */
