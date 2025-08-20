@@ -46,13 +46,11 @@
       left: 50vw; /* visible before first mousemove */
       top: 50vh;
     }
-
     .cursor.hover {
       transform: translate(-50%, -50%) scale(2);
       background: linear-gradient(45deg, #ff6b35, #f7931e, #fdc830);
       animation: colorShift 1s ease infinite;
     }
-
     @keyframes colorShift {
       0%, 100% { filter: hue-rotate(0deg); }
       50% { filter: hue-rotate(30deg); }
@@ -94,7 +92,6 @@
       display: flex; justify-content: space-between; align-items: center;
       max-width: 1400px; margin: 0 auto;
     }
-
     .logo {
       font-size: 1.5rem; font-weight: bold;
       background: var(--gradient);
@@ -102,10 +99,7 @@
       -webkit-text-fill-color: transparent;
       animation: gradient-shift 3s ease infinite;
     }
-    @keyframes gradient-shift {
-      0%, 100% { filter: hue-rotate(0deg); }
-      50% { filter: hue-rotate(30deg); }
-    }
+    @keyframes gradient-shift { 0%, 100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(30deg); } }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
@@ -130,7 +124,6 @@
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     .glitch-text {
       font-size: clamp(3rem, 10vw, 6rem); font-weight: bold; position: relative;
       text-transform: uppercase; letter-spacing: 0.05em;
@@ -140,7 +133,6 @@
     }
     .glitch-text::before { animation: glitch-1 0.5s infinite; color: var(--primary); z-index: -1; }
     .glitch-text::after  { animation: glitch-2 0.5s infinite; color: var(--accent); z-index: -2; }
-
     @keyframes glitch-1 {
       0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
       20% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 2px); }
@@ -187,12 +179,76 @@
     }
     .magnetic-btn:hover::before { width: 300px; height: 300px; }
 
-    /* Projects Section */
-    .projects { padding: 4rem 2rem; max-width: 1400px; margin: 0 auto; }
+    /* Sections Layout */
     .section-title {
       font-size: 3rem; text-align: center; margin-bottom: 3rem;
       background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
+
+    /* Experience (vertical timeline) */
+    .experience {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .timeline {
+      border-left: 2px solid rgba(99,102,241,0.3);
+      padding-left: 2rem;
+      position: relative;
+    }
+    .tl-item {
+      position: relative;
+      margin: 2rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .tl-item.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -11px;
+      top: 0.7rem;
+      width: 12px; height: 12px;
+      background: var(--gradient);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(99,102,241,0.15);
+    }
+    .tl-card {
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.25rem 1.25rem 1rem;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .tl-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(99,102,241,0.25);
+    }
+    .tl-header {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .tl-role { font-size: 1.15rem; font-weight: 700; }
+    .tl-where { opacity: 0.85; }
+    .tl-dates {
+      font-size: 0.95rem;
+      opacity: 0.75;
+      white-space: nowrap;
+    }
+    .tl-points {
+      margin-top: 0.5rem;
+      padding-left: 1.1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Projects */
+    .projects { padding: 4rem 2rem; max-width: 1400px; margin: 0 auto; }
     .project-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;
     }
@@ -224,7 +280,7 @@
     }
     .tech-tag:hover { background: var(--primary); transform: scale(1.1); }
 
-    /* Skills Section */
+    /* Skills */
     .skills { padding: 4rem 2rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05)); }
     .skill-container {
       max-width: 1000px; margin: 0 auto; display: grid;
@@ -244,7 +300,7 @@
     .skill-item:hover .skill-icon { filter: grayscale(0%); animation: bounce 0.5s; }
     @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
-    /* Contact Section */
+    /* Contact */
     .contact { padding: 4rem 2rem; text-align: center; }
     .contact-form { max-width: 600px; margin: 0 auto; }
     .form-group { margin-bottom: 1.5rem; position: relative; }
@@ -283,6 +339,7 @@
       .nav-links { display: none; }
       .glitch-text { font-size: 2.5rem; }
       .project-grid { grid-template-columns: 1fr; }
+      .tl-header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
     }
   </style>
 </head>
@@ -298,10 +355,11 @@
     <div class="nav-container">
       <div class="logo">Daniel Azran</div>
       <ul class="nav-links">
-        <li><a href="#home"     class="smooth-scroll">Home</a></li>
-        <li><a href="#projects" class="smooth-scroll">Projects</a></li>
-        <li><a href="#skills"   class="smooth-scroll">Skills</a></li>
-        <li><a href="#contact"  class="smooth-scroll">Contact</a></li>
+        <li><a href="#home"       class="smooth-scroll">Home</a></li>
+        <li><a href="#experience" class="smooth-scroll">Experience</a></li>
+        <li><a href="#projects"   class="smooth-scroll">Projects</a></li>
+        <li><a href="#skills"     class="smooth-scroll">Skills</a></li>
+        <li><a href="#contact"    class="smooth-scroll">Contact</a></li>
         <li><a href="https://github.com/Danzran" target="_blank">GitHub</a></li>
         <li><a href="https://linkedin.com/in/danielazran" target="_blank">LinkedIn</a></li>
       </ul>
@@ -320,6 +378,65 @@
     </div>
     <div class="scroll-indicator">
       <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section class="experience" id="experience">
+    <h2 class="section-title">Experience</h2>
+    <div class="timeline">
+      <!-- Extropian -->
+      <div class="tl-item">
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">Backend Software Developer</div>
+              <div class="tl-where">Extropian · Orlando, FL</div>
+            </div>
+            <div class="tl-dates">Sep 2024 – May 2025</div>
+          </div>
+          <ul class="tl-points">
+            <li>Built a cross-platform Flutter app for real-time golf swing analysis using Dart & Firebase.</li>
+            <li>Led Bluetooth streaming + metric calc layer; cut packet loss from tens to single digits per session.</li>
+            <li>Collaborated in a 6-member Agile team with Git & Jira.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Systems Assembler & IT Technician -->
+      <div class="tl-item">
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">Systems Assembler & IT Technician</div>
+              <div class="tl-where">Freelance · Multiple Locations</div>
+            </div>
+            <div class="tl-dates">Sep 2018 – Present</div>
+          </div>
+          <ul class="tl-points">
+            <li>Designed & assembled custom desktops for gaming, editing, and servers.</li>
+            <li>Set up small-business networks with VMs; improved efficiency and resource management.</li>
+            <li>Diagnosed hardware/software issues; delivered stable optimized builds.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Sonic Locksmith -->
+      <div class="tl-item">
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">Lockout Technician</div>
+              <div class="tl-where">Sonic Locksmith · Hollywood, FL</div>
+            </div>
+            <div class="tl-dates">Aug 2022 – Dec 2023</div>
+          </div>
+          <ul class="tl-points">
+            <li>Programmed/cut keys for push-to-start & traditional vehicles.</li>
+            <li>Resolved on-site lockouts under time pressure with clear client comms.</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -591,17 +708,31 @@
       });
     });
 
-    // -------- smooth scrolling with nav offset --------
+    // -------- reveal timeline on scroll --------
+    const tlItems = document.querySelectorAll('.tl-item');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('in-view');
+      });
+    }, { threshold: 0.15 });
+    tlItems.forEach(el => io.observe(el));
+
+    // -------- smooth scrolling with snappier feel --------
     function smoothScrollTo(target, offset = 0) {
       const start = window.scrollY;
       const end = target.getBoundingClientRect().top + window.scrollY - offset;
-      const duration = 600;
+      const duration = 420; // was 600 — shorter = snappier
       const startTime = performance.now();
-      function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+
+      // cubic easing with quicker ramp-up
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
       function step(now) {
         const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const eased = easeInOutQuad(progress);
+        const eased = easeInOutCubic(progress);
         window.scrollTo(0, start + (end - start) * eased);
         if (progress < 1) requestAnimationFrame(step);
       }
