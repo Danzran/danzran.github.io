@@ -373,7 +373,13 @@
       <p class="subtitle typewriter">University of Central Florida - B.S. in Computer Science</p>
       <div style="margin-top: 3rem;">
         <a href="#projects" class="magnetic-btn smooth-scroll">View Projects</a>
-        <a href="#contact"  class="magnetic-btn smooth-scroll">Get In Touch</a>
+        <!-- Changed this button to download your resume -->
+        <a href="DanielAzranResume.pdf"
+           class="magnetic-btn"
+           download="DanielAzranResume.pdf"
+           title="Download my resume">
+          Resume ⬇
+        </a>
       </div>
     </div>
     <div class="scroll-indicator">
@@ -721,10 +727,9 @@
     function smoothScrollTo(target, offset = 0) {
       const start = window.scrollY;
       const end = target.getBoundingClientRect().top + window.scrollY - offset;
-      const duration = 420; // Make smaller for snappier transition
+      const duration = 420; // snappy
       const startTime = performance.now();
 
-    
       function easeInOutCubic(t) {
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       }
