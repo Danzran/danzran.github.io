@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Daniel Azran</title>
 
-  <!-- Rounded headline font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet"/>
-
-  <!-- ZIP lib to read mnist.npz in-browser -->
   <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.0/umd/index.min.js"></script>
 
   <style>
@@ -174,7 +171,7 @@
     @keyframes scroll-bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
     @keyframes scroll-wheel{0%{top:10px;opacity:1}100%{top:30px;opacity:0}}
 
-    /* ------------ SIMPLE HOVER REVEAL (no loading/spotlight) ------------ */
+    /* ------------ SIMPLE HOVER REVEAL (image as <img>) ------------ */
     .avatar-wrap{
       position:relative;
       width:clamp(180px,28vw,300px);
@@ -192,24 +189,24 @@
     .spotify-card{
       position:absolute; inset:0; z-index:1;
       width:100%; height:100%; border:0; border-radius:inherit;
-      background:#000;              /* dark/minimal frame behind embed */
+      background:#000; /* minimal/dark */
       filter:saturate(1.02) contrast(1.02);
     }
 
-    /* Photo overlay (does NOT intercept clicks) */
+    /* The photo as an <img> */
     .avatar-front{
       position:absolute; inset:0; z-index:2;
+      width:100%; height:100%;
+      object-fit:cover;
       border-radius:inherit;
-      pointer-events:none; /* critical: allow clicking iframe below */
-      background:
-        radial-gradient(closest-side, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-        url('handstand.png') center/cover no-repeat;
+      pointer-events:none; /* allow clicking the iframe below */
       transition:opacity .18s ease, transform .18s ease;
       opacity:1;
+      display:block;
+      background:#0b1020; /* fallback color if image fails */
     }
-    /* On hover, fade the photo so the card is visible/clickable */
     .avatar-wrap:hover .avatar-front{
-      opacity:.10;         /* tweak: how visible you want the photo while peeking */
+      opacity:.10;              /* reveal the card */
       transform:scale(1.015);
     }
 
@@ -281,7 +278,7 @@
       <div class="hero-right">
         <!-- Simple hover-to-reveal Spotify card -->
         <div class="avatar-wrap" id="avatarWrap">
-          <!-- Replace TRACK_ID with any track you want -->
+          <!-- Replace TRACK_ID as needed -->
           <iframe
             id="spotifyCard"
             class="spotify-card"
@@ -290,8 +287,8 @@
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
           </iframe>
 
-          <!-- The visible picture (fades on hover) -->
-          <div id="avatarFront" class="avatar-front" role="img" aria-label="Photo of Daniel Azran"></div>
+          <!-- The visible picture (fades on hover). IMPORTANT: ensure this path/case matches your repo -->
+          <img id="avatarFront" class="avatar-front" src="./handstand.png" alt="Photo of Daniel Azran" loading="eager" decoding="async">
         </div>
 
         <div class="about-card">
