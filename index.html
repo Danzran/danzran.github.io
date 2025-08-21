@@ -19,8 +19,10 @@
       --gradient:linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
     }
     html{ scroll-behavior:smooth; }
-    body{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
-          background:var(--dark); color:var(--light); overflow-x:hidden; cursor:none; }
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
+      background:var(--dark); color:var(--light); overflow-x:hidden; cursor:none;
+    }
     a,button,input,textarea,select,label,[role="button"],
     .project-card,.skill-item,.tech-tag,.magnetic-btn{ cursor:none !important; }
 
@@ -130,33 +132,17 @@
     .tech-tag{ padding:.25rem .75rem; background:rgba(99, 102, 241, 0.2); border-radius:15px; font-size:.875rem; border:1px solid var(--primary); transition:.3s; }
     .tech-tag:hover{ background:var(--primary); transform:scale(1.1); }
 
-    /* MNIST STRIP (top of card) */
-    .mnist-strip{
-      height: 96px;                /* spans more of top of card */
-      border-radius: 14px;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 1rem;
-      background: transparent;     /* keep underlying card visible */
-      border: 1px solid rgba(255,255,255,0.10);              /* very subtle outline */
-    }
-    /* feathered white border / glow for contrast */
-    .mnist-strip::after{
-      content:"";
-      position:absolute; inset:-1px;
-      pointer-events:none;
-      border-radius:inherit;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.14),
-        0 0 24px rgba(255,255,255,0.10) inset;
-    }
+    /* MNIST strip canvas */
     .mnist-canvas{
       width: 100%;
-      height: 100%;
+      height: 96px;
       display: block;
-      image-rendering: pixelated;   /* crisp pixels */
-      filter: drop-shadow(0 0 6px rgba(255,255,255,0.12)); /* feathered halo around digits */
+      image-rendering: pixelated;
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.12));
       background: transparent;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.10);
+      margin-bottom:1rem;
     }
 
     /* Skills */
@@ -188,7 +174,45 @@
     @keyframes scroll-bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
     @keyframes scroll-wheel{0%{top:10px;opacity:1}100%{top:30px;opacity:0}}
 
-    /* Responsive */
+    /* ------------ SIMPLE HOVER REVEAL (no loading/spotlight) ------------ */
+    .avatar-wrap{
+      position:relative;
+      width:clamp(180px,28vw,300px);
+      height:clamp(190px,28vw,400px);
+      border-radius:20px;
+      margin-inline:auto;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 30px rgba(99,102,241,.25);
+      overflow:hidden;
+      transition:transform .2s ease;
+    }
+    .avatar-wrap:hover{ transform:scale(1.01); }
+
+    /* Spotify card behind the image */
+    .spotify-card{
+      position:absolute; inset:0; z-index:1;
+      width:100%; height:100%; border:0; border-radius:inherit;
+      background:#000;              /* dark/minimal frame behind embed */
+      filter:saturate(1.02) contrast(1.02);
+    }
+
+    /* Photo overlay (does NOT intercept clicks) */
+    .avatar-front{
+      position:absolute; inset:0; z-index:2;
+      border-radius:inherit;
+      pointer-events:none; /* critical: allow clicking iframe below */
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+        url('handstand.png') center/cover no-repeat;
+      transition:opacity .18s ease, transform .18s ease;
+      opacity:1;
+    }
+    /* On hover, fade the photo so the card is visible/clickable */
+    .avatar-wrap:hover .avatar-front{
+      opacity:.10;         /* tweak: how visible you want the photo while peeking */
+      transform:scale(1.015);
+    }
+
     @media (max-width:1024px){
       .hero-inner{ grid-template-columns:1fr; }
       .hero-left{ text-align:center; }
@@ -255,12 +279,21 @@
       </div>
 
       <div class="hero-right">
-        <div class="avatar" role="img" aria-label="Photo of Daniel Azran"
-             style="width:clamp(180px,28vw,300px);height:clamp(180px,28vw,300px);border-radius:20px;
-                    background:radial-gradient(closest-side,rgba(255,255,255,.08),rgba(255,255,255,.02)),
-                               url('headshot.jpg') center/cover no-repeat;
-                    border:1px solid rgba(255,255,255,.08); box-shadow:0 10px 30px rgba(99,102,241,.25);
-                    margin-inline:auto;"></div>
+        <!-- Simple hover-to-reveal Spotify card -->
+        <div class="avatar-wrap" id="avatarWrap">
+          <!-- Replace TRACK_ID with any track you want -->
+          <iframe
+            id="spotifyCard"
+            class="spotify-card"
+            src="https://open.spotify.com/embed/track/0fgosF2PWrYbyy9e7BclKz"
+            frameborder="0" loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+          </iframe>
+
+          <!-- The visible picture (fades on hover) -->
+          <div id="avatarFront" class="avatar-front" role="img" aria-label="Photo of Daniel Azran"></div>
+        </div>
+
         <div class="about-card">
           <h3>About Me</h3>
           <p>Backend-leaning SWE with projects in real-time computer vision, ML, and cross-platform mobile. I like building low-latency, reliable systems and polishing UX details that make apps feel alive.</p>
@@ -347,7 +380,6 @@
       </div>
 
       <div class="project-card">
-        <!-- MNIST wide strip at the top of this card -->
         <canvas id="mnistStrip" class="mnist-canvas" aria-label="MNIST sample slideshow"
         style="width:100%; height:96px; display:block;"></canvas>
 
@@ -476,7 +508,7 @@
     function legacyCopy(text){ const ta=document.createElement('textarea'); ta.value=text; ta.setAttribute('readonly',''); ta.style.position='absolute'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy')}catch{} document.body.removeChild(ta); copied(); }
     copyBtn?.addEventListener('click',async()=>{ try{ if(navigator.clipboard && isSecureContext){ await navigator.clipboard.writeText(email); copied(); } else legacyCopy(email); } catch{ legacyCopy(email); } });
 
-    /* ---------- Constant subtle aura around title ---------- */
+    /* ---------- Title aura ---------- */
     (function(){
       const title=document.getElementById('auraTitle'); const canvas=document.getElementById('auraCanvas'); if(!title||!canvas) return;
       const ctx=canvas.getContext('2d'); const DPR=Math.max(1, Math.min(2, devicePixelRatio||1));
@@ -506,12 +538,12 @@
       requestAnimationFrame(tick);
     })();
 
-    /* ---------- MNIST WIDE STRIP from mnist.npz ---------- */
+    /* ---------- MNIST strip ---------- */
     (function mnistStripFromNPZ(){
       const CANDIDATES = [
-        'mnist.npz',                // same folder (recommended; no CORS)
-        'assets/mnist.npz',         // optional path if you prefer /assets
-        'https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz' // fallback (may be blocked by CORS)
+        'mnist.npz',
+        'assets/mnist.npz',
+        'https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz'
       ];
 
       const cvs = document.getElementById('mnistStrip');
@@ -527,7 +559,6 @@
       }
       fit(); addEventListener('resize', ()=>{ fit(); });
 
-      // Minimal .npy parser for uint8 MNIST
       function parseNPY(buffer){
         const view=new DataView(buffer);
         if(view.getUint8(0)!==0x93) throw new Error('Not an .npy');
@@ -546,7 +577,6 @@
       }
 
       function makeTile(sampleData, dw, dh){
-        // Build white-on-transparent 28x28, then upscale to dw x dh (no smoothing)
         const tiny=document.createElement('canvas'); tiny.width=W; tiny.height=H;
         const tctx=tiny.getContext('2d', { willReadFrequently:true });
         const img=tctx.createImageData(W,H);
@@ -560,13 +590,12 @@
       }
 
       function startStrip(xArray, count){
-        // layout: compute integer pixel scale for crisp digits
         function layout(){
-          const pad = Math.round(8 * DPR);     // side padding inside strip
+          const pad = Math.round(8 * DPR);
           const targetH = cvs.height - 2*pad;
           const scale = Math.max(1, Math.floor(targetH / H));
           const dw = W * scale, dh = H * scale;
-          const spacing = Math.max(6*DPR, Math.round(dw * 0.18));  // subtle gap
+          const spacing = Math.max(6*DPR, Math.round(dw * 0.18));
           const stride = dw + spacing;
           const y = Math.round((cvs.height - dh)/2);
           const needed = Math.ceil((cvs.width + stride)/stride) + 1;
@@ -574,19 +603,17 @@
         }
 
         let L = layout();
-        let tiles = [];   // offscreen canvases for each displayed digit
-        let indices = []; // dataset indices corresponding to tiles
+        let tiles = [];
         let offset = 0;
-        const SPEED = 60 * DPR; // px/sec subtle scroll
+        const SPEED = 60 * DPR;
 
-        // seed tiles
         function seed(){
           L = layout();
-          tiles.length = 0; indices.length = 0; offset = 0;
+          tiles.length = 0; offset = 0;
           for(let i=0;i<L.needed;i++){
             const ix = Math.floor(Math.random()*count);
             const tile = makeTile(xArray.slice(ix*W*H, (ix+1)*W*H), L.dw, L.dh);
-            tiles.push(tile); indices.push(ix);
+            tiles.push(tile);
           }
         }
         seed(); addEventListener('resize', seed);
@@ -594,16 +621,15 @@
         let last = performance.now();
         function loop(now){
           const dt=Math.min(50, now-last); last=now;
-          // Recalc L lazily on each frame in case height changed slightly
           L = layout();
 
           offset += (SPEED * dt/1000);
           if(offset >= L.stride){
             offset -= L.stride;
-            tiles.shift(); indices.shift();
+            tiles.shift();
             const ix = Math.floor(Math.random()*count);
             const tile = makeTile(xArray.slice(ix*W*H, (ix+1)*W*H), L.dw, L.dh);
-            tiles.push(tile); indices.push(ix);
+            tiles.push(tile);
           }
 
           ctx.clearRect(0,0,cvs.width,cvs.height);
@@ -623,10 +649,10 @@
         const res = await fetch(url);
         if(!res.ok) throw new Error('fetch failed: '+res.status);
         const buf = new Uint8Array(await res.arrayBuffer());
-        const files = fflate.unzipSync(buf);           // -> { 'x_train.npy': Uint8Array, 'x_test.npy': ... }
+        const files = fflate.unzipSync(buf);
         const xName = files['x_test.npy'] ? 'x_test.npy' : 'x_train.npy';
-        const parsed = parseNPY(files[xName].buffer);  // { data: Uint8Array, shape: [N,28,28] }
-        const N = parsed.shape[0], stride = W*H;       // 784
+        const parsed = parseNPY(files[xName].buffer);
+        const N = parsed.shape[0];
         startStrip(parsed.data, N);
       }
 
