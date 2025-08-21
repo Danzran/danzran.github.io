@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Daniel Azran</title>
 
+  <!-- Rounded headline font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet"/>
+
+  <!-- ZIP lib to read mnist.npz in-browser -->
   <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.0/umd/index.min.js"></script>
 
   <style>
@@ -171,7 +174,7 @@
     @keyframes scroll-bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
     @keyframes scroll-wheel{0%{top:10px;opacity:1}100%{top:30px;opacity:0}}
 
-    /* ------------ SIMPLE HOVER REVEAL (image as <img>) ------------ */
+    /* ------------ HOVER-REVEAL WRAP ------------ */
     .avatar-wrap{
       position:relative;
       width:clamp(180px,28vw,300px);
@@ -184,31 +187,73 @@
       transition:transform .2s ease;
     }
     .avatar-wrap:hover{ transform:scale(1.01); }
-
-    /* Spotify card behind the image */
-    .spotify-card{
-      position:absolute; inset:0; z-index:1;
-      width:100%; height:100%; border:0; border-radius:inherit;
-      background:#000; /* minimal/dark */
-      filter:saturate(1.02) contrast(1.02);
-    }
-
-    /* The photo as an <img> */
     .avatar-front{
       position:absolute; inset:0; z-index:2;
-      width:100%; height:100%;
-      object-fit:cover;
+      width:100%; height:100%; object-fit:cover; border-radius:inherit;
+      pointer-events:none; transition:opacity .18s ease, transform .18s ease;
+      opacity:1; display:block; background:#0b1020;
+    }
+    /* Fade when hovered or when JS toggles .reveal while playing */
+    .avatar-wrap:hover .avatar-front,
+    .avatar-wrap.reveal .avatar-front{
+      opacity:.10; transform:scale(1.015);
+    }
+
+    /* ------------ MINIMAL NOW-PLAYING CARD ------------ */
+    .music-card{
+      position:absolute; inset:0; z-index:1;
+      display:grid; grid-template-rows:auto 1fr auto; align-items:center; justify-items:center;
+      gap:10px; padding:14px;
       border-radius:inherit;
-      pointer-events:none; /* allow clicking the iframe below */
-      transition:opacity .18s ease, transform .18s ease;
-      opacity:1;
-      display:block;
-      background:#0b1020; /* fallback color if image fails */
+      background:rgba(0,0,0,.82);
+      border:1px solid rgba(255,255,255,.06);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
     }
-    .avatar-wrap:hover .avatar-front{
-      opacity:.10;              /* reveal the card */
-      transform:scale(1.015);
+    /* Artwork square */
+    .art{
+      width:90%; aspect-ratio:1/1; border:1px solid rgba(255,255,255,.18);
+      border-radius:10px; overflow:hidden; background:#111;
+      box-shadow:0 6px 14px rgba(0,0,0,.35) inset;
     }
+    .art img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* Tiny note */
+    .fav-note{
+      font-size:.85rem; opacity:.9; margin-top:2px;
+      background:linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+
+    /* Progress line + times */
+    .progress{ width:90%; display:grid; gap:6px; }
+    .times{ display:flex; justify-content:space-between; font-variant-numeric:tabular-nums; font-size:.8rem; opacity:.75; }
+    .bar{
+      position:relative; height:3px; border-radius:999px; overflow:visible;
+      background:rgba(255,255,255,.18);
+    }
+    .bar-fill{
+      position:absolute; left:0; top:0; bottom:0; width:0%;
+      background:linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+    }
+    .bar-thumb{
+      position:absolute; top:50%; left:0%; width:10px; height:10px; border-radius:50%;
+      background:#fff; transform:translate(-50%,-50%); box-shadow:0 0 10px rgba(255,255,255,.45);
+    }
+    .bar-hit{ position:absolute; inset:-8px 0; background:transparent; border:none; padding:0; }
+
+    /* Smaller play button */
+    .controls{ width:90%; display:flex; justify-content:center; }
+    .play-btn{
+      width:48px; height:48px; border-radius:50%;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(135deg, rgba(99,102,241,.25), rgba(139,92,246,.25));
+      box-shadow:0 8px 22px rgba(99,102,241,.28);
+      transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    }
+    .play-btn:hover{ transform:translateY(-1px) scale(1.03); box-shadow:0 10px 26px rgba(99,102,241,.4); }
+    .icon{ width:18px; height:18px; display:block; }
 
     @media (max-width:1024px){
       .hero-inner{ grid-template-columns:1fr; }
@@ -276,18 +321,44 @@
       </div>
 
       <div class="hero-right">
-        <!-- Simple hover-to-reveal Spotify card -->
+        <!-- Hover-to-reveal custom music card -->
         <div class="avatar-wrap" id="avatarWrap">
-          <!-- Replace TRACK_ID as needed -->
-          <iframe
-            id="spotifyCard"
-            class="spotify-card"
-            src="https://open.spotify.com/embed/track/0fgosF2PWrYbyy9e7BclKz"
-            frameborder="0" loading="lazy"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-          </iframe>
+          <div class="music-card" id="musicCard">
+            <div class="art">
+              <img src="redlight.png" alt="Favorite song artwork">
+            </div>
 
-          <!-- The visible picture (fades on hover). IMPORTANT: ensure this path/case matches your repo -->
+            <div class="fav-note">You found my favorite song!</div>
+
+            <div class="progress">
+              <div class="times">
+                <span id="timeNow">0:00</span>
+                <span id="timeLeft">0:30</span>
+              </div>
+              <div class="bar" id="bar">
+                <div class="bar-fill" id="barFill"></div>
+                <div class="bar-thumb" id="barThumb"></div>
+                <button class="bar-hit" id="barHit" aria-label="Seek within the 30-second highlight"></button>
+              </div>
+            </div>
+
+            <div class="controls">
+              <button class="play-btn" id="playBtn" aria-pressed="false" aria-label="Play or pause favorite song">
+                <!-- Play -->
+                <svg class="icon" id="iconPlay" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M8 5v14l11-7z"></path>
+                </svg>
+                <!-- Pause -->
+                <svg class="icon" id="iconPause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none;">
+                  <path d="M6 5h4v14H6zM14 5h4v14h-4z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <audio id="easterAudio" src="tgrave.mp3" preload="metadata" playsinline></audio>
+          </div>
+
+          <!-- The visible picture (fades on hover or while playing). IMPORTANT: case must match your repo. -->
           <img id="avatarFront" class="avatar-front" src="handstand.PNG" alt="Handstand" loading="eager" decoding="async">
         </div>
 
@@ -377,6 +448,7 @@
       </div>
 
       <div class="project-card">
+        <!-- MNIST wide strip at the top of this card -->
         <canvas id="mnistStrip" class="mnist-canvas" aria-label="MNIST sample slideshow"
         style="width:100%; height:96px; display:block;"></canvas>
 
@@ -505,7 +577,7 @@
     function legacyCopy(text){ const ta=document.createElement('textarea'); ta.value=text; ta.setAttribute('readonly',''); ta.style.position='absolute'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy')}catch{} document.body.removeChild(ta); copied(); }
     copyBtn?.addEventListener('click',async()=>{ try{ if(navigator.clipboard && isSecureContext){ await navigator.clipboard.writeText(email); copied(); } else legacyCopy(email); } catch{ legacyCopy(email); } });
 
-    /* ---------- Title aura ---------- */
+    /* ---------- Constant subtle aura around title ---------- */
     (function(){
       const title=document.getElementById('auraTitle'); const canvas=document.getElementById('auraCanvas'); if(!title||!canvas) return;
       const ctx=canvas.getContext('2d'); const DPR=Math.max(1, Math.min(2, devicePixelRatio||1));
@@ -535,7 +607,7 @@
       requestAnimationFrame(tick);
     })();
 
-    /* ---------- MNIST strip ---------- */
+    /* ---------- MNIST WIDE STRIP from mnist.npz ---------- */
     (function mnistStripFromNPZ(){
       const CANDIDATES = [
         'mnist.npz',
@@ -556,6 +628,7 @@
       }
       fit(); addEventListener('resize', ()=>{ fit(); });
 
+      // Minimal .npy parser for uint8 MNIST
       function parseNPY(buffer){
         const view=new DataView(buffer);
         if(view.getUint8(0)!==0x93) throw new Error('Not an .npy');
@@ -574,6 +647,7 @@
       }
 
       function makeTile(sampleData, dw, dh){
+        // Build white-on-transparent 28x28, then upscale to dw x dh (no smoothing)
         const tiny=document.createElement('canvas'); tiny.width=W; tiny.height=H;
         const tctx=tiny.getContext('2d', { willReadFrequently:true });
         const img=tctx.createImageData(W,H);
@@ -587,12 +661,13 @@
       }
 
       function startStrip(xArray, count){
+        // layout: compute integer pixel scale for crisp digits
         function layout(){
-          const pad = Math.round(8 * DPR);
+          const pad = Math.round(8 * DPR);     // side padding inside strip
           const targetH = cvs.height - 2*pad;
           const scale = Math.max(1, Math.floor(targetH / H));
           const dw = W * scale, dh = H * scale;
-          const spacing = Math.max(6*DPR, Math.round(dw * 0.18));
+          const spacing = Math.max(6*DPR, Math.round(dw * 0.18));  // subtle gap
           const stride = dw + spacing;
           const y = Math.round((cvs.height - dh)/2);
           const needed = Math.ceil((cvs.width + stride)/stride) + 1;
@@ -600,9 +675,9 @@
         }
 
         let L = layout();
-        let tiles = [];
+        let tiles = [];   // offscreen canvases for each displayed digit
         let offset = 0;
-        const SPEED = 60 * DPR;
+        const SPEED = 60 * DPR; // px/sec subtle scroll
 
         function seed(){
           L = layout();
@@ -646,9 +721,9 @@
         const res = await fetch(url);
         if(!res.ok) throw new Error('fetch failed: '+res.status);
         const buf = new Uint8Array(await res.arrayBuffer());
-        const files = fflate.unzipSync(buf);
+        const files = fflate.unzipSync(buf);           // -> { 'x_train.npy': Uint8Array, 'x_test.npy': ... }
         const xName = files['x_test.npy'] ? 'x_test.npy' : 'x_train.npy';
-        const parsed = parseNPY(files[xName].buffer);
+        const parsed = parseNPY(files[xName].buffer);  // { data: Uint8Array, shape: [N,28,28] }
         const N = parsed.shape[0];
         startStrip(parsed.data, N);
       }
@@ -659,6 +734,99 @@
         }
         console.warn('MNIST .npz could not be loaded. Place mnist.npz next to this HTML to avoid CORS.');
       })();
+    })();
+
+    /* ---------- CUSTOM MUSIC CARD LOGIC (30s highlight) ---------- */
+    (function(){
+      const audio   = document.getElementById('easterAudio');
+      const wrap    = document.getElementById('avatarWrap');
+      const playBtn = document.getElementById('playBtn');
+      const iconPlay= document.getElementById('iconPlay');
+      const iconPause=document.getElementById('iconPause');
+      const barFill = document.getElementById('barFill');
+      const barThumb= document.getElementById('barThumb');
+      const barHit  = document.getElementById('barHit');
+      const timeNow = document.getElementById('timeNow');
+      const timeLeft= document.getElementById('timeLeft');
+
+      // Choose the best 30s window
+      let SEGMENT_START = 45;  // seconds (tweak this)
+      const SEGMENT_LEN = 30;
+      let SEGMENT_END   = SEGMENT_START + SEGMENT_LEN;
+      let primed = false;
+
+      audio.addEventListener('loadedmetadata', () => {
+        if (isFinite(audio.duration)) {
+          if (SEGMENT_START > audio.duration - 1) SEGMENT_START = Math.max(0, audio.duration - SEGMENT_LEN);
+          SEGMENT_END = Math.min(audio.duration, SEGMENT_START + SEGMENT_LEN);
+          updateTimeText(SEGMENT_START, SEGMENT_END, SEGMENT_START);
+        }
+      });
+
+      function setRevealed(on){ wrap.classList.toggle('reveal', on); }
+      function toggleUI(isPlaying){
+        playBtn.setAttribute('aria-pressed', String(isPlaying));
+        iconPlay.style.display  = isPlaying ? 'none' : 'block';
+        iconPause.style.display = isPlaying ? 'block' : 'none';
+      }
+      function format(t){ if(!isFinite(t)||t<0) t=0; const m=Math.floor(t/60), s=Math.floor(t%60).toString().padStart(2,'0'); return `${m}:${s}`; }
+      function updateTimeText(start, end, cur){
+        const elapsed = Math.max(0, cur - start);
+        timeNow.textContent  = format(elapsed);
+        timeLeft.textContent = format(end - start - elapsed);
+      }
+      function updateProgress(){
+        const cur = audio.currentTime || SEGMENT_START;
+        const pct = Math.max(0, Math.min(1, (cur - SEGMENT_START) / (SEGMENT_END - SEGMENT_START)));
+        barFill.style.width = (pct*100) + '%';
+        barThumb.style.left = (pct*100) + '%';
+        updateTimeText(SEGMENT_START, SEGMENT_END, cur);
+      }
+
+      function play(){
+        if (!primed) { audio.currentTime = SEGMENT_START; primed = true; }
+        audio.play().then(()=>{ setRevealed(true); toggleUI(true); }).catch(()=>{ /* user gesture required */ });
+      }
+      function pause(){
+        audio.pause(); toggleUI(false); setRevealed(false);
+      }
+
+      playBtn.addEventListener('click', () => { if (audio.paused) play(); else pause(); });
+
+      audio.addEventListener('timeupdate', () => {
+        if (audio.currentTime >= SEGMENT_END - 0.02) {
+          pause();
+          audio.currentTime = SEGMENT_START;
+          updateProgress();
+          return;
+        }
+        updateProgress();
+      });
+      audio.addEventListener('pause', () => { toggleUI(false); setRevealed(false); });
+      audio.addEventListener('play',  () => { toggleUI(true);  setRevealed(true);  });
+
+      // Seek on bar click
+      barHit.addEventListener('click', (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const target = SEGMENT_START + Math.max(0, Math.min(1, x)) * (SEGMENT_END - SEGMENT_START);
+        if (!primed) primed = true;
+        audio.currentTime = target; updateProgress();
+      });
+      barHit.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          const delta = (e.key === 'ArrowLeft' ? -2 : 2);
+          const t = Math.max(SEGMENT_START, Math.min(SEGMENT_END, (audio.currentTime||SEGMENT_START) + delta));
+          if (!primed) primed = true;
+          audio.currentTime = t; updateProgress();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault(); playBtn.click();
+        }
+      });
+
+      // Initialize time text
+      updateTimeText(SEGMENT_START, SEGMENT_END, SEGMENT_START);
     })();
   </script>
 </body>
