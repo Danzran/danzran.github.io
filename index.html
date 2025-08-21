@@ -8,61 +8,45 @@
   <!-- Rounded headline font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet"/>
 
+  <!-- ZIP lib to read mnist.npz in-browser -->
+  <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.0/umd/index.min.js"></script>
+
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-
     :root{
       --primary:#6366f1; --secondary:#8b5cf6; --accent:#ec4899;
       --dark:#0f172a; --light:#f1f5f9;
       --gradient:linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
     }
+    html{ scroll-behavior:smooth; }
+    body{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
+          background:var(--dark); color:var(--light); overflow-x:hidden; cursor:none; }
+    a,button,input,textarea,select,label,[role="button"],
+    .project-card,.skill-item,.tech-tag,.magnetic-btn{ cursor:none !important; }
 
-    html { scroll-behavior:smooth; }
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
-      background:var(--dark); color:var(--light);
-      overflow-x:hidden; cursor:none;
-    }
-    /* Ensure no element re-enables the system cursor */
-    a,button,input,textarea,select,label,[role="button"],.project-card,.skill-item,.tech-tag,.magnetic-btn{ cursor:none !important; }
+    /* Custom cursor + trail */
+    .cursor{ width:10px;height:10px;background:#ff6b35;border-radius:50%;position:fixed;pointer-events:none;
+             z-index:10000;transition:transform .2s,background .3s;transform:translate(-50%,-50%);left:50vw;top:50vh;}
+    .cursor.hover{ transform:translate(-50%,-50%) scale(2);
+                   background:linear-gradient(45deg,#ff6b35,#f7931e,#fdc830); animation:colorShift 1s ease infinite; }
+    @keyframes colorShift{0%,100%{filter:hue-rotate(0)}50%{filter:hue-rotate(30deg)}}
+    .trail-dot{ position:fixed;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,rgba(255,248,220,.8),rgba(255,215,0,.4));
+                pointer-events:none;z-index:9999;transform:translate(-50%,-50%); }
 
-    /* ===== Custom Cursor ===== */
-    .cursor{
-      width:10px;height:10px;background:#ff6b35;border-radius:50%;
-      position:fixed;pointer-events:none;z-index:10000;
-      transition:transform .2s,background .3s;transform:translate(-50%,-50%);
-      left:50vw; top:50vh;
-    }
-    .cursor.hover{
-      transform:translate(-50%,-50%) scale(2);
-      background:linear-gradient(45deg,#ff6b35,#f7931e,#fdc830);
-      animation:colorShift 1s ease infinite;
-    }
-    @keyframes colorShift{0%,100%{filter:hue-rotate(0deg)}50%{filter:hue-rotate(30deg)}}
-
-    .trail-dot{
-      position:fixed;width:8px;height:8px;border-radius:50%;
-      background:radial-gradient(circle,rgba(255,248,220,.8),rgba(255,215,0,.4));
-      pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
-    }
-
-    /* Background particles */
+    /* Particle bg */
     #particles{ position:fixed; inset:0; width:100%; height:100%; z-index:-1; }
 
-    /* ===== Nav ===== */
-    nav{
-      position:fixed; top:0; width:100%; padding:2rem 4rem; z-index:1000;
-      backdrop-filter:blur(10px); background:rgba(15,23,42,.8); transition:transform .3s;
-    }
+    /* Nav */
+    nav{ position:fixed; top:0; width:100%; padding:2rem 4rem; z-index:1000; backdrop-filter:blur(10px); background:rgba(15,23,42,.8); }
     .nav-container{ display:flex; justify-content:space-between; align-items:center; max-width:1400px; margin:0 auto; }
     .logo{ font-size:1.5rem; font-weight:700; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:gradient-shift 3s ease infinite; }
-    @keyframes gradient-shift{0%,100%{filter:hue-rotate(0deg)}50%{filter:hue-rotate(30deg)}}
+    @keyframes gradient-shift{0%,100%{filter:hue-rotate(0)}50%{filter:hue-rotate(30deg)}}
     .nav-links{ display:flex; gap:2rem; list-style:none; }
     .nav-links a{ color:var(--light); text-decoration:none; position:relative; padding:.5rem 1rem; }
     .nav-links a::before{ content:""; position:absolute; bottom:0; left:50%; width:0; height:2px; background:var(--gradient); transition:width .3s,left .3s; }
     .nav-links a:hover::before{ width:100%; left:0; }
 
-    /* ===== Hero translucent panel ===== */
+    /* Hero translucent panel */
     .hero{ min-height:100vh; display:grid; place-items:center; position:relative; padding:6rem 2rem 2rem; }
     .hero-inner{
       position:relative; width:100%; max-width:1200px;
@@ -81,40 +65,24 @@
     .hero-left{ position:relative; z-index:2; }
     .hero-right{ z-index:2; display:grid; gap:1rem; align-content:center; }
 
-    /* ===== Title + Aura ===== */
+    /* Title + aura */
     .aura-wrap{ position:relative; display:inline-block; }
     .aura-title{
       position:relative; z-index:2;
-      font-family:'Poppins', system-ui, sans-serif;
-      font-weight:800; letter-spacing:.035em; line-height:1.03;
-      font-size:clamp(3rem,8vw,5.6rem);
-      color:#f3f4f6;
-      /* soft static glow */
-      text-shadow:
-        0 0 8px rgba(255,255,255,.28),
-        0 0 22px rgba(255,255,255,.18),
-        0 0 36px rgba(255,255,255,.10);
+      font-family:'Poppins', system-ui, sans-serif; font-weight:800; letter-spacing:.035em; line-height:1.03;
+      font-size:clamp(3rem,8vw,5.6rem); color:#f3f4f6;
+      text-shadow: 0 0 8px rgba(255,255,255,.28), 0 0 22px rgba(255,255,255,.18), 0 0 36px rgba(255,255,255,.10);
     }
-    /* animated aura canvas sits under the text */
-    .aura-canvas{
-      position:absolute; left:0; top:0; width:0; height:0;
-      z-index:1; pointer-events:none; mix-blend-mode:screen; /* lighten onto background */
-    }
+    .aura-canvas{ position:absolute; left:0; top:0; width:0; height:0; z-index:1; pointer-events:none; mix-blend-mode:screen; }
 
-    /* ===== Quick typewriter for subheading ===== */
+    /* Subheading typewriter (snappy) */
     .subtitle{ margin:1.25rem 0 1.75rem; opacity:.9; }
-    .typewriter{
-      display:inline-block; white-space:nowrap; overflow:hidden;
-      border-right:3px solid var(--primary);
-      animation:typing 2s steps(28, end) .1s both, blink .7s step-end infinite;
-      font-size:1.25rem;
-    }
+    .typewriter{ display:inline-block; white-space:nowrap; overflow:hidden; border-right:3px solid var(--primary);
+                 animation:typing 2s steps(50,end) 0.1s both, blink .7s step-end infinite; font-size:1.25rem; }
     @keyframes typing{ from{ width:0 } to{ width:100% } }
     @keyframes blink{ from,to{ border-color:transparent } 50%{ border-color:var(--primary) } }
 
     .cta-row{ display:flex; flex-wrap:wrap; gap:.75rem; align-items:center; }
-
-    /* ===== Buttons ===== */
     .magnetic-btn{
       display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.4rem;
       background:var(--gradient); color:#fff; text-decoration:none; border-radius:999px;
@@ -122,47 +90,81 @@
       font-weight:600; border:1px solid transparent; line-height:1;
     }
     @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,.35)}50%{box-shadow:0 0 0 16px rgba(99,102,241,0)}}
-    .magnetic-btn::before{content:""; position:absolute; top:50%; left:50%; width:0; height:0; background:rgba(255,255,255,.28); border-radius:50%; transform:translate(-50%,-50%); transition:width .6s,height .6s;}
+    .magnetic-btn::before{content:""; position:absolute; top:50%; left:50%; width:0; height:0; background:rgba(255,255,255,.28); border-radius:50%;
+                          transform:translate(-50%,-50%); transition:width .6s,height .6s;}
     .magnetic-btn:hover::before{ width:280px; height:280px; }
     .btn-light{ background:rgba(226,232,240,.88); color:#0f172a; border:1px solid rgba(15,23,42,.18); box-shadow:0 6px 20px rgba(15,23,42,.18); }
     .btn-light::before{ background:rgba(0,0,0,.06); }
     .btn-icon{ display:inline-flex; }
 
-    /* ===== Sections ===== */
     .section-title{
       font-size:3rem; text-align:center; margin:3rem 0;
       background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     }
 
+    /* Experience */
     .experience{ padding:4rem 2rem; max-width:1100px; margin:0 auto; }
     .timeline{ border-left:2px solid rgba(99,102,241,.3); padding-left:2rem; position:relative; }
-    .tl-item{ position:relative; margin:2rem 0; opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease; }
+    .tl-item{ position:relative; margin:2rem 0; opacity:0; transform:translateY(20px); transition:opacity .6s, transform .6s; }
     .tl-item.in-view{ opacity:1; transform:translateY(0); }
-    .tl-item::before{ content:""; position:absolute; left:-11px; top:.7rem; width:12px; height:12px; background:var(--gradient); border-radius:50%; box-shadow:0 0 0 6px rgba(99,102,241,.15); }
-    .tl-card{ background:linear-gradient(135deg, rgba(99,102,241,.1), rgba(139,92,246,.1)); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:1.25rem 1.25rem 1rem; backdrop-filter:blur(10px); transition:transform .3s, box-shadow .3s; }
+    .tl-item::before{ content:""; position:absolute; left:-11px; top:.7rem; width:12px; height:12px; background:var(--gradient); border-radius:50%;
+                      box-shadow:0 0 0 6px rgba(99,102,241,.15); }
+    .tl-card{ background:linear-gradient(135deg, rgba(99,102,241,.1), rgba(139,92,246,.1)); border:1px solid rgba(255,255,255,.08);
+              border-radius:16px; padding:1.25rem 1.25rem 1rem; backdrop-filter:blur(10px); transition:transform .3s, box-shadow .3s; }
     .tl-card:hover{ transform:translateY(-4px); box-shadow:0 16px 32px rgba(99,102,241,.25); }
     .tl-header{ display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin-bottom:.5rem; }
-    .tl-role{ font-size:1.15rem; font-weight:700; }
-    .tl-where{ opacity:.85; }
-    .tl-dates{ font-size:.95rem; opacity:.75; white-space:nowrap; }
+    .tl-role{ font-size:1.15rem; font-weight:700; } .tl-where{ opacity:.85; } .tl-dates{ font-size:.95rem; opacity:.75; white-space:nowrap; }
     .tl-points{ margin-top:.5rem; padding-left:1.1rem; line-height:1.6; opacity:.9; }
 
+    /* Projects grid */
     .projects{ padding:4rem 2rem; max-width:1400px; margin:0 auto; }
     .project-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(350px,1fr)); gap:2rem; }
-    .project-card{ background:linear-gradient(135deg, rgba(99,102,241,.1), rgba(139,92,246,.1)); border-radius:20px; padding:2rem; border:1px solid rgba(255,255,255,.1); backdrop-filter:blur(10px); transition:transform .3s, box-shadow .3s; position:relative; overflow:hidden; }
-    .project-card:hover{ transform:translateY(-10px) rotateX(5deg); box-shadow:0 20px 40px rgba(99,102,241,.3); }
+    .project-card{ background:linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+                   border-radius:20px; padding:2rem; position:relative; overflow:hidden;
+                   transition:transform .3s, box-shadow .3s; backdrop-filter:blur(10px);
+                   border:1px solid rgba(255, 255, 255, 0.1); }
+    .project-card:hover{ transform:translateY(-10px) rotateX(5deg); box-shadow:0 20px 40px rgba(99, 102, 241, 0.3); }
     .project-icon{ font-size:3rem; margin-bottom:1rem; animation:float 3s ease-in-out infinite; }
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes float{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-10px) } }
     .tech-stack{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1rem; }
-    .tech-tag{ padding:.25rem .75rem; background:rgba(99,102,241,.2); border-radius:15px; font-size:.875rem; border:1px solid var(--primary); transition:.3s; }
+    .tech-tag{ padding:.25rem .75rem; background:rgba(99, 102, 241, 0.2); border-radius:15px; font-size:.875rem; border:1px solid var(--primary); transition:.3s; }
     .tech-tag:hover{ background:var(--primary); transform:scale(1.1); }
 
+    /* MNIST STRIP (top of card) */
+    .mnist-strip{
+      height: 96px;                /* spans more of top of card */
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: transparent;     /* keep underlying card visible */
+      border: 1px solid rgba(255,255,255,0.10);              /* very subtle outline */
+    }
+    /* feathered white border / glow for contrast */
+    .mnist-strip::after{
+      content:"";
+      position:absolute; inset:-1px;
+      pointer-events:none;
+      border-radius:inherit;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.14),
+        0 0 24px rgba(255,255,255,0.10) inset;
+    }
+    .mnist-canvas{
+      width: 100%;
+      height: 100%;
+      display: block;
+      image-rendering: pixelated;   /* crisp pixels */
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.12)); /* feathered halo around digits */
+      background: transparent;
+    }
+
+    /* Skills */
     .skills{ padding:4rem 2rem; background:linear-gradient(135deg, rgba(99,102,241,.05), rgba(236,72,153,.05)); }
     .skill-container{ max-width:1000px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:2rem; }
     .skill-item{ text-align:center; padding:1.5rem; background:rgba(255,255,255,.05); border-radius:15px; transition:.3s; position:relative; }
     .skill-item::after{ content:""; position:absolute; bottom:0; left:0; width:100%; height:3px; background:var(--gradient); transform:scaleX(0); transition:transform .3s; }
-    .skill-item:hover{ transform:translateY(-5px); background:rgba(255,255,255,.1); }
-    .skill-item:hover::after{ transform:scaleX(1); }
+    .skill-item:hover{ transform:translateY(-5px); background:rgba(255,255,255,.1); } .skill-item:hover::after{ transform:scaleX(1); }
     .skill-icon{ font-size:2.5rem; margin-bottom:.5rem; filter:grayscale(100%); transition:filter .3s; }
     .skill-item:hover .skill-icon{ filter:grayscale(0%); animation:bounce .5s; }
     @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
@@ -170,8 +172,10 @@
     .contact{ padding:4rem 2rem; text-align:center; }
     .contact-form{ max-width:600px; margin:0 auto; }
     .form-group{ margin-bottom:1.5rem; position:relative; }
-    .form-input{ width:100%; padding:1rem; background:rgba(255,255,255,.05); border:2px solid rgba(99,102,241,.3); border-radius:10px; color:var(--light); font-size:1rem; transition:.3s; }
-    .form-input:focus{ outline:none; border-color:var(--primary); background:rgba(255,255,255,.1); transform:translateY(-2px); box-shadow:0 10px 20px rgba(99,102,241,.2); }
+    .form-input{ width:100%; padding:1rem; background:rgba(255,255,255,.05); border:2px solid rgba(99,102,241,.3);
+                 border-radius:10px; color:var(--light); font-size:1rem; transition:.3s; }
+    .form-input:focus{ outline:none; border-color:var(--primary); background:rgba(255,255,255,.1); transform:translateY(-2px);
+                       box-shadow:0 10px 20px rgba(99,102,241,.2); }
     .form-label{ position:absolute; left:1rem; top:1rem; color:rgba(255,255,255,.5); transition:.3s; pointer-events:none; }
     .form-input:focus + .form-label, .form-input:not(:placeholder-shown) + .form-label{
       top:-.5rem; left:.5rem; font-size:.875rem; color:var(--primary); background:var(--dark); padding:0 .5rem;
@@ -179,10 +183,12 @@
 
     .scroll-indicator{ position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); animation:scroll-bounce 2s infinite; }
     .scroll-line{ width:30px; height:50px; border:2px solid var(--primary); border-radius:15px; position:relative; }
-    .scroll-line::before{ content:""; position:absolute; top:10px; left:50%; width:3px; height:10px; background:var(--primary); border-radius:2px; transform:translateX(-50%); animation:scroll-wheel 2s infinite; }
+    .scroll-line::before{ content:""; position:absolute; top:10px; left:50%; width:3px; height:10px; background:var(--primary); border-radius:2px;
+                           transform:translateX(-50%); animation:scroll-wheel 2s infinite; }
     @keyframes scroll-bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
     @keyframes scroll-wheel{0%{top:10px;opacity:1}100%{top:30px;opacity:0}}
 
+    /* Responsive */
     @media (max-width:1024px){
       .hero-inner{ grid-template-columns:1fr; }
       .hero-left{ text-align:center; }
@@ -201,10 +207,10 @@
   <!-- Custom Cursor -->
   <div class="cursor"></div>
 
-  <!-- Background Canvas -->
+  <!-- Particle Background -->
   <canvas id="particles"></canvas>
 
-  <!-- Nav -->
+  <!-- Navigation -->
   <nav id="navbar">
     <div class="nav-container">
       <div class="logo">Daniel Azran</div>
@@ -236,8 +242,6 @@
         <div class="cta-row">
           <a href="#projects" class="magnetic-btn smooth-scroll">View Projects</a>
           <a href="DanielAzranResume.pdf" class="magnetic-btn" download="DanielAzranResume.pdf" title="Download my resume">Resume ⬇</a>
-
-          <!-- Email copy -->
           <button type="button" id="copyEmailBtn" class="magnetic-btn btn-light" data-email="dazran0929@gmail.com" title="Click to copy email" aria-live="polite">
             <span class="btn-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -253,17 +257,16 @@
       <div class="hero-right">
         <div class="avatar" role="img" aria-label="Photo of Daniel Azran"
              style="width:clamp(180px,28vw,300px);height:clamp(180px,28vw,300px);border-radius:20px;
-             background:radial-gradient(closest-side,rgba(255,255,255,.08),rgba(255,255,255,.02)),
-                        url('headshot.jpg') center/cover no-repeat;
-             border:1px solid rgba(255,255,255,.08); box-shadow:0 10px 30px rgba(99,102,241,.25);
-             margin-inline:auto; transition:transform .3s ease;"></div>
+                    background:radial-gradient(closest-side,rgba(255,255,255,.08),rgba(255,255,255,.02)),
+                               url('headshot.jpg') center/cover no-repeat;
+                    border:1px solid rgba(255,255,255,.08); box-shadow:0 10px 30px rgba(99,102,241,.25);
+                    margin-inline:auto;"></div>
         <div class="about-card">
           <h3>About Me</h3>
-          <p>Backend-leaning SWE with projects in real-time computer vision, ML, and cross-platform mobile. I like building low-latency, reliable systems and polishing UX details that make apps feel alive. Open to internships and new-grad roles.</p>
+          <p>Backend-leaning SWE with projects in real-time computer vision, ML, and cross-platform mobile. I like building low-latency, reliable systems and polishing UX details that make apps feel alive.</p>
         </div>
       </div>
     </div>
-
     <div class="scroll-indicator"><div class="scroll-line"></div></div>
   </section>
 
@@ -287,7 +290,6 @@
           </ul>
         </div>
       </div>
-
       <div class="tl-item">
         <div class="tl-card">
           <div class="tl-header">
@@ -304,7 +306,6 @@
           </ul>
         </div>
       </div>
-
       <div class="tl-item">
         <div class="tl-card">
           <div class="tl-header">
@@ -332,62 +333,55 @@
         <h3>Golf Swing Analyzer Mobile App</h3>
         <p>Cross-platform Flutter app analyzing golf swing metrics in real-time with wearable sensor data. Reduced packet loss from tens to single digits per session.</p>
         <div class="tech-stack">
-          <span class="tech-tag">Flutter</span>
-          <span class="tech-tag">Dart</span>
-          <span class="tech-tag">Firebase</span>
-          <span class="tech-tag">Bluetooth</span>
+          <span class="tech-tag">Flutter</span><span class="tech-tag">Dart</span><span class="tech-tag">Firebase</span><span class="tech-tag">Bluetooth</span>
         </div>
       </div>
+
       <div class="project-card">
         <div class="project-icon">👁️</div>
         <h3>Real-Time Optical Flow Tracker</h3>
-        <p>Built 30+ FPS Lucas-Kanade tracker with Shi-Tomasi detection, forward–backward checks, and dense flow viz.</p>
+        <p>Built 30+ FPS Lucas-Kanade tracker with Shi-Tomasi detection, forward–backward checks, and dense optical flow visualization.</p>
         <div class="tech-stack">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">OpenCV</span>
-          <span class="tech-tag">Computer Vision</span>
+          <span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">Computer Vision</span>
         </div>
       </div>
+
+      <div class="project-card">
+        <!-- MNIST wide strip at the top of this card -->
+        <canvas id="mnistStrip" class="mnist-canvas" aria-label="MNIST sample slideshow"
+        style="width:100%; height:96px; display:block;"></canvas>
+
+        <h3>Handwritten Digit Classifier</h3>
+        <p>CNN (TensorFlow/Keras) achieving 98% on MNIST with a clean preprocessing + training pipeline.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">TensorFlow</span><span class="tech-tag">Keras</span><span class="tech-tag">Deep Learning</span><span class="tech-tag">Python</span>
+        </div>
+      </div>
+
       <div class="project-card">
         <div class="project-icon">🏠</div>
         <h3>Real Estate Price Predictor</h3>
         <p>Compared Linear Regression, KNN, Random Forest, and AdaBoost; 7% RMSE reduction via tuning + log-price regression.</p>
         <div class="tech-stack">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">R</span>
-          <span class="tech-tag">Machine Learning</span>
-          <span class="tech-tag">Jupyter</span>
+          <span class="tech-tag">Python</span><span class="tech-tag">R</span><span class="tech-tag">Machine Learning</span><span class="tech-tag">Jupyter</span>
         </div>
       </div>
-      <div class="project-card">
-        <div class="project-icon">✍️</div>
-        <h3>Handwritten Digit Classifier</h3>
-        <p>CNN (TensorFlow/Keras) achieving 98% on MNIST with a clean preprocessing + training pipeline.</p>
-        <div class="tech-stack">
-          <span class="tech-tag">TensorFlow</span>
-          <span class="tech-tag">Keras</span>
-          <span class="tech-tag">Deep Learning</span>
-          <span class="tech-tag">Python</span>
-        </div>
-      </div>
+
       <div class="project-card">
         <div class="project-icon">💻</div>
         <h3>Custom System Architecture</h3>
         <p>Built and tuned desktops/servers; deployed small-business networks with VMs and better resource management.</p>
         <div class="tech-stack">
-          <span class="tech-tag">Hardware</span>
-          <span class="tech-tag">Networking</span>
-          <span class="tech-tag">VirtualBox</span>
-          <span class="tech-tag">IT Support</span>
+          <span class="tech-tag">Hardware</span><span class="tech-tag">Networking</span><span class="tech-tag">VirtualBox</span><span class="tech-tag">IT Support</span>
         </div>
       </div>
+
       <div class="project-card">
         <div class="project-icon">🚀</div>
         <h3>More Projects</h3>
         <p>See GitHub for more (robotics, AI, full-stack) — always building.</p>
         <div class="tech-stack">
-          <span class="tech-tag">View GitHub</span>
-          <span class="tech-tag">Danzran</span>
+          <span class="tech-tag">View GitHub</span><span class="tech-tag">Danzran</span>
         </div>
       </div>
     </div>
@@ -416,60 +410,48 @@
   <section class="contact" id="contact">
     <h2 class="section-title">Let's Connect</h2>
     <form class="contact-form">
-      <div class="form-group">
-        <input type="text" class="form-input" placeholder=" " required>
-        <label class="form-label">Your Name</label>
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-input" placeholder=" " required>
-        <label class="form-label">Your Email</label>
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-input" placeholder=" " required>
-        <label class="form-label">Subject</label>
-      </div>
-      <div class="form-group">
-        <textarea class="form-input" rows="5" placeholder=" " required></textarea>
-        <label class="form-label">Message</label>
-      </div>
+      <div class="form-group"><input type="text" class="form-input" placeholder=" " required><label class="form-label">Your Name</label></div>
+      <div class="form-group"><input type="email" class="form-input" placeholder=" " required><label class="form-label">Your Email</label></div>
+      <div class="form-group"><input type="text" class="form-input" placeholder=" " required><label class="form-label">Subject</label></div>
+      <div class="form-group"><textarea class="form-input" rows="5" placeholder=" " required></textarea><label class="form-label">Message</label></div>
       <button type="submit" class="magnetic-btn">Send Message</button>
     </form>
   </section>
 
   <script>
-    /* ========== Custom Cursor ========== */
-    const cursor = document.querySelector('.cursor');
-    let mouseX = innerWidth/2, mouseY = innerHeight/2, cursorX = mouseX, cursorY = mouseY;
-    addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; cursor.style.left = mouseX+'px'; cursor.style.top = mouseY+'px'; });
-    (function move(){ cursorX += (mouseX - cursorX)*0.9; cursorY += (mouseY - cursorY)*0.9; cursor.style.left = cursorX+'px'; cursor.style.top = cursorY+'px'; requestAnimationFrame(move); })();
+    /* ---------- Custom cursor + trail ---------- */
+    const cursor=document.querySelector('.cursor');
+    let mouseX=innerWidth/2, mouseY=innerHeight/2, cursorX=mouseX, cursorY=mouseY;
+    addEventListener('mousemove',e=>{mouseX=e.clientX; mouseY=e.clientY; cursor.style.left=mouseX+'px'; cursor.style.top=mouseY+'px';});
+    (function move(){ cursorX+=(mouseX-cursorX)*0.9; cursorY+=(mouseY-cursorY)*0.9; cursor.style.left=cursorX+'px'; cursor.style.top=cursorY+'px'; requestAnimationFrame(move); })();
     document.querySelectorAll('a,button,.project-card,.skill-item,.tech-tag,.magnetic-btn,input,textarea').forEach(el=>{
       el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));
       el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'));
     });
-    // trail
-    const trail=[]; const trailLen=20;
-    for(let i=0;i<trailLen;i++){ const d=document.createElement('div'); d.className='trail-dot'; document.body.appendChild(d); trail.push({e:d,x:cursorX,y:cursorY}); }
-    const mp=[]; addEventListener('mousemove',e=>{ mp.push({x:e.clientX,y:e.clientY}); if(mp.length>trailLen) mp.shift(); });
-    (function animTrail(){ for(let i=0;i<trail.length;i++){ const p=mp[mp.length-1-i]; if(!p) continue; const t=trail[i]; t.x+=(p.x-t.x)*0.35; t.y+=(p.y-t.y)*0.35; t.e.style.left=(t.x-3)+'px'; t.e.style.top=(t.y-3)+'px'; t.e.style.opacity=(1-i/trailLen)*0.5; t.e.style.transform=`scale(${1-i/trailLen})`; const hue=(Date.now()/20 - i*5)%360; t.e.style.background=`hsl(${hue},70%,50%)`; } requestAnimationFrame(animTrail); })();
+    const trail=[], trailLen=20, mp=[];
+    for(let i=0;i<trailLen;i++){const d=document.createElement('div'); d.className='trail-dot'; document.body.appendChild(d); trail.push({e:d,x:cursorX,y:cursorY});}
+    addEventListener('mousemove',e=>{ mp.push({x:e.clientX,y:e.clientY}); if(mp.length>trailLen) mp.shift(); });
+    (function animTrail(){ for(let i=0;i<trail.length;i++){ const p=mp[mp.length-1-i]; if(!p) continue; const t=trail[i];
+      t.x+=(p.x-t.x)*0.35; t.y+=(p.y-t.y)*0.35; t.e.style.left=(t.x-3)+'px'; t.e.style.top=(t.y-3)+'px';
+      t.e.style.opacity=(1-i/trailLen)*0.5; t.e.style.transform=`scale(${1-i/trailLen})`;
+      const hue=(Date.now()/20 - i*5)%360; t.e.style.background=`hsl(${hue},70%,50%)`; } requestAnimationFrame(animTrail); })();
 
-    /* ========== Background Particles (existing) ========== */
-    const bg = document.getElementById('particles'); const g = bg.getContext('2d');
+    /* ---------- Particle background ---------- */
+    const bg=document.getElementById('particles'), g=bg.getContext('2d');
     function sizeBG(){ bg.width=innerWidth; bg.height=innerHeight; } sizeBG(); addEventListener('resize', sizeBG);
-    const ps=[]; const N=100;
     class P{ constructor(){ this.x=Math.random()*bg.width; this.y=Math.random()*bg.height; this.s=Math.random()*3+1; this.vx=Math.random()*3-1.5; this.vy=Math.random()*3-1.5; this.c=`hsl(${Math.random()*60+200},70%,50%)`; }
       u(){ this.x+=this.vx; this.y+=this.vy; if(this.x>bg.width)this.x=0; if(this.x<0)this.x=bg.width; if(this.y>bg.height)this.y=0; if(this.y<0)this.y=bg.height;
         const dx=mouseX-this.x, dy=mouseY-this.y, d=Math.hypot(dx,dy); if(d<100){ const fx=dx/d, fy=dy/d, f=(100-d)/100; this.x-=fx*f*2; this.y-=fy*f*2; } }
       d(){ g.fillStyle=this.c; g.beginPath(); g.arc(this.x,this.y,this.s,0,Math.PI*2); g.fill(); } }
-    for(let i=0;i<N;i++) ps.push(new P());
+    const ps=Array.from({length:100},()=>new P());
     function link(){ for(let a=0;a<ps.length;a++) for(let b=a+1;b<ps.length;b++){ const dx=ps[a].x-ps[b].x, dy=ps[a].y-ps[b].y, d=Math.hypot(dx,dy); if(d<100){ g.strokeStyle=`rgba(99,102,241,${1-d/100})`; g.lineWidth=.5; g.beginPath(); g.moveTo(ps[a].x,ps[a].y); g.lineTo(ps[b].x,ps[b].y); g.stroke(); } } }
     (function animBG(){ g.clearRect(0,0,bg.width,bg.height); ps.forEach(p=>{p.u(); p.d();}); link(); requestAnimationFrame(animBG); })();
 
-    /* ========== Timeline reveal ========== */
-    const tlItems=document.querySelectorAll('.tl-item');
+    /* ---------- Timeline reveal ---------- */
     const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); }),{threshold:.15});
-    tlItems.forEach(el=>io.observe(el));
+    document.querySelectorAll('.tl-item').forEach(el=>io.observe(el));
 
-    /* ========== Smooth scroll (snappy) ========== */
+    /* ---------- Smooth scroll (snappier) ---------- */
     function smoothScrollTo(target, offset=0){ const start=scrollY, end=target.getBoundingClientRect().top + scrollY - offset, T=420, t0=performance.now();
       function ease(t){ return t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
       function step(now){ const p=Math.min((now-t0)/T,1); scrollTo(0,start+(end-start)*ease(p)); if(p<1) requestAnimationFrame(step); } requestAnimationFrame(step);
@@ -482,131 +464,178 @@
       });
     });
 
-    /* ========== Magnetic buttons ========== */
+    /* ---------- Magnetic buttons ---------- */
     document.querySelectorAll('.magnetic-btn').forEach(btn=>{
       btn.addEventListener('mousemove',e=>{ const r=btn.getBoundingClientRect(); const x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2; btn.style.transform=`translate(${x*.3}px,${y*.3}px)`; });
       btn.addEventListener('mouseleave',()=>{ btn.style.transform='translate(0,0)'; });
     });
 
-    /* ========== Copy email ========== */
+    /* ---------- Copy email ---------- */
     const copyBtn=document.getElementById('copyEmailBtn'); const email=copyBtn?.dataset.email||'dazran0929@gmail.com'; const original=copyBtn?.innerHTML;
     function copied(){ copyBtn.innerHTML='✓ Copied'; setTimeout(()=>copyBtn.innerHTML=original,1600); }
     function legacyCopy(text){ const ta=document.createElement('textarea'); ta.value=text; ta.setAttribute('readonly',''); ta.style.position='absolute'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy')}catch{} document.body.removeChild(ta); copied(); }
     copyBtn?.addEventListener('click',async()=>{ try{ if(navigator.clipboard && isSecureContext){ await navigator.clipboard.writeText(email); copied(); } else legacyCopy(email); } catch{ legacyCopy(email); } });
 
-    /* ==========================================================
-       ======= CONSTANT, SUBTLE AURA EMISSION AROUND TITLE =======
-       ========================================================== */
+    /* ---------- Constant subtle aura around title ---------- */
     (function(){
-      const title = document.getElementById('auraTitle');
-      const canvas = document.getElementById('auraCanvas');
-      if(!title || !canvas) return;
-      const ctx = canvas.getContext('2d');
-      const DPR = Math.max(1, Math.min(2, devicePixelRatio || 1));
-
-      let rect, wrapRect, cx, cy;
-      const particles = [];
-      const MAX_PARTICLES = 60;        // cap for subtlety & perf
-      const SPAWN_PER_SEC = 10;        // constant emission (subtle)
-      let spawnCarry = 0;
-
-      function resize(){
-        const wrap = title.parentElement;
-        rect = title.getBoundingClientRect();
-        wrapRect = wrap.getBoundingClientRect();
-
-        canvas.width  = Math.max(1, Math.round(rect.width * DPR));
-        canvas.height = Math.max(1, Math.round(rect.height * DPR));
-        canvas.style.width  = rect.width+'px';
-        canvas.style.height = rect.height+'px';
-        canvas.style.left   = Math.round(rect.left - wrapRect.left)+'px';
-        canvas.style.top    = Math.round(rect.top  - wrapRect.top)+'px';
-
-        cx = canvas.width/2;  // device px
-        cy = canvas.height/2;
+      const title=document.getElementById('auraTitle'); const canvas=document.getElementById('auraCanvas'); if(!title||!canvas) return;
+      const ctx=canvas.getContext('2d'); const DPR=Math.max(1, Math.min(2, devicePixelRatio||1));
+      let rect, wrapRect, cx, cy; const particles=[]; const MAX=60; const RATE=10; let carry=0;
+      function resize(){ const wrap=title.parentElement; rect=title.getBoundingClientRect(); wrapRect=wrap.getBoundingClientRect();
+        canvas.width=Math.round(rect.width*DPR); canvas.height=Math.round(rect.height*DPR);
+        canvas.style.width=rect.width+'px'; canvas.style.height=rect.height+'px';
+        canvas.style.left=Math.round(rect.left-wrapRect.left)+'px'; canvas.style.top=Math.round(rect.top-wrapRect.top)+'px';
+        cx=canvas.width/2; cy=canvas.height/2; }
+      resize(); addEventListener('resize',()=>requestAnimationFrame(resize));
+      function spawn(){ if(particles.length>=MAX) return; const W=canvas.width,H=canvas.height; const edge=Math.random(); let x,y;
+        if(edge<0.45){ x=Math.random()*W; y=Math.random()*(H*0.15); }
+        else if(edge<0.7){ x=(Math.random()<0.5)? Math.random()*(W*0.12) : W-Math.random()*(W*0.12); y=Math.random()*H; }
+        else{ x=Math.random()*W; y=H-Math.random()*(H*0.10); }
+        const dx=x-cx, dy=y-cy, len=Math.hypot(dx,dy)||1; let ux=dx/len, uy=dy/len; const speed=(0.02+Math.random()*0.05);
+        uy=Math.min(uy-0.35,-0.05);
+        particles.push({x,y,vx:ux*speed*DPR+(Math.random()-0.5)*0.02*DPR,vy:uy*speed*DPR-Math.random()*0.02*DPR,r:(1.2+Math.random()*1.6)*DPR,life:900+Math.random()*900,born:performance.now(),alpha:0.18+Math.random()*0.14});
       }
-      resize(); addEventListener('resize', ()=>requestAnimationFrame(resize));
-
-      function spawn(){
-        if (particles.length >= MAX_PARTICLES) return;
-
-        // Spawn along the rectangle perimeter with jitter
-        const W = canvas.width, H = canvas.height;
-        const edge = Math.random(); // 0..1
-        let x, y;
-
-        if (edge < 0.45) { // top edge bias (rises upward)
-          x = Math.random() * W;
-          y = Math.max(1, Math.random() * (H * 0.15));
-        } else if (edge < 0.7) { // sides
-          x = (Math.random() < 0.5) ? Math.max(1, Math.random() * (W*0.12)) : Math.min(W-1, W - Math.random()*(W*0.12));
-          y = Math.random() * H;
-        } else { // bottom small chance
-          x = Math.random() * W;
-          y = Math.min(H-1, H - Math.random()*(H*0.10));
-        }
-
-        // Direction: slightly outward from center + upward drift
-        const dx = x - cx, dy = y - cy;
-        const len = Math.hypot(dx, dy) || 1;
-        let ux = dx/len, uy = dy/len;
-
-        // velocity in CSS px/ms, convert to device by *DPR when drawing movement
-        const speed = (0.02 + Math.random()*0.05); // subtle
-        // upward bias
-        uy = Math.min(uy - 0.35, -0.05);
-
-        particles.push({
-          x, y,
-          vx: ux * speed * DPR + (Math.random()-0.5)*0.02*DPR,
-          vy: uy * speed * DPR - Math.random()*0.02*DPR,
-          r: (1.2 + Math.random()*1.6) * DPR,
-          life: 900 + Math.random()*900,
-          born: performance.now(),
-          alpha: 0.18 + Math.random()*0.14
-        });
-      }
-
-      let last = performance.now();
-      function tick(now){
-        const dt = Math.min(50, now - last); // clamp
-        last = now;
-
-        // spawn at steady rate
-        spawnCarry += (SPAWN_PER_SEC * dt / 1000);
-        while (spawnCarry >= 1){ spawn(); spawnCarry -= 1; }
-
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.globalCompositeOperation = 'lighter';
-
-        for (let i = particles.length - 1; i >= 0; i--){
-          const p = particles[i];
-          const age = now - p.born;
-          if (age > p.life){ particles.splice(i,1); continue; }
-
-          // motion
-          p.x += p.vx * (dt / 16);
-          p.y += p.vy * (dt / 16);
-
-          // gentle sideways waver
-          p.vx += (Math.random()-0.5) * 0.004 * DPR;
-
-          // fade in quickly, then out slowly
-          const t = age / p.life;
-          const a = p.alpha * (t < 0.15 ? (t/0.15) : Math.pow(1 - t, 1.6));
-
-          const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r*2.1);
-          grd.addColorStop(0, `rgba(255,255,255,${a})`);
-          grd.addColorStop(1, `rgba(255,255,255,0)`);
-          ctx.fillStyle = grd;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r*2.1, 0, Math.PI*2);
-          ctx.fill();
-        }
-
-        requestAnimationFrame(tick);
-      }
+      let last=performance.now(); function tick(now){ const dt=Math.min(50, now-last); last=now; carry+=(RATE*dt/1000); while(carry>=1){ spawn(); carry-=1; }
+        ctx.clearRect(0,0,canvas.width,canvas.height); ctx.globalCompositeOperation='lighter';
+        for(let i=particles.length-1;i>=0;i--){ const p=particles[i]; const age=now-p.born; if(age>p.life){ particles.splice(i,1); continue; }
+          p.x+=p.vx*(dt/16); p.y+=p.vy*(dt/16); p.vx+=(Math.random()-0.5)*0.004*DPR;
+          const t=age/p.life, a=p.alpha*(t<0.15?(t/0.15):Math.pow(1-t,1.6));
+          const grd=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.1); grd.addColorStop(0,`rgba(255,255,255,${a})`); grd.addColorStop(1,`rgba(255,255,255,0)`);
+          ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*2.1,0,Math.PI*2); ctx.fill(); }
+        requestAnimationFrame(tick); }
       requestAnimationFrame(tick);
+    })();
+
+    /* ---------- MNIST WIDE STRIP from mnist.npz ---------- */
+    (function mnistStripFromNPZ(){
+      const CANDIDATES = [
+        'mnist.npz',                // same folder (recommended; no CORS)
+        'assets/mnist.npz',         // optional path if you prefer /assets
+        'https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz' // fallback (may be blocked by CORS)
+      ];
+
+      const cvs = document.getElementById('mnistStrip');
+      if (!cvs) return;
+      const ctx = cvs.getContext('2d', { willReadFrequently:true });
+      const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      const W=28, H=28;
+
+      function fit(){
+        const r=cvs.getBoundingClientRect();
+        cvs.width = Math.max(1, Math.round(r.width * DPR));
+        cvs.height= Math.max(1, Math.round(r.height* DPR));
+      }
+      fit(); addEventListener('resize', ()=>{ fit(); });
+
+      // Minimal .npy parser for uint8 MNIST
+      function parseNPY(buffer){
+        const view=new DataView(buffer);
+        if(view.getUint8(0)!==0x93) throw new Error('Not an .npy');
+        const major=view.getUint8(6), minor=view.getUint8(7);
+        let headerLen, offset;
+        if(major===1){ headerLen=view.getUint16(8,true); offset=10+headerLen; }
+        else if(major===2){ headerLen=view.getUint32(8,true); offset=12+headerLen; }
+        else throw new Error('Unsupported .npy version');
+        const headerTxt=new TextDecoder('latin1').decode(new Uint8Array(buffer, offset-headerLen, headerLen));
+        const descr=/'descr':\s*'([^']+)'/.exec(headerTxt)?.[1]||'';
+        const shapeS=/'shape':\s*\(([^)]*)\)/.exec(headerTxt)?.[1]||'';
+        const shape=shapeS.split(',').map(s=>s.trim()).filter(Boolean).map(Number);
+        if(!/u1$/.test(descr)) throw new Error('MNIST expected uint8');
+        const data=new Uint8Array(buffer, offset);
+        return {data, shape};
+      }
+
+      function makeTile(sampleData, dw, dh){
+        // Build white-on-transparent 28x28, then upscale to dw x dh (no smoothing)
+        const tiny=document.createElement('canvas'); tiny.width=W; tiny.height=H;
+        const tctx=tiny.getContext('2d', { willReadFrequently:true });
+        const img=tctx.createImageData(W,H);
+        for(let i=0,p=0;i<sampleData.length;i++,p+=4){
+          const v=sampleData[i]; img.data[p]=255; img.data[p+1]=255; img.data[p+2]=255; img.data[p+3]=v;
+        }
+        tctx.putImageData(img,0,0);
+        const off=document.createElement('canvas'); off.width=Math.round(dw); off.height=Math.round(dh);
+        const octx=off.getContext('2d'); octx.imageSmoothingEnabled=false; octx.drawImage(tiny,0,0,W,H,0,0,off.width,off.height);
+        return off;
+      }
+
+      function startStrip(xArray, count){
+        // layout: compute integer pixel scale for crisp digits
+        function layout(){
+          const pad = Math.round(8 * DPR);     // side padding inside strip
+          const targetH = cvs.height - 2*pad;
+          const scale = Math.max(1, Math.floor(targetH / H));
+          const dw = W * scale, dh = H * scale;
+          const spacing = Math.max(6*DPR, Math.round(dw * 0.18));  // subtle gap
+          const stride = dw + spacing;
+          const y = Math.round((cvs.height - dh)/2);
+          const needed = Math.ceil((cvs.width + stride)/stride) + 1;
+          return {pad, dw, dh, spacing, stride, y, needed};
+        }
+
+        let L = layout();
+        let tiles = [];   // offscreen canvases for each displayed digit
+        let indices = []; // dataset indices corresponding to tiles
+        let offset = 0;
+        const SPEED = 60 * DPR; // px/sec subtle scroll
+
+        // seed tiles
+        function seed(){
+          L = layout();
+          tiles.length = 0; indices.length = 0; offset = 0;
+          for(let i=0;i<L.needed;i++){
+            const ix = Math.floor(Math.random()*count);
+            const tile = makeTile(xArray.slice(ix*W*H, (ix+1)*W*H), L.dw, L.dh);
+            tiles.push(tile); indices.push(ix);
+          }
+        }
+        seed(); addEventListener('resize', seed);
+
+        let last = performance.now();
+        function loop(now){
+          const dt=Math.min(50, now-last); last=now;
+          // Recalc L lazily on each frame in case height changed slightly
+          L = layout();
+
+          offset += (SPEED * dt/1000);
+          if(offset >= L.stride){
+            offset -= L.stride;
+            tiles.shift(); indices.shift();
+            const ix = Math.floor(Math.random()*count);
+            const tile = makeTile(xArray.slice(ix*W*H, (ix+1)*W*H), L.dw, L.dh);
+            tiles.push(tile); indices.push(ix);
+          }
+
+          ctx.clearRect(0,0,cvs.width,cvs.height);
+          ctx.imageSmoothingEnabled = false;
+
+          for(let i=0;i<tiles.length;i++){
+            const x = Math.round(L.pad + i*L.stride - offset);
+            ctx.drawImage(tiles[i], x, L.y);
+          }
+
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+      }
+
+      async function loadNPZ(url){
+        const res = await fetch(url);
+        if(!res.ok) throw new Error('fetch failed: '+res.status);
+        const buf = new Uint8Array(await res.arrayBuffer());
+        const files = fflate.unzipSync(buf);           // -> { 'x_train.npy': Uint8Array, 'x_test.npy': ... }
+        const xName = files['x_test.npy'] ? 'x_test.npy' : 'x_train.npy';
+        const parsed = parseNPY(files[xName].buffer);  // { data: Uint8Array, shape: [N,28,28] }
+        const N = parsed.shape[0], stride = W*H;       // 784
+        startStrip(parsed.data, N);
+      }
+
+      (async () => {
+        for(const u of CANDIDATES){
+          try{ await loadNPZ(u); return; }catch(e){ /* try next */ }
+        }
+        console.warn('MNIST .npz could not be loaded. Place mnist.npz next to this HTML to avoid CORS.');
+      })();
     })();
   </script>
 </body>
