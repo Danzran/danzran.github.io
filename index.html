@@ -104,19 +104,75 @@
       background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     }
 
-    /* Experience */
-    .experience{ padding:4rem 2rem; max-width:1100px; margin:0 auto; }
-    .timeline{ border-left:2px solid rgba(99,102,241,.3); padding-left:2rem; position:relative; }
-    .tl-item{ position:relative; margin:2rem 0; opacity:0; transform:translateY(20px); transition:opacity .6s, transform .6s; }
+    /* --------- Experience (center line + alternating + same-level visuals) --------- */
+    .experience{ padding:4rem 2rem; max-width:1200px; margin:0 auto; }
+    .timeline{
+      position:relative; max-width:1100px; margin:0 auto; padding:1rem 0;
+    }
+    .timeline::before{
+      content:""; position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%);
+      width:2px;
+      background:linear-gradient(
+        to bottom,
+        rgba(99,102,241,0), rgba(99,102,241,.4),
+        rgba(236,72,153,.4), rgba(99,102,241,.4),
+        rgba(99,102,241,0)
+      );
+      opacity:.8;
+    }
+    .tl-item{
+      position:relative;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:2rem 3rem;
+      align-items:stretch;             /* forces equal heights across both sides */
+      margin:2.25rem 0;
+      opacity:0; transform:translateY(20px);
+      transition:opacity .6s, transform .6s;
+    }
     .tl-item.in-view{ opacity:1; transform:translateY(0); }
-    .tl-item::before{ content:""; position:absolute; left:-11px; top:.7rem; width:12px; height:12px; background:var(--gradient); border-radius:50%;
-                      box-shadow:0 0 0 6px rgba(99,102,241,.15); }
-    .tl-card{ background:linear-gradient(135deg, rgba(99,102,241,.1), rgba(139,92,246,.1)); border:1px solid rgba(255,255,255,.08);
-              border-radius:16px; padding:1.25rem 1.25rem 1rem; backdrop-filter:blur(10px); transition:transform .3s, box-shadow .3s; }
+    .tl-item::before{
+      content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:14px; height:14px; border-radius:50%; background:var(--gradient);
+      box-shadow:0 0 0 6px rgba(99,102,241,.15);
+    }
+    .tl-item:nth-child(odd) .tl-card{ grid-column:1; }
+    .tl-item:nth-child(odd) .tl-visual{ grid-column:2; }
+    .tl-item:nth-child(even) .tl-card{ grid-column:2; }
+    .tl-item:nth-child(even) .tl-visual{ grid-column:1; }
+
+    .tl-card{
+      display:flex; flex-direction:column; height:100%;
+      background:linear-gradient(135deg, rgba(99,102,241,.10), rgba(139,92,246,.10));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px; padding:1.25rem 1.25rem 1rem;
+      backdrop-filter:blur(10px);
+      transition:transform .3s, box-shadow .3s;
+    }
     .tl-card:hover{ transform:translateY(-4px); box-shadow:0 16px 32px rgba(99,102,241,.25); }
     .tl-header{ display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin-bottom:.5rem; }
     .tl-role{ font-size:1.15rem; font-weight:700; } .tl-where{ opacity:.85; } .tl-dates{ font-size:.95rem; opacity:.75; white-space:nowrap; }
     .tl-points{ margin-top:.5rem; padding-left:1.1rem; line-height:1.6; opacity:.9; }
+
+    .tl-visual{
+      display:flex; align-items:stretch; justify-content:center; height:100%;
+      border-radius:16px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      box-shadow:0 8px 24px rgba(0,0,0,.25) inset;
+      min-height:220px;
+    }
+    .tl-visual img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    @media (max-width:900px){
+      .timeline::before{ opacity:.25; }
+      .tl-item{ grid-template-columns:1fr; gap:1rem; }
+      .tl-item::before{ top:0; transform:translate(-50%,-50%); }
+      .tl-item:nth-child(even) .tl-card,
+      .tl-item:nth-child(even) .tl-visual,
+      .tl-item:nth-child(odd) .tl-card,
+      .tl-item:nth-child(odd) .tl-visual{ grid-column:1; }
+    }
 
     /* Projects grid */
     .projects{ padding:4rem 2rem; max-width:1400px; margin:0 auto; }
@@ -155,17 +211,7 @@
     .skill-item:hover .skill-icon{ filter:grayscale(0%); animation:bounce .5s; }
     @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 
-    .contact{ padding:4rem 2rem; text-align:center; }
-    .contact-form{ max-width:600px; margin:0 auto; }
-    .form-group{ margin-bottom:1.5rem; position:relative; }
-    .form-input{ width:100%; padding:1rem; background:rgba(255,255,255,.05); border:2px solid rgba(99,102,241,.3);
-                 border-radius:10px; color:var(--light); font-size:1rem; transition:.3s; }
-    .form-input:focus{ outline:none; border-color:var(--primary); background:rgba(255,255,255,.1); transform:translateY(-2px);
-                       box-shadow:0 10px 20px rgba(99,102,241,.2); }
-    .form-label{ position:absolute; left:1rem; top:1rem; color:rgba(255,255,255,.5); transition:.3s; pointer-events:none; }
-    .form-input:focus + .form-label, .form-input:not(:placeholder-shown) + .form-label{
-      top:-.5rem; left:.5rem; font-size:.875rem; color:var(--primary); background:var(--dark); padding:0 .5rem;
-    }
+    /* (removed contact section per request) */
 
     .scroll-indicator{ position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); animation:scroll-bounce 2s infinite; }
     .scroll-line{ width:30px; height:50px; border:2px solid var(--primary); border-radius:15px; position:relative; }
@@ -193,7 +239,6 @@
       pointer-events:none; transition:opacity .18s ease, transform .18s ease;
       opacity:1; display:block; background:#0b1020;
     }
-    /* Fade when hovered or when JS toggles .reveal while playing */
     .avatar-wrap:hover .avatar-front,
     .avatar-wrap.reveal .avatar-front{
       opacity:.10; transform:scale(1.015);
@@ -210,7 +255,6 @@
       backdrop-filter:blur(8px);
       -webkit-backdrop-filter:blur(8px);
     }
-    /* Artwork square */
     .art{
       width:90%; aspect-ratio:1/1; border:1px solid rgba(255,255,255,.18);
       border-radius:10px; overflow:hidden; background:#111;
@@ -218,14 +262,12 @@
     }
     .art img{ width:100%; height:100%; object-fit:cover; display:block; }
 
-    /* Tiny note */
     .fav-note{
       font-size:.85rem; opacity:.9; margin-top:2px;
       background:linear-gradient(90deg, var(--primary), var(--accent));
       -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     }
 
-    /* Progress line + times */
     .progress{ width:90%; display:grid; gap:6px; }
     .times{ display:flex; justify-content:space-between; font-variant-numeric:tabular-nums; font-size:.8rem; opacity:.75; }
     .bar{
@@ -242,7 +284,6 @@
     }
     .bar-hit{ position:absolute; inset:-8px 0; background:transparent; border:none; padding:0; }
 
-    /* Smaller play button */
     .controls{ width:90%; display:flex; justify-content:center; }
     .play-btn{
       width:48px; height:48px; border-radius:50%;
@@ -267,6 +308,98 @@
       .project-grid{ grid-template-columns:1fr; }
       .tl-header{ flex-direction:column; align-items:flex-start; gap:.2rem; }
     }
+    /* ==== Experience: clean cards with optional media ==== */
+.exp-list{
+  display:grid;
+  gap:1.5rem;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.exp-card{
+  position:relative;
+  display:grid;
+  grid-template-columns: 1fr;               /* no-media default */
+  gap:1.25rem;
+  padding:1.1rem;
+  border-radius:18px;
+  background:linear-gradient(135deg, rgba(99,102,241,.08), rgba(139,92,246,.08));
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.exp-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(99,102,241,.25);
+  border-color: rgba(255,255,255,.16);
+}
+/* subtle left accent */
+.exp-card::before{
+  content:"";
+  position:absolute; left:0; top:10px; bottom:10px; width:3px;
+  border-radius:3px;
+  background:linear-gradient(180deg, var(--primary), var(--accent));
+  opacity:.6;
+}
+
+/* media slot (only when present) */
+.exp-card.has-media{
+  grid-template-columns: minmax(280px, 360px) 1fr;
+}
+.exp-media{
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03);
+  box-shadow:0 8px 24px rgba(0,0,0,.25) inset;
+  aspect-ratio: 16/9;
+  align-self:stretch;
+}
+.exp-media img{
+  width:100%; height:100%; object-fit:contain; display:block;
+}
+
+/* content */
+.exp-body{ display:flex; flex-direction:column; gap:.6rem; }
+.exp-header{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:.5rem 1rem;
+  align-items:baseline;
+}
+.exp-role{ font-size:1.15rem; font-weight:700; }
+.exp-where{ opacity:.8; }
+.exp-dates{ font-size:.95rem; opacity:.75; white-space:nowrap; }
+
+.exp-points{
+  margin:.25rem 0 0;
+  padding-left:1.1rem;
+  line-height:1.6;
+  opacity:.92;
+}
+.exp-tags{
+  display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.35rem;
+}
+.exp-tags span{
+  font-size:.8rem;
+  padding:.25rem .6rem;
+  border-radius:999px;
+  background:rgba(99,102,241,.18);
+  border:1px solid var(--primary);
+}
+
+/* entrance reveal (optional) */
+.exp-card{ opacity:0; transform:translateY(16px); }
+.exp-card.in-view{ opacity:1; transform:translateY(0); transition:.5s ease; }
+
+/* responsive */
+@media (max-width:900px){
+  .exp-card.has-media{ grid-template-columns: 1fr; }
+  .exp-media{ aspect-ratio: 16/9; }
+  .exp-header{ grid-template-columns: 1fr; }
+  .exp-dates{ order:3; }
+}
+
   </style>
 </head>
 <body>
@@ -285,7 +418,6 @@
         <li><a href="#experience" class="smooth-scroll">Experience</a></li>
         <li><a href="#projects"   class="smooth-scroll">Projects</a></li>
         <li><a href="#skills"     class="smooth-scroll">Skills</a></li>
-        <li><a href="#contact"    class="smooth-scroll">Contact</a></li>
         <li><a href="https://github.com/Danzran" target="_blank">GitHub</a></li>
         <li><a href="https://linkedin.com/in/danielazran" target="_blank">LinkedIn</a></li>
       </ul>
@@ -373,57 +505,106 @@
 
   <!-- Experience -->
   <section class="experience" id="experience">
-    <h2 class="section-title">Experience</h2>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-card">
-          <div class="tl-header">
-            <div>
-              <div class="tl-role">Backend Software Developer</div>
-              <div class="tl-where">Extropian · Orlando, FL</div>
-            </div>
-            <div class="tl-dates">Sep 2024 – May 2025</div>
+  <h2 class="section-title">Experience</h2>
+
+  <div class="exp-list">
+    <!-- Backend Software Developer -->
+    <article class="exp-card has-media">
+      <figure class="exp-media">
+        <img src="one.png" alt="Extropian golf swing app preview">
+      </figure>
+
+      <div class="exp-body">
+        <header class="exp-header">
+          <div class="exp-title">
+            <h3 class="exp-role">Backend Software Developer</h3>
+            <div class="exp-where">Extropian · Orlando, FL</div>
           </div>
-          <ul class="tl-points">
-            <li>Built a cross-platform Flutter app for real-time golf swing analysis using Dart & Firebase.</li>
-            <li>Led Bluetooth streaming + metric calc layer; cut packet loss from tens to single digits per session.</li>
-            <li>Collaborated in a 6-member Agile team with Git & Jira.</li>
-          </ul>
-        </div>
+          <div class="exp-dates">Sep 2024 – May 2025</div>
+        </header>
+
+        <ul class="exp-points">
+          <li>Built a cross-platform Flutter app for real-time golf swing analysis (Dart, Firebase).</li>
+          <li>Led Bluetooth streaming + metric layer; cut packet loss from tens to single digits per session.</li>
+          <li>Collaborated in a 6-member Agile team with Git & Jira.</li>
+        </ul>
+        <div class="exp-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>Bluetooth</span></div>
       </div>
-      <div class="tl-item">
-        <div class="tl-card">
-          <div class="tl-header">
-            <div>
-              <div class="tl-role">Systems Assembler & IT Technician</div>
-              <div class="tl-where">Freelance · Multiple Locations</div>
-            </div>
-            <div class="tl-dates">Sep 2018 – Present</div>
+    </article>
+
+    <!-- Systems Assembler & IT Technician (with image) -->
+    <article class="exp-card has-media">
+      <figure class="exp-media">
+        <img src="two.png" alt="Custom PC and network build">
+      </figure>
+
+      <div class="exp-body">
+        <header class="exp-header">
+          <div class="exp-title">
+            <h3 class="exp-role">Systems Assembler & IT Technician</h3>
+            <div class="exp-where">Freelance · Multiple Locations</div>
           </div>
-          <ul class="tl-points">
-            <li>Designed & assembled custom desktops for gaming, editing, and servers.</li>
-            <li>Set up small-business networks with VMs; improved efficiency and resource management.</li>
-            <li>Diagnosed hardware/software issues; delivered stable optimized builds.</li>
-          </ul>
-        </div>
+          <div class="exp-dates">Sep 2018 – Present</div>
+        </header>
+
+        <ul class="exp-points">
+          <li>Designed & assembled desktops for gaming, editing, and servers.</li>
+          <li>Set up small-business networks with VMs; improved resource efficiency.</li>
+          <li>Diagnosed HW/SW issues; delivered stable, optimized builds.</li>
+        </ul>
+        <div class="exp-tags"><span>PC Build</span><span>Networking</span><span>VMs</span></div>
       </div>
-      <div class="tl-item">
-        <div class="tl-card">
-          <div class="tl-header">
-            <div>
-              <div class="tl-role">Lockout Technician</div>
-              <div class="tl-where">Sonic Locksmith · Hollywood, FL</div>
-            </div>
-            <div class="tl-dates">Aug 2022 – Dec 2023</div>
+    </article>
+
+    <!-- Lockout Technician (image optional — included) -->
+    <article class="exp-card has-media">
+      <figure class="exp-media">
+        <img src="three.png" alt="Automotive key programming">
+      </figure>
+
+      <div class="exp-body">
+        <header class="exp-header">
+          <div class="exp-title">
+            <h3 class="exp-role">Lockout Technician</h3>
+            <div class="exp-where">Sonic Locksmith · Hollywood, FL</div>
           </div>
-          <ul class="tl-points">
-            <li>Programmed/cut keys for push-to-start & traditional vehicles.</li>
-            <li>Resolved on-site lockouts under time pressure with clear client comms.</li>
-          </ul>
-        </div>
+          <div class="exp-dates">Aug 2022 – Dec 2023</div>
+        </header>
+
+        <ul class="exp-points">
+          <li>Programmed/cut keys for push-to-start & traditional vehicles.</li>
+          <li>Resolved on-site lockouts under time pressure with clear comms.</li>
+          <li>Maintained inventory & calibration for key-cutting/diagnostic tools.</li>
+        </ul>
+        <div class="exp-tags"><span>Keys</span><span>Diagnostics</span></div>
       </div>
-    </div>
-  </section>
+    </article>
+
+    <!-- Video Editor (no image example) -->
+    <article class="exp-card has-media">
+      <figure class="exp-media">
+        <img src="four.png" alt="Video Editing">
+      </figure>
+      <div class="exp-body">
+        <header class="exp-header">
+          <div class="exp-title">
+            <h3 class="exp-role">Video Editor</h3>
+            <div class="exp-where">Freelance · Remote</div>
+          </div>
+          <div class="exp-dates">2021 – Present</div>
+        </header>
+
+        <ul class="exp-points">
+          <li>Edit short-/long-form; deliver in 16:9, 1:1, and 9:16.</li>
+          <li>Color, audio cleanup, motion titles; export-ready pipelines.</li>
+          <li>Collaborate with clients to hit brand tone & deadlines.</li>
+        </ul>
+        <div class="exp-tags"><span>Premiere/Resolve</span><span>Motion</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
 
   <!-- Projects -->
   <section class="projects" id="projects">
@@ -470,10 +651,11 @@
 
       <div class="project-card">
         <div class="project-icon">💻</div>
-        <h3>Custom System Architecture</h3>
-        <p>Built and tuned desktops/servers; deployed small-business networks with VMs and better resource management.</p>
+        <h3>Mikal - Wix Sync</h3>
+        <p>Designed and implemented a custom scheduling integration that synchronized a no-API legacy on-premise appointment system
+           with Wix Bookings, automatically blocking online availability and preventing double-bookings.</p>
         <div class="tech-stack">
-          <span class="tech-tag">Hardware</span><span class="tech-tag">Networking</span><span class="tech-tag">VirtualBox</span><span class="tech-tag">IT Support</span>
+          <span class="tech-tag">Python</span><span class="tech-tag">SQLite</span><span class="tech-tag">AutoHotKey</span><span class="tech-tag">API</span>
         </div>
       </div>
 
@@ -505,18 +687,6 @@
       <div class="skill-item"><div class="skill-icon">🎯</div><div>C/C++</div></div>
       <div class="skill-item"><div class="skill-icon">📊</div><div>R</div></div>
     </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="contact" id="contact">
-    <h2 class="section-title">Let's Connect</h2>
-    <form class="contact-form">
-      <div class="form-group"><input type="text" class="form-input" placeholder=" " required><label class="form-label">Your Name</label></div>
-      <div class="form-group"><input type="email" class="form-input" placeholder=" " required><label class="form-label">Your Email</label></div>
-      <div class="form-group"><input type="text" class="form-input" placeholder=" " required><label class="form-label">Subject</label></div>
-      <div class="form-group"><textarea class="form-input" rows="5" placeholder=" " required></textarea><label class="form-label">Message</label></div>
-      <button type="submit" class="magnetic-btn">Send Message</button>
-    </form>
   </section>
 
   <script>
@@ -551,6 +721,11 @@
     /* ---------- Timeline reveal ---------- */
     const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); }),{threshold:.15});
     document.querySelectorAll('.tl-item').forEach(el=>io.observe(el));
+    const ioExp = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+},{ threshold:.12 });
+document.querySelectorAll('.exp-card').forEach(el => ioExp.observe(el));
+
 
     /* ---------- Smooth scroll (snappier) ---------- */
     function smoothScrollTo(target, offset=0){ const start=scrollY, end=target.getBoundingClientRect().top + scrollY - offset, T=420, t0=performance.now();
@@ -647,7 +822,6 @@
       }
 
       function makeTile(sampleData, dw, dh){
-        // Build white-on-transparent 28x28, then upscale to dw x dh (no smoothing)
         const tiny=document.createElement('canvas'); tiny.width=W; tiny.height=H;
         const tctx=tiny.getContext('2d', { willReadFrequently:true });
         const img=tctx.createImageData(W,H);
@@ -661,13 +835,12 @@
       }
 
       function startStrip(xArray, count){
-        // layout: compute integer pixel scale for crisp digits
         function layout(){
-          const pad = Math.round(8 * DPR);     // side padding inside strip
+          const pad = Math.round(8 * DPR);
           const targetH = cvs.height - 2*pad;
           const scale = Math.max(1, Math.floor(targetH / H));
           const dw = W * scale, dh = H * scale;
-          const spacing = Math.max(6*DPR, Math.round(dw * 0.18));  // subtle gap
+          const spacing = Math.max(6*DPR, Math.round(dw * 0.18));
           const stride = dw + spacing;
           const y = Math.round((cvs.height - dh)/2);
           const needed = Math.ceil((cvs.width + stride)/stride) + 1;
@@ -675,9 +848,9 @@
         }
 
         let L = layout();
-        let tiles = [];   // offscreen canvases for each displayed digit
+        let tiles = [];
         let offset = 0;
-        const SPEED = 60 * DPR; // px/sec subtle scroll
+        const SPEED = 60 * DPR;
 
         function seed(){
           L = layout();
