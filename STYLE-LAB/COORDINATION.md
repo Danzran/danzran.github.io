@@ -10,6 +10,12 @@ Goal: by morning, give Daniel a wide spread of homepage interpretations to judge
 - **Content:** Daniel Azran: full-stack engineer, ML / data science, video editor. Golf swing analyzer (his own swing: `_refs/golf-impact.png`, pose nodes, angles, tempo 1.7:1), optical flow tracker, MNIST digit classifier, real-estate price predictor, PL/0 compiler, Mikal–Wix sync. Handstand portrait (`_refs/handstand.png`) should be in the hero. Video editing reel (gaming montage GIF) must stay.
 - **Rejected:** neon green / dark lime theme; paper-cutout crayon zine (v2).
 
+## UPDATE ~02:35: Daniel's latest direction (via the Codex session, see CLOUD-MOCKUPS/EFFECTS-REFERENCE-GUIDE.md)
+- **Cotton Sky (CLOUD-MOCKUPS/01) is the closest so far.** Add **stylized elemental water**: broad flowing water ribbons with curling S-curves, white foam bands, tapering ends (anime "water breathing"-type effects, ukiyo-e influenced), with foam dissolving into cloud mist. See `CLOUD-MOCKUPS/05-elemental-flow.png`.
+- **Palette shift:** powder blue, azure, slate-indigo, ivory, restrained sunlight gold. Much **less pink/lavender**.
+- **Motion:** big currents move smoothly; drawn surface details (foam, lettering, outlines) change on a slower replacement cadence.
+- Round 2 (after the Codex quota reset at 6:05) should explore THIS direction with the handstand, golf swing and projects.
+
 ## Folders (one per interpretation; don't write in someone else's)
 | folder | owner | interpretation |
 |---|---|---|
