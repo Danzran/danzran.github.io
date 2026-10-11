@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Style Blend Mockups</title>
+<style>
+:root{--bg:#fbf6f1;--ink:#3a3354;--muted:#7b7391;--card:#fff;--line:#e8dff0;--accent:#b49cff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1a26;--ink:#efe9ff;--muted:#a59dbd;--card:#27232f;--line:#3a3448}}
+:root[data-theme="dark"]{--bg:#1d1a26;--ink:#efe9ff;--muted:#a59dbd;--card:#27232f;--line:#3a3448}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif;padding:32px 16px 64px}
+main{max-width:1200px;margin:0 auto}
+h1{font-size:28px;margin-bottom:6px}
+p.lead{color:var(--muted);max-width:70ch;margin-bottom:28px}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:36px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr));gap:18px}
+figure{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:zoom-in}
+figure img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:var(--line)}
+figcaption{padding:12px 14px}
+figcaption b{display:block}
+figcaption span{color:var(--muted);font-size:14px}
+.refs{grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr))}
+.refs figure img{aspect-ratio:4/3}
+dialog{border:0;padding:0;background:transparent;max-width:96vw;max-height:94vh}
+dialog img{max-width:96vw;max-height:94vh;display:block;border-radius:10px}
+dialog::backdrop{background:rgba(20,16,30,.85)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Style blend: cloud world × anime key-frame ink</h1>
+  <p class="lead">Each image mixes the dreamy pastel clouds (Codex mockup 02) with the hand-inked impact-frame linework from the Oikawa serve, at a different ink strength. Click any image to see it full size. Tell me a number, or say "between 01 and 02".</p>
+
+  <h2>Hero</h2>
+  <div class="grid">
+    <figure><img src="01-hero-soft-ink.png" alt="Soft ink hero"><figcaption><b>01 · soft ink</b><span>Indigo lines, light hatching, emphasis lines as coloured light.</span></figcaption></figure>
+    <figure><img src="02-hero-strong-ink.png" alt="Strong ink hero"><figcaption><b>02 · strong ink</b><span>Bold black brush and heavy hatching, closest to the Oikawa frame.</span></figcaption></figure>
+  </div>
+
+  <h2>Golf swing</h2>
+  <div class="grid">
+    <figure><img src="03-golf-impact-frame.png" alt="Golf impact frame"><figcaption><b>03 · impact frame</b><span>Dramatic key frame with analysis marks scribbled on.</span></figcaption></figure>
+    <figure><img src="04-golf-soft-sketch.png" alt="Golf soft sketch"><figcaption><b>04 · soft sketch</b><span>Coloured pencil and watercolour, calmer.</span></figcaption></figure>
+  </div>
+
+  <h2>Calibration</h2>
+  <div class="grid">
+    <figure><img src="05-line-weight-ladder.png" alt="Line weight ladder 1 to 5"><figcaption><b>05 · ink ladder 1 → 5</b><span>Same drawing from very soft to very sharp. Pick a number.</span></figcaption></figure>
+    <figure><img src="06-fluffy-ui-ink.png" alt="Full homepage"><figcaption><b>06 · full homepage</b><span>Cloud UI with medium-strength ink.</span></figcaption></figure>
+  </div>
+
+  <h2>References</h2>
+  <div class="grid refs">
+    <figure><img src="reference/cloud-dream.png" alt=""><figcaption><b>Cloud dream</b><span>Codex mockup 02</span></figcaption></figure>
+    <figure><img src="reference/oikawa-serve.png" alt=""><figcaption><b>Oikawa serve</b><span>Line-work reference (local only, not committed)</span></figcaption></figure>
+    <figure><img src="reference/handstand.png" alt=""><figcaption><b>Handstand</b><span>Your original</span></figcaption></figure>
+    <figure><img src="reference/golf-impact.png" alt=""><figcaption><b>Golf at impact</b><span>Frame 34 of your clip</span></figcaption></figure>
+  </div>
+</main>
+<dialog id="zoom"><img alt=""></dialog>
+<script>
+const dlg = document.getElementById('zoom'), big = dlg.querySelector('img');
+document.querySelectorAll('figure img').forEach(i => i.addEventListener('click', () => { big.src = i.src; dlg.showModal(); }));
+dlg.addEventListener('click', () => dlg.close());
+</script>
+</body>
+</html>
