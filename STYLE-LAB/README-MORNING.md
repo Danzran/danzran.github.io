@@ -14,7 +14,7 @@ Everything is on the `redesign` branch, committed in small steps, not pushed. Yo
 | **v7 · Manga page** `redesign/drafts/v7-manga/` | Direction D built for real: the page is a manga chapter on paper. Screentone clouds, speech-bubble nav, SFX (FWOOP, SWISH, ZIP), and panel borders that boil. Panels wipe open on threes as you read down. | Scroll at reading speed. |
 | **v3 · Cloud soft ink** `redesign/drafts/v3-cloud-ink/` | Calm Ghibli-like sky, drifting fluffy clouds, your inked handstand with redrawn light rays. You "sink into the clouds" on scroll. | |
 
-All four share:
+All five share:
 - **Brush lettering that boils.** Each letter has 3 drawings swapped out of step: the "write every letter a few times" effect you described.
 - **Your real golf swing.** Rotoscoped from `golfswing.mov` with MediaPipe pose, live angle arcs, hand path, and swing stats (tempo 1.7:1, 0.5s back, 0.3s down). The hand speed assumes a 1.70m height, so it's a rough estimate.
 - **The video editing GIF.** Converted from 42MB to a 1.7MB video.
