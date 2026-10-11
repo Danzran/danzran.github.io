@@ -7,7 +7,6 @@ if (!reduce) Lettering.start(7);
 
 /* ---------- sky: same azure/ivory/gold cotton sky as the homepage, simplified ---------- */
 const sky = document.getElementById('sky'), sx = sky.getContext('2d');
-const river = document.getElementById('river'), rx = river.getContext('2d');
 let W = 0, H = 0;
 function puffCloud(w, h) {
   const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
@@ -18,17 +17,16 @@ function puffCloud(w, h) {
   g.fillStyle = sh; g.fillRect(0, 0, w, h); return c;
 }
 const clouds = Array.from({ length: 12 }, () => { const s = .5 + Math.random(); return { img: puffCloud(560 * s | 0, 280 * s | 0), x: Math.random(), y: Math.random() * 3, d: .08 + Math.random() * .35, v: .004 + Math.random() * .008 }; });
+const stars = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.3 + .3, tw: Math.random() * 6 }));
+const plate = new Image(); plate.src = 'assets/plate-night.webp';
 function drawSky(t, scroll) {
-  const g = sx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#8fc0f5'); g.addColorStop(.55, '#cfe4fb'); g.addColorStop(1, '#fbf4e6');
+  // v9 night: navy blue hour, moonlit cloud edges, stars, and the painted night plate fading out below the header
+  const g = sx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#081234'); g.addColorStop(.6, '#142c6c'); g.addColorStop(1, '#22428c');
   sx.fillStyle = g; sx.fillRect(0, 0, W, H);
-  const sg = sx.createRadialGradient(W * .8, H * .12, 0, W * .8, H * .12, Math.max(W, H) * .5);
-  sg.addColorStop(0, 'rgba(255,246,214,.9)'); sg.addColorStop(.15, 'rgba(250,221,150,.45)'); sg.addColorStop(1, 'rgba(250,221,150,0)');
-  sx.fillStyle = sg; sx.fillRect(0, 0, W, H);
-  for (const c of clouds) {
-    const w = c.img.width * (W / 1600) * (.6 + c.d), h = c.img.height * (W / 1600) * (.6 + c.d);
-    const y = c.y * H - scroll * c.d, yy = ((y % (H * 3)) + H * 3) % (H * 3) - H * .4;
-    sx.globalAlpha = .55 + c.d; sx.drawImage(c.img, ((c.x + t * c.v) % 1.4 - .2) * W - w / 2, yy, w, h);
-  }
+  const pa = Math.max(0, 1 - scroll / (H * 1.1));
+  if (pa > 0 && plate.complete && plate.naturalWidth) { const s = Math.max(W / plate.naturalWidth, H / plate.naturalHeight) * 1.06, w = plate.naturalWidth * s, h = plate.naturalHeight * s; sx.globalAlpha = pa * .55; sx.drawImage(plate, (W - w) / 2, (H - h) / 2 - scroll * .35, w, h); }
+  sx.fillStyle = '#fff6dc';
+  for (const st of stars) { sx.globalAlpha = .45 + .45 * Math.sin(t * 2 + st.tw); sx.beginPath(); sx.arc(st.x * W, ((st.y * H - scroll * .05) % H + H) % H, st.r, 0, 7); sx.fill(); }
   sx.globalAlpha = 1;
 }
 
@@ -56,19 +54,9 @@ function drawTile(T) {
   for (const i of [11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28]) { if (kp[i][2] < .3) continue; const [x, y] = P(i); g.fillStyle = i === 15 || i === 16 ? '#e9b85a' : '#fff'; g.beginPath(); g.arc(x, y, 3.6, 0, 7); g.fill(); g.strokeStyle = '#25396c'; g.lineWidth = 1.4; g.stroke(); g.lineWidth = 2.4; g.strokeStyle = '#1557b0'; }
 }
 
-/* ---------- river: down the page edges, and one water line threading under the five keyframes ---------- */
-let path = [];
 function layout() {
   W = innerWidth; H = innerHeight;
-  [sky, river].forEach(c => { c.width = W * DPR; c.height = H * DPR; }); sx.setTransform(DPR, 0, 0, DPR, 0, 0); rx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  const top = el => el.getBoundingClientRect().top + scrollY, r = s => document.querySelector(s).getBoundingClientRect();
-  const main = r('.p-main'), strip = r('.keystrip'), how = r('.how'), back = r('.back');
-  const sy = scrollY, L = Math.max(W * .04, main.left - 36), R = Math.min(W * .96, main.right + 36);
-  path = [{ x: W * .5, y: r('.p-head').bottom + sy - 10 }, { x: L, y: main.top + sy + main.height * .2 }, { x: L, y: main.bottom + sy - 40 },
-    { x: L + 10, y: strip.bottom + sy + 26 }];
-  tiles.forEach((T, i) => { const b = T.c.getBoundingClientRect(); path.push({ x: b.left + b.width * .5, y: b.bottom + sy + (i % 2 ? 30 : 14) }); });
-  path.push({ x: R, y: strip.bottom + sy + 30 }, { x: R, y: how.top + sy + how.height * .5 }, { x: back.left + back.width * .5 + 120, y: back.top + sy + back.height * .5 });
-  path = path.map(p => ({ ...p, z: 1 }));
+  sky.width = W * DPR; sky.height = H * DPR; sx.setTransform(DPR, 0, 0, DPR, 0, 0);
 }
 layout(); addEventListener('resize', layout); addEventListener('load', layout);
 document.fonts.ready.then(() => { layout(); GolfSwing.mount(document.getElementById('golf'), document.getElementById('golfStats'), GOLF); });
@@ -76,13 +64,8 @@ document.fonts.ready.then(() => { layout(); GolfSwing.mount(document.getElementB
 let lastDrawing = -1;
 function frame(now) {
   requestAnimationFrame(frame);
-  const t = reduce ? 0 : Math.floor(now / 1000 * 12) / 12, drawing = Math.floor(now / (1000 / 12)), scroll = scrollY;
+  const t = reduce ? 0 : now / 1000, drawing = Math.floor(now / (1000 / 12)), scroll = scrollY;
   drawSky(t, scroll);
-  rx.clearRect(0, 0, W, H);
-  if (path.length > 1) {
-    const pts = path.map((p, i) => ({ x: p.x + Math.sin(t * .8 + i * 1.7) * 6, y: p.y, z: 1 }));
-    rx.save(); rx.translate(0, -scroll); Water.setSeed(drawing + 5); Water.draw(rx, pts, { width: Math.max(14, Math.min(28, W * .02)), t, side: 0, drawn: 1, alpha: .9, taper: 200 }); rx.restore();
-  }
   if (drawing !== lastDrawing && drawing % 2 === 0) { lastDrawing = drawing; tiles.forEach(drawTile); }
 }
 requestAnimationFrame(frame);
