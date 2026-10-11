@@ -7,3 +7,11 @@ The agents agreed that the water hero (azure ribbons wrapping the handstand over
 - **33 night tide.** The same hero at blue hour, with gold light glowing inside the water. It could be a dark mode, or the end of the scroll.
 - **34 water close-ups.** A developer reference sheet showing each part of the water effect: body, foam crest, curls, droplets, tails, crossings and splash.
 - **35 / 36 recolours.** `b/23-water-full-page` and `h/2x-water-projects` with the green fairway and hills removed.
+
+## Round 4: site pieces beyond the homepage
+
+- **41 project page.** A detail-page template for the Golf Swing Analyzer: keyframe strip, stats, and a "how it works" section.
+- **42 intro.** A drop falls, splashes into a "DA" ring, then the ring unspools into the ribbon around the handstand. **This intro is now live in v8.** Reload v8 to see it; add `?nointro` to the URL to skip it.
+- **43 monogram.** A one-stroke water "DA" with a foam curl, shown as a favicon at 64/32/16 px, in the nav bar, and as draw-on keyframes.
+- **44 mobile likeness.** A phone hero that keeps your real outfit (navy beanie, maroon top, light jeans).
+- **45 404.** The river has run dry into a puddle, and you sit beside it laughing, holding the last drop.
