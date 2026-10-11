@@ -1,0 +1,3 @@
+# codex run logs
+redesign/**/log-*.txt
+redesign/codex-lando-log.txt
