@@ -23,3 +23,6 @@ Keeps Daniel's dreamy cloud palette but gives the hero the punch of the key-fram
 
 ## Assessment
 Heroes work well and are clearly more brush-like than the reference, but 01 is close to 02-hero-strong-ink (only slightly looser). Faces on 02-hero-alt are anime-ish; golfer is stylised, not a likeness.
+
+## Round 2 (quota reset)
+All planned images now exist: 03 full page, 04 projects, 05 experience, 06 mobile, 07 storyboard, 08 style sheet, 09 softened (01b is the earlier accidental variant). New water direction (21-23): Cotton Sky plus anime elemental water, blue/azure/ivory/gold. Water ribbons spiral around the handstand (21), trace the golf swing arc inside the pose-node analyzer card with tempo 1.7 : 1 (22), and flow down the whole page connecting sections (23). Motion: big water ribbons translate/scale smoothly (CSS transform, slow), while foam, droplets, ink contour and lettering swap on a slower 3-4 variant cadence (steps); clouds drift. Build as separate transparent layers: ribbon cel (SVG/WebP), foam overlay variants, figure, clouds. Caveats: 23 has a small green fairway patch in the golf card (violates no-green; regenerate or recolor if used); text in 08/23 should be re-checked at zoom; pose-node angles are illustrative.
