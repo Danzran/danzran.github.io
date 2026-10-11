@@ -8,6 +8,7 @@ IMG = ('.png', '.jpg', '.jpeg', '.webp')
 
 # (folder relative to repo root, title, blurb)
 GROUPS = [
+    ('STYLE-LAB/water-r3', 'Water round 3 · tuning the winner', 'Ink ladder 1–5 for the water hero, the v8 river storyboard, a night-tide variant, a water close-up sheet for building it in code, and the green-free recolours.'),
     ('STYLE-LAB/a-cloud-soft-ink', 'A · Cloud world, soft ink', 'Ghibli-like painted clouds with soft indigo linework (ink ladder 2–3).'),
     ('STYLE-LAB/b-sakuga-impact', 'B · Sakuga impact frames', 'Bold brush ink, hatching and emphasis lines on airy pastel (ladder 4–5).'),
     ('STYLE-LAB/c-genga-pencil', 'C · Animator key-frame pencils', 'Blue/red construction lines, timing sheets, onion skins: behind the frame.'),
