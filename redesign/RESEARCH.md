@@ -7,7 +7,11 @@ redesign/
   RESEARCH.md        ← this file
   codex-ideas.md     ← 6 hero concepts from Codex (gpt-5.6-terra), with implementation prompts
   mockups/           ← generated concept images (Codex): lens, timeline, line, lando-reveal, lando-scroll
-  drafts/v1-reveal/  ← working prototype #1 (open index.html in a browser)
+  drafts/v1-reveal/  ← prototype #1: dark/lime machine-vision reveal (superseded)
+  drafts/v2-scribble/← prototype #2: paper + pastel crayon, boiling hand-lettering (current)
+  drafts/paper-motion-study/ ← technique study from a parallel Codex session
+  assets/            ← golf rotoscope frames + swing.json/js, handstand cutout, Codex art (gen/ PNG, web/ WebP), video reel, fonts
+  tools/             ← reproducible pipelines: golf pose/stylize, handstand segment/stylize, WebP conversion, screenshots
   shots/             ← automated screenshots of drafts (desktop v1-*, phone v1m-*)
 ```
 
