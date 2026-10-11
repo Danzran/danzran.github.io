@@ -173,6 +173,14 @@ window.LAB = {
     {
      "src": "water-r3/55-night-full.png",
      "name": "55-night-full.png"
+    },
+    {
+     "src": "water-r3/61-plate-day.png",
+     "name": "61-plate-day.png"
+    },
+    {
+     "src": "water-r3/62-plate-night.png",
+     "name": "62-plate-night.png"
     }
    ],
    "folder": "water-r3"
