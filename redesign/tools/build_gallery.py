@@ -8,6 +8,8 @@ IMG = ('.png', '.jpg', '.jpeg', '.webp')
 
 # (folder relative to repo root, title, blurb)
 GROUPS = [
+    ('STYLE-LAB/handstand-orbit', 'Handstand orbit · panned shots (Codex)', 'Turnaround sheet plus yaw −90…+90, low/high angles and close crops. The v9 hero scrubs −60…+60.'),
+    ('STYLE-LAB/timeline-r1', 'Timeline inspiration (Codex)', 'Constellation, editing timeline and moon-dial mockups for the Experience section. The moon-dial one invented a job description; ignore its text.'),
     ('STYLE-LAB/water-r3', 'Water round 3 · tuning the winner', 'Ink ladder 1–5 for the water hero, the v8 river storyboard, a night-tide variant, a water close-up sheet for building it in code, and the green-free recolours.'),
     ('STYLE-LAB/a-cloud-soft-ink', 'A · Cloud world, soft ink', 'Ghibli-like painted clouds with soft indigo linework (ink ladder 2–3).'),
     ('STYLE-LAB/b-sakuga-impact', 'B · Sakuga impact frames', 'Bold brush ink, hatching and emphasis lines on airy pastel (ladder 4–5).'),
@@ -29,6 +31,11 @@ for extra in sorted(os.listdir(LAB)):
         GROUPS.append((p, extra, ''))
 
 PROTOS = [
+    ('redesign/drafts/v9-night/index.html', 'v9 · Night (your pick as base, live)', 'Night tide only. Smooth mutating scribble headings, the hero turns around you on scroll (Codex orbit frames), the golf card now draws the club head and ball, Experience is an editing timeline with your reel, and the cursor is a scribble loop (?c=moonglow|inkring).'),
+    ('redesign/drafts/v9-night/labs/scribble/index.html', 'v9 lab · smooth scribble', 'Five mutating scribble variants with sliders, the old stepped boil side by side, and a roto outline around the handstand.'),
+    ('redesign/drafts/v9-night/labs/timeline/index.html', 'v9 lab · five Experience timelines', 'Constellation, tide lanes, edit timeline (in v9), moon dial, depth flight.'),
+    ('redesign/drafts/v9-night/labs/cursor/index.html', 'v9 lab · eight cursors', 'Moonglow, ink ring, scribble (in v9), ripples, star motes, constellation, caustics, glint.'),
+    ('redesign/drafts/v9-night/golf.html', 'v9 · golf case study (night)', 'The case-study page on the night sky, with the club and ball overlay.'),
     ('redesign/drafts/v8-tide/golf.html', 'v8 · Tide: golf case study (live)', 'Project-detail template from water-r3/41: your swing with live pose analysis, five real keyframes re-inked on twos with measured lead-arm angles, how-it-works cards, and the river threading through.'),
     ('redesign/drafts/v8-tide/index.html', 'v8 · Tide (water round, live)', 'One hand-inked water river runs the whole page: it unwinds from the ribbons around your handstand and grows as you scroll, weaving between frosted ivory cards, and ends in a pool at contact. Azure/ivory/gold sky that warms as you go down. On twos by default.'),
     ('redesign/drafts/v7-manga/index.html', 'v7 · Pastel manga page (live)', 'The homepage as a manga chapter: screentone clouds, speech-bubble nav, SFX lettering, panels that wipe open on threes as you read down.'),
