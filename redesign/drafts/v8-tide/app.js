@@ -191,6 +191,47 @@ function drawMini(m, t) {
 const trail = [];
 addEventListener('pointermove', e => trail.push({ x: e.clientX, y: e.clientY + scrollY, life: 1 }), { passive: true });
 
+/* ---------- intro (STYLE-LAB/water-r3/42): a drop falls, splashes into a ring, the ring unspools into the spiral ---------- */
+const INTRO = { start: performance.now(), drop: .7, splash: .6, grow: 1.1 };
+INTRO.total = INTRO.drop + INTRO.splash + INTRO.grow;
+INTRO.skip = reduce || /[?&]nointro/.test(location.search);
+const ease = x => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+function growPts(pts, g) {             // first g of the spiral, cut at an interpolated point so it grows smoothly
+  const f = g * (pts.length - 1), i = Math.floor(f), k = f - i;
+  const out = pts.slice(0, i + 1);
+  if (i + 1 < pts.length) { const a = pts[i], b = pts[i + 1]; out.push({ x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k, z: b.z }); }
+  return out.length > 1 ? out : null;
+}
+function drawIntro(ctx, it, drawing) {
+  const b = figBox(), lx = b.x + b.w * .5, ly = b.y + b.h * 1.0;   // the drop lands where his hands meet the water
+  Water.setSeed(drawing);
+  if (it < INTRO.drop) {                                           // falling drop with a short streak
+    const y = ease(it / INTRO.drop * 1.1) * ly;
+    ctx.strokeStyle = 'rgba(79,169,232,.5)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(lx, y - 60); ctx.lineTo(lx, y - 12); ctx.stroke();
+    ctx.fillStyle = Water.C.mid; ctx.beginPath(); ctx.moveTo(lx, y - 16); ctx.quadraticCurveTo(lx + 9, y, lx, y + 8); ctx.quadraticCurveTo(lx - 9, y, lx, y - 16); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(lx - 2.5, y - 1, 2, 0, 7); ctx.fill();
+    return;
+  }
+  const st = it - INTRO.drop;
+  if (st < INTRO.splash + .3) {                                    // rings + crown of droplets, redrawn on twos
+    const q = ease(st / INTRO.splash);
+    for (let r = 0; r < 3; r++) {
+      const R = (40 + r * 34) * q * (b.w / 160);
+      ctx.globalAlpha = Math.max(0, 1 - q * .55 - r * .12); ctx.strokeStyle = r ? Water.C.deep : Water.C.mid; ctx.lineWidth = 9 - r * 2.5;
+      ctx.beginPath(); ctx.ellipse(lx + (Math.random() - .5) * 2, ly, R, R * .28, 0, 0, 7); ctx.stroke();
+    }
+    ctx.fillStyle = Water.C.light;
+    for (let d = 0; d < 14; d++) { const a = Math.PI + (d / 13) * Math.PI, h = Math.sin(q * Math.PI) * (50 + (d * 37) % 40); ctx.globalAlpha = 1 - q * .5; ctx.beginPath(); ctx.arc(lx + Math.cos(a) * 60 * q, ly - h + Math.sin(a) * 6, 3 + (d % 3), 0, 7); ctx.fill(); }
+    ctx.globalAlpha = 1;
+  }
+}
+function introState(now) {
+  if (INTRO.skip) return { done: true, g: 1 };
+  const it = (now - INTRO.start) / 1000;
+  return { it, done: it > INTRO.total, g: ease((it - INTRO.drop - INTRO.splash * .6) / INTRO.grow) };
+}
+if (!INTRO.skip) figEl.style.clipPath = 'inset(100% 0 0 0)';
+
 /* ---------- main loop ---------- */
 let lastDrawing = -1;
 function frame(now) {
@@ -200,17 +241,24 @@ function frame(now) {
   rx.clearRect(0, 0, W, H); fx.clearRect(0, 0, front.width, front.height);
   const b = figBox(), open = Math.min(1, scroll / (H * .9)), width = b.h * .052;
   // hero ribbons: back halves on the fixed river canvas (offset by scroll), front halves above the figure
-  if (scroll < H * 1.3) {
-    const p1 = spiral(t, SPIRAL, 0, open), p2 = spiral(t, SECOND, 2, open);
+  const intro = introState(now);
+  if (!intro.done) {
+    drawIntro(fx, intro.it, drawing);
+    // the figure is revealed hands-first, in drawn steps, as the ribbon climbs
+    figEl.style.clipPath = `inset(${Math.round((1 - intro.g) * 8) / 8 * 100}% 0 0 0)`;
+  } else if (figEl.style.clipPath) figEl.style.clipPath = '';
+  if (scroll < H * 1.3 && intro.g > 0) {
+    let p1 = spiral(t, SPIRAL, 0, open), p2 = spiral(t, SECOND, 2, open);
+    if (intro.g < 1) { p1 = growPts(p1, intro.g); p2 = growPts(p2, Math.max(0, intro.g * 1.3 - .3)); }
     rx.save(); rx.translate(0, -scroll);
-    Water.setSeed(drawing + 3); Water.draw(rx, p2, { width: width * .5, t: t * 1.2, side: -1, drawn: 1, alpha: .6 });
-    Water.setSeed(drawing); Water.draw(rx, p1, { width, t, side: -1, drawn: 1, alpha: .85 });
+    if (p2) { Water.setSeed(drawing + 3); Water.draw(rx, p2, { width: width * .5, t: t * 1.2, side: -1, drawn: 1, alpha: .6 }); }
+    if (p1) { Water.setSeed(drawing); Water.draw(rx, p1, { width, t, side: -1, drawn: 1, alpha: .85 }); }
     rx.restore();
-    Water.setSeed(drawing + 3); Water.draw(fx, p2, { width: width * .5, t: t * 1.2, side: 1, drawn: 1, alpha: .7 });
-    Water.setSeed(drawing); Water.draw(fx, p1, { width, t, side: 1, drawn: 1, alpha: .92 });
+    if (p2) { Water.setSeed(drawing + 3); Water.draw(fx, p2, { width: width * .5, t: t * 1.2, side: 1, drawn: 1, alpha: .7 }); }
+    if (p1) { Water.setSeed(drawing); Water.draw(fx, p1, { width, t, side: 1, drawn: 1, alpha: .92 }); }
   }
   // the river
-  const pre = riverPrefix(t, scroll);
+  const pre = intro.done ? riverPrefix(t, scroll) : [];
   if (pre.length > 1) {
     rx.save(); rx.translate(0, -scroll);
     Water.setSeed(drawing + 11); Water.draw(rx, pre, { width: Math.max(18, Math.min(38, W * .026)), t, side: 0, drawn: 1, alpha: .95, taper: 260 });
@@ -241,8 +289,9 @@ const lenis = new Lenis({ lerp: .09 });
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(tk => lenis.raf(tk * 1000)); gsap.ticker.lagSmoothing(0);
 document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if (!el) return; e.preventDefault(); lenis.scrollTo(el, { duration: 1.6 }); }));
-gsap.from('.hero h1 .lt-letter', { y: 60, opacity: 0, duration: .5, ease: 'steps(4)', stagger: .05, delay: .2 });
-gsap.from('.role, .hero .pill', { y: 20, opacity: 0, duration: .5, ease: 'steps(4)', stagger: .15, delay: .9 });
+const titleDelay = INTRO.skip ? .2 : INTRO.total - .3;
+gsap.from('.hero h1 .lt-letter', { y: 60, opacity: 0, duration: .5, ease: 'steps(4)', stagger: .05, delay: titleDelay });
+gsap.from('.role, .hero .pill', { y: 20, opacity: 0, duration: .5, ease: 'steps(4)', stagger: .15, delay: titleDelay + .7 });
 gsap.utils.toArray('.sec h2').forEach(h => gsap.from(h.querySelectorAll('.lt-letter'), { y: 50, opacity: 0, duration: .35, ease: 'steps(3)', stagger: .04, scrollTrigger: { trigger: h, start: 'top 85%' } }));
 // cards surface out of the water: rise + settle, on threes
 gsap.utils.toArray('.card').forEach((c, i) => gsap.from(c, { y: 80, opacity: 0, rotate: i % 2 ? 1.5 : -1.5, duration: .6, ease: 'steps(6)', scrollTrigger: { trigger: c, start: 'top 90%' } }));
