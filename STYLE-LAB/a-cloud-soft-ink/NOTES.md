@@ -25,4 +25,7 @@ It extends the existing cloud-dream/handstand work he already likes, keeps the f
 ## Honest caveats
 - Generated images contain some small landscape elements (cliffs, tiny trees with a little green, villages) in 03/04 - dial back or repaint to keep the no-green rule strict.
 - Body text in 03 is plausible placeholder copy (company names and dates are invented); do not treat as content.
-- 08-style-sheet.png is missing (Codex usage limit); see PROMPTS.md to rerun.
+- 08-style-sheet.png generated in round 2.
+
+## Round 2: Cotton Sky + elemental water (21-23)
+Same soft-ink cloud world, re-graded to powder blue, azure, ivory and restrained gold (almost no pink), with broad sakuga-style water ribbons curling in S-curves around the handstand figure, white foam bands, and foam dissolving into cloud mist. 21 is the hero (figure standing in a wet-sand shallows with ribbons spiralling up behind), 22 a golf-analyzer-led projects section (pose nodes, 92/147 deg arcs, club speed/hip rotation/tempo 1.7:1 panel plus three cards), 23 a full-page scroll where a water river winds down through the cloud islands. Build: the ribbons are separate transparent layers moving smoothly (slow translate/rotate); foam, lettering and outlines swap on a slower 3-4 frame cadence (steps() sprites or displacement-filter seeds). Caveats: 23 has invented copy and tiny moss/shrubs on rocks (slight green risk), and its golfer is a generic blue-shirt figure rather than Daniel; 22's golfer is closer to his reference but wears a teal beanie. Serif headings in 22/23 differ from the brush hand of 21, so type needs a decision.
