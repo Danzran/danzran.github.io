@@ -19,7 +19,7 @@ document.querySelectorAll('#heroFig, .about__fig').forEach(box => {
 /* ---------- concentration lines (shuchusen), redrawn completely every frame on threes ---------- */
 function burst(canvas, opts = {}) {
   const ctx = canvas.getContext('2d');
-  const o = Object.assign({ count: 150, inner: .22, ink: .22, invert: false, focus: () => [.62, .45] }, opts);
+  const o = Object.assign({ count: 220, inner: .2, ink: .25, invert: false, focus: () => [.62, .45] }, opts);
   const fit = () => { canvas.width = canvas.clientWidth * DPR; canvas.height = canvas.clientHeight * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); };
   fit(); addEventListener('resize', fit);
   function draw(power = 1) {
@@ -28,7 +28,7 @@ function burst(canvas, opts = {}) {
     ctx.fillStyle = o.invert ? INK : 'rgba(0,0,0,0)'; ctx.clearRect(0, 0, W, H); if (o.invert) ctx.fillRect(0, 0, W, H);
     const n = Math.round(o.count * power);
     for (let i = 0; i < n; i++) {
-      const a = rand(0, Math.PI * 2), r0 = R * rand(o.inner, o.inner + .25) / power, w = rand(.003, .014);
+      const a = rand(0, Math.PI * 2), r0 = R * rand(o.inner, o.inner + .25) / power, w = rand(.004, .02);
       const isInk = Math.random() < o.ink;
       ctx.fillStyle = o.invert ? (isInk ? '#fffdf8' : COLS[i % COLS.length]) : (isInk ? INK : COLS[i % COLS.length]);
       ctx.globalAlpha = isInk ? rand(.6, 1) : rand(.55, .95);
@@ -59,20 +59,22 @@ onThrees();
 if (!reduce) setInterval(onThrees, 125);
 
 /* ---------- inked cel clouds in the hero ---------- */
-function cloudPath(x, y, w, h) {
-  let d = `M${x} ${y + h}`;
-  const n = 5 + (Math.random() * 3 | 0);
+// classic outlined cel cloud: stroke every puff first, then fill them all, so only the silhouette is inked
+function puffCloud(cx, cy, w, h, fill) {
+  const puffs = [], n = 6 + (Math.random() * 4 | 0);
   for (let i = 0; i < n; i++) {
-    const x1 = x + (w * (i + 1)) / n, r = (w / n) * rand(.55, .8);
-    d += ` A${r.toFixed(0)} ${(r * rand(.8, 1.1)).toFixed(0)} 0 0 1 ${x1.toFixed(0)} ${(y + h - rand(0, h * .35)).toFixed(0)}`;
+    const t = i / (n - 1), r = h * (.35 + .4 * Math.sin(t * Math.PI)) * rand(.8, 1.15);
+    puffs.push([cx - w / 2 + w * t, cy - Math.sin(t * Math.PI) * h * .35 + rand(-6, 6), r]);
   }
-  return d + ` L${x + w} ${y + h + 40} L${x} ${y + h + 40}Z`;
+  puffs.push([cx, cy + h * .15, h * .5]);
+  const circ = (sw, f, s) => puffs.map(([x, y, r]) => `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(0)}" fill="${f}" ${s ? `stroke="${INK}" stroke-width="${sw}"` : ''}/>`).join('');
+  return `<g>${circ(9, fill, true)}${circ(0, fill, false)}<path d="M${cx - w * .3} ${cy + h * .05} q ${w * .12} ${-h * .18} ${w * .26} 0" fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round" opacity=".6"/></g>`;
 }
 function heroClouds() {
   const svg = document.getElementById('heroClouds'), W = innerWidth, H = innerHeight;
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  const specs = [[-40, H * .78, W * .42, 90, COLS[0]], [W * .3, H * .86, W * .5, 70, COLS[2]], [W * .62, H * .8, W * .45, 100, COLS[4]], [-60, H * .9, W * .5, 60, COLS[1]], [W * .55, H * .92, W * .5, 60, COLS[3]]];
-  svg.innerHTML = specs.map(([x, y, w, h, c]) => `<path d="${cloudPath(x, y, w, h)}" fill="${c}" stroke="${INK}" stroke-width="4" stroke-linejoin="round"/>`).join('');
+  svg.innerHTML = [[W * .1, H * .93, W * .3, 120, COLS[0]], [W * .42, H * .98, W * .32, 110, COLS[2]], [W * .78, H * .9, W * .34, 130, COLS[4]], [W * .95, H * .2, W * .16, 70, COLS[3]], [W * .5, H * .12, W * .12, 50, COLS[1]]]
+    .map(([x, y, w, h, c]) => puffCloud(x, y, w, h, c)).join('');
 }
 heroClouds(); addEventListener('resize', heroClouds);
 
