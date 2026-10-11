@@ -23,8 +23,15 @@ My picks from looking at them all together:
 
 The agents agreed on one thing: the water hero (`21` / `2a` / `2x-water-hero`) was the strongest image in every style.
 
+**Round 3 (`STYLE-LAB/water-r3/`)** tunes that direction:
+- **`31-ink-ladder.png`**: the water hero at ink strengths 1–5. Reply with a number.
+- **`32-river-storyboard.png`**: how v8 Tide behaves on scroll.
+- **`33-night-tide.png`**: a blue-hour version with gold glowing water. It's gorgeous and could work as a dark mode or the end of the scroll.
+- **`34-water-closeups.png`**: the parts of the water effect, with hex codes. v8 now uses this palette.
+- **`35` / `36`**: the two green-flawed mockups, recoloured.
+
 Known flaws in the water round:
-- **Green that slipped in.**
+- **Green that slipped in.** The first two below are fixed in water-r3 (`35`, `36`).
   - A fairway patch in `b/23-water-full-page`.
   - A hillside in `h/2x-water-projects`.
   - A teal beanie on the golfer in `a/22-water-projects`.
