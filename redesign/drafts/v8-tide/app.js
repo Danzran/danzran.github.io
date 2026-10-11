@@ -23,6 +23,30 @@ function setNight(on) {
 nightBtn.onclick = () => setNight(!document.documentElement.classList.contains('night'));
 if (/[?&]night/.test(location.search)) setNight(true);   // index.html?night opens straight into night tide
 
+/* ---------- ink strength 1-5 (STYLE-LAB/water-r3/31 ink ladder): contour weight, jitter, and speed lines at 4-5 ---------- */
+const INK_LEVELS = { 1: [0, 0, 0], 2: [.9, .35, 1], 3: [1.6, .6, 1.6], 4: [2.8, .85, 2.6], 5: [4.2, 1, 3.6] };
+let ink = 3;
+function setInk(n) {
+  ink = n; const [w, a, j] = INK_LEVELS[n]; Object.assign(Water.C, { inkW: w, inkA: a, inkJ: j }); Object.assign(DAY, { inkW: w, inkA: a, inkJ: j }); Object.assign(NIGHT, { inkW: w, inkA: a, inkJ: j });
+  document.querySelectorAll('#inkPick button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.ink === n));
+  document.documentElement.dataset.ink = n;
+}
+document.getElementById('inkPick').addEventListener('click', e => { const b = e.target.closest('[data-ink]'); if (b) setInk(+b.dataset.ink); });
+const qInk = +(location.search.match(/[?&]ink=(\d)/) || [])[1]; setInk(qInk >= 1 && qInk <= 5 ? qInk : 3);
+// concentration lines behind the figure, redrawn on threes (only at ink 4-5)
+function speedLines(ctx, drawing, scroll) {
+  if (ink < 4 || scroll > H) return;
+  const b = figBox(), cx = b.x + b.w * .5, cy = b.y + b.h * .55, R = Math.hypot(W, H), n = ink === 5 ? 120 : 60;
+  let seed = Math.floor(drawing / 3) * 9301 + 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  ctx.save(); ctx.fillStyle = Water.C.ink;
+  for (let i = 0; i < n; i++) {
+    const a = rnd() * 6.283, r0 = R * (.2 + rnd() * .16), w = .002 + rnd() * (ink === 5 ? .01 : .005);
+    ctx.globalAlpha = (ink === 5 ? .5 : .25) * (.4 + rnd() * .6);
+    ctx.beginPath(); ctx.moveTo(cx + Math.cos(a - w) * R, cy + Math.sin(a - w) * R); ctx.lineTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); ctx.lineTo(cx + Math.cos(a + w) * R, cy + Math.sin(a + w) * R); ctx.fill();
+  }
+  ctx.restore();
+}
+
 /* ---------- lettering + figure drawings on threes ---------- */
 document.querySelectorAll('[data-brush]').forEach((el, i) => Lettering.render(el, { seed: 9 + i * 29 }));
 if (!reduce) Lettering.start(7);
@@ -260,6 +284,7 @@ function frame(now) {
   rx.clearRect(0, 0, W, H); fx.clearRect(0, 0, front.width, front.height);
   const b = figBox(), open = Math.min(1, scroll / (H * .9)), width = b.h * .052;
   // hero ribbons: back halves on the fixed river canvas (offset by scroll), front halves above the figure
+  rx.save(); rx.translate(0, -scroll); speedLines(rx, drawing, scroll); rx.restore();
   const intro = introState(now);
   if (!intro.done) {
     drawIntro(fx, intro.it, drawing);
