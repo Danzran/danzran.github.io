@@ -1,3 +1,10 @@
 # codex run logs
 redesign/**/log-*.txt
 redesign/codex-lando-log.txt
+
+# all codex run logs
+**/log-*.txt
+
+# third-party reference frames (not ours to publish)
+STYLE-BLEND/reference/oikawa-serve.png
+CLOUD-MOCKUPS/reference/beautiful-world-*.png
