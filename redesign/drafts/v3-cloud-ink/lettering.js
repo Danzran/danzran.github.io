@@ -53,7 +53,7 @@ window.Lettering = (() => {
     const ang = (-18 + (rnd() - .5) * 20) * Math.PI / 180, ca = Math.cos(ang), sa = Math.sin(ang);
     let dry = '';
     for (let k = -60; k < 60; k += 2.2 + rnd() * 3.5) {
-      if (rnd() < .55) continue;
+      if (rnd() < .78) continue;
       const cx = g.adv / 2 + k * -sa, cy = -30 + k * ca, len = 10 + rnd() * 40, off = (rnd() - .5) * 60;
       dry += `M${(cx + ca * (off - len / 2)).toFixed(1)} ${(cy + sa * (off - len / 2)).toFixed(1)}L${(cx + ca * (off + len / 2)).toFixed(1)} ${(cy + sa * (off + len / 2)).toFixed(1)}`;
     }
@@ -63,7 +63,7 @@ window.Lettering = (() => {
       <clipPath id="${id}"><path d="${body}" fill-rule="nonzero"/></clipPath>
       <path d="${edge}" fill="currentColor" opacity=".35"/>
       <path d="${body}" fill="currentColor"/>
-      <path clip-path="url(#${id})" d="${dry}" stroke="var(--dry, #fff7f0)" stroke-width="${(.8 + rnd() * .9).toFixed(1)}" stroke-linecap="round" opacity=".55"/>
+      <path clip-path="url(#${id})" d="${dry}" stroke="var(--dry, #fff7f0)" stroke-width="${(.5 + rnd() * .6).toFixed(1)}" stroke-linecap="round" opacity=".4"/>
     </g>`;
   }
 
