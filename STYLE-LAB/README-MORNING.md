@@ -30,6 +30,7 @@ The agents agreed on one thing: the water hero (`21` / `2a` / `2x-water-hero`) w
 - **`34-water-closeups.png`**: the parts of the water effect, with hex codes. v8 now uses this palette.
 - **`35` / `36`**: the two green-flawed mockups, recoloured.
 - **`41`–`45`** (round 4): a golf project detail page, the intro storyboard (now built into v8), a "DA" water monogram/favicon sheet, a phone hero that keeps your real outfit, and a 404 page.
+- **`51`–`55`** (round 5): experience as a river timeline, an about section, a **horizontal-scroll** panorama (an alternative layout), a **dive-through-the-water** section transition, and the full night-tide page.
 
 Known flaws in the water round:
 - **Green that slipped in.** The first two below are fixed in water-r3 (`35`, `36`).
