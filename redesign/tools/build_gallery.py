@@ -57,6 +57,16 @@ for folder, title, blurb in GROUPS:
         'images': [{'src': os.path.relpath(os.path.join(d, f), LAB).replace(os.sep, '/'), 'name': f} for f in imgs],
         'folder': os.path.relpath(d, LAB).replace(os.sep, '/'),
     })
+# cross-folder view: every round-2 "Cotton Sky + elemental water" mockup side by side, first in the gallery
+water = []
+for g in groups:
+    if not g['folder'].startswith(('a-', 'b-', 'c-', 'd-', 'e-', 'f-', 'g-', 'h-')): continue
+    water += [{'src': im['src'], 'name': g['folder'].split('-')[0] + ' / ' + im['name']} for im in g['images'] if 'water' in im['name']]
+if water:
+    groups.insert(0, {'id': 'water-round', 'title': 'Water round · all styles (newest)',
+        'blurb': 'Round 2: every style agent\'s take on Cotton Sky + elemental water (blue/azure/ivory/gold, less pink, no green). Same images also appear in their own folders below.',
+        'notes': '', 'hasNotes': False, 'images': water, 'folder': ''})
+
 protos = [{'href': os.path.relpath(os.path.join(ROOT, h), LAB).replace(os.sep, '/'), 'title': t, 'blurb': b}
           for h, t, b in PROTOS if os.path.exists(os.path.join(ROOT, h))]
 with open(os.path.join(LAB, 'manifest.js'), 'w', encoding='utf-8') as f:
