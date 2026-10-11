@@ -79,11 +79,11 @@ window.TL = (() => {
   if (reduce) setTimeout(() => document.querySelectorAll('video').forEach(v => { v.removeAttribute('autoplay'); v.pause(); v.controls = true; }), 0);
 
   /* ---------- card deck: active jobs stack in a column, space opens and closes continuously ---------- */
-  function cardHTML(j, cls = '') {
-    return `<article class="card ${cls}" data-job="${j.id}">${j.video ? videoTag() : ''}<span class="tag">${j.years}</span><h3>${j.title.replace('&', '&amp;')}</h3><p>${j.desc}</p></article>`;
+  function cardHTML(j, cls = '', noVideo = false) {
+    return `<article class="card ${cls}" data-job="${j.id}">${j.video && !noVideo ? videoTag() : ''}<span class="tag">${j.years}</span><h3>${j.title.replace('&', '&amp;')}</h3><p>${j.desc}</p></article>`;
   }
-  function makeDeck(el, { center = true, gap = 14, dx = -26 } = {}) {
-    el.innerHTML = JOBS.map(j => cardHTML(j)).join('');
+  function makeDeck(el, { center = true, gap = 14, dx = -26, noVideo = false } = {}) {
+    el.innerHTML = JOBS.map(j => cardHTML(j, '', noVideo)).join('');
     const cards = [...el.children].map((c, i) => ({ el: c, job: JOBS[i], y: 0, a: -1 }));
     function update(acts) {
       let total = 0;
