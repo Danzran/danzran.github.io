@@ -59,6 +59,14 @@ for (let i = 0; i < 16; i++) {
 }
 clouds.sort((a, b) => a.depth - b.depth);
 
+/* painted hero plates (STYLE-LAB/water-r3/61, 62): cover the hero, drift slower than the page, fade out below it */
+const plates = { day: new Image(), night: new Image() };
+plates.day.src = 'assets/plate-day.webp'; plates.night.src = 'assets/plate-night.webp';
+function drawPlate(img, scroll, alpha) {
+  if (!img.complete || !img.naturalWidth || alpha <= 0) return;
+  const s = Math.max(W / img.naturalWidth, H / img.naturalHeight) * 1.06, w = img.naturalWidth * s, h = img.naturalHeight * s;
+  sx.globalAlpha = alpha; sx.drawImage(img, (W - w) / 2, (H - h) / 2 - scroll * .35, w, h); sx.globalAlpha = 1;
+}
 function drawSky(t, scroll) {
   const p = docH > H ? scroll / (docH - H) : 0;
   // day sky that warms toward gold as you go down the page (never pink, never green)
@@ -79,6 +87,8 @@ function drawSky(t, scroll) {
     sx.globalAlpha = .55 + c.depth; sx.drawImage(c.img, x, yy, w, h);
   }
   sx.globalAlpha = 1;
+  const plateA = Math.max(0, 1 - scroll / (H * 1.1));
+  drawPlate(plates.day, scroll, plateA * (1 - theme.night));
   const n = theme.night; if (!n) return;
   // blue hour: navy wash over everything, then moonlit cloud edges, stars and the moon on top
   const ng = sx.createLinearGradient(0, 0, 0, H);
@@ -95,6 +105,7 @@ function drawSky(t, scroll) {
   mg.addColorStop(0, 'rgba(255,244,214,1)'); mg.addColorStop(.09, 'rgba(255,240,200,.95)'); mg.addColorStop(.1, 'rgba(255,226,160,.35)'); mg.addColorStop(1, 'rgba(255,226,160,0)');
   sx.globalAlpha = n; sx.fillStyle = mg; sx.fillRect(0, 0, W, H);
   sx.globalAlpha = 1;
+  drawPlate(plates.night, scroll, plateA * n);
 }
 
 /* ---------- layout: figure + river path in document coordinates ---------- */
