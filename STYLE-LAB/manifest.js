@@ -736,6 +736,11 @@ window.LAB = {
  ],
  "protos": [
   {
+   "href": "../redesign/drafts/v8-tide/index.html",
+   "title": "v8 \u00b7 Tide (water round, live)",
+   "blurb": "One hand-inked water river runs the whole page: it unwinds from the ribbons around your handstand and grows as you scroll, weaving between frosted ivory cards, and ends in a pool at contact. Azure/ivory/gold sky that warms as you go down. On twos by default."
+  },
+  {
    "href": "../redesign/drafts/v7-manga/index.html",
    "title": "v7 \u00b7 Pastel manga page (live)",
    "blurb": "The homepage as a manga chapter: screentone clouds, speech-bubble nav, SFX lettering, panels that wipe open on threes as you read down."
