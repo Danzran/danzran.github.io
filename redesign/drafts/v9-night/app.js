@@ -44,7 +44,7 @@ function speedLines(ctx, drawing, scroll) {
 document.querySelectorAll('[data-brush]').forEach((el, i) => Lettering.render(el, { seed: 9 + i * 29 }));
 if (!reduce) Lettering.start(7);
 const figEl = document.getElementById('fig'), figs = [...figEl.querySelectorAll('img')]; let fk = 0;
-if (!reduce) setInterval(() => { figs[fk].classList.remove('on'); fk = (fk + 1 + (Math.random() * 2 | 0)) % figs.length; figs[fk].classList.add('on'); }, 125);
+// v9: the figure no longer swaps between drawings every 125ms (read as "framey"); one drawing holds
 
 /* ---------- canvases ---------- */
 const sky = document.getElementById('sky'), river = document.getElementById('river'), front = document.getElementById('ribbonFront'), hero = document.getElementById('hero');
@@ -172,8 +172,12 @@ function spiral(t, src, ph, open) {
 /* ---------- mini project drawings, re-inked on twos ---------- */
 const minis = [...document.querySelectorAll('[data-mini]')].map(c => ({ c, g: c.getContext('2d'), kind: c.dataset.mini }));
 const INK = '#22345e', AZ = '#3f8ee8', DEEP = '#1f5fbf', GOLD = '#e9b85a';
-function jl(g, pts, j) { g.beginPath(); pts.forEach(([x, y], i) => g[i ? 'lineTo' : 'moveTo'](x + rand(-j, j), y + rand(-j, j))); g.stroke(); }
+// line wobble mutates smoothly with time (each vertex has its own phase) instead of re-randomising per drawing
+let miniT = 0;
+const wob = (i, j, ph) => j * (Math.sin(miniT * 2.1 + i * 1.9 + ph) * .6 + Math.sin(miniT * 3.3 - i * .7 + ph * 2) * .4);
+function jl(g, pts, j) { g.beginPath(); pts.forEach(([x, y], i) => g[i ? 'lineTo' : 'moveTo'](x + wob(i, j, x * .01), y + wob(i, j, y * .013 + 2))); g.stroke(); }
 function drawMini(m, t) {
+  miniT = t;
   const { c, g } = m, w = c.clientWidth, h = c.clientHeight; if (!w) return;
   if (c.width !== Math.round(w * DPR)) { c.width = Math.round(w * DPR); c.height = Math.round(h * DPR); }
   g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, w, h); g.lineCap = g.lineJoin = 'round';
@@ -192,7 +196,7 @@ function drawMini(m, t) {
     const conf = [.02, .01, .03, .01, .02, .01, .01, .86 + Math.sin(t) * .03, .02, .01];
     conf.forEach((v, i) => {
       const y = h * .1 + i * h * .08, bw = (w * .42) * v;
-      g.fillStyle = i === 7 ? DEEP : 'rgba(63,142,232,.35)'; g.fillRect(w * .52, y, Math.max(3, bw + rand(-1, 1)), h * .055);
+      g.fillStyle = i === 7 ? DEEP : 'rgba(63,142,232,.35)'; g.fillRect(w * .52, y, Math.max(3, bw + wob(i, 1, 0)), h * .055);
       g.fillStyle = INK; g.font = `${Math.round(h * .07)}px "Patrick Hand"`; g.fillText(i, w * .46, y + h * .05);
     });
   } else {                         // a house and the price curve the model fits
@@ -201,7 +205,7 @@ function drawMini(m, t) {
     jl(g, [[hx, hy], [hx, hy - s * .6], [hx + s * .5, hy - s], [hx + s, hy - s * .6], [hx + s, hy], [hx, hy]], 1.2);
     jl(g, [[hx + s * .38, hy], [hx + s * .38, hy - s * .3], [hx + s * .62, hy - s * .3], [hx + s * .62, hy]], 1);
     g.fillStyle = GOLD;
-    for (let i = 0; i < 14; i++) { const u = i / 13, x = w * (.5 + .44 * u), y = h * (.82 - .6 * Math.log1p(u * 4) / Math.log(5)) + ((i * 7) % 5 - 2) * 4; g.beginPath(); g.arc(x + rand(-.6, .6), y, 3, 0, 7); g.fill(); }
+    for (let i = 0; i < 14; i++) { const u = i / 13, x = w * (.5 + .44 * u), y = h * (.82 - .6 * Math.log1p(u * 4) / Math.log(5)) + ((i * 7) % 5 - 2) * 4; g.beginPath(); g.arc(x + wob(i, .6, 1), y, 3, 0, 7); g.fill(); }
     g.strokeStyle = DEEP; g.lineWidth = 2.6;
     jl(g, Array.from({ length: 16 }, (_, i) => { const u = i / 15; return [w * (.5 + .44 * u), h * (.82 - .6 * Math.log1p(u * 4) / Math.log(5))]; }), .9);
   }
@@ -212,6 +216,7 @@ let lastDrawing = -1;
 function frame(now) {
   requestAnimationFrame(frame);
   const t = reduce ? 0 : clock(), drawing = Math.floor(now / (1000 / 12)), scroll = scrollY;
+  Water.setTime(t);   // contours mutate smoothly; setSeed below only picks which ribbon's noise stream
   drawSky(t, scroll);
   rx.clearRect(0, 0, W, H); fx.clearRect(0, 0, front.width, front.height);
   const b = figBox(), open = Math.min(1, scroll / (H * .9)), width = b.h * .052;
@@ -220,13 +225,13 @@ function frame(now) {
   if (scroll < H * 1.3) {
     const p1 = spiral(t, SPIRAL, 0, open), p2 = spiral(t, SECOND, 2, open);
     rx.save(); rx.translate(0, -scroll);
-    if (p2) { Water.setSeed(drawing + 3); Water.draw(rx, p2, { width: width * .5, t: t * 1.2, side: -1, drawn: 1, alpha: .6 }); }
-    if (p1) { Water.setSeed(drawing); Water.draw(rx, p1, { width, t, side: -1, drawn: 1, alpha: .85 }); }
+    if (p2) { Water.setSeed(3); Water.draw(rx, p2, { width: width * .5, t: t * 1.2, side: -1, drawn: 1, alpha: .6 }); }
+    if (p1) { Water.setSeed(0); Water.draw(rx, p1, { width, t, side: -1, drawn: 1, alpha: .85 }); }
     rx.restore();
-    if (p2) { Water.setSeed(drawing + 3); Water.draw(fx, p2, { width: width * .5, t: t * 1.2, side: 1, drawn: 1, alpha: .7 }); }
-    if (p1) { Water.setSeed(drawing); Water.draw(fx, p1, { width, t, side: 1, drawn: 1, alpha: .92 }); }
+    if (p2) { Water.setSeed(3); Water.draw(fx, p2, { width: width * .5, t: t * 1.2, side: 1, drawn: 1, alpha: .7 }); }
+    if (p1) { Water.setSeed(0); Water.draw(fx, p1, { width, t, side: 1, drawn: 1, alpha: .92 }); }
   }
-  if (drawing !== lastDrawing && drawing % 2 === 0) { lastDrawing = drawing; minis.forEach(m => drawMini(m, t)); }
+  minis.forEach(m => drawMini(m, t));
 }
 layout();
 document.fonts.ready.then(() => { layout(); GolfSwing.mount(document.getElementById('golf'), document.getElementById('golfStats'), '../v5-elemental/assets/golf'); });
