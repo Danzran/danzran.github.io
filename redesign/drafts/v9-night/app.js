@@ -2,36 +2,29 @@
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const DPR = Math.min(devicePixelRatio || 1, 1.5);
 const rand = (a, b) => a + Math.random() * (b - a);
-let onTwos = false;                                  // smooth by default (v9); the toggle brings back the on-twos version
+let onTwos = false;                                  // v9: water moves smoothly (Daniel: "too framey")
 const clock = () => { const t = performance.now() / 1000; return onTwos ? Math.floor(t * 12) / 12 : t; };
-const btn = document.getElementById('cadence');
-btn.onclick = () => { onTwos = !onTwos; btn.textContent = 'water: ' + (onTwos ? 'on twos' : 'smooth'); btn.setAttribute('aria-pressed', onTwos); };
 
 /* ---------- day / night tide: night tints the sky navy and lights the water from inside with gold ---------- */
 const DAY = { ...Water.C };
 const NIGHT = { deep: '#1d4fa8', mid: '#4d8fe0', light: '#ffd98a', foam: '#fff3c4', ink: '#0d1c40', edge: '#d6e8ff', s1: '#ffe9b0', s2: '#ffd27a', s3: '#f6c25e', glow: 'rgba(255,214,120,.55)' };
 const theme = { night: 0 };
-const nightBtn = document.getElementById('night');
 const stars = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random() * .8, r: Math.random() * 1.3 + .3, tw: Math.random() * 6 }));
 function setNight(on, instant) {
   document.documentElement.classList.toggle('night', on);
   Object.assign(Water.C, on ? NIGHT : DAY);
-  nightBtn.textContent = on ? '☀ day' : '☾ night tide'; nightBtn.setAttribute('aria-pressed', on);
   if (instant || reduce || !window.gsap) theme.night = on ? 1 : 0;
   else gsap.to(theme, { night: on ? 1 : 0, duration: .9, ease: 'steps(6)' });   // the sky changes in drawn steps, not a fade
 }
-nightBtn.onclick = () => setNight(!document.documentElement.classList.contains('night'));
-setNight(!/[?&]day/.test(location.search), true);   // v9: night tide is the base; ?day opens the day sky
+setNight(true, true);   // v9 is night only (Daniel dropped the day sky)
 
 /* ---------- ink strength 1-5 (STYLE-LAB/water-r3/31 ink ladder): contour weight, jitter, and speed lines at 4-5 ---------- */
 const INK_LEVELS = { 1: [0, 0, 0], 2: [.9, .35, 1], 3: [1.6, .6, 1.6], 4: [2.8, .85, 2.6], 5: [4.2, 1, 3.6] };
 let ink = 3;
 function setInk(n) {
   ink = n; const [w, a, j] = INK_LEVELS[n]; Object.assign(Water.C, { inkW: w, inkA: a, inkJ: j }); Object.assign(DAY, { inkW: w, inkA: a, inkJ: j }); Object.assign(NIGHT, { inkW: w, inkA: a, inkJ: j });
-  document.querySelectorAll('#inkPick button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.ink === n));
   document.documentElement.dataset.ink = n;
 }
-document.getElementById('inkPick').addEventListener('click', e => { const b = e.target.closest('[data-ink]'); if (b) setInk(+b.dataset.ink); });
 const qInk = +(location.search.match(/[?&]ink=(\d)/) || [])[1]; setInk(qInk >= 1 && qInk <= 5 ? qInk : 3);
 // concentration lines behind the figure, redrawn on threes (only at ink 4-5)
 function speedLines(ctx, drawing, scroll) {
