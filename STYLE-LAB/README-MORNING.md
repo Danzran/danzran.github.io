@@ -35,13 +35,14 @@ Known flaws in the water round:
 
 | | What it is | Try this |
 |---|---|---|
+| **v8 · Tide** `redesign/drafts/v8-tide/` | Newest, built from the water round. One inked water river runs the whole page. It starts from the ribbons wrapped around your handstand and grows downward as you scroll. It weaves between frosted-ivory cards and ends in a calm pool at Contact. The sky warms from azure to gold as you go down. | Scroll slowly and watch the river lead you. Move the mouse to stir a little water. Use the toggle to compare on twos vs. smooth. |
 | **v5 · Elemental flow** `redesign/drafts/v5-elemental/` | Built on the Codex session's "Cotton Sky + water" mockup (your latest direction). The painted water actually flows (WebGL flow map). Stylized water ribbons wrap your handstand. Scrolling flies the camera hands → torso → feet, with a chapter card at each stop. | Move the mouse over the water (it swirls). Use the bottom-right toggle to compare smooth water vs. "on twos". |
 | **v6 · The edit** `redesign/drafts/v6-edit/` | COD-edit / Beautiful World: your handstand colour-graded, glowing scratchy white title, REC + timecode, flash-frame cuts, letterbox. The work section is an edit bay, and scrolling drags the playhead through your projects. | Scroll slowly through "the work". |
 | **v4 · Sakuga** `redesign/drafts/v4-sakuga/` | Impact-frame energy: black brush ink, concentration lines redrawn on threes, inverted flash + shake on impacts, smear-frame entrances, manga panels. | Scroll fast past the panels. |
 | **v7 · Manga page** `redesign/drafts/v7-manga/` | Direction D built for real: the page is a manga chapter on paper. Screentone clouds, speech-bubble nav, SFX (FWOOP, SWISH, ZIP), and panel borders that boil. Panels wipe open on threes as you read down. | Scroll at reading speed. |
 | **v3 · Cloud soft ink** `redesign/drafts/v3-cloud-ink/` | Calm Ghibli-like sky, drifting fluffy clouds, your inked handstand with redrawn light rays. You "sink into the clouds" on scroll. | |
 
-All five share:
+All six share:
 - **Brush lettering that boils.** Each letter has 3 drawings swapped out of step: the "write every letter a few times" effect you described.
 - **Your real golf swing.** Rotoscoped from `golfswing.mov` with MediaPipe pose, live angle arcs, hand path, and swing stats (tempo 1.7:1, 0.5s back, 0.3s down). The hand speed assumes a 1.70m height, so it's a rough estimate.
 - **The video editing GIF.** Converted from 42MB to a 1.7MB video.
