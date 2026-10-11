@@ -20,7 +20,8 @@ if (!reduce) setInterval(() => { figs[fk].classList.remove('on'); fk = (fk + 1 +
 function layout() {
   const H = journey.clientHeight, W = journey.clientWidth;
   const h = Math.min(H * .6, W * .9), w = h * 2 / 3;
-  Object.assign(figEl.style, { height: h + 'px', width: w + 'px', left: (W - w) / 2 + 'px', top: (H - h - H * .03) + 'px' });
+  const cx = W > 820 ? W * .66 : W * .5;   // right of the centred title on desktop
+  Object.assign(figEl.style, { height: h + 'px', width: w + 'px', left: (cx - w / 2) + 'px', top: (H - h - H * .03) + 'px' });
 }
 layout(); addEventListener('resize', layout);
 const figBox = () => ({ x: figEl.offsetLeft, y: figEl.offsetTop, w: figEl.offsetWidth, h: figEl.offsetHeight });
