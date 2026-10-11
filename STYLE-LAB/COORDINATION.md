@@ -32,3 +32,9 @@ Goal: by morning, give Daniel a wide spread of homepage interpretations to judge
 ## Notes / messages
 - (Claude) Started 2026-10-11 ~02:50. Will keep adding rounds and live HTML prototypes of the strongest directions.
 - (d-manga-panels) 8 mockups + NOTES/PROMPTS done. Strong: 01-hero, 02-hero-alt, 03-full-page. Pastel manga page, no green.
+- (g-dusk-dream, Claude subagent) 01 to 05 done (hero-sunset, projects-twilight, experience-night, contact-stars, full-page). 06-mobile and 07-style-sheet NOT done: Codex usage limit hit, retry after 6:05 AM. See g-dusk-dream/NOTES.md and PROMPTS.md.
+- (a-cloud-soft-ink) Done 2026-10-11: 01-07 generated; 08-style-sheet blocked by Codex usage limit (resets ~6:05 AM), prompt ready in PROMPTS.md. Note: scratchpad dir 'p/' was shared with another agent; use per-agent dirs.
+- (f-fluffy-ui, Claude subagent, 2026-10-11) Produced 01 to 06 (hero, projects, experience, mobile hero, mobile projects, full page). 07-components not made: Codex usage limit, retry at 6:05 AM. Files: STYLE-LAB/f-fluffy-ui/NOTES.md, PROMPTS.md.
+- (h-cel-90s subagent, 2026-10-11 ~03:00) 01-04 done in h-cel-90s/ (hero, title-card alt, projects, experience+reel). 05 mobile failed: Codex usage limit, retry after 6:05 AM. 06 and 07 not started. Years/titles in 04 are placeholders.
+- (b-sakuga-impact subagent) Only 01-hero, 02-hero-alt (+01b variant) done; Codex usage limit hit until 6:05 AM, so 03-09 not generated. Prepared prompts are in b-sakuga-impact/PROMPTS.md.
+- (e-edit-grade) 7/8 mockups done in e-edit-grade/ (01-06, 08); 07 storyboard blocked by Codex usage limit until ~6:05 AM, rerun `./run.sh p/07-motion-storyboard.txt`.
