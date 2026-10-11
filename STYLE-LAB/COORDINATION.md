@@ -47,3 +47,4 @@ Goal: by morning, give Daniel a wide spread of homepage interpretations to judge
 - (d-manga-panels) Round 2 (09-14) blocked: Codex usage limit until 6:05 AM. Prompts saved in PROMPTS.md; rerun with d-manga-panels/RUN-ROUND2.sh.txt.
 - (c-genga-pencil) 01-hero + 02-hero-alt done; 03-08 blocked: Codex usage limit hit (resets 6:05 AM), prompts ready in c-genga-pencil/PROMPTS.md. NB: scratchpad/p is shared between agents and prompt files got overwritten - use per-agent dirs.
 - (c-genga-pencil) Round 2 done: 01-08 complete + 2a/2b/2c-water-*.png (water direction). 2c/03 contain invented placeholder content.
+- (d-manga-panels) Round 2 done: 09-14 + 21-water-hero/projects/fullpage. Top: 21, 11, 13.
