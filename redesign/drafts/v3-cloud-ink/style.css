@@ -95,7 +95,7 @@ section{position:relative}
 .when{font-family:var(--hand);font-size:18px;color:var(--ink-soft)}
 .jobs{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
 .job{text-align:center}
-.job img{width:72%;margin:0 auto -10px;mix-blend-mode:multiply}
+.job img{width:72%;margin:0 auto -10px}
 .job h3{font-family:var(--hand);font-size:28px;font-weight:400;line-height:1.05}
 .job p{font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:6px}
 
@@ -137,3 +137,5 @@ section{position:relative}
 }
 .p-golf .cloud{padding:9% 7% 9% 8%}
 .golf__vis{border-radius:42% 46% 40% 48%/30% 32% 40% 42%}
+.p-golf .golf > div:last-child{padding-top:9%}
+.p-golf .golf__vis{border-radius:38% 42% 36% 44%/28% 30% 34% 36%;margin-top:6%}
