@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paper motion study — Daniel Azran</title>
+  <link rel="stylesheet" href="study.css">
+  <script src="study.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <a class="eyebrow" href="../../PAPER-VFX-RESEARCH.md">Daniel Azran / motion research</a>
+      <h1>A little imperfect.</h1>
+      <p class="intro">Letters redrawn. Lines alive. Paper that holds a pose.</p>
+    </header>
+    <form class="controls" aria-label="Motion study controls" onsubmit="return false">
+      <label for="cadence">Drawing changes / second
+        <select id="cadence" disabled>
+          <option value="4">4 — gentle</option>
+          <option value="6" selected>6 — lively</option>
+          <option value="8">8 — on threes at 24 fps</option>
+          <option value="12">12 — on twos at 24 fps</option>
+        </select>
+      </label>
+      <button id="pause" type="button" aria-pressed="false" disabled>Pause motion</button>
+      <button id="step" type="button" disabled>Next drawing</button>
+      <label class="check"><input id="registration" type="checkbox" checked disabled>Paper registration</label>
+      <span id="status" role="status">Static preview</span>
+    </form>
+    <div class="studies">
+      <section class="name-study paper">
+        <div class="study-label"><span>01 / replacement lettering</span><span>three drawings per letter</span></div>
+        <h2 class="sr-only">Daniel Azran — alternate handwritten letterforms</h2>
+        <svg id="lettering" viewBox="0 0 500 250" aria-hidden="true" class="lettering">
+          <text x="22" y="115" font-size="88" fill="currentColor">Daniel</text>
+          <text x="105" y="220" font-size="88" fill="currentColor">Azran</text>
+        </svg>
+        <p>The contour changes; the baseline stays put. Each letter has its own phase.</p>
+      </section>
+      <section class="mark-study paper">
+        <div class="study-label"><span>02 / line boil</span><span>circle + arrow + underline</span></div>
+        <h2>Make a mark.</h2>
+        <svg viewBox="0 0 420 230" aria-hidden="true" class="marks">
+          <ellipse cx="182" cy="96" rx="112" ry="63" fill="var(--butter)" opacity=".8"/>
+          <path id="circle" d="M 64 90 C 52 12 293 12 302 89 C 320 174 54 185 64 90"/>
+          <path id="arrow" d="M 325 184 Q 389 104 290 64 M 291 64 L 316 66 M 290 64 L 298 86"/>
+          <path id="underline" d="M 92 182 Q 178 171 257 181 M 104 194 Q 181 182 240 190"/>
+          <text x="183" y="106" text-anchor="middle" fill="var(--ink)" font-size="27">keep it curious</text>
+        </svg>
+        <p>Small changes in the drawn line give a still composition life.</p>
+      </section>
+      <section class="collage-study paper">
+        <div class="study-label"><span>03 / paper collage</span><span>held movement + local grain</span></div>
+        <h2>Little pieces.</h2>
+        <svg viewBox="0 0 420 230" aria-hidden="true" class="collage">
+          <defs>
+            <pattern id="grain" width="17" height="19" patternUnits="userSpaceOnUse">
+              <path d="M 2 4 l 2 1 M 11 13 l 1 -1 M 7 17 l 1 0" stroke="var(--ink)" stroke-width=".7" opacity=".18"/>
+            </pattern>
+            <path id="cutout" d="M 115 40 L 273 32 L 295 167 L 258 185 L 123 177 L 102 66 Z"/>
+          </defs>
+          <g id="blue-paper" class="paper-shadow">
+            <path d="M 76 76 L 228 59 L 252 192 L 89 198 L 63 112 Z" fill="var(--blue)"/>
+            <path d="M 76 76 L 228 59 L 252 192 L 89 198 L 63 112 Z" fill="url(#grain)"/>
+          </g>
+          <g id="peach-paper" class="paper-shadow">
+            <use href="#cutout" fill="var(--peach)"/>
+            <use href="#cutout" fill="url(#grain)"/>
+            <path d="M 163 103 Q 195 59 219 104 Q 246 133 209 149 Q 175 160 162 123" fill="var(--lilac)" stroke="var(--ink)" stroke-width="2.5"/>
+            <path d="M 141 64 L 155 62 M 138 159 Q 178 168 209 166" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          </g>
+          <path id="spark" d="M 324 43 L 328 65 L 350 69 L 328 74 L 321 95 L 317 74 L 295 67 L 317 63 Z" fill="var(--butter)" stroke="var(--ink)" stroke-width="2"/>
+        </svg>
+        <p>The texture travels with its paper. A small stepped shift suggests hands moving it.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Try pausing and stepping through the drawings. The name uses authored SVG variants, with no font downloads or animation libraries.</p>
+      <p>The palette and paths are study material. Finished portrait and golf treatments are described in the <a href="../../PAPER-VFX-RESEARCH.md">research brief</a>.</p>
+      <noscript><p>Enable JavaScript to compare the replacement drawings. This static preview remains available.</p></noscript>
+    </footer>
+  </main>
+</body>
+</html>
