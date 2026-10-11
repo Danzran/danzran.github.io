@@ -54,34 +54,35 @@ window.GolfSwing = (() => {
       const im = frames[f];
       if (im.complete && im.naturalWidth) ctx.drawImage(im, ox, oy, dw, dh);
       const kp = S.kp[f], P = i => [ox + kp[i][0] * dw, oy + kp[i][1] * dh];
+      const k = Math.max(1, W / 340);   // scale strokes + labels with the card
 
       // hand path (club grip) trail
       const hx = (P(15)[0] + P(16)[0]) / 2, hy = (P(15)[1] + P(16)[1]) / 2;
       trail.push([hx, hy]); if (trail.length > 14) trail.shift();
       ctx.setLineDash([2, 7]); ctx.lineCap = 'round';
-      for (let i = 1; i < trail.length; i++) scribbleLine(...trail[i - 1], ...trail[i], '#ff5f9e', 3.2);
+      for (let i = 1; i < trail.length; i++) scribbleLine(...trail[i - 1], ...trail[i], '#ff5f9e', 3.2 * k);
       ctx.setLineDash([]);
 
       // shoulder + hip lines extended, spine
       const ext = (a, b, k) => [a[0] + (a[0] - b[0]) * k, a[1] + (a[1] - b[1]) * k];
-      scribbleLine(...ext(P(11), P(12), .5), ...ext(P(12), P(11), .5), '#7cc8ff', 2.2);
-      scribbleLine(...ext(P(23), P(24), .6), ...ext(P(24), P(23), .6), '#b39dff', 2.2);
+      scribbleLine(...ext(P(11), P(12), .5), ...ext(P(12), P(11), .5), '#7cc8ff', 2.4 * k);
+      scribbleLine(...ext(P(23), P(24), .6), ...ext(P(24), P(23), .6), '#b39dff', 2.4 * k);
       const ms = [(P(11)[0] + P(12)[0]) / 2, (P(11)[1] + P(12)[1]) / 2], mh = [(P(23)[0] + P(24)[0]) / 2, (P(23)[1] + P(24)[1]) / 2];
-      ctx.setLineDash([6, 6]); scribbleLine(...mh, ...ext(ms, mh, .35), '#ffab7a', 2); ctx.setLineDash([]);
+      ctx.setLineDash([6, 6]); scribbleLine(...mh, ...ext(ms, mh, .35), '#ffab7a', 2.2 * k); ctx.setLineDash([]);
 
       // skeleton + nodes
       ctx.lineCap = 'round';
-      for (const [a, b] of BONES) scribbleLine(...P(a), ...P(b), INK, 2.6);
-      NODES.forEach((n, i) => scribbleDot(...P(n), n === 0 ? 7 : 5, PASTEL[(i + f) % PASTEL.length]));
+      for (const [a, b] of BONES) scribbleLine(...P(a), ...P(b), INK, 2.8 * k);
+      NODES.forEach((n, i) => scribbleDot(...P(n), (n === 0 ? 7 : 5) * k, PASTEL[(i + f) % PASTEL.length]));
 
       // angle arcs: lead elbow + trail knee
       const [leadArm, knee, sep, spine] = S.per_frame[f];
       const ang = (o, p) => Math.atan2(p[1] - o[1], p[0] - o[0]);
-      arc(...P(13), ang(P(13), P(11)), ang(P(13), P(15)), 16, '#ff5f9e');
-      hand(`${leadArm}°`, P(13)[0] - 46, P(13)[1] - 10, 17, '#d63a7a');
-      arc(...P(26), ang(P(26), P(24)), ang(P(26), P(28)), 16, '#4a9be0');
-      hand(`${knee}°`, P(26)[0] + 14, P(26)[1] + 4, 17, '#2f78c0');
-      hand(`sep ${sep}°`, ms[0] + 30, ms[1] - 18, 15, '#6c55d6', -.06);
+      arc(...P(13), ang(P(13), P(11)), ang(P(13), P(15)), 18 * k, '#ff5f9e');
+      hand(`${leadArm}°`, P(13)[0] - 50 * k, P(13)[1] - 10 * k, 19 * k, '#d63a7a');
+      arc(...P(26), ang(P(26), P(24)), ang(P(26), P(28)), 18 * k, '#4a9be0');
+      hand(`${knee}°`, P(26)[0] + 16 * k, P(26)[1] + 6 * k, 19 * k, '#2f78c0');
+      hand(`sep ${sep}°`, ms[0] + 30 * k, ms[1] - 18 * k, 17 * k, '#6c55d6', -.06);
 
       // phase sticker
       const ph = S.phases;
