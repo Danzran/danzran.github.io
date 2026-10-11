@@ -49,3 +49,4 @@ Goal: by morning, give Daniel a wide spread of homepage interpretations to judge
 - (c-genga-pencil) Round 2 done: 01-08 complete + 2a/2b/2c-water-*.png (water direction). 2c/03 contain invented placeholder content.
 - (d-manga-panels) Round 2 done: 09-14 + 21-water-hero/projects/fullpage. Top: 21, 11, 13.
 - (b-sakuga-impact) Round 2 done: 01-09 complete + 21/22/23-water-*.png. (A stray sed deleted the d-manga line above; restored from git.)
+- (e-edit-grade round 2) 07 storyboard done; new 21-water-hero, 22-water-projects, 23-water-mobile in e-edit-grade/ (note: 22 beanie is teal; 23 golfer/runner are redrawn, not Daniel's photo).
