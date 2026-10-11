@@ -10,6 +10,9 @@ Double-click **OPEN-MOCKUPS.html** for a local image gallery. You can also open 
 - `02-lilac-cloud-dream.png` — the handstand pose integrated into lilac clouds and peach light. `handstand.PNG` was the pose reference.
 - `03-cloud-material-playground.png` — cloud lettering and a family of fluffy shapes to compare. The shapes are part of one image, not separately extracted assets.
 - `04-fluffy-interface.png` — a cleaner, more abstract portfolio direction where the interface forms themselves feel cloudy.
+- `05-elemental-flow.png` — Cotton Sky's atmosphere with flowing blue water, white foam, and cloud mist; the latest direction after the water-effects reference.
+
+The latest vocabulary and visual galleries are in **EFFECTS-REFERENCE-GUIDE.md**. The fifth image's exact prompt is in **05-ELEMENTAL-FLOW-PROMPT.md**.
 
 Generated with the built-in image_gen tool. The exact prompts are in **PROMPTS.md**. These PNGs are flattened concept images, not layered Photoshop files or finished page implementations. Keep a copy of an original before editing it.
 
