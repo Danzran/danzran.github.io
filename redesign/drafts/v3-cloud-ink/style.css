@@ -55,7 +55,7 @@ section{position:relative}
 /* ---------- projects ---------- */
 .projects{padding:16vh var(--gutter) 12vh}
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:34px}
-.cloud{position:relative;padding:44px 40px 40px;--mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cpath d='M60 290C25 290 6 262 12 236 2 214 6 186 28 174 18 140 40 112 72 116 78 72 120 50 156 66 176 26 236 18 262 54 300 34 352 52 356 96 392 104 400 150 384 176 398 206 390 248 358 258 352 284 320 296 292 286 262 300 226 296 204 286 172 298 140 296 116 286 92 298 60 290Z'/%3E%3C/svg%3E");
+.cloud{position:relative;padding:11% 9% 9%;--mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cpath d='M60 290C25 290 6 262 12 236 2 214 6 186 28 174 18 140 40 112 72 116 78 72 120 50 156 66 176 26 236 18 262 54 300 34 352 52 356 96 392 104 400 150 384 176 398 206 390 248 358 258 352 284 320 296 292 286 262 300 226 296 204 286 172 298 140 296 116 286 92 298 60 290Z'/%3E%3C/svg%3E");
   -webkit-mask:var(--mask) center/100% 100% no-repeat;mask:var(--mask) center/100% 100% no-repeat;background:radial-gradient(120% 90% at 40% 30%,#fff 30%,#fbf5ff 70%,#f1e8ff)}
 .cloud-wrap{position:relative;filter:drop-shadow(0 18px 30px rgba(130,110,210,.18))}
 .cloud-wrap .outline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -135,3 +135,5 @@ section{position:relative}
   .hero__sky,.hero__fig{animation:none}
   html[data-boil] .boil{filter:none}
 }
+.p-golf .cloud{padding:9% 7% 9% 8%}
+.golf__vis{border-radius:42% 46% 40% 48%/30% 32% 40% 42%}
