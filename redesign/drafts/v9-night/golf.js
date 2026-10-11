@@ -13,7 +13,7 @@ window.GolfSwing = (() => {
       const im = new Image(); im.src = `${base}/g${String(i).padStart(2, '0')}.webp`; return im;
     });
     let f = 0, playing = false, last = 0, hold = 0;
-    const trail = [];
+    const trail = [], headTrail = [];
     const fit = () => {
       // layout size, not getBoundingClientRect: entrance transforms (scale/skew) must not shrink the buffer
       const d = Math.min(devicePixelRatio || 1, 2);
@@ -64,6 +64,43 @@ window.GolfSwing = (() => {
       for (let i = 1; i < trail.length; i++) scribbleLine(...trail[i - 1], ...trail[i], '#e0679a', 3.2 * k);
       ctx.setLineDash([]);
 
+      // club + ball (assets/golf/club.js, if loaded): shaft from the grip to the head, a fading head path, the ball and its launch
+      const CL = window.SWING_CLUB;
+      if (CL) {
+        const Q = p => [ox + p[0] * dw, oy + p[1] * dh];
+        // ball: sits on the tee until impact, then a launch streak toward the dot seen leaving
+        const ph = S.phases;
+        if (CL.ball[f]) {
+          const [bx, by] = Q(CL.ball[f]), br = Math.max(4, CL.ball[f][2] * dw * 1.2);
+          ctx.fillStyle = 'rgba(255,217,138,.35)'; ctx.beginPath(); ctx.arc(bx, by, br * 2.4, 0, 7); ctx.fill();
+          scribbleDot(bx, by, br, '#ffffff');
+          if (f <= ph.address + 2) hand('ball', bx - 44 * k, by - 10 * k, 17 * k, '#3f5fb8');
+        } else if (f >= ph.impact && f <= ph.impact + 4 && CL.ball[ph.impact - 1]) {
+          const a = Q(CL.ball[ph.impact - 1]), le = CL.ball_est && CL.ball_est[ph.impact + 1], b = le ? Q(le) : [a[0] - dw * .2, a[1] - dh * .6];
+          const u = (f - ph.impact + 1) / 5, ex = a[0] + (b[0] - a[0]) * 1.6 * u, ey = a[1] + (b[1] - a[1]) * 1.6 * u;
+          ctx.setLineDash([10 * k, 6 * k]); scribbleLine(a[0], a[1], ex, ey, '#ffd98a', 3 * k); ctx.setLineDash([]);
+          scribbleDot(ex, ey, 4 * k, '#ffffff');
+          if (f === ph.impact + 1) hand('launch', ex + 10 * k, ey + 4 * k, 17 * k, '#b8457d');
+        }
+        // head path: the last few heads, oldest faintest (reset when the loop restarts)
+        // only measured heads join the path, and a jump longer than a third of the frame (12 fps skips) breaks it
+        headTrail.push(CL.est[f] ? null : Q(CL.head[f])); if (headTrail.length > 6) headTrail.shift();
+        for (let i = 1; i < headTrail.length; i++) {
+          const a = headTrail[i - 1], b = headTrail[i];
+          if (!a || !b || Math.hypot(b[0] - a[0], b[1] - a[1]) > dw * .34) continue;
+          ctx.globalAlpha = i / headTrail.length * .8; scribbleLine(...a, ...b, '#ffd98a', 3.4 * k);
+        }
+        ctx.globalAlpha = 1;
+        // shaft + head; estimated heads (out of frame / hidden) are dashed and unlabelled
+        const g = Q(CL.grip[f]), h = Q(CL.head[f]), est = CL.est[f];
+        if (est) ctx.setLineDash([7 * k, 6 * k]);
+        scribbleLine(...g, ...h, '#fff3c4', 2.6 * k); ctx.setLineDash([]);
+        ctx.save(); ctx.translate(...h); ctx.rotate(Math.atan2(h[1] - g[1], h[0] - g[0]));
+        ctx.fillStyle = est ? 'rgba(233,184,90,.5)' : '#e9b85a'; ctx.strokeStyle = INK; ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.roundRect(-5 * k, -7 * k, 12 * k, 14 * k, 4 * k); ctx.fill(); ctx.stroke(); ctx.restore();
+        if (!est && (f <= ph.address + 2 || f === ph.impact)) hand('club head', h[0] - 86 * k, h[1] + 24 * k, 17 * k, '#3f5fb8');
+      }
+
       // shoulder + hip lines extended, spine
       const ext = (a, b, k) => [a[0] + (a[0] - b[0]) * k, a[1] + (a[1] - b[1]) * k];
       scribbleLine(...ext(P(11), P(12), .5), ...ext(P(12), P(11), .5), '#8fb4ff', 2.4 * k);
@@ -106,7 +143,7 @@ window.GolfSwing = (() => {
       if (f === S.frames - 1 && !paused) { hold = 10; paused = true; return; } // pause a beat at the finish
       paused = false;
       f = (f + 1) % S.frames;
-      if (f === 0) trail.length = 0;
+      if (f === 0) trail.length = headTrail.length = 0;
     }
     let paused = false;
     frames[0].onload = draw;
