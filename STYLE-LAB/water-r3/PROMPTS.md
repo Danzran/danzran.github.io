@@ -115,3 +115,19 @@ Using your image generation tool, generate this image and save the PNG into the 
 Style: 'Cotton Sky + elemental water' for Daniel Azran's portfolio. Fluffy dreamy cotton clouds; stylized elemental water: broad flowing ribbons with curling S-curves, white foam bands, tapering ends, sakuga-like anime water with ukiyo-e influence, foam dissolving into cloud mist. Palette: #DCEEFF pale blue, #4FA9E8 azure, #1557B0 cobalt, #25396C slate-indigo ink, #FFF8E8 ivory, restrained sunlight gold. Almost no pink, NO green anywhere. Brush-lettered headings, elegant small-caps serif labels, frosted ivory glass cards with thin ink outlines. Original artwork. Render text legibly and spelled exactly as given.
 NIGHT TIDE variant: deep navy and cobalt sky with stars and a moon, moonlit ivory cloud edges, and the water glowing warm gold from inside like bioluminescence. Tall full homepage (about 1:2.4 portrait): hero with the handstand figure rim-lit by glowing gold water and ivory brush title 'Daniel Azran'; one glowing river winds down past dark frosted-glass cards ('Golf Swing Analyzer' with gold pose dots and 'tempo 1.7:1', 'Optical Flow Tracker', 'Digit Classifier', 'Real Estate Predictor'), an 'Experience' card with a video reel, an 'About' card, and ends in a glowing calm pool under 'Say hello'. Any figure of Daniel must match the attached photo: navy beanie, maroon/burgundy long-sleeve top, light-wash blue jeans, light sneakers.
 ```
+
+# Round 6: hero background plates for v8
+
+## 61-plate-day
+```
+Using your image generation tool, generate this image and save the PNG into the current directory as 61-plate-day.png. Report the final path.
+Painted anime background art in the 'Cotton Sky + elemental water' style: fluffy dreamy cotton clouds with soft ivory tops and powder-blue undersides, painterly watercolor finish, palette #DCEEFF pale blue, #4FA9E8 azure, #1557B0 cobalt, #FFF8E8 ivory, restrained sunlight gold. Almost no pink, NO green anywhere, no buildings or castles, no people, NO TEXT, no UI. 16:9, 1920x1080 feel.
+A website hero BACKGROUND PLATE: wide sky of towering cotton clouds, a soft gold sun glow in the upper left, a calm reflective water surface across the bottom fifth that mirrors the clouds. Keep the LEFT 45% calm and low-detail (title will go there) and leave an open clear area at the right-centre where a figure will be composited later. Gentle depth: far small clouds, mid clouds, big soft foreground clouds at the bottom corners.
+```
+
+## 62-plate-night
+```
+Using your image generation tool, generate this image and save the PNG into the current directory as 62-plate-night.png. Report the final path.
+Painted anime background art in the 'Cotton Sky + elemental water' style: fluffy dreamy cotton clouds with soft ivory tops and powder-blue undersides, painterly watercolor finish, palette #DCEEFF pale blue, #4FA9E8 azure, #1557B0 cobalt, #FFF8E8 ivory, restrained sunlight gold. Almost no pink, NO green anywhere, no buildings or castles, no people, NO TEXT, no UI. 16:9, 1920x1080 feel.
+The SAME composition at blue-hour night: deep navy to cobalt sky with pale stars, a full moon upper right, moonlit ivory cloud edges, and the calm water across the bottom fifth reflecting the moon with faint warm gold glints. Keep the LEFT 45% calm and low-detail and leave an open clear area at the right-centre for a figure. No text, no people.
+```
