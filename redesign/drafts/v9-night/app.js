@@ -41,8 +41,9 @@ function speedLines(ctx, drawing, scroll) {
 }
 
 /* ---------- lettering + figure drawings on threes ---------- */
-document.querySelectorAll('[data-brush]').forEach((el, i) => Lettering.render(el, { seed: 9 + i * 29 }));
-if (!reduce) Lettering.start(7);
+// v9: continuously mutating scribble (scribble.js); letters arrive on their own when first seen. ?scribble=calm|crawl|echo|torn|stepped
+document.querySelectorAll('[data-brush]').forEach((el, i) => Scribble.render(el, { seed: 9 + i * 29, delay: i ? 0 : .2 }));
+if (!reduce) Scribble.start();
 const figEl = document.getElementById('fig'), figs = [...figEl.querySelectorAll('img')]; let fk = 0;
 // v9: the figure no longer swaps between drawings every 125ms (read as "framey"); one drawing holds
 
@@ -250,9 +251,8 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(tk => lenis.raf(tk * 1000)); gsap.ticker.lagSmoothing(0);
 document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const el = document.querySelector(a.getAttribute('href')); if (!el) return; e.preventDefault(); lenis.scrollTo(el, { duration: 1.6 }); }));
 const titleDelay = .2;
-gsap.from('.hero h1 .lt-letter', { y: 60, opacity: 0, duration: .5, ease: 'steps(4)', stagger: .05, delay: titleDelay });
+// title letters: Scribble's own arrive (staggered, echo-smeared) replaces the stepped gsap drop
 gsap.from('.role, .hero .pill', { y: 20, opacity: 0, duration: .5, ease: 'steps(4)', stagger: .15, delay: titleDelay + .7 });
-gsap.utils.toArray('.sec h2').forEach(h => gsap.from(h.querySelectorAll('.lt-letter'), { y: 50, opacity: 0, duration: .35, ease: 'steps(3)', stagger: .04, scrollTrigger: { trigger: h, start: 'top 85%' } }));
 // cards surface out of the water: rise + settle, on threes
 gsap.utils.toArray('.card').forEach((c, i) => gsap.from(c, { y: 80, opacity: 0, rotate: i % 2 ? 1.5 : -1.5, duration: .6, ease: 'steps(6)', scrollTrigger: { trigger: c, start: 'top 90%' } }));
 ScrollTrigger.addEventListener('refresh', layout);
