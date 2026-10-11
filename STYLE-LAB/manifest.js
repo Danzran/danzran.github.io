@@ -434,6 +434,11 @@ window.LAB = {
  ],
  "protos": [
   {
+   "href": "../redesign/drafts/v7-manga/index.html",
+   "title": "v7 \u00b7 Pastel manga page (live)",
+   "blurb": "The homepage as a manga chapter: screentone clouds, speech-bubble nav, SFX lettering, panels that wipe open on threes as you read down."
+  },
+  {
    "href": "../redesign/drafts/v6-edit/index.html",
    "title": "v6 \u00b7 The edit (COD / Beautiful World, live)",
    "blurb": "Graded footage, glowing scratchy titles, REC/timecode chrome, flash-frame cuts, and an edit bay where scrolling drives the playhead through your projects."

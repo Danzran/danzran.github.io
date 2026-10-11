@@ -28,6 +28,7 @@ for extra in sorted(os.listdir(LAB)):
         GROUPS.append((p, extra, ''))
 
 PROTOS = [
+    ('redesign/drafts/v7-manga/index.html', 'v7 · Pastel manga page (live)', 'The homepage as a manga chapter: screentone clouds, speech-bubble nav, SFX lettering, panels that wipe open on threes as you read down.'),
     ('redesign/drafts/v6-edit/index.html', 'v6 · The edit (COD / Beautiful World, live)', 'Graded footage, glowing scratchy titles, REC/timecode chrome, flash-frame cuts, and an edit bay where scrolling drives the playhead through your projects.'),
     ('redesign/drafts/v5-elemental/index.html', 'v5 · Elemental flow (latest direction, live)', 'Cotton-sky water scene that actually flows (WebGL flow map), water ribbons wrapping the handstand, camera travels hands → torso → feet. Toggle smooth vs on-twos water.'),
     ('redesign/drafts/v4-sakuga/index.html', 'v4 · Sakuga impact frames (live)', 'Bold ink, concentration lines redrawn on threes, impact-frame flashes and smears on scroll, sakuga golf rotoscope.'),
