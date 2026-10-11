@@ -17,5 +17,8 @@
 
 **Caveats:** the character in the generated art drifts between panels (the 06/03 faces are generic anime, not Daniel); some panels (03 bottom, 06 middle) are filler scenes. 04 has an extra "Motion Studies" panel.
 
-## Round 2 status
-Images 09-14 (mobile v2, hero likeness, hero softer, experience v2, golf project detail, transition) were NOT generated: Codex returned "usage limit reached, retry after 6:05 AM". Prompts are in PROMPTS.md; RUN-ROUND2.sh.txt is the runner (rename to .sh, runs pairs of 2).
+## Round 2 (done)
+09 mobile v2 (real project content), 10 hero likeness (matches the handstand: beanie, jeans, maroon top), 11 hero softer (indigo ink, watercolour clouds; best likeness and softest), 12 experience v2 (pastel editor UI, FPS montage still; the handstand figure is oddly overlapped on the reel), 13 golf project detail chapter, 14 page-turn / wipe transition.
+
+## Water round (2x-water-*)
+"Cotton Sky + elemental water": azure/ivory/gold, no pink, no green. Anime water ribbons spiral round the handstand (21), flow as gutters between project panels (22), and run as one river down a tall page (23). Build: water ribbons as layered transparent PNG/SVG strips that scroll/parallax smoothly; foam, lettering and panel borders swapped on twos/threes at a slower cadence. Caveat: the figure's outfit was recoloured (pale blue beanie, ivory top) for the palette, so it no longer matches the original photo; 22/23 UI cards are in-image and need real UI built over them. 23 has a dark laptop panel and a serif title, which should be changed.
