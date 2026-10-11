@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Azran — Draft v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d0a; --bg-deep:#060805; --ink:#f1f2ea; --muted:#7d8277; --line:rgba(241,242,234,.12);
+  --lime:#d2ff00; --lime-ink:#0b0d0a;
+  --serif:"Instrument Serif", Georgia, serif;
+  --sans:"Inter Tight", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, monospace;
+  --gutter:clamp(16px,3vw,40px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:lowercase}
+
+/* ---------- loader ---------- */
+.loader{position:fixed;inset:0;z-index:100;background:var(--bg-deep);display:flex;flex-direction:column;justify-content:flex-end;padding:var(--gutter)}
+.loader__count{font-family:var(--serif);font-size:clamp(80px,18vw,260px);line-height:.8;color:var(--ink)}
+.loader__bar{height:2px;background:var(--line);margin-top:24px;overflow:hidden}
+.loader__bar i{display:block;height:100%;width:0;background:var(--lime)}
+.loader__meta{display:flex;justify-content:space-between;margin-top:12px;color:var(--muted)}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:18px var(--gutter) 30px;color:var(--ink);transition:color .4s;background:linear-gradient(rgba(11,13,10,.92) 30%,transparent)}
+.nav::before{content:"";position:absolute;inset:0;background:linear-gradient(var(--lime) 30%,transparent);opacity:0;transition:opacity .4s;z-index:-1}
+body.theme-lime .nav{color:var(--lime-ink);background:none}
+body.theme-lime .nav::before{opacity:1}
+body.at-top .nav{background:none}
+.nav__mark{font-family:var(--serif);font-size:26px;line-height:1}
+.nav__links{display:flex;gap:28px}
+.nav__links a{position:relative}
+.nav__links a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .4s}
+.nav__links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav__status{display:flex;align-items:center;gap:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime);animation:pulse 2s infinite}
+body.theme-lime .dot{background:var(--lime-ink);box-shadow:none}
+@keyframes pulse{50%{opacity:.35}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%}
+#reveal{pointer-events:none;z-index:3}
+.hero__surface{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:96px var(--gutter) 28px}
+.hero__top{display:flex;justify-content:space-between;color:var(--muted)}
+.hero__name{font-family:var(--serif);font-weight:400;font-size:clamp(84px,19.5vw,330px);line-height:.82;letter-spacing:-.02em}
+.hero__name .line{display:block;overflow:hidden;padding-bottom:.04em}
+.hero__name .line span{display:inline-block;will-change:transform}
+.hero__name .line:nth-child(2){padding-left:12vw}
+.hero__name em{font-style:italic;color:var(--lime)}
+.hero__bottom{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:16px;color:var(--muted)}
+.hero__tagline{font-family:var(--sans);text-transform:none;letter-spacing:0;font-size:clamp(15px,1.4vw,19px);color:var(--ink);max-width:30ch;line-height:1.35}
+.hero__hint{display:flex;flex-direction:column;align-items:center;gap:10px}
+.hero__hint .arrow{width:1px;height:42px;background:linear-gradient(var(--lime),transparent);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.hero__tc{justify-self:end;text-align:right}
+.hero__tc b{color:var(--lime);font-weight:500}
+
+/* ---------- statement ---------- */
+.statement{position:relative;background:var(--bg-deep);padding:22vh var(--gutter);
+  background-image:linear-gradient(rgba(210,255,0,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(210,255,0,.06) 1px,transparent 1px);background-size:60px 60px}
+.statement::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,var(--bg-deep) 75%)}
+.statement p{position:relative;font-size:clamp(30px,4.6vw,78px);line-height:1.06;letter-spacing:-.025em;font-weight:500;max-width:19ch}
+.statement .w{opacity:.14;transition:none}
+.statement .w.hl{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--lime)}
+.statement .label{position:relative;color:var(--lime);margin-bottom:36px;display:block}
+
+/* ---------- work (horizontal) ---------- */
+.work{position:relative;background:var(--bg);overflow:hidden}
+.work__head{display:flex;justify-content:space-between;align-items:end;padding:120px var(--gutter) 40px}
+.work__title{font-family:var(--serif);font-size:clamp(64px,12vw,200px);line-height:.85}
+.work__title em{color:var(--lime)}
+.work__pin{position:relative;height:100vh;height:100svh;display:flex;align-items:center}
+.work__track{display:flex;gap:28px;padding:0 var(--gutter);width:max-content}
+.card{position:relative;width:min(70vw,540px);flex:none;border-top:1px solid var(--line);padding-top:18px}
+.card__meta{display:flex;justify-content:space-between;color:var(--muted);margin-bottom:16px}
+.card__num{font-family:var(--serif);font-size:80px;line-height:.8;color:var(--lime)}
+.card__vis{position:relative;aspect-ratio:16/10;overflow:hidden;background:#11140f;border-radius:4px}
+.card__vis img,.card__vis canvas{position:absolute;inset:-6% ;width:112%;height:112%;object-fit:cover}
+.card__vis canvas{inset:0;width:100%;height:100%}
+.card h3{font-size:clamp(24px,2.4vw,36px);font-weight:600;letter-spacing:-.02em;margin:20px 0 10px}
+.card p{color:#b9bdb1;line-height:1.5;max-width:46ch}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.tags span{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:5px 9px;border-radius:99px;color:var(--muted)}
+.card:hover .card__vis{outline:1px solid var(--lime)}
+.card .go{display:inline-block;margin-top:16px;color:var(--lime)}
+.more{width:min(70vw,420px);flex:none;align-self:stretch;border-top:1px solid var(--line);padding-top:18px;display:flex;flex-direction:column;gap:0}
+.more a{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);font-size:22px;font-weight:500}
+.more a:hover{color:var(--lime)}
+.work__progress{position:absolute;left:var(--gutter);right:var(--gutter);bottom:48px;height:1px;background:var(--line)}
+.work__progress i{display:block;height:100%;width:100%;background:var(--lime);transform:scaleX(0);transform-origin:left}
+
+/* ---------- experience (lime theme) ---------- */
+.exp{background:var(--lime);color:var(--lime-ink);padding:140px var(--gutter) 120px;position:relative}
+.exp__title{font-family:var(--serif);font-size:clamp(56px,9vw,150px);line-height:.85;margin-bottom:60px}
+.exp__row{display:grid;grid-template-columns:1.2fr 1fr .6fr;gap:16px;padding:28px 0;border-top:1px solid rgba(11,13,10,.25);align-items:baseline;cursor:default;transition:padding .4s}
+.exp__row:last-child{border-bottom:1px solid rgba(11,13,10,.25)}
+.exp__row h3{font-size:clamp(24px,3.2vw,48px);font-weight:600;letter-spacing:-.03em}
+.exp__row .co{font-size:17px}
+.exp__row .when{text-align:right}
+.exp__row .detail{grid-column:1/-1;max-height:0;overflow:hidden;opacity:0;transition:max-height .5s,opacity .4s;font-size:16px;line-height:1.5;max-width:70ch}
+.exp__row:hover{padding-left:16px}
+.exp__row:hover .detail{max-height:120px;opacity:1}
+.follower{position:fixed;left:0;top:0;width:280px;aspect-ratio:4/3;z-index:40;pointer-events:none;overflow:hidden;border-radius:4px;opacity:0;transform:translate(-50%,-50%) scale(.6)}
+.follower img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:6vw;padding:160px var(--gutter);align-items:center}
+.about__img{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:4px;max-width:460px}
+.about__img img{position:absolute;inset:-10% 0;height:120%;width:100%;object-fit:cover}
+.about h2{font-family:var(--serif);font-size:clamp(44px,5.5vw,92px);line-height:.95;margin-bottom:28px}
+.about h2 em{color:var(--lime)}
+.about p{font-size:19px;line-height:1.55;color:#c7cbbf;max-width:48ch;margin-bottom:18px}
+.song{display:inline-flex;align-items:center;gap:12px;margin-top:20px;padding:10px 16px 10px 10px;border:1px solid var(--line);border-radius:99px;background:none;color:var(--ink);cursor:pointer}
+.song img{width:32px;height:32px;border-radius:50%}
+.song.playing img{animation:spin 4s linear infinite}
+.song .bars{display:flex;gap:2px;align-items:end;height:14px}
+.song .bars i{width:2px;background:var(--lime);height:30%}
+.song.playing .bars i{animation:eq .8s infinite alternate}
+.song.playing .bars i:nth-child(2){animation-delay:.2s}.song.playing .bars i:nth-child(3){animation-delay:.4s}
+@keyframes eq{to{height:100%}}@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- marquee ---------- */
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:26px 0;white-space:nowrap}
+.marquee__inner{display:inline-flex;gap:48px;font-family:var(--serif);font-size:clamp(40px,6vw,96px);line-height:1;will-change:transform}
+.marquee__inner span:nth-child(even){color:var(--lime);font-style:italic}
+
+/* ---------- footer ---------- */
+.footer{padding:140px var(--gutter) 28px;position:relative}
+.footer__cta{font-size:clamp(28px,3vw,44px);font-weight:500;letter-spacing:-.02em;max-width:18ch;margin-bottom:40px}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--lime);color:var(--lime-ink);padding:16px 26px;border-radius:99px;font-weight:600;transition:transform .3s}
+.btn:hover{transform:translateY(-3px)}
+.footer__links{display:flex;gap:28px;margin-top:60px;color:var(--muted)}
+.footer__links a:hover{color:var(--lime)}
+.footer__big{font-family:var(--serif);font-size:20.5vw;line-height:.8;letter-spacing:-.03em;margin-top:80px;white-space:nowrap;overflow:hidden}
+.footer__big span{display:inline-block}
+.footer__legal{display:flex;justify-content:space-between;color:var(--muted);margin-top:16px}
+
+/* ---------- responsive ---------- */
+@media (max-width:760px){
+  .work__pin{height:auto;display:block;padding-bottom:80px}
+  .nav__links{display:none}
+  .hero__bottom{grid-template-columns:1fr;gap:20px}
+  .hero__hint{align-items:flex-start;flex-direction:row}
+  .hero__hint .arrow{display:none}
+  .hero__tc{justify-self:start;text-align:left}
+  .hero__name .line:nth-child(2){padding-left:0}
+  .hero__name{font-size:29vw}
+  .hero__top span:last-child{display:none}
+  .work__track{flex-direction:column;width:auto}
+  .card,.more{width:100%}
+  .work__progress{display:none}
+  .exp__row{grid-template-columns:1fr}
+  .exp__row .when{text-align:left}
+  .exp__row .detail{max-height:none;opacity:1}
+  .about{grid-template-columns:1fr}
+  .follower{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .loader{display:none}
+  .statement .w{opacity:1}
+  *{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" aria-hidden="true">
+  <div class="loader__count"><span id="count">0</span></div>
+  <div class="loader__bar"><i></i></div>
+  <div class="loader__meta mono"><span>daniel azran — portfolio</span><span>loading model weights…</span></div>
+</div>
+
+<nav class="nav">
+  <a href="#top" class="nav__mark">DA</a>
+  <div class="nav__links mono">
+    <a href="#work">work</a><a href="#experience">experience</a><a href="#about">about</a><a href="#contact">contact</a>
+  </div>
+  <div class="nav__status mono"><span class="dot"></span>open to work</div>
+</nav>
+
+<main id="top">
+  <!-- HERO: surface layer + machine-vision reveal layer (cursor blob) -->
+  <section class="hero" id="hero">
+    <canvas id="nebula"></canvas>
+    <div class="hero__surface">
+      <div class="hero__top mono"><span>full-stack / machine learning / video editor</span><span>florida, usa</span></div>
+      <h1 class="hero__name" id="heroName" aria-label="Daniel Azran">
+        <span class="line"><span>Daniel</span></span>
+        <span class="line"><span>Az<em>r</em>an</span></span>
+      </h1>
+      <div class="hero__bottom mono">
+        <p class="hero__tagline">I build systems that see, learn, and tell a story — and I care how they look.</p>
+        <div class="hero__hint"><span>move to see what the model sees · scroll</span><span class="arrow"></span></div>
+        <div class="hero__tc">tc <b id="tc">00:00:00:00</b><br>rec ● 30fps</div>
+      </div>
+    </div>
+    <canvas id="reveal"></canvas>
+  </section>
+
+  <section class="statement">
+    <span class="label mono">// behind the scenes</span>
+    <p id="statement">What the user sees is only half the work. I build the <i class="hl">model</i>, the pipeline, and the app around it — then I edit it until it <i class="hl">feels</i> right.</p>
+  </section>
+
+  <section class="work" id="work">
+    <div class="work__head">
+      <h2 class="work__title">Selected <em>work</em></h2>
+      <span class="mono" style="color:var(--muted)">04 projects — drag scroll →</span>
+    </div>
+    <div class="work__pin">
+    <div class="work__track" id="track">
+      <article class="card">
+        <div class="card__meta mono"><span class="card__num">01</span><span>2024–25 · extropian</span></div>
+        <div class="card__vis"><img src="../../../one.png" alt="Golf swing analyzer app preview" data-par></div>
+        <h3>Golf Swing Analyzer</h3>
+        <p>Cross-platform Flutter app analyzing swing metrics in real time from wearable sensors. Led the Bluetooth streaming + metric layer; cut packet loss from tens to single digits per session.</p>
+        <div class="tags"><span>flutter</span><span>dart</span><span>firebase</span><span>bluetooth</span></div>
+        <span class="go mono">nda</span>
+      </article>
+      <a class="card" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener">
+        <div class="card__meta mono"><span class="card__num">02</span><span>computer vision</span></div>
+        <div class="card__vis"><canvas data-vis="flow"></canvas></div>
+        <h3>Real-Time Optical Flow Tracker</h3>
+        <p>30+ FPS Lucas–Kanade tracker with Shi–Tomasi detection, forward–backward checks and dense flow visualization.</p>
+        <div class="tags"><span>python</span><span>opencv</span><span>cv</span></div>
+        <span class="go mono">github ↗</span>
+      </a>
+      <a class="card" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener">
+        <div class="card__meta mono"><span class="card__num">03</span><span>deep learning</span></div>
+        <div class="card__vis"><canvas data-vis="digit"></canvas></div>
+        <h3>Handwritten Digit Classifier</h3>
+        <p>CNN in TensorFlow/Keras hitting 98% on MNIST. Next up: a live draw-a-digit demo running right here in the browser.</p>
+        <div class="tags"><span>tensorflow</span><span>keras</span><span>python</span></div>
+        <span class="go mono">github ↗</span>
+      </a>
+      <a class="card" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener">
+        <div class="card__meta mono"><span class="card__num">04</span><span>machine learning</span></div>
+        <div class="card__vis"><canvas data-vis="price"></canvas></div>
+        <h3>Real Estate Price Predictor</h3>
+        <p>Linear Regression vs KNN vs Random Forest vs AdaBoost; 7% RMSE reduction via tuning and log-price regression.</p>
+        <div class="tags"><span>python</span><span>r</span><span>sklearn</span><span>jupyter</span></div>
+        <span class="go mono">github ↗</span>
+      </a>
+      <div class="more">
+        <span class="mono" style="color:var(--muted);margin-bottom:8px">more work</span>
+        <a href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener">Mikal — Wix Sync <span class="mono">↗</span></a>
+        <a href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener">PL/0 Compiler <span class="mono">↗</span></a>
+        <a href="https://github.com/Danzran" target="_blank" rel="noopener">Everything on GitHub <span class="mono">↗</span></a>
+      </div>
+    </div>
+    <div class="work__progress"><i id="workProg"></i></div>
+    </div>
+  </section>
+
+  <section class="exp" id="experience" data-theme="lime">
+    <h2 class="exp__title">Experience</h2>
+    <div class="exp__row" data-img="../../../one.png">
+      <h3>Backend Software Developer</h3><span class="co">Extropian · Orlando, FL</span><span class="when mono">2024 — 2025</span>
+      <p class="detail">Real-time golf swing analysis app (Flutter, Dart, Firebase). Led Bluetooth streaming + metric layer. 6-person Agile team.</p>
+    </div>
+    <div class="exp__row" data-img="../../../two.png">
+      <h3>Systems Assembler &amp; IT</h3><span class="co">Freelance</span><span class="when mono">2018 — now</span>
+      <p class="detail">Desktops for gaming, editing and servers; small-business networks with VMs; stable, optimized builds.</p>
+    </div>
+    <div class="exp__row" data-img="../../../redlight.png">
+      <h3>Video Editor</h3><span class="co">Freelance · Remote</span><span class="when mono">2014 — 2020</span>
+      <p class="detail">3D compositing, camera tracking and thumbnails in After Effects / Premiere; coordinated teams of up to four editors.</p>
+    </div>
+    <div class="exp__row" data-img="../../../three.png">
+      <h3>Lockout Technician</h3><span class="co">Sonic Locksmith · Hollywood, FL</span><span class="when mono">2022 — 2023</span>
+      <p class="detail">Programmed and cut keys for push-to-start vehicles; on-site problem solving under time pressure.</p>
+    </div>
+  </section>
+  <div class="follower" id="follower"><img alt=""></div>
+
+  <section class="about" id="about">
+    <div class="about__img"><img src="../../../handstand.PNG" alt="Daniel doing a handstand" data-par></div>
+    <div>
+      <span class="mono" style="color:var(--lime)">// about</span>
+      <h2 style="margin-top:18px">Addicted to <em>real</em> progress.</h2>
+      <p>I'm a full-stack engineer focused on machine learning and data science, but what I really enjoy is solving problems — with tools I've picked up or ones built from scratch.</p>
+      <p>Years of video editing taught me that what the viewer sees matters as much as what's behind it.</p>
+      <button class="song" id="song" aria-pressed="false">
+        <img src="../../../redlight.png" alt=""><span class="mono">favorite song</span><span class="bars"><i></i><i></i><i></i></span>
+      </button>
+      <audio id="audio" src="../../../tgrave.mp3" preload="none"></audio>
+    </div>
+  </section>
+
+  <div class="marquee" aria-label="Tech stack"><div class="marquee__inner" id="marquee">
+    <span>Python</span><span>TensorFlow</span><span>OpenCV</span><span>Flutter</span><span>Dart</span><span>React</span><span>Rust</span><span>Java</span><span>C/C++</span><span>AWS</span><span>Firebase</span><span>After Effects</span>
+  </div></div>
+
+  <footer class="footer" id="contact">
+    <p class="footer__cta">Have a model to train, an app to ship, or a story to cut?</p>
+    <a class="btn" href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">Let's talk →</a>
+    <div class="footer__links mono">
+      <a href="https://github.com/Danzran" target="_blank" rel="noopener">github</a>
+      <a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">linkedin</a>
+      <a href="../../../DanielAzranResume.pdf" target="_blank">resume.pdf</a>
+    </div>
+    <div class="footer__big" id="bigName" aria-hidden="true"></div>
+    <div class="footer__legal mono"><span>© 2026 daniel azran</span><span>draft v1 — machine-vision reveal</span></div>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script>
+(() => {
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DPR = Math.min(devicePixelRatio || 1, 1.5);
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------------- smooth scroll ---------------- */
+let lenis = null;
+if (!reduce) {
+  lenis = new Lenis({ lerp: 0.09 });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  const el = document.querySelector(a.getAttribute('href'));
+  if (!el) return; e.preventDefault();
+  lenis ? lenis.scrollTo(el, { duration: 1.4 }) : el.scrollIntoView();
+}));
+
+/* ---------------- pointer ---------------- */
+const ptr = { x: innerWidth / 2, y: innerHeight / 2, px: innerWidth / 2, py: innerHeight / 2, vx: 0, vy: 0, active: false };
+addEventListener('pointermove', e => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.active = true; }, { passive: true });
+
+/* ---------------- hero: nebula ---------------- */
+const hero = document.getElementById('hero');
+const neb = document.getElementById('nebula'), nctx = neb.getContext('2d');
+const rev = document.getElementById('reveal'), rctx = rev.getContext('2d');
+let W = 0, H = 0, stars = [];
+function sizeHero() {
+  W = hero.clientWidth; H = hero.clientHeight;
+  for (const c of [neb, rev]) { c.width = W * DPR; c.height = H * DPR; }
+  nctx.setTransform(DPR, 0, 0, DPR, 0, 0); rctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  const n = W < 760 ? 260 : 700;
+  stars = Array.from({ length: n }, () => ({
+    x: Math.random() * W, y: Math.random() * H, z: Math.random() ** 2,
+    s: Math.random() * 1.4 + .3, lime: Math.random() < .12
+  }));
+  sizeMask(); sizeField();
+}
+
+/* ---------------- hero: blob mask (low-res, thresholded) ---------------- */
+const MS = 4; // mask downscale
+const mask = document.createElement('canvas'), mctx = mask.getContext('2d', { willReadFrequently: true });
+const maskCore = document.createElement('canvas'), cctx = maskCore.getContext('2d');
+const maskRim = document.createElement('canvas'), rimctx = maskRim.getContext('2d');
+let trail = [];
+function sizeMask() {
+  for (const c of [mask, maskCore, maskRim]) { c.width = Math.ceil(W / MS); c.height = Math.ceil(H / MS); }
+}
+function drawMask(fill) {
+  const w = mask.width, h = mask.height;
+  mctx.clearRect(0, 0, w, h);
+  mctx.filter = 'blur(6px)';
+  mctx.fillStyle = '#fff';
+  for (const p of trail) {
+    mctx.globalAlpha = Math.min(1, p.life);
+    mctx.beginPath(); mctx.arc(p.x / MS, p.y / MS, (p.r * (0.4 + 0.6 * p.life)) / MS, 0, 7); mctx.fill();
+  }
+  if (fill > 0) { // scroll-driven takeover: grows from the pointer / centre
+    mctx.globalAlpha = 1;
+    mctx.beginPath(); mctx.arc(ptr.x / MS, ptr.y / MS, (Math.hypot(W, H) * fill) / MS, 0, 7); mctx.fill();
+  }
+  mctx.filter = 'none'; mctx.globalAlpha = 1;
+  const src = mctx.getImageData(0, 0, w, h), core = cctx.createImageData(w, h), rim = rimctx.createImageData(w, h);
+  let any = false;
+  for (let i = 3; i < src.data.length; i += 4) {
+    const a = src.data[i];
+    if (!a) continue; any = true;
+    const c = a < 124 ? 0 : a > 136 ? 255 : (a - 124) * 21;
+    const r = a < 104 ? 0 : a > 116 ? 255 : (a - 104) * 21;
+    core.data[i] = c;
+    rim.data[i - 3] = 210; rim.data[i - 2] = 255; rim.data[i - 1] = 0; rim.data[i] = r;
+  }
+  cctx.putImageData(core, 0, 0); rimctx.putImageData(rim, 0, 0);
+  return any;
+}
+
+/* ---------------- hero: flow field (machine layer) ---------------- */
+const CELL = 30;
+let cols = 0, rows = 0, fx, fy;
+function sizeField() { cols = Math.ceil(W / CELL) + 1; rows = Math.ceil(H / CELL) + 1; fx = new Float32Array(cols * rows); fy = new Float32Array(cols * rows); }
+function stepField(t) {
+  const R = 5, cx = ptr.x / CELL, cy = ptr.y / CELL;
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    const k = j * cols + i;
+    const d2 = (i - cx) ** 2 + (j - cy) ** 2;
+    if (d2 < R * R * 4) { const f = Math.exp(-d2 / (R * R)); fx[k] += ptr.vx * f * .25; fy[k] += ptr.vy * f * .25; }
+    fx[k] *= .94; fy[k] *= .94;
+  }
+}
+const nameEl = document.getElementById('heroName');
+const lineEls = [...nameEl.querySelectorAll('.line > span')];
+function drawMachine(c, t) {
+  c.fillStyle = '#060805'; c.fillRect(0, 0, W, H);
+  // grid
+  c.strokeStyle = 'rgba(210,255,0,.06)'; c.lineWidth = 1; c.beginPath();
+  for (let x = 0; x < W; x += CELL * 2) { c.moveTo(x + .5, 0); c.lineTo(x + .5, H); }
+  for (let y = 0; y < H; y += CELL * 2) { c.moveTo(0, y + .5); c.lineTo(W, y + .5); }
+  c.stroke();
+  // flow vectors
+  c.lineWidth = 1.2;
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    const k = j * cols + i, x = i * CELL, y = j * CELL;
+    const a = Math.sin(x * .004 + t * .4) * Math.cos(y * .005 - t * .3) * 3;
+    const vx = fx[k] + Math.cos(a) * 2, vy = fy[k] + Math.sin(a) * 2;
+    const m = Math.min(Math.hypot(vx, vy), 26);
+    c.strokeStyle = `rgba(210,255,0,${.18 + m / 34})`;
+    const ex = x + vx / (Math.hypot(vx, vy) || 1) * (4 + m), ey = y + vy / (Math.hypot(vx, vy) || 1) * (4 + m);
+    c.beginPath(); c.moveTo(x, y); c.lineTo(ex, ey); c.stroke();
+    c.fillStyle = c.strokeStyle; c.fillRect(ex - 1, ey - 1, 2, 2);
+  }
+  // name as the model sees it: outline + bbox + keypoints
+  const hr = hero.getBoundingClientRect();
+  let bx0 = 1e9, by0 = 1e9, bx1 = -1e9, by1 = -1e9;
+  for (const el of lineEls) {
+    const r = el.getBoundingClientRect(), fs = parseFloat(getComputedStyle(el.parentNode.parentNode).fontSize);
+    const scale = r.width / (el.offsetWidth || 1);
+    c.font = `${fs * scale}px "Instrument Serif"`;
+    c.textBaseline = 'alphabetic';
+    const txt = el.textContent, m = c.measureText(txt);
+    const x = r.left - hr.left, y = r.top - hr.top + (r.height + m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+    c.strokeStyle = 'rgba(241,242,234,.9)'; c.lineWidth = 1; c.strokeText(txt, x, y);
+    // keypoints at letter starts
+    let ax = x;
+    c.fillStyle = '#d2ff00';
+    for (const ch of txt) {
+      const cw = c.measureText(ch).width;
+      c.beginPath(); c.arc(ax + cw / 2, y - m.actualBoundingBoxAscent * .5, 3, 0, 7); c.fill();
+      ax += cw;
+    }
+    bx0 = Math.min(bx0, x); by0 = Math.min(by0, y - m.actualBoundingBoxAscent); bx1 = Math.max(bx1, x + m.width); by1 = Math.max(by1, y + m.actualBoundingBoxDescent);
+  }
+  // skeleton connecting keypoints line by line
+  c.strokeStyle = '#d2ff00'; c.lineWidth = 1.5; c.strokeRect(bx0 - 12, by0 - 12, bx1 - bx0 + 24, by1 - by0 + 24);
+  c.fillStyle = '#d2ff00'; c.fillRect(bx0 - 12, by0 - 34, 230, 22);
+  c.fillStyle = '#060805'; c.font = '500 12px "JetBrains Mono"'; c.fillText(`person: daniel_azran  ${(0.97 + Math.sin(t * 3) * .02).toFixed(2)}`, bx0 - 4, by0 - 18);
+  // scanline
+  const sy = (t * 140) % H;
+  const g = c.createLinearGradient(0, sy - 60, 0, sy); g.addColorStop(0, 'rgba(210,255,0,0)'); g.addColorStop(1, 'rgba(210,255,0,.14)');
+  c.fillStyle = g; c.fillRect(0, sy - 60, W, 60);
+  // cursor readout
+  c.strokeStyle = 'rgba(210,255,0,.7)'; c.lineWidth = 1; c.beginPath();
+  c.moveTo(ptr.x - 14, ptr.y); c.lineTo(ptr.x + 14, ptr.y); c.moveTo(ptr.x, ptr.y - 14); c.lineTo(ptr.x, ptr.y + 14); c.stroke();
+  c.fillStyle = '#d2ff00'; c.font = '11px "JetBrains Mono"';
+  const sp = Math.hypot(ptr.vx, ptr.vy).toFixed(1);
+  c.fillText(`x ${ptr.x | 0}  y ${ptr.y | 0}`, ptr.x + 18, ptr.y - 8);
+  c.fillText(`flow ${sp} px/f`, ptr.x + 18, ptr.y + 8);
+}
+
+const heroState = { fill: 0, visible: true };
+let last = 0, rimWas = false;
+function heroFrame(now) {
+  if (!reduce) requestAnimationFrame(heroFrame);
+  if (!heroState.visible) return;
+  const t = now / 1000;
+  ptr.vx = ptr.x - ptr.px; ptr.vy = ptr.y - ptr.py; ptr.px = ptr.x; ptr.py = ptr.y;
+  // nebula
+  nctx.fillStyle = '#0b0d0a'; nctx.fillRect(0, 0, W, H);
+  const g = nctx.createRadialGradient(W * .7, H * .35, 0, W * .7, H * .35, W * .6);
+  g.addColorStop(0, 'rgba(120,150,40,.10)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  nctx.fillStyle = g; nctx.fillRect(0, 0, W, H);
+  const ox = (ptr.x / W - .5) * 30, oy = (ptr.y / H - .5) * 30;
+  for (const s of stars) {
+    s.x -= (.08 + s.z * .3); if (s.x < -10) s.x = W + 10;
+    nctx.globalAlpha = .25 + s.z * .7;
+    nctx.fillStyle = s.lime ? '#d2ff00' : '#f1f2ea';
+    nctx.fillRect(s.x + ox * s.z, s.y + oy * s.z, s.s, s.s);
+  }
+  nctx.globalAlpha = 1;
+  // trail
+  const speed = Math.hypot(ptr.vx, ptr.vy);
+  if (ptr.active && speed > .5) trail.push({ x: ptr.x, y: ptr.y, r: 60 + Math.min(speed, 40) * 3, life: 1 });
+  for (const p of trail) p.life -= .018;
+  trail = trail.filter(p => p.life > 0);
+  if (trail.length > 90) trail.splice(0, trail.length - 90);
+  stepField(t);
+  rctx.clearRect(0, 0, W, H);
+  const any = drawMask(heroState.fill);
+  if (!any) return;
+  // machine layer clipped by core, lime rim underneath
+  rctx.save();
+  rctx.imageSmoothingEnabled = true;
+  rctx.drawImage(maskRim, 0, 0, W, H);
+  rctx.restore();
+  machineBuf.ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  drawMachine(machineBuf.ctx, t);
+  machineBuf.ctx.setTransform(1, 0, 0, 1, 0, 0);
+  machineBuf.ctx.globalCompositeOperation = 'destination-in';
+  machineBuf.ctx.drawImage(maskCore, 0, 0, machineBuf.c.width, machineBuf.c.height);
+  machineBuf.ctx.globalCompositeOperation = 'source-over';
+  rctx.setTransform(1, 0, 0, 1, 0, 0);
+  rctx.drawImage(machineBuf.c, 0, 0);
+  rctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+const machineBuf = { c: document.createElement('canvas') };
+machineBuf.ctx = machineBuf.c.getContext('2d');
+function sizeAll() { sizeHero(); machineBuf.c.width = W * DPR; machineBuf.c.height = H * DPR; }
+sizeAll();
+addEventListener('resize', () => { sizeAll(); ScrollTrigger.refresh(); });
+new IntersectionObserver(([e]) => heroState.visible = e.isIntersecting).observe(hero);
+if (!reduce) requestAnimationFrame(heroFrame);
+else { heroFrame(0); }
+
+/* ---------------- loader + intro ---------------- */
+const lines = gsap.utils.toArray('.hero__name .line > span');
+function intro() {
+  gsap.from(lines, { yPercent: 110, duration: 1.3, ease: 'expo.out', stagger: .12 });
+  gsap.from('.hero__top, .hero__bottom, .nav', { opacity: 0, y: 14, duration: 1, delay: .5, stagger: .1 });
+}
+if (reduce) { document.querySelector('.loader').remove(); }
+else {
+  lenis && lenis.stop();
+  const o = { v: 0 };
+  gsap.timeline({ onComplete: () => { lenis && lenis.start(); } })
+    .to(o, { v: 100, duration: 1.6, ease: 'power2.inOut', onUpdate: () => {
+      document.getElementById('count').textContent = Math.round(o.v);
+      document.querySelector('.loader__bar i').style.width = o.v + '%';
+    } })
+    .to('.loader', { clipPath: 'inset(0 0 100% 0)', duration: 1, ease: 'expo.inOut' }, '+=.15')
+    .add(intro, '-=.55')
+    .set('.loader', { display: 'none' });
+}
+
+/* timecode */
+const tcEl = document.getElementById('tc'), t0 = performance.now();
+setInterval(() => {
+  const f = Math.floor((performance.now() - t0) / (1000 / 30));
+  const p = n => String(n).padStart(2, '0');
+  tcEl.textContent = `${p(Math.floor(f / 108000))}:${p(Math.floor(f / 1800) % 60)}:${p(Math.floor(f / 30) % 60)}:${p(f % 30)}`;
+}, 33);
+
+if (reduce) return;
+
+/* ---------------- scroll: hero takeover ---------------- */
+ScrollTrigger.create({ start: 0, end: 40, onToggle: s => document.body.classList.toggle('at-top', s.isActive) });
+gsap.timeline({ scrollTrigger: { trigger: hero, start: 'top top', end: '+=110%', pin: true, scrub: true } })
+  .to(heroState, { fill: 1, ease: 'power2.in' }, 0)
+  .to(lines[0], { xPercent: -8, ease: 'none' }, 0)
+  .to(lines[1], { xPercent: 8, ease: 'none' }, 0)
+  .to('.hero__top, .hero__bottom', { opacity: 0, ease: 'none', duration: .3 }, 0);
+
+/* ---------------- statement word fill ---------------- */
+const st = document.getElementById('statement');
+const walk = node => [...node.childNodes].flatMap(n => {
+  if (n.nodeType === 3) return n.textContent.split(/(\s+)/).map(s => s.trim() ? `<span class="w">${s}</span>` : s);
+  return [`<span class="w hl">${n.textContent}</span>`];
+});
+st.innerHTML = walk(st).join('');
+gsap.to('#statement .w', { opacity: 1, stagger: .1, ease: 'none',
+  scrollTrigger: { trigger: '.statement', start: 'top 70%', end: 'bottom 70%', scrub: true } });
+
+/* ---------------- work: horizontal pin ---------------- */
+const mm = gsap.matchMedia();
+mm.add('(min-width: 761px)', () => {
+  const track = document.getElementById('track');
+  const dist = () => track.scrollWidth - innerWidth;
+  const tween = gsap.to(track, { x: () => -dist(), ease: 'none',
+    scrollTrigger: { trigger: '.work__pin', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 1, invalidateOnRefresh: true,
+      onUpdate: s => gsap.set('#workProg', { scaleX: s.progress }) } });
+  track.querySelectorAll('[data-par]').forEach(img => gsap.fromTo(img, { xPercent: -5 }, { xPercent: 5, ease: 'none',
+    scrollTrigger: { trigger: img.closest('.card'), containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } }));
+  gsap.from('.card', { y: 80, opacity: 0, stagger: .08, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.work__pin', start: 'top 70%' } });
+});
+
+/* card visuals */
+document.querySelectorAll('canvas[data-vis]').forEach(cv => {
+  const c = cv.getContext('2d'), kind = cv.dataset.vis;
+  const fit = () => { cv.width = cv.clientWidth * DPR; cv.height = cv.clientHeight * DPR; c.setTransform(DPR, 0, 0, DPR, 0, 0); };
+  fit(); addEventListener('resize', fit);
+  const digit = '0000000000000000000000000000|0000000000011111100000000000|0000000001111111111000000000|0000000011110000011100000000|0000000111000000001110000000|0000000111000000001110000000|0000000011100000011100000000|0000000001111111111000000000|0000000000111111110000000000|0000000001111001111000000000|0000000011100000011100000000|0000000111000000001110000000|0000000111000000001110000000|0000000111100000011110000000|0000000011111111111100000000|0000000000111111110000000000'.split('|');
+  const pts = Array.from({ length: 40 }, (_, i) => ({ x: i / 39, y: .7 - i / 39 * .5 + (Math.random() - .5) * .18 }));
+  let on = false; new IntersectionObserver(([e]) => on = e.isIntersecting).observe(cv);
+  (function loop(now) {
+    requestAnimationFrame(loop); if (!on) return;
+    const t = now / 1000, w = cv.clientWidth, h = cv.clientHeight;
+    c.fillStyle = '#11140f'; c.fillRect(0, 0, w, h);
+    c.strokeStyle = '#d2ff00'; c.fillStyle = '#d2ff00';
+    if (kind === 'flow') {
+      for (let y = 14; y < h; y += 18) for (let x = 14; x < w; x += 18) {
+        const a = Math.sin(x * .02 + t) + Math.cos(y * .025 - t * .7), m = 4 + 6 * Math.abs(Math.sin(a + t));
+        c.globalAlpha = .25 + m / 14; c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * m, y + Math.sin(a) * m); c.stroke();
+      }
+      c.globalAlpha = 1;
+    } else if (kind === 'digit') {
+      const s = Math.min(w, h) / 20, ox = (w - 28 * s * .7) / 2, oy = (h - 16 * s) / 2;
+      digit.forEach((row, j) => [...row].forEach((v, i) => {
+        const on = v === '1', flick = .5 + .5 * Math.sin(t * 2 + i * .3 + j * .2);
+        c.globalAlpha = on ? .55 + .45 * flick : .06;
+        c.fillRect(ox + i * s * .7, oy + j * s, s * .7 - 2, s - 2);
+      }));
+      c.globalAlpha = 1; c.font = '12px "JetBrains Mono"'; c.fillText(`pred: 8   p=${(.97 + .02 * Math.sin(t)).toFixed(3)}`, 16, h - 16);
+    } else if (kind === 'price') {
+      c.globalAlpha = .15; for (let i = 1; i < 5; i++) { c.beginPath(); c.moveTo(0, h * i / 5); c.lineTo(w, h * i / 5); c.stroke(); }
+      c.globalAlpha = 1; const k = (t * .25) % 1.3;
+      pts.forEach((p, i) => { if (p.x <= k) { c.globalAlpha = .5; c.beginPath(); c.arc(p.x * (w - 40) + 20, p.y * h, 3, 0, 7); c.fill(); } });
+      c.globalAlpha = 1; c.lineWidth = 2; c.beginPath(); c.moveTo(20, h * .7); c.lineTo(20 + Math.min(k, 1) * (w - 40), h * (.7 - Math.min(k, 1) * .5)); c.stroke(); c.lineWidth = 1;
+      c.font = '12px "JetBrains Mono"'; c.fillText('rmse −7%  log(price) ~ rf', 16, 24);
+    }
+  })(0);
+});
+
+/* ---------------- experience: lime theme + image follower ---------------- */
+ScrollTrigger.create({ trigger: '#experience', start: 'top 40px', end: 'bottom 40px', toggleClass: { targets: document.body, className: 'theme-lime' } });
+const fol = document.getElementById('follower'), folImg = fol.querySelector('img');
+const fx2 = gsap.quickTo(fol, 'x', { duration: .6, ease: 'power3' }), fy2 = gsap.quickTo(fol, 'y', { duration: .6, ease: 'power3' });
+addEventListener('pointermove', e => { fx2(e.clientX); fy2(e.clientY); });
+document.querySelectorAll('.exp__row').forEach(row => {
+  row.addEventListener('pointerenter', () => { folImg.src = row.dataset.img; gsap.to(fol, { opacity: 1, scale: 1, duration: .4 }); });
+  row.addEventListener('pointerleave', () => gsap.to(fol, { opacity: 0, scale: .6, duration: .3 }));
+});
+gsap.from('.exp__row', { y: 40, opacity: 0, stagger: .08, duration: .9, ease: 'expo.out', scrollTrigger: { trigger: '.exp', start: 'top 60%' } });
+
+/* ---------------- about parallax ---------------- */
+gsap.fromTo('.about__img img', { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.about', scrub: true } });
+
+/* ---------------- marquee (scroll-velocity aware) ---------------- */
+const mq = document.getElementById('marquee');
+mq.innerHTML += mq.innerHTML;
+let mx = 0;
+gsap.ticker.add(() => {
+  const v = lenis ? lenis.velocity : 0;
+  mx -= 1 + Math.abs(v) * .25;
+  const half = mq.scrollWidth / 2; if (-mx > half) mx += half;
+  mq.style.transform = `translateX(${mx}px) skewX(${gsap.utils.clamp(-12, 12, -v * .4)}deg)`;
+});
+
+/* ---------------- footer big name ---------------- */
+const big = document.getElementById('bigName');
+big.innerHTML = [...'Daniel Azran'].map(ch => `<span>${ch === ' ' ? '&nbsp;' : ch}</span>`).join('');
+gsap.from('#bigName span', { yPercent: 100, stagger: .04, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.footer', start: 'top 50%' } });
+
+/* ---------------- song easter egg ---------------- */
+const song = document.getElementById('song'), audio = document.getElementById('audio');
+song.addEventListener('click', () => {
+  if (audio.paused) { audio.currentTime = audio.currentTime || 0; audio.play(); song.classList.add('playing'); song.setAttribute('aria-pressed', 'true'); }
+  else { audio.pause(); song.classList.remove('playing'); song.setAttribute('aria-pressed', 'false'); }
+});
+})();
+</script>
+</body>
+</html>
