@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer-core');
-const [,, url, out, w = '1440', h = '900'] = process.argv;
+const [,, url, out, w = '1440', h = '900', stops = '0.55,1.4,2.3,3.6,5.2,7,8.6,10'] = process.argv;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 (async () => {
   const b = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: 'new', args: ['--hide-scrollbars'] });
@@ -16,7 +16,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   await sleep(120);
   await p.screenshot({ path: out + '-1-reveal.png' });
   const H = +h; let shot = 2;
-  for (const y of [0.55, 1.4, 2.3, 3.6, 5.2, 7, 8.6, 10]) {
+  for (const y of stops.split(',').map(Number)) {
     await p.evaluate(y => window.scrollTo(0, y), Math.round(y * H));
     await sleep(1600);
     await p.screenshot({ path: `${out}-${shot++}-scroll${y}.png` });
