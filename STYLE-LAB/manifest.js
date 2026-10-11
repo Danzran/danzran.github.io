@@ -133,6 +133,26 @@ window.LAB = {
     {
      "src": "water-r3/36-h-projects-recolored.png",
      "name": "36-h-projects-recolored.png"
+    },
+    {
+     "src": "water-r3/41-project-golf.png",
+     "name": "41-project-golf.png"
+    },
+    {
+     "src": "water-r3/42-intro-sequence.png",
+     "name": "42-intro-sequence.png"
+    },
+    {
+     "src": "water-r3/43-monogram.png",
+     "name": "43-monogram.png"
+    },
+    {
+     "src": "water-r3/44-mobile-likeness.png",
+     "name": "44-mobile-likeness.png"
+    },
+    {
+     "src": "water-r3/45-404.png",
+     "name": "45-404.png"
     }
    ],
    "folder": "water-r3"
