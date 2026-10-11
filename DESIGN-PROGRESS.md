@@ -1,10 +1,10 @@
 # Portfolio redesign — shared progress and context
 
-**Last updated:** 2026-10-11 23:07 UTC
+**Last updated:** 2026-10-11 23:45 UTC
 
-**Updated by:** Codex
+**Updated by:** Claude (coordinator, session a7518836)
 
-**Status:** visual exploration and local prototypes; final art direction is not confirmed in this session.
+**Status:** the user picked v8's **night tide** as the base. v9 Night is the working prototype. The overall look is still not final ("still not quite").
 
 This is the living handoff for all agents working on Daniel Azran's portfolio. Read it first, update it during relevant work, and follow [AGENTS.md](AGENTS.md). Keep the current-state sections accurate; use the work log for historical milestones.
 
@@ -12,9 +12,15 @@ This is the living handoff for all agents working on Daniel Azran's portfolio. R
 
 - **Combined visual gallery:** [STYLE-LAB/index.html](STYLE-LAB/index.html). Its manifest includes the handstand drafts, cloud mockups, style-blend tests, and prototype links. The existing gallery supports enlarged previews and starred picks.
 - **Ten handstand directions from this session:** [HANDSTAND-DRAFTS/OPEN-DRAFTS.html](HANDSTAND-DRAFTS/OPEN-DRAFTS.html). Nine hero directions and one three-frame body-camera storyboard.
-- **Latest prototype found in the checkout:** [v8 Tide](redesign/drafts/v8-tide/index.html). This is a candidate implementation, not a confirmed user selection.
+- **Working prototype: [v9 Night](redesign/drafts/v9-night/index.html).** The user said: "holy shit i just saw the dark mode that one is way better... we are going to be using that as the base". The brief and the user's answers are in [redesign/BRIEF-V9.md](redesign/BRIEF-V9.md).
+- **Labs for v9 pieces:**
+  - [smooth scribble](redesign/drafts/v9-night/labs/scribble/index.html)
+  - [8 cursors](redesign/drafts/v9-night/labs/cursor/index.html)
+  - [5 Experience timelines](redesign/drafts/v9-night/labs/timeline/index.html)
+- **Previous prototype:** [v8 Tide](redesign/drafts/v8-tide/index.html).
 - **Existing body-pan implementation to inspect:** [v5 Elemental flow](redesign/drafts/v5-elemental/index.html), especially its hands → torso → feet camera route.
 - **Parallel-session overview:** [STYLE-LAB/README-MORNING.md](STYLE-LAB/README-MORNING.md). Useful detail, but its recommendations and claims must be distinguished from user approval and independently verified results.
+- **New handstand orbit asset study:** [STYLE-LAB/handstand-orbit/NOTES.md](STYLE-LAB/handstand-orbit/NOTES.md), with [turnaround](STYLE-LAB/handstand-orbit/00-turnaround.png), nine yaw views, two elevation views, two camera crops, and a reviewed [navy strip](STYLE-LAB/handstand-orbit/strip.png). This is an exploratory generated illustration set, not a selected final hero or verified 3-D reconstruction.
 
 Windows repository location: `C:\dev\danzran.github.io`. The galleries are local HTML files; open them in a browser. Prototypes may need their external fonts/libraries and should be checked in the actual intended serving environment.
 
@@ -42,6 +48,22 @@ These ingredients are not one established style name. Useful technical/search te
 - The user disliked the presentation of the Real Time VFX website as outdated, and said the other suggested sites were not really it either. Prioritize concrete custom drafts and motion studies over another generic reference-site list.
 - The latest visual request was for about ten varied drafts, including drastically different possibilities, with the handstand image as the hero centerpiece.
 - The latest workflow request was to create this shared progress document and require any agent working on the project to update it automatically as part of its work.
+
+### Feedback on v8 Tide (Claude session, 2026-10-11, quoted in BRIEF-V9.md)
+- **Overall:** "Still not quite"; they like Tide, but it is not yet what they are going for.
+- **Scribble:** the effect was "too framey". It should be "mutating and smoother", like the Beautiful World video.
+- **Liked:** the card style, and especially the golf video card. They want the ball and club head added.
+- **Water:** the hero water is cool, but the scroll-down river is not good.
+- **Experience:** wants a creative, visually appealing timeline.
+- **Night mode:** much better, and becomes the base.
+- **Cursor:** the water cursor "sucks".
+- **Hero:** asked Codex for panned shots of the handstand.
+- **Answers to follow-up questions:**
+  - Build the smooth scribble on the web rather than reviving their own tool.
+  - The orbit should be a subtle ±40–60°.
+  - Drop the day sky entirely.
+  - Drop the dive transition, ink picker and intro.
+  - Keep the golf case-study page.
 
 No favorite among the ten handstand drafts was selected in this session. Suggestions by Codex or Claude, agent consensus, and the existence of a later prototype are **not user decisions**. If another conversation contains newer explicit feedback, verify it and record its source here.
 
@@ -158,6 +180,22 @@ The parallel-session notes identify v8 as their newest starting point. That is a
 
 ## Open decisions and sensible next work
 
+**v9 state (Claude, verified in headless Chrome at 1440x900 and 390x844 with no console errors):**
+- **Hero:**
+  - Night only. No river, intro, dive, or toggles.
+  - Water contours mutate smoothly (`Water.setTime`).
+  - The hero figure is a 7-drawing orbit, turned by scroll (0→60°) and pointer (±20°).
+- **Lettering:** brush headings use `scribble.js` "crawl"; `?scribble=calm|echo|torn|stepped` switches the style.
+- **Cursor:** the scribble-loop cursor; `?c=moonglow|inkring|none` switches it.
+- **Experience:** an editing-timeline concept (NLE tracks, playhead scrub, the reel in the monitor).
+- **Golf card:** draws the club shaft and head, the head path, the ball and the launch streak.
+
+**Still open for the user:**
+- Which cursor and which scribble variant.
+- Timeline C (edit) versus D (moon dial).
+- Whether the roto outline should go around the hero figure.
+- Note that the golf club-head data is partly hand-placed (`est` flags).
+
 1. Find which materials, typography, body treatment, or motion ideas actually resonate. The user has not yet settled on a final combination here; they invited drastic experimentation.
 2. Produce a short, concrete body-camera motion test using a promising combination. Compare it with existing v5 and v8 mechanics rather than assuming more static images will settle motion.
 3. Prepare a faithful production figure/environment/light separation from the original image. Treat generated figures as concept references, not automatic replacements for the user's likeness.
@@ -188,3 +226,5 @@ These are agent workflow instructions, not a filesystem watcher or background su
 | 2026-10-11 | Parallel Claude session; repository notes/source | Expanded `STYLE-LAB/` and `STYLE-BLEND/`, built v3–v8 prototypes and asset pipelines. v8 is the newest candidate found; details come from local notes and source inspection, not a fresh comprehensive runtime validation. |
 | 2026-10-11 22:49 | Codex | Created `DESIGN-PROGRESS.md` as the canonical handoff, with root `AGENTS.md` and `CLAUDE.md` requiring ongoing updates. Included this session's user feedback and the newer parallel-session artifacts, while separating decisions, proposals, and validation provenance. All 35 local Markdown links passed validation; the three files are readable. Existing root-site changes were preserved. |
 | 2026-10-11 23:07 | Codex | Added conservative 2-D golf club/ball companion data, the generator, debug grid, and notes: `redesign/assets/golf/club.{js,json}`, `club-debug.jpg`, `CLUB-NOTES.md`, and `redesign/tools/golf_club_track.py`. Checked 50-frame mapping/array lengths and inspected the overlay sheet; 2-D speed is explicitly an illustrative 28 mph estimate, not measured performance data. |
+| 2026-10-11 23:27 | Codex | Generated the handstand orbit sheet and 13 illustration frames in `STYLE-LAB/handstand-orbit/`, documented exact prompts and scroll mapping, and inspected the navy yaw strip. Verified 13 fallback cutouts are valid 933 × 1400 RGBA PNGs; the Windows cutout utility failed under WSL and no WebP/JPEG codec was available, so required `cut/*.webp` and `strip.jpg` remain honestly undelivered (see `NOTES.md`). |
+| 2026-10-11 23:45 | Claude (coordinator) | Built v9 Night from Daniel's feedback and integrated the parallel work: scribble.js, the cursor lab, timeline C, the orbit hero, and the golf club/ball overlay. Codex orbit cutouts failed in its sandbox, so Claude cut them out to webp with `cutout.py`. Golf head data pass 2 (all 50 frames; est frames read by eye; 28 mph claim dropped) was done by hand, because running Codex unsandboxed was not permitted. Commit-message caveat: the timeline agent's `index.html`/`style.css` edits landed inside commits fcd2f5d and 58b640b (hero orbit). Checked with headless screenshots, desktop and phone. |
