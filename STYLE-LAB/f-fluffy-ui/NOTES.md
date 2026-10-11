@@ -10,7 +10,7 @@ The most usable direction in the lab. Milky ivory space, with UI elements (nav p
 - 04-mobile-hero.png (9:19.5): phone hero with bottom cloud tab bar and hamburger.
 - 05-mobile-projects.png (9:19.5): phone project list with filter chips and stacked cards.
 - 06-full-page.png (about 1:2.6): full homepage, hero to contact footer.
-- 07-components.png: NOT PRODUCED. Codex usage limit was hit (retry window 6:05 AM).
+- 07-components.png: produced in round 2 after the quota reset (hover labels say "Button", not CTA text).
 
 ## How it moves
 Calm, not framey. Suggested motion for a live build:
@@ -30,3 +30,6 @@ Calm, not framey. Suggested motion for a live build:
 - Video reel is a generic sunset montage placeholder. It does not use Daniel's real gaming montage GIF.
 - Full-page captions ("Turning real-world data...") and the About paragraph are invented filler.
 - Type is generic sans, not a brand font.
+
+## Round 2: Cotton Sky with elemental water
+A blend of this folder's cloud-UI system with the Cotton Sky direction. The sky is fluffy cotton cloud in powder blue, azure and ivory, with a restrained gold glow. Stylized water ribbons (curling S-curves, white foam bands, tapering ends, sakuga-like "water breathing" anime water) swirl around the handstand figure and dissolve into cloud mist. UI stays cloud-material with feathered edges and thin indigo hairlines, and the ink accents are gold-tinged underlines and blue dashes. Palette is blue, azure, ivory and gold, with no pink and no green. 2x-water-hero.png is the homepage hero with the handstand on a water crest and a small golf tempo card. 2x-water-projects.png is the projects page with the golf swing analyzer feature card (pose nodes, a 37 degree angle arc, a stats table) and three smaller project cards. Motion, per the coordination brief: big water currents move smoothly, and the foam and outline detail change on a slower replacement cadence. 07-components.png was regenerated in round 2 after the Codex quota reset (its hover labels say "Button" rather than the CTA text).
