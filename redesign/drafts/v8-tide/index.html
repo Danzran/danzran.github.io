@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Azran — Draft v8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- fixed layers: sky + clouds behind, the river above them, content scrolls on top -->
+<canvas id="sky" aria-hidden="true"></canvas>
+<canvas id="river" aria-hidden="true"></canvas>
+
+<nav class="nav"><a class="mark" href="#top">DA</a><span class="sp"></span><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="hero-copy">
+      <h1 class="brush" data-brush>Daniel Azran</h1>
+      <p class="role">ENGINEER / ML / VIDEO EDITOR</p>
+      <a class="pill" href="#work">follow the water ↓</a>
+    </div>
+    <div class="fig" id="fig">
+      <img class="on" src="../v3-cloud-ink/assets/fig-0.webp" alt="Daniel doing a handstand"><img src="../v3-cloud-ink/assets/fig-1.webp" alt=""><img src="../v3-cloud-ink/assets/fig-2.webp" alt="">
+    </div>
+    <canvas id="ribbonFront" aria-hidden="true"></canvas>
+  </section>
+
+  <section class="sec work" id="work">
+    <h2 class="brush" data-brush data-anchor="L">Selected work</h2>
+    <article class="card golf-card" data-anchor="R">
+      <div class="golfvis"><canvas id="golf" aria-label="My golf swing with live pose analysis"></canvas></div>
+      <div class="golf-copy">
+        <span class="tag">featured · computer vision</span>
+        <h3>Golf Swing Analyzer</h3>
+        <p>Real-time swing analysis from wearable sensors (Flutter, Dart, Firebase, Bluetooth). This is my own swing run through MediaPipe pose: joint angles, hand path, tempo.</p>
+        <div class="stats" id="golfStats">
+          <div><b data-tempo></b><span>tempo</span></div>
+          <div><b data-back></b><span>backswing</span></div>
+          <div><b data-down></b><span>downswing</span></div>
+          <div><b data-speed></b><span>hand speed (est.)</span></div>
+          <div class="live"><span data-live></span></div>
+        </div>
+      </div>
+    </article>
+    <div class="row3">
+      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><canvas class="mini" data-mini="flow" aria-hidden="true"></canvas><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade point tracking.</p></a>
+      <a class="card proj" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener"><canvas class="mini" data-mini="digits" aria-hidden="true"></canvas><h3>Digit Classifier</h3><p>Keras CNN · 98% on MNIST.</p></a>
+      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener"><canvas class="mini" data-mini="house" aria-hidden="true"></canvas><h3>Real Estate Predictor</h3><p>−7% RMSE with a log-price target.</p></a>
+    </div>
+    <p class="more">also: <a href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener">PL/0 compiler ↗</a> <a href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener">Mikal – Wix sync ↗</a> <a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></p>
+  </section>
+
+  <section class="sec exp" id="experience">
+    <h2 class="brush" data-brush data-anchor="R">Experience</h2>
+    <div class="card reel" data-anchor="L">
+      <video src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline aria-label="Video editing reel"></video>
+      <div><span class="tag">2014–2020</span><h3>Video editor</h3><p>COD edits, compositing, camera tracking, leading a team of 4 editors. Editing taught me the viewer only ever sees the cut.</p></div>
+    </div>
+    <ol class="jobs">
+      <li class="card" data-anchor="R"><span class="tag">2024–25</span><h3>Backend developer · Extropian</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></li>
+      <li class="card"><span class="tag">2018–now</span><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></li>
+      <li class="card" data-anchor="L"><span class="tag">2022–23</span><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></li>
+    </ol>
+  </section>
+
+  <section class="sec about" id="about">
+    <div class="card about-card" data-anchor="R">
+      <h2 class="brush" data-brush>About</h2>
+      <p>I'm a full-stack engineer focused on machine learning and data science, but what I really enjoy is solving problems — with tools I've picked up or ones built from scratch.</p>
+      <button class="pill" id="song" aria-pressed="false">♪ play my favorite song</button>
+      <audio id="audio" src="../../../tgrave.mp3" preload="none"></audio>
+    </div>
+  </section>
+
+  <footer class="sec contact" id="contact">
+    <h2 class="brush big" data-brush>Say hello</h2>
+    <a class="pill solid" href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">let's talk →</a>
+    <div class="links"><a href="https://github.com/Danzran" target="_blank" rel="noopener">GitHub</a><a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">LinkedIn</a><a href="../../../DanielAzranResume.pdf" target="_blank">Resume</a></div>
+    <div class="pool" id="pool" data-anchor="C"></div>
+    <p class="legal">© 2026 Daniel Azran · draft v8 · tide</p>
+  </footer>
+</main>
+
+<button class="toggle" id="cadence" aria-pressed="true">water: on twos</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="../../assets/fonts/brush-font.js"></script>
+<script src="../../assets/golf/swing.js"></script>
+<script src="lettering.js"></script>
+<script src="golf.js"></script>
+<script src="water.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
