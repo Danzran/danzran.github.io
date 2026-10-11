@@ -29,3 +29,6 @@ Flash frames and shake need a reduced-motion fallback (photosensitivity). Legibi
 
 ## Status
 7 of 8 mockups generated. `07-motion-storyboard.png` NOT generated: Codex hit its usage limit (resets ~6:05 AM). Prompt is ready in `p/07-motion-storyboard.txt`; rerun with `./run.sh p/07-motion-storyboard.txt` from this folder. Motion behaviour is described in "How it moves" above.
+
+## Round 2: water (21-23)
+Cotton Sky plus elemental water: the edit-grade chrome (scratchy white title, REC/timecode, keyframe timeline) stays, but the palette moves to azure, powder blue, ivory and sun gold, with water ribbons spiralling around the handstand. In 21 the ribbons wrap the body like a vortex; in 22 a water streak trails the golf swing inside a frosted-glass analyzer card (pose nodes, 92/147 degree arcs, tempo 1.7:1) next to three project cards. Build: large ribbons as a parallax PNG/WebP layer drifting slowly with scroll (smooth), while foam overlay and the white lettering swap on threes (steps()). Card glass: backdrop-filter blur plus ivory rgba. Caveat: in 22 the golfer's beanie came out teal (green-ish); fix by recolouring ivory/azure before reuse. Golfer in 22 is redrawn, not the real photo.
