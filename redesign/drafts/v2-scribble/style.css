@@ -32,7 +32,8 @@ html[data-boil="2"] .boil{filter:url(#boil2)}
 .swath{position:absolute;z-index:-1;pointer-events:none;overflow:visible}
 
 /* ---------- nav ---------- */
-.nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:16px var(--gutter)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:16px var(--gutter) 26px;background:linear-gradient(var(--paper) 55%,transparent)}
+.hero-top .nav{background:none}
 .nav__mark{font-family:var(--hand);font-size:30px;line-height:1;transform:rotate(-4deg)}
 .nav__links{display:flex;gap:6px}
 .nav__links a{font-family:var(--hand);font-size:21px;padding:4px 12px;border-radius:40% 50% 45% 55%/55% 45% 50% 45%;transition:background .2s}

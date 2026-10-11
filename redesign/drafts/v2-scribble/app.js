@@ -112,6 +112,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click
   const el = document.querySelector(a.getAttribute('href')); if (!el) return; e.preventDefault(); lenis.scrollTo(el, { duration: 1.4 });
 }));
 
+ScrollTrigger.create({ start: 0, end: 40, onToggle: s => document.body.classList.toggle('hero-top', s.isActive) });
+
 /* ---------- intro: letters "drawn in" one by one, on 8s ---------- */
 const heroLetters = gsap.utils.toArray('.hero__name .sc-letter');
 gsap.from(heroLetters, { opacity: 0, scale: .6, rotate: () => rand(-25, 25), duration: .5, ease: 'steps(4)', stagger: .07, delay: .2 });
