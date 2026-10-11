@@ -17,3 +17,6 @@ redesign/drafts/v4-sakuga/assets/handstand.png
 redesign/drafts/v4-sakuga/assets/golf-impact.png
 redesign/drafts/v4-sakuga/assets/02-hero-strong-ink.png
 redesign/drafts/v4-sakuga/assets/oikawa-serve.png
+
+# per-agent prompt/log scratch dirs
+STYLE-LAB/*/p/
