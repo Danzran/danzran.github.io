@@ -41,3 +41,40 @@ Keep everything identical (layout, text, figures, water, clouds) EXCEPT: recolou
 Using your image generation tool, edit the attached image and save the PNG into the current directory as 36-h-projects-recolored.png. Report the final path.
 Keep everything identical (layout, text, figures, water, clouds, cards) EXCEPT: recolour every green area (hills, grass, fairway, any green tint) to pale ivory sand or soft azure-grey so there is NO green anywhere. Same size and aspect ratio.
 ```
+
+# Round 4: site pieces beyond the homepage
+
+## 41-project-golf
+```
+Using your image generation tool, generate this image and save the PNG into the current directory as 41-project-golf.png. Report the final path.
+Style: 'Cotton Sky + elemental water' for Daniel Azran's portfolio. Fluffy dreamy cotton clouds; stylized elemental water: broad flowing ribbons with curling S-curves, white foam bands, tapering ends, sakuga-like anime water with ukiyo-e influence, foam dissolving into cloud mist. Palette: #DCEEFF pale blue, #4FA9E8 azure, #1557B0 cobalt, #25396C slate-indigo ink, #FFF8E8 ivory, restrained sunlight gold. Almost no pink, NO green anywhere. Brush-lettered headings, elegant small-caps serif for labels. Original artwork. Render text legibly and spelled exactly as given.
+Tall desktop PROJECT DETAIL page (about 2:3 portrait) for 'Golf Swing Analyzer'. Top: brush title 'Golf Swing Analyzer', tags 'Flutter · Dart · Firebase · Bluetooth · MediaPipe'. A large frosted-ivory card shows a golfer (use the attached golf frame for pose) mid-downswing with pose-node skeleton dots, a water ribbon tracing the club path, angle arcs labelled 'lead arm' and 'knee'. Below: a horizontal strip of five swing keyframes (address, takeaway, top, impact, finish) connected by a water line; a stats row with 'tempo 1.7 : 1', 'backswing 0.5 s', 'downswing 0.3 s'; then a short 'How it works' section with three small icon cards ('sensor', 'pose model', 'feedback'). Footer link 'back to all work'. Water ribbons frame the page edges.
+```
+
+## 42-intro-sequence
+```
+Using your image generation tool, generate this image and save the PNG into the current directory as 42-intro-sequence.png. Report the final path.
+Style: 'Cotton Sky + elemental water' for Daniel Azran's portfolio. Fluffy dreamy cotton clouds; stylized elemental water: broad flowing ribbons with curling S-curves, white foam bands, tapering ends, sakuga-like anime water with ukiyo-e influence, foam dissolving into cloud mist. Palette: #DCEEFF pale blue, #4FA9E8 azure, #1557B0 cobalt, #25396C slate-indigo ink, #FFF8E8 ivory, restrained sunlight gold. Almost no pink, NO green anywhere. Brush-lettered headings, elegant small-caps serif for labels. Original artwork. Render text legibly and spelled exactly as given.
+A 16:9 storyboard sheet of a website INTRO / loading animation in four numbered frames left to right, each with a short handwritten note: (1) 'empty sky' pale cotton clouds only, a tiny water droplet falls; (2) 'splash' the droplet hits and blooms into a ring of water that writes the letters 'DA' as a brush monogram; (3) 'ribbon' the monogram unspools into one water ribbon that spirals upward and the handstand figure (attached) appears inside it; (4) 'hero' the finished homepage hero with title 'Daniel Azran' and nav. The handstand figure must match the attached photo exactly: navy beanie, maroon/burgundy long-sleeve top, light-wash blue jeans, light sneakers, upside down on his hands.
+```
+
+## 43-monogram
+```
+Using your image generation tool, generate this image and save the PNG into the current directory as 43-monogram.png. Report the final path.
+Style: 'Cotton Sky + elemental water' for Daniel Azran's portfolio. Fluffy dreamy cotton clouds; stylized elemental water: broad flowing ribbons with curling S-curves, white foam bands, tapering ends, sakuga-like anime water with ukiyo-e influence, foam dissolving into cloud mist. Palette: #DCEEFF pale blue, #4FA9E8 azure, #1557B0 cobalt, #25396C slate-indigo ink, #FFF8E8 ivory, restrained sunlight gold. Almost no pink, NO green anywhere. Brush-lettered headings, elegant small-caps serif for labels. Original artwork. Render text legibly and spelled exactly as given.
+A 16:9 brand sheet for a 'DA' monogram made of a single water brush stroke with a foam curl (ukiyo-e spiral) where the strokes meet. Show: the large monogram on ivory; the same on cobalt; a round favicon at 3 sizes (64, 32, 16 px mock); a nav-bar usage at small size next to the words 'Work About Contact'; three animation keyframes of the stroke being drawn (start, half, finished). Small labels in serif small caps.
+```
+
+## 44-mobile-likeness
+```
+Using your image generation tool, generate this image and save the PNG into the current directory as 44-mobile-likeness.png. Report the final path.
+Style: 'Cotton Sky + elemental water' for Daniel Azran's portfolio. Fluffy dreamy cotton clouds; stylized elemental water: broad flowing ribbons with curling S-curves, white foam bands, tapering ends, sakuga-like anime water with ukiyo-e influence, foam dissolving into cloud mist. Palette: #DCEEFF pale blue, #4FA9E8 azure, #1557B0 cobalt, #25396C slate-indigo ink, #FFF8E8 ivory, restrained sunlight gold. Almost no pink, NO green anywhere. Brush-lettered headings, elegant small-caps serif for labels. Original artwork. Render text legibly and spelled exactly as given.
+PORTRAIT 9:19.5 phone homepage. Upper two thirds: the handstand figure centred, wrapped by one water ribbon spiral, standing on a calm reflective water surface above clouds. The handstand figure must match the attached photo exactly: navy beanie, maroon/burgundy long-sleeve top, light-wash blue jeans, light sneakers, upside down on his hands. Text over the sky at top: brush 'Daniel Azran', small caps 'ENGINEER / ML / VIDEO EDITOR'. Bottom third: a pill button 'follow the water' and the start of a river leading down to the edge of a frosted card titled 'Golf Swing Analyzer'. A small round 'DA' monogram top-left and a menu icon top-right.
+```
+
+## 45-404
+```
+Using your image generation tool, generate this image and save the PNG into the current directory as 45-404.png. Report the final path.
+Style: 'Cotton Sky + elemental water' for Daniel Azran's portfolio. Fluffy dreamy cotton clouds; stylized elemental water: broad flowing ribbons with curling S-curves, white foam bands, tapering ends, sakuga-like anime water with ukiyo-e influence, foam dissolving into cloud mist. Palette: #DCEEFF pale blue, #4FA9E8 azure, #1557B0 cobalt, #25396C slate-indigo ink, #FFF8E8 ivory, restrained sunlight gold. Almost no pink, NO green anywhere. Brush-lettered headings, elegant small-caps serif for labels. Original artwork. Render text legibly and spelled exactly as given.
+16:9 desktop 404 page. The water river from the homepage has run dry into a small puddle in the clouds; the handstand figure (attached) has tipped over and sits beside it laughing, holding a single water droplet. Big brush text '404' made of water, line 'this page drifted off', pill button 'back to the sky'. Light and charming. The handstand figure must match the attached photo exactly: navy beanie, maroon/burgundy long-sleeve top, light-wash blue jeans, light sneakers, upside down on his hands.
+```
