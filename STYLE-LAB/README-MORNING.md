@@ -29,6 +29,7 @@ The agents agreed on one thing: the water hero (`21` / `2a` / `2x-water-hero`) w
 - **`33-night-tide.png`**: a blue-hour version with gold glowing water. It's gorgeous and could work as a dark mode or the end of the scroll.
 - **`34-water-closeups.png`**: the parts of the water effect, with hex codes. v8 now uses this palette.
 - **`35` / `36`**: the two green-flawed mockups, recoloured.
+- **`41`–`45`** (round 4): a golf project detail page, the intro storyboard (now built into v8), a "DA" water monogram/favicon sheet, a phone hero that keeps your real outfit, and a 404 page.
 
 Known flaws in the water round:
 - **Green that slipped in.** The first two below are fixed in water-r3 (`35`, `36`).
@@ -42,7 +43,7 @@ Known flaws in the water round:
 
 | | What it is | Try this |
 |---|---|---|
-| **v8 · Tide** `redesign/drafts/v8-tide/` | Newest, built from the water round. One inked water river runs the whole page. It starts from the ribbons wrapped around your handstand and grows downward as you scroll. It weaves between frosted-ivory cards and ends in a calm pool at Contact. The sky warms from azure to gold as you go down. | Scroll slowly and watch the river lead you. Move the mouse to stir a little water. Use the toggle to compare on twos vs. smooth. Click **☾ night tide** (bottom left) for the blue-hour version, where the water glows gold. Open `index.html?night` to start at night. |
+| **v8 · Tide** `redesign/drafts/v8-tide/` | Newest, built from the water round. One inked water river runs the whole page. It starts from the ribbons wrapped around your handstand and grows downward as you scroll. It weaves between frosted-ivory cards and ends in a calm pool at Contact. The sky warms from azure to gold as you go down. | Scroll slowly and watch the river lead you. Move the mouse to stir a little water. Use the toggle to compare on twos vs. smooth. Click **☾ night tide** (bottom left) for the blue-hour version, where the water glows gold. Open `index.html?night` to start at night. On load, a drop falls, splashes, and unspools into the ribbon (`?nointro` skips it). |
 | **v5 · Elemental flow** `redesign/drafts/v5-elemental/` | Built on the Codex session's "Cotton Sky + water" mockup (your latest direction). The painted water actually flows (WebGL flow map). Stylized water ribbons wrap your handstand. Scrolling flies the camera hands → torso → feet, with a chapter card at each stop. | Move the mouse over the water (it swirls). Use the bottom-right toggle to compare smooth water vs. "on twos". |
 | **v6 · The edit** `redesign/drafts/v6-edit/` | COD-edit / Beautiful World: your handstand colour-graded, glowing scratchy white title, REC + timecode, flash-frame cuts, letterbox. The work section is an edit bay, and scrolling drags the playhead through your projects. | Scroll slowly through "the work". |
 | **v4 · Sakuga** `redesign/drafts/v4-sakuga/` | Impact-frame energy: black brush ink, concentration lines redrawn on threes, inverted flash + shake on impacts, smear-frame entrances, manga panels. | Scroll fast past the panels. |
