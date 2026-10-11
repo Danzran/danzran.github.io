@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="timeline.css">
 </head>
 <body>
 <!-- fixed layers: sky + clouds behind, the river above them, content scrolls on top -->
@@ -23,8 +24,8 @@
       <p class="role">ENGINEER / ML / VIDEO EDITOR</p>
       <a class="pill" href="#work">follow the water ↓</a>
     </div>
-    <div class="fig" id="fig">
-      <img class="on" src="../v3-cloud-ink/assets/fig-0.webp" alt="Daniel doing a handstand"><img src="../v3-cloud-ink/assets/fig-1.webp" alt=""><img src="../v3-cloud-ink/assets/fig-2.webp" alt="">
+    <div class="fig orbit" id="fig">
+      <img src="assets/orbit/yaw-m60.webp" alt="" data-yaw="-60"><img src="assets/orbit/yaw-m40.webp" alt="" data-yaw="-40"><img src="assets/orbit/yaw-m20.webp" alt="" data-yaw="-20"><img src="assets/orbit/yaw-000.webp" alt="Daniel doing a handstand" data-yaw="000"><img src="assets/orbit/yaw-p20.webp" alt="" data-yaw="+20"><img src="assets/orbit/yaw-p40.webp" alt="" data-yaw="+40"><img src="assets/orbit/yaw-p60.webp" alt="" data-yaw="+60">
     </div>
     <canvas id="ribbonFront" aria-hidden="true"></canvas>
   </section>
@@ -57,15 +58,25 @@
 
   <section class="sec exp" id="experience">
     <h2 class="brush" data-brush data-anchor="R">Experience</h2>
-    <div class="card reel" data-anchor="L">
-      <video src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline aria-label="Video editing reel"></video>
-      <div><span class="tag">2014–2020</span><h3>Video editor</h3><p>COD edits, compositing, camera tracking, leading a team of 4 editors. Editing taught me the viewer only ever sees the cut.</p></div>
+    <div class="nle" id="nle">
+      <div class="nle-top">
+        <div class="monitor" id="monitor">
+          <div class="mon-slate" aria-hidden="true"></div>
+          <video class="mon-reel" id="monReel" src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline aria-label="Video editing reel"></video>
+          <div class="mon-titles" id="monTitles" aria-hidden="true"></div>
+          <div class="mon-hud" aria-hidden="true"><span class="pgm">● PGM</span><span class="tc" id="monTC">TC 2014:01:00</span></div>
+        </div>
+        <div class="inspector"><p class="insp-h">inspector</p><div class="insp-deck" id="inspDeck"></div></div>
+      </div>
+      <div class="panel" id="panel">
+        <div class="heads" aria-hidden="true"><span></span><span>V3</span><span>V2</span><span>V1</span><span>A1</span></div>
+        <div class="tracks" id="tracks">
+          <div class="ruler" id="ruler" aria-hidden="true"></div>
+          <div class="lanes" id="lanes"><div class="lane"></div><div class="lane"></div><div class="lane"></div><div class="lane"></div></div>
+          <div class="playhead" id="playhead"><i></i></div>
+        </div>
+      </div>
     </div>
-    <ol class="jobs">
-      <li class="card" data-anchor="R" data-whirl><span class="tag">2018–now</span><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></li>
-      <li class="card" data-anchor="L" data-whirl><span class="tag">2022–23</span><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></li>
-      <li class="card" data-anchor="R" data-whirl><span class="tag">2024–25</span><h3>Backend developer · Extropian</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></li>
-    </ol>
   </section>
 
   <section class="sec about" id="about">
@@ -98,6 +109,7 @@
 <script src="golf.js"></script>
 <script src="water.js"></script>
 <script src="app.js"></script>
+<script src="timeline.js"></script>
 <script src="labs/cursor/cursors/scribble.js"></script>
 <script src="labs/cursor/cursors/moonglow.js"></script>
 <script src="labs/cursor/cursors/inkring.js"></script>
