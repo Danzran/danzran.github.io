@@ -4,6 +4,33 @@
 
 Everything is on the `redesign` branch, committed in small steps, not pushed. Your live `index.html` is untouched.
 
+## New this morning: the water round (top of the gallery)
+
+After the Codex quota reset at 6:05, every style agent first filled in its missing images. Each then drew your latest direction, **Cotton Sky + elemental water**, in its own style. The palette is blue/azure/ivory/gold, with less pink and no green.
+
+All 23 of those mockups sit side by side in the first gallery section, **"Water round · all styles"**. They also appear in each agent's own folder below it.
+
+My picks from looking at them all together:
+
+| Want | Look at |
+|---|---|
+| Boldest hero (ink + motion) | `b-sakuga-impact/21-water-hero.png`, `d-manga-panels/21-water-hero.png` (FWOOSH) |
+| Softest / most "drawn" hero | `c-genga-pencil/2a-water-hero.png` (pencil construction lines and an onion-skin ghost) |
+| Most cinematic hero | `e-edit-grade/21-water-hero.png` (cloud castles, REC/timeline chrome) |
+| Cleanest, most buildable hero | `g-dusk-dream/2x-water-hero.png`, `f-fluffy-ui/2x-water-hero.png` |
+| Golf card | `c-genga-pencil/2b-water-golf-card.png`, `b-sakuga-impact/22-water-projects.png` |
+| Whole-page flow (one river down the page) | `c-genga-pencil/2c-water-full-page.png`, `g-dusk-dream/2x-water-full-page.png` |
+
+The agents agreed on one thing: the water hero (`21` / `2a` / `2x-water-hero`) was the strongest image in every style.
+
+Known flaws in the water round:
+- **Green that slipped in.**
+  - A fairway patch in `b/23-water-full-page`.
+  - A hillside in `h/2x-water-projects`.
+  - A teal beanie on the golfer in `a/22-water-projects`.
+- **Invented copy.** Stats like club speed and hip turn, and extra project names in the full-page mockups, are made up.
+- **Redrawn people.** The golfer is a redraw, not you.
+
 ## Live prototypes (these actually move; open in Chrome)
 
 | | What it is | Try this |
@@ -38,7 +65,7 @@ All five share:
 
 ## Honest caveats
 
-- **Codex image quota.** It ran out at about 3am (resets 6:05). Several folders are missing their last 1–3 images (mobile, style sheet, storyboard). The prompts are saved, and I'm re-running them after the reset.
+- **Codex image quota.** It ran out at about 3am. After the 6:05 reset, every missing image was generated, so all folders are complete.
 - **Your likeness.** The AI-drawn figures resemble your handstand but aren't exact. The prototypes use a redraw of your actual photo.
 - **Invented details.** Some mockups contain made-up job titles or dates. Ignore those; they're layout placeholders.
 - **Not tested on a phone.** The prototypes were tested in headless Chrome at desktop and phone width, not on a real phone.
