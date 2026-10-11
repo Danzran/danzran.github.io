@@ -15,10 +15,11 @@ window.GolfSwing = (() => {
     let f = 0, playing = false, last = 0, hold = 0;
     const trail = [];
     const fit = () => {
-      const r = canvas.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
-      canvas.width = r.width * d; canvas.height = r.height * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+      // layout size, not getBoundingClientRect: entrance transforms (scale/skew) must not shrink the buffer
+      const d = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = canvas.clientWidth * d; canvas.height = canvas.clientHeight * d; ctx.setTransform(d, 0, 0, d, 0, 0);
     };
-    fit(); addEventListener('resize', fit);
+    fit(); new ResizeObserver(fit).observe(canvas);
     new IntersectionObserver(([e]) => playing = e.isIntersecting).observe(canvas);
 
     const jit = (a = 1.6) => (Math.random() - .5) * a;
