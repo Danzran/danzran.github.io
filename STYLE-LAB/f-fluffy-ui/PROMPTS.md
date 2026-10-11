@@ -100,7 +100,7 @@ Sections from top to bottom, each clearly separated by space:
 Original artwork, text legible and spelled exactly: "Work", "About", "Contact", "Daniel Azran", "Engineer / ML / Video editor", "See my work", "Vision", "Learning", "Motion", "Selected work", "Golf swing analyzer", "tempo 1.7:1", "Optical flow tracker", "MNIST digit classifier", "Real-estate price predictor", "View project", "Experience", "Where I have built things", "Video editing reel", "Play reel", "Stack", "Get in touch".
 ```
 
-## 07-components (NOT GENERATED: Codex usage limit hit; refs planned: 04-fluffy-interface.png, 01-hero.png, 05-mobile-projects.png)
+## 07-components (refs: 04-fluffy-interface.png, 01-hero.png, 05-mobile-projects.png)
 
 ```text
 Using your image generation tool, generate this image and save the PNG into the current directory as 07-components.png. Report the final path.
@@ -118,4 +118,40 @@ Specimens, arranged in a neat grid with labels:
 8. Feathered panel: a large cloud-material panel showing the edge feathering and a hairline indigo border. Label "Panel".
 
 Original artwork, text legible and spelled exactly: "Buttons", "See my work", "View project", "Play reel", "Hover and press", "Nav", "Work", "About", "Contact", "Cards", "Project title", "1.7:1", "tempo ratio", "Tags", "ML", "Vision", "Video", "tempo 1.7:1", "Timeline", "Milestone", "Ink accents", "Panel".
+```
+
+## Round 2: 07-components (generated after quota reset; prompt is in the 07 section above)
+
+## Round 2: 2x-water-hero (refs: CLOUD-MOCKUPS/01-cotton-sky.png, CLOUD-MOCKUPS/05-elemental-flow.png, handstand.png, golf-impact.png)
+
+```text
+Using your image generation tool, generate this image and save the PNG into the current directory as 2x-water-hero.png. Report the final path.
+
+Create an original artwork: a desktop homepage hero mockup, 16:9 landscape, "Cotton Sky with elemental water". Fluffy dreamy cotton clouds fill the sky, with a restrained sunlit gold glow near the top right. Palette: powder blue, azure, slate-indigo ink, ivory, restrained gold. Much less pink or lavender. NO green anywhere, no neon.
+
+Stylized elemental water: broad flowing water ribbons with curling S-curves, white foam bands and tapering ends, drawn as sakuga-like anime water (ukiyo-e influenced, "water breathing" style). The water swirls around and below the figure, and its foam dissolves into cloud mist at the edges. Ink strength 2 to 3 out of 5 on the water outlines, with a few radiating emphasis dashes.
+
+Subject: a handstand figure (use the reference handstand image: a person in a handstand, loose brush ink outline, flat cel colour in ivory, slate and azure) balanced at the centre-right on a water ribbon crest, slightly above a cloud.
+
+Layout: left column has the heading "Daniel Azran" in large crisp deep slate-indigo sans-serif with a short hand-inked gold-tinged underline, subtitle "Engineer / ML / Video editor" in slate-indigo, and a cloud-shaped button "See my work" with a thin indigo ink outline. Top right: slim cloud nav pill with "Work" (active, tiny ink underline), "About", "Contact". Bottom right: a small floating card showing a golf swing analyzer preview with pose nodes joined by thin lines, one angle arc marked with a small degree label, and the stat "tempo 1.7:1".
+
+Style: crisp readable type, clean alignment, cloud-material UI elements with feathered edges, small hand-inked accents. Original artwork, not a copy of the reference. Text must be legible and spelled exactly: "Daniel Azran", "Engineer / ML / Video editor", "See my work", "Work", "About", "Contact", "tempo 1.7:1".
+
+```
+
+## Round 2: 2x-water-projects (refs: CLOUD-MOCKUPS/05-elemental-flow.png, 2x-water-hero.png, golf-impact.png, 02-projects.png)
+
+```text
+Using your image generation tool, generate this image and save the PNG into the current directory as 2x-water-projects.png. Report the final path.
+
+Create an original artwork: a desktop projects page mockup, 16:9 landscape, "Cotton Sky with elemental water". Fluffy cotton clouds across the background, with thin stylized water ribbons (sakuga-like anime water, white foam bands, tapering ends) curling along the bottom and edges and dissolving into cloud mist. Palette: powder blue, azure, slate-indigo ink, ivory, restrained sunlit gold. Much less pink or lavender. NO green anywhere, no neon.
+
+Top: slim cloud nav pill with "Work" (active, tiny ink underline), "About", "Contact". Heading "Selected work" in large crisp slate-indigo sans-serif with a short gold-tinged hand-inked underline.
+
+Main feature: a large golf swing analyzer card, cloud-material panel with feathered edges and a thin indigo hairline. Left side of card: a golf swing figure (use the reference golf image pose) with pose nodes as small dots joined by thin lines, a marked joint angle arc with a degree label "37 degrees", and a swing path arc with dotted trail. Right side of card: stat rows with clean numbers: "Tempo 1.7:1", "Backswing 0.8 s", "Downswing 0.5 s", "Hip turn 42 degrees". Card title "Golf swing analyzer" in bold slate-indigo, with a small cloud tag "tempo 1.7:1" and a "View project" link with arrow.
+
+Below the feature card: three smaller cloud project cards in a row, each with a flat cel-coloured preview area and crisp caption with "View project" link: "Optical flow tracker" (flowing azure arrows and tracked dots over water-blue gradient), "MNIST digit classifier" (handwritten digits in soft cloud bubbles, blue and ivory), "Real-estate price predictor" (rising azure line chart with dots and tiny gold sun).
+
+Style: product clarity first, crisp readable type, flat cloud material for UI elements, small hand-inked accents at ink strength 2 to 3. Original artwork, not a copy of the references. Text must be legible and spelled exactly: "Work", "About", "Contact", "Selected work", "Golf swing analyzer", "Tempo 1.7:1", "Backswing 0.8 s", "Downswing 0.5 s", "Hip turn 42 degrees", "37 degrees", "tempo 1.7:1", "View project", "Optical flow tracker", "MNIST digit classifier", "Real-estate price predictor".
+
 ```
