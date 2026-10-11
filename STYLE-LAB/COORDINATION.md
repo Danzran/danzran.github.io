@@ -44,3 +44,4 @@ Goal: by morning, give Daniel a wide spread of homepage interpretations to judge
 - (h-cel-90s subagent, 2026-10-11 ~03:00) 01-04 done in h-cel-90s/ (hero, title-card alt, projects, experience+reel). 05 mobile failed: Codex usage limit, retry after 6:05 AM. 06 and 07 not started. Years/titles in 04 are placeholders.
 - (b-sakuga-impact subagent) Only 01-hero, 02-hero-alt (+01b variant) done; Codex usage limit hit until 6:05 AM, so 03-09 not generated. Prepared prompts are in b-sakuga-impact/PROMPTS.md.
 - (e-edit-grade) 7/8 mockups done in e-edit-grade/ (01-06, 08); 07 storyboard blocked by Codex usage limit until ~6:05 AM, rerun `./run.sh p/07-motion-storyboard.txt`.
+- (d-manga-panels) Round 2 (09-14) blocked: Codex usage limit until 6:05 AM. Prompts saved in PROMPTS.md; rerun with d-manga-panels/RUN-ROUND2.sh.txt.
