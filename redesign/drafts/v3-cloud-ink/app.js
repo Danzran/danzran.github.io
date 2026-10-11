@@ -75,7 +75,7 @@ function layer(canvas, count, yMin, yMax, scaleMin, scaleMax, speed, tint) {
   return { canvas, ctx, items };
 }
 const back = layer(document.getElementById('cloudsBack'), 6, .52, .82, .6, 1.1, .006, ['rgba(255,214,190,.35)', 'rgba(170,150,240,.45)']);
-const front = layer(document.getElementById('cloudsFront'), 7, .78, 1.02, 1.1, 2.0, .012, ['rgba(255,226,200,.3)', 'rgba(160,140,235,.55)']);
+const front = layer(document.getElementById('cloudsFront'), 6, .98, 1.12, .9, 1.6, .012, ['rgba(255,226,200,.3)', 'rgba(160,140,235,.55)']);
 function fit() { for (const L of [back, front]) { L.canvas.width = hero.clientWidth * DPR; L.canvas.height = hero.clientHeight * DPR; L.ctx.setTransform(DPR, 0, 0, DPR, 0, 0); } }
 fit(); addEventListener('resize', fit);
 const state = { sink: 0, mx: 0, my: 0 };
