@@ -214,6 +214,5 @@ gsap.from('.role, .hero .pill', { y: 20, opacity: 0, duration: .5, ease: 'steps(
 gsap.utils.toArray('.sec h2').forEach(h => gsap.from(h.querySelectorAll('.lt-letter'), { y: 50, opacity: 0, duration: .35, ease: 'steps(3)', stagger: .04, scrollTrigger: { trigger: h, start: 'top 85%' } }));
 // cards surface out of the water: rise + settle, on threes
 gsap.utils.toArray('.card').forEach((c, i) => gsap.from(c, { y: 80, opacity: 0, rotate: i % 2 ? 1.5 : -1.5, duration: .6, ease: 'steps(6)', scrollTrigger: { trigger: c, start: 'top 90%' } }));
-gsap.utils.toArray('.proj, .jobs .card').forEach((el, i) => gsap.to(el, { y: i % 2 ? 7 : -7, duration: 3 + i * .3, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .4 }));
 ScrollTrigger.addEventListener('refresh', layout);
 })();

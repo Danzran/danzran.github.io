@@ -87,4 +87,9 @@ main{position:relative;z-index:2}
   .row3,.jobs{grid-template-columns:1fr}
   .golfvis{max-width:360px;width:100%;margin:0 auto}
 }
-@media (prefers-reduced-motion:reduce){.proj:hover{transform:none}}
+/* buoyancy lives on `translate` so it never fights the GSAP entrance (which owns `transform`) */
+.proj,.jobs .card{animation:bob 3.4s ease-in-out infinite alternate}
+.proj:nth-child(2),.jobs .card:nth-child(2){animation-duration:3.9s;animation-delay:-1.2s;--bob:7px}
+.proj:nth-child(3),.jobs .card:nth-child(3){animation-duration:4.3s;animation-delay:-2.1s}
+@keyframes bob{from{translate:0 calc(var(--bob,-7px) * -1)}to{translate:0 var(--bob,-7px)}}
+@media (prefers-reduced-motion:reduce){.proj:hover{transform:none}.proj,.jobs .card{animation:none}}
