@@ -153,6 +153,22 @@ window.LAB = {
     {
      "src": "water-r3/45-404.png",
      "name": "45-404.png"
+    },
+    {
+     "src": "water-r3/51-experience-river.png",
+     "name": "51-experience-river.png"
+    },
+    {
+     "src": "water-r3/53-horizontal.png",
+     "name": "53-horizontal.png"
+    },
+    {
+     "src": "water-r3/54-dive-transition.png",
+     "name": "54-dive-transition.png"
+    },
+    {
+     "src": "water-r3/55-night-full.png",
+     "name": "55-night-full.png"
     }
    ],
    "folder": "water-r3"
