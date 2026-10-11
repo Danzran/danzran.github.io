@@ -117,10 +117,6 @@ window.LAB = {
     {
      "src": "d-manga-panels/08-style-sheet.png",
      "name": "08-style-sheet.png"
-    },
-    {
-     "src": "d-manga-panels/10-hero-likeness.png",
-     "name": "10-hero-likeness.png"
     }
    ],
    "folder": "d-manga-panels"
@@ -437,6 +433,11 @@ window.LAB = {
   }
  ],
  "protos": [
+  {
+   "href": "../redesign/drafts/v6-edit/index.html",
+   "title": "v6 \u00b7 The edit (COD / Beautiful World, live)",
+   "blurb": "Graded footage, glowing scratchy titles, REC/timecode chrome, flash-frame cuts, and an edit bay where scrolling drives the playhead through your projects."
+  },
   {
    "href": "../redesign/drafts/v5-elemental/index.html",
    "title": "v5 \u00b7 Elemental flow (latest direction, live)",
