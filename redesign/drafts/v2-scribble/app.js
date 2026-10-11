@@ -19,10 +19,10 @@ function swath(host, color) {
   const svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('class', 'swath boil');
   svg.setAttribute('viewBox', '0 0 100 40'); svg.setAttribute('preserveAspectRatio', 'none');
-  Object.assign(svg.style, { left: '-4%', top: '18%', width: '108%', height: '70%' });
-  let d = 'M2 ' + rand(8, 14);
-  for (let x = 2; x < 98; x += rand(2.4, 3.6)) d += ` L${x.toFixed(1)} ${rand(30, 37).toFixed(1)} L${(x + rand(1.4, 2.4)).toFixed(1)} ${rand(3, 10).toFixed(1)}`;
-  svg.innerHTML = `<path d="${d}" fill="none" stroke="${color}" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round" filter="url(#crayon)" vector-effect="non-scaling-stroke"/>`;
+  Object.assign(svg.style, { left: '-3%', top: '34%', width: '106%', height: '58%' });
+  let d = `M${rand(0, 3).toFixed(1)} ${rand(26, 32).toFixed(1)}`;
+  for (let x = 3; x < 96; x += rand(5, 8)) d += ` L${(x + rand(2, 4)).toFixed(1)} ${rand(4, 12).toFixed(1)} L${(x + rand(4, 7)).toFixed(1)} ${rand(28, 36).toFixed(1)}`;
+  svg.innerHTML = `<path d="${d}" fill="none" stroke="${color}" stroke-width="16" stroke-linejoin="round" stroke-linecap="round" filter="url(#crayon)" vector-effect="non-scaling-stroke" opacity=".9"/>`;
   host.style.position = 'relative'; host.style.zIndex = 0;
   host.prepend(svg);
 }
