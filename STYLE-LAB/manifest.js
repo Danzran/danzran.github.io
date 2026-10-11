@@ -66,7 +66,7 @@ window.LAB = {
    "title": "C \u00b7 Animator key-frame pencils",
    "blurb": "Blue/red construction lines, timing sheets, onion skins: behind the frame.",
    "notes": "",
-   "hasNotes": false,
+   "hasNotes": true,
    "images": [
     {
      "src": "c-genga-pencil/01-hero.png",
