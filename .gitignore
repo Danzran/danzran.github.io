@@ -8,3 +8,5 @@ redesign/codex-lando-log.txt
 # third-party reference frames (not ours to publish)
 STYLE-BLEND/reference/oikawa-serve.png
 CLOUD-MOCKUPS/reference/beautiful-world-*.png
+# shared reference copies for agents (originals are committed elsewhere)
+STYLE-LAB/_refs/
