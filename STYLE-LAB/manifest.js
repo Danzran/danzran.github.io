@@ -159,6 +159,10 @@ window.LAB = {
      "name": "51-experience-river.png"
     },
     {
+     "src": "water-r3/52-about.png",
+     "name": "52-about.png"
+    },
+    {
      "src": "water-r3/53-horizontal.png",
      "name": "53-horizontal.png"
     },
