@@ -120,7 +120,7 @@ window.Scribble = (() => {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', `${-pad} ${-asc - pad} ${g.adv + pad * 2} ${asc + desc + pad * 2}`);
         svg.setAttribute('class', 'sc-letter');
-        svg.style.width = ((g.adv + pad * 2) / UNITS) + 'em';
+        svg.style.width = ((g.adv + pad * 2) / UNITS) + 'em'; svg.style.height = ((asc + desc + pad * 2) / UNITS) + 'em';
         svg.style.margin = `0 ${-(pad / UNITS)}em`;
         let html = '';
         for (let v = 0; v < VARIANTS; v++) html += `<g class="sc-v" style="display:${v ? 'none' : 'inline'}">${drawVariant(ch, v, seed + i)}</g>`;

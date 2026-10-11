@@ -80,7 +80,7 @@ window.Lettering = (() => {
         const g = glyph(ch), pad = 8, svg = document.createElementNS(NS, 'svg');
         svg.setAttribute('viewBox', `${-pad} ${-asc - pad} ${g.adv + pad * 2} ${asc + desc + pad * 2}`);
         svg.setAttribute('class', 'lt-letter');
-        svg.style.width = ((g.adv + pad * 2) / UNITS) + 'em'; svg.style.margin = `0 ${-(pad / UNITS)}em`;
+        svg.style.width = ((g.adv + pad * 2) / UNITS) + 'em'; svg.style.height = ((asc + desc + pad * 2) / UNITS) + 'em'; svg.style.margin = `0 ${-(pad / UNITS)}em`;
         let html = '';
         for (let v = 0; v < VARIANTS; v++) html += `<g class="lt-v" style="display:${v ? 'none' : 'inline'}">${variant(ch, v, seed + i)}</g>`;
         svg.innerHTML = html; w.appendChild(svg);

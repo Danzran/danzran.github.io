@@ -17,7 +17,7 @@ html[data-boil="1"] .boil{filter:url(#boil1)}
 html[data-boil="2"] .boil{filter:url(#boil2)}
 
 .lt-word{display:inline-flex;white-space:nowrap}
-.lt-letter{height:1.2em;overflow:visible;vertical-align:-.2em}
+.lt-letter{overflow:visible;vertical-align:-.28em}
 .brush{display:inline-block;line-height:.9;white-space:nowrap;color:var(--ink)}
 
 /* ---------- nav ---------- */

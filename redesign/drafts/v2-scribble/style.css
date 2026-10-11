@@ -26,7 +26,7 @@ html[data-boil="2"] .boil{filter:url(#boil2)}
 .note{font-family:var(--hand);font-size:clamp(18px,1.6vw,24px);line-height:1.15}
 .scribble{display:inline-block;line-height:.95;white-space:nowrap}
 .sc-word{display:inline-flex;white-space:nowrap}
-.sc-letter{height:1.12em;overflow:visible;vertical-align:-.16em}
+.sc-letter{overflow:visible;vertical-align:-.22em}
 
 /* highlighter swaths behind words */
 .swath{position:absolute;z-index:-1;pointer-events:none;overflow:visible}
