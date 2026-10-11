@@ -162,6 +162,7 @@ gsap.from('.card, .more', { y: 90, rotate: () => rand(-8, 8), opacity: 0, ease: 
   scrollTrigger: { trigger: '.work__pin', start: 'top 75%' } });
 
 /* ---------- experience + about entrances ---------- */
+ScrollTrigger.create({ trigger: '#experience', start: 'top 60px', end: 'bottom 60px', toggleClass: { targets: document.body, className: 'theme-lilac' } });
 gsap.from('.reel__frame', { rotate: -8, y: 60, opacity: 0, duration: .8, ease: 'steps(6)', scrollTrigger: { trigger: '.reel', start: 'top 75%' } });
 gsap.from('.exp__row', { x: -60, opacity: 0, duration: .6, ease: 'steps(5)', stagger: .1, scrollTrigger: { trigger: '.exp__row', start: 'top 80%' } });
 gsap.from('.about__doodle', { scale: .7, opacity: 0, duration: .8, ease: 'steps(6)', scrollTrigger: { trigger: '.about', start: 'top 70%' } });

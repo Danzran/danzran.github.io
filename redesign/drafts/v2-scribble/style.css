@@ -165,3 +165,4 @@ html[data-boil="2"] .boil{filter:url(#boil2)}
   html[data-boil] .boil{filter:none}
   .statement .w{opacity:1}
 }
+.theme-lilac .nav{background:linear-gradient(var(--lilac) 55%,transparent)}
