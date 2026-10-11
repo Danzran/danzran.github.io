@@ -107,3 +107,4 @@ html.night .stats div{background:rgba(255,255,255,.06);border-color:rgba(255,233
 html.night .stats .live{background:rgba(246,194,94,.25)}
 html.night .mini,html.night .golfvis{background:#e9eefb}
 html.night .links a,html.night .more a{border-color:#f3ead6}
+.golf-copy .case{margin-top:16px}
