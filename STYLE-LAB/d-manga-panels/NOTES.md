@@ -16,3 +16,6 @@
 - Art: handstand and golf panels come from the real photos redrawn in ink; the generated mockups are placeholders for key art.
 
 **Caveats:** the character in the generated art drifts between panels (the 06/03 faces are generic anime, not Daniel); some panels (03 bottom, 06 middle) are filler scenes. 04 has an extra "Motion Studies" panel.
+
+## Round 2 status
+Images 09-14 (mobile v2, hero likeness, hero softer, experience v2, golf project detail, transition) were NOT generated: Codex returned "usage limit reached, retry after 6:05 AM". Prompts are in PROMPTS.md; RUN-ROUND2.sh.txt is the runner (rename to .sh, runs pairs of 2).
