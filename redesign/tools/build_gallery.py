@@ -29,6 +29,7 @@ for extra in sorted(os.listdir(LAB)):
         GROUPS.append((p, extra, ''))
 
 PROTOS = [
+    ('redesign/drafts/v8-tide/golf.html', 'v8 · Tide: golf case study (live)', 'Project-detail template from water-r3/41: your swing with live pose analysis, five real keyframes re-inked on twos with measured lead-arm angles, how-it-works cards, and the river threading through.'),
     ('redesign/drafts/v8-tide/index.html', 'v8 · Tide (water round, live)', 'One hand-inked water river runs the whole page: it unwinds from the ribbons around your handstand and grows as you scroll, weaving between frosted ivory cards, and ends in a pool at contact. Azure/ivory/gold sky that warms as you go down. On twos by default.'),
     ('redesign/drafts/v7-manga/index.html', 'v7 · Pastel manga page (live)', 'The homepage as a manga chapter: screentone clouds, speech-bubble nav, SFX lettering, panels that wipe open on threes as you read down.'),
     ('redesign/drafts/v6-edit/index.html', 'v6 · The edit (COD / Beautiful World, live)', 'Graded footage, glowing scratchy titles, REC/timecode chrome, flash-frame cuts, and an edit bay where scrolling drives the playhead through your projects.'),

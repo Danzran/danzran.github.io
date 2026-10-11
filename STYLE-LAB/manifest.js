@@ -790,6 +790,11 @@ window.LAB = {
  ],
  "protos": [
   {
+   "href": "../redesign/drafts/v8-tide/golf.html",
+   "title": "v8 \u00b7 Tide: golf case study (live)",
+   "blurb": "Project-detail template from water-r3/41: your swing with live pose analysis, five real keyframes re-inked on twos with measured lead-arm angles, how-it-works cards, and the river threading through."
+  },
+  {
    "href": "../redesign/drafts/v8-tide/index.html",
    "title": "v8 \u00b7 Tide (water round, live)",
    "blurb": "One hand-inked water river runs the whole page: it unwinds from the ribbons around your handstand and grows as you scroll, weaving between frosted ivory cards, and ends in a pool at contact. Azure/ivory/gold sky that warms as you go down. On twos by default."
