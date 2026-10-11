@@ -2,7 +2,7 @@
    Body + flowing inner streaks move smoothly; the inked contour and foam curls are
    redrawn on twos (12 fps) so the drawn details have a hand-animated cadence. */
 window.Water = (() => {
-  const C = { deep: '#1557b0', mid: '#4fa9e8', light: '#a9d4ff', foam: '#ffffff', ink: '#25396c', edge: '#dceeff', s1: '#e6f3ff', s2: '#cfe6ff', s3: '#bfe0ff', glow: '' };  // glow: '' = none (night mode sets a gold glow)   // from STYLE-LAB/water-r3/34-water-closeups
+  const C = { deep: '#1557b0', mid: '#4fa9e8', light: '#a9d4ff', foam: '#ffffff', ink: '#25396c', edge: '#dceeff', s1: '#e6f3ff', s2: '#cfe6ff', s3: '#bfe0ff', glow: '', inkW: 1.2, inkA: .45, inkJ: 1.6 };  // glow: '' = none (night mode sets a gold glow)   // from STYLE-LAB/water-r3/34-water-closeups
 
   // Catmull-Rom through control points -> dense samples
   function spline(pts, per = 18) {
@@ -77,8 +77,8 @@ window.Water = (() => {
       ctx.beginPath(); edge(.92, drawn ? 1.2 : 0).forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.stroke();
       ctx.setLineDash([]);
       // inked contour, re-drawn each "drawing" with a little jitter
-      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.globalAlpha = alpha * .45;
-      for (const k of [1, -1]) { ctx.beginPath(); edge(k, drawn ? 1.6 : 0).forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.stroke(); }
+      ctx.strokeStyle = C.ink; ctx.lineWidth = C.inkW; ctx.globalAlpha = alpha * C.inkA;   // ink strength is set by the page (1-5 ladder)
+      if (C.inkA > 0) for (const k of [1, -1]) { ctx.beginPath(); edge(k, drawn ? C.inkJ : 0).forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.stroke(); }
       ctx.globalAlpha = alpha;
     }
     // foam curls riding the crest (positions travel with t; shapes are re-inked on twos)
