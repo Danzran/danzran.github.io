@@ -92,10 +92,20 @@ clouds.sort((a, b) => a.depth - b.depth);
 /* painted hero plates (STYLE-LAB/water-r3/61, 62): cover the hero, drift slower than the page, fade out below it */
 const plates = { day: new Image(), night: new Image() };
 plates.day.src = 'assets/plate-day.webp'; plates.night.src = 'assets/plate-night.webp';
+// the plate's bottom quarter is faded to transparent once (destination-out), so no hard edge shows when it scrolls up
+const fadedPlate = new Map();
+function faded(img) {
+  if (fadedPlate.has(img)) return fadedPlate.get(img);
+  const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight; const g = c.getContext('2d');
+  g.drawImage(img, 0, 0); g.globalCompositeOperation = 'destination-out';
+  const gr = g.createLinearGradient(0, c.height * .7, 0, c.height); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
+  g.fillStyle = gr; g.fillRect(0, c.height * .7, c.width, c.height * .3);
+  fadedPlate.set(img, c); return c;
+}
 function drawPlate(img, scroll, alpha) {
   if (!img.complete || !img.naturalWidth || alpha <= 0) return;
   const s = Math.max(W / img.naturalWidth, H / img.naturalHeight) * 1.06, w = img.naturalWidth * s, h = img.naturalHeight * s;
-  sx.globalAlpha = alpha; sx.drawImage(img, (W - w) / 2, (H - h) / 2 - scroll * .35, w, h); sx.globalAlpha = 1;
+  sx.globalAlpha = alpha; sx.drawImage(faded(img), (W - w) / 2, (H - h) / 2 - scroll * .35, w, h); sx.globalAlpha = 1;
 }
 function drawSky(t, scroll) {
   const p = docH > H ? scroll / (docH - H) : 0;
@@ -114,6 +124,7 @@ function drawSky(t, scroll) {
     const x = ((c.x + t * c.v) % 1.4 - .2) * W - w / 2;
     const y = c.y * H - scroll * c.depth;
     const yy = ((y % (H * 3.4)) + H * 3.4) % (H * 3.4) - H * .5;   // wrap vertically so clouds keep coming
+    if (theme.night >= 1) break;   // v9 is night only: the daylight cumulus pass would just show through the wash as grey blobs
     sx.globalAlpha = .55 + c.depth; sx.drawImage(c.img, x, yy, w, h);
   }
   sx.globalAlpha = 1;
@@ -127,7 +138,7 @@ function drawSky(t, scroll) {
   for (const c of clouds) {
     const w = c.img.width * (W / 1600) * (.6 + c.depth), h = c.img.height * (W / 1600) * (.6 + c.depth);
     const x = ((c.x + t * c.v) % 1.4 - .2) * W - w / 2, y = c.y * H - scroll * c.depth, yy = ((y % (H * 3.4)) + H * 3.4) % (H * 3.4) - H * .5;
-    sx.globalAlpha = n * (.12 + c.depth * .35); sx.drawImage(c.img, x, yy, w, h);
+    sx.globalAlpha = n * (.03 + c.depth * .1);   // faint moonlit clouds below the painted plate sx.drawImage(c.img, x, yy, w, h);
   }
   sx.fillStyle = '#fff6dc';
   for (const st of stars) { sx.globalAlpha = n * (.45 + .45 * Math.sin(t * 2 + st.tw)); sx.beginPath(); sx.arc(st.x * W, st.y * H - (scroll * .05) % H, st.r, 0, 7); sx.fill(); }
