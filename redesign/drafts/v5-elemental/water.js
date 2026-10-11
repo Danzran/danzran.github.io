@@ -38,7 +38,7 @@ window.Water = (() => {
   function draw(ctx, pts, opt) {
     const { width = 40, t = 0, side = 0, drawn = 0, alpha = 1 } = opt;
     const S = spline(pts);
-    const w = p => width * Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, p.u))), .55) * (.85 + .15 * Math.sin(p.u * 9 + t * 1.3));
+    const w = p => width * Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, p.u))), .9) * (.85 + .15 * Math.sin(p.u * 9 + t * 1.3));
     const inSide = p => side === 0 || (side > 0 ? p.z >= 0 : p.z < 0);
     ctx.save(); ctx.globalAlpha = alpha; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
     // runs of consecutive samples on this side
@@ -51,14 +51,17 @@ window.Water = (() => {
       const top = edge(1), bot = edge(-1).reverse();
       // body
       const g = ctx.createLinearGradient(run[0].x, run[0].y - width, run[0].x, run[0].y + width);
-      ctx.fillStyle = C.mid;
+      const mid = run[run.length >> 1], gw = width * 1.2;
+      const g2 = ctx.createLinearGradient(mid.x + mid.nx * gw, mid.y + mid.ny * gw, mid.x - mid.nx * gw, mid.y - mid.ny * gw);
+      g2.addColorStop(0, '#9fd0ff'); g2.addColorStop(.45, C.mid); g2.addColorStop(1, C.deep);
+      ctx.fillStyle = g2;
       ctx.beginPath(); [...top, ...bot].forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.closePath(); ctx.fill();
       // deeper band toward the lower edge
       ctx.fillStyle = C.deep; ctx.globalAlpha = alpha * .55;
       ctx.beginPath(); [...edge(-.15), ...edge(-1).reverse()].forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.closePath(); ctx.fill();
       ctx.globalAlpha = alpha;
       // flowing streaks: offset polylines with moving dashes
-      const streaks = [[.62, C.light, 3.2, 70, 40], [.3, C.light, 2.2, 50, 60], [-.05, '#cfe6ff', 1.6, 34, 52], [-.45, C.light, 2.4, 80, 50], [.82, C.foam, 2.2, 26, 34]];
+      const streaks = [[.7, '#e6f3ff', 1.6, 90, 30], [.5, C.light, 1.4, 60, 50], [.25, '#cfe6ff', 1.1, 40, 46], [0, C.light, 1.2, 70, 60], [-.3, '#bfe0ff', 1, 50, 40], [-.6, C.light, 1.3, 90, 55], [.86, C.foam, 1.8, 30, 22]];
       for (const [k, col, lw, dash, gap] of streaks) {
         ctx.strokeStyle = col; ctx.lineWidth = lw * Math.max(.6, width / 46);
         ctx.setLineDash([dash, gap]); ctx.lineDashOffset = -t * 160 * (1 + k * .2);
@@ -71,7 +74,7 @@ window.Water = (() => {
       ctx.beginPath(); edge(.92, drawn ? 1.2 : 0).forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.stroke();
       ctx.setLineDash([]);
       // inked contour, re-drawn each "drawing" with a little jitter
-      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.globalAlpha = alpha * .75;
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.globalAlpha = alpha * .45;
       for (const k of [1, -1]) { ctx.beginPath(); edge(k, drawn ? 1.6 : 0).forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.stroke(); }
       ctx.globalAlpha = alpha;
     }

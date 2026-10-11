@@ -83,10 +83,11 @@ const ctxs = [back, front, trail].map(c => c.getContext('2d'));
 function fit2d() { [back, front, trail].forEach((c, i) => { c.width = journey.clientWidth * DPR; c.height = journey.clientHeight * DPR; ctxs[i].setTransform(DPR, 0, 0, DPR, 0, 0); }); }
 fit2d(); addEventListener('resize', fit2d);
 // a spiral that wraps the upside-down figure: (u, v) in figure-box units, z = in front (+) / behind (-)
-const SPIRAL = [[-1.9, 1.04, 1], [-.6, .95, 1], [.5, .88, 1], [1.25, .79, -1], [.7, .67, -1], [-.25, .61, -1], [-.6, .5, 1], [.25, .42, 1], [1.1, .35, 1], [1.45, .27, -1], [.7, .19, -1], [-.15, .13, -1], [.15, .03, 1], [1.1, -.06, 1], [2.4, -.12, 1]];
-function spiralPts(t) {
+const SPIRAL = [[-1.9, 1.05, 1], [-.55, .93, 1], [.55, .85, 1], [1.1, .75, -1], [.45, .65, -1], [-.25, .57, -1], [-.4, .46, 1], [.4, .36, 1], [1.3, .22, 1], [2.5, .04, 1]];
+const SECOND = [[2.2, .98, 1], [1.1, .9, 1], [.25, .8, -1], [-.5, .7, -1], [-1.0, .55, 1], [-.6, .4, 1], [.1, .3, -1], [.9, .2, -1], [1.6, .08, 1]];
+function spiralPts(t, path = SPIRAL, ph = 0) {
   const b = figBox();
-  return SPIRAL.map(([u, v, z], i) => ({ x: b.x + b.w * (u + Math.sin(t * .7 + i * 1.3) * .05), y: b.y + b.h * (v + Math.cos(t * .6 + i) * .015), z }));
+  return path.map(([u, v, z], i) => ({ x: b.x + b.w * (u + Math.sin(t * .7 + i * 1.3 + ph) * .05), y: b.y + b.h * (v + Math.cos(t * .6 + i) * .015), z }));
 }
 
 /* ---------- main loop ---------- */
@@ -105,9 +106,11 @@ function frame(now) {
   // ribbon around the figure
   const W = journey.clientWidth, H = journey.clientHeight, b = figBox();
   ctxs[0].clearRect(0, 0, W, H); ctxs[1].clearRect(0, 0, W, H); ctxs[2].clearRect(0, 0, W, H);
-  const pts = spiralPts(t), width = b.h * .055;
-  Water.setSeed(drawing); Water.draw(ctxs[0], pts, { width, t, side: -1, drawn: 1, alpha: .95 });
-  Water.setSeed(drawing); Water.draw(ctxs[1], pts, { width, t, side: 1, drawn: 1 });
+  const pts = spiralPts(t), pts2 = spiralPts(t, SECOND, 2), width = b.h * .036;
+  Water.setSeed(drawing + 3); Water.draw(ctxs[0], pts2, { width: width * .5, t: t * 1.2, side: -1, drawn: 1, alpha: .6 });
+  Water.setSeed(drawing); Water.draw(ctxs[0], pts, { width, t, side: -1, drawn: 1, alpha: .82 });
+  Water.setSeed(drawing + 3); Water.draw(ctxs[1], pts2, { width: width * .5, t: t * 1.2, side: 1, drawn: 1, alpha: .7 });
+  Water.setSeed(drawing); Water.draw(ctxs[1], pts, { width, t, side: 1, drawn: 1, alpha: .92 });
   // cursor trail ribbon
   mouse.trail.forEach(p => p.life -= .028); mouse.trail = mouse.trail.filter(p => p.life > 0).slice(-26);
   if (mouse.trail.length > 4) {
@@ -133,8 +136,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click
 
 const cam = { fx: 0, fy: 0, s: 1 };
 function applyCam() {
-  const W = journey.clientWidth, H = journey.clientHeight;
-  world.style.transform = `translate(${W / 2 - cam.fx * cam.s}px, ${H / 2 - cam.fy * cam.s}px) scale(${cam.s})`;
+  const W = journey.clientWidth, H = journey.clientHeight, s = cam.s;
+  const fx = Math.min(W - W / (2 * s), Math.max(W / (2 * s), cam.fx)), fy = Math.min(H - H / (2 * s), Math.max(H / (2 * s), cam.fy));
+  world.style.transform = `translate(${W / 2 - fx * s}px, ${H / 2 - fy * s}px) scale(${s})`;
 }
 function focus(u, v) { const b = figBox(); return { fx: b.x + b.w * u, fy: b.y + b.h * v }; }
 function resetCam() { cam.fx = journey.clientWidth / 2; cam.fy = journey.clientHeight / 2; cam.s = 1; applyCam(); }
