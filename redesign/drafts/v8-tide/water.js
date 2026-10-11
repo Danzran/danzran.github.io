@@ -36,9 +36,11 @@ window.Water = (() => {
 
   // Draw the parts of a ribbon whose depth matches `side` (+1 in front, -1 behind, 0 = all)
   function draw(ctx, pts, opt) {
-    const { width = 40, t = 0, side = 0, drawn = 0, alpha = 1 } = opt;
+    const { width = 40, t = 0, side = 0, drawn = 0, alpha = 1, taper = 0 } = opt;
     const S = spline(pts);
-    const w = p => width * Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, p.u))), .9) * (.85 + .15 * Math.sin(p.u * 9 + t * 1.3));
+    // taper: 0 = swell over the whole length; >0 = only the last `taper` px at each end thin out (long rivers)
+    const env = p => taper ? Math.pow(Math.min(1, p.s / taper, (S.L - p.s) / taper), .7) : Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, p.u))), .9);
+    const w = p => width * env(p) * (.85 + .15 * Math.sin(p.s / 90 + t * 1.3));
     const inSide = p => side === 0 || (side > 0 ? p.z >= 0 : p.z < 0);
     ctx.save(); ctx.globalAlpha = alpha; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
     // runs of consecutive samples on this side
