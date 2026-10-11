@@ -127,6 +127,14 @@ function layout() {
     const r = el.getBoundingClientRect(), side = el.dataset.anchor, y = r.top + sy + r.height * .5;
     if (side === 'C') return;
     const x = narrow ? (side === 'L' ? W * .1 : W * .9) : side === 'L' ? Math.max(W * .05, r.left - 30) : Math.min(W * .95, r.right + 30);
+    if (el.hasAttribute('data-whirl')) {
+      // a little whirlpool beside this stop (the timeline marker), out on the open side of the card
+      const onLeft = r.left + r.width / 2 < W / 2, wx = narrow ? x : onLeft ? Math.min(W - 80, r.right + 150) : Math.max(110, r.left - 150), R = 72, dir = onLeft ? 1 : -1;
+      pts.push({ x: wx, y: y - R * 2.2 });
+      for (let i = 0; i <= 7; i++) { const a = -Math.PI / 2 + dir * i * .95, k = 1 - i / 16; pts.push({ x: wx + Math.cos(a) * R * k * 1.4, y: y + Math.sin(a) * R * k }); }
+      pts.push({ x: wx, y: y + R * 2.4 });
+      return;
+    }
     pts.push({ x, y: y - r.height * .3 }, { x, y: y + r.height * .3 });
   });
   const pool = document.getElementById('pool').getBoundingClientRect(), pcx = pool.left + pool.width / 2, pcy = pool.top + sy + pool.height * .55;
