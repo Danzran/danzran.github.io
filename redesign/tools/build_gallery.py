@@ -17,6 +17,7 @@ GROUPS = [
     ('STYLE-LAB/g-dusk-dream', 'G · Dusk to night', 'Golden hour to starry pastel night as you scroll; glowing ink.'),
     ('STYLE-LAB/h-cel-90s', 'H · 90s pastel cel anime', 'Hand-inked cels, airbrushed skies, sparkles and VHS warmth.'),
     ('STYLE-LAB/codex-session', 'X · Codex terra picks', 'Interpretations the Codex agent thought were missing.'),
+    ('HANDSTAND-DRAFTS', 'Handstand camera drafts (Codex session)', 'Water/ink/light treatments around your handstand plus a scroll camera path (hands → torso → feet). See CAMERA-PATH.md.'),
     ('STYLE-BLEND', 'Blend tests (first round)', 'Cloud world × anime ink at different strengths. 05 is the ink ladder.'),
     ('CLOUD-MOCKUPS', 'Cloud mockups (Codex session)', 'The fluffy cloud direction that started this.'),
     ('redesign/mockups', 'Earlier mockups (rejected directions)', 'Lime/dark reveal and paper-crayon explorations, kept for reference.'),
@@ -27,6 +28,8 @@ for extra in sorted(os.listdir(LAB)):
         GROUPS.append((p, extra, ''))
 
 PROTOS = [
+    ('redesign/drafts/v5-elemental/index.html', 'v5 · Elemental flow (latest direction, live)', 'Cotton-sky water scene that actually flows (WebGL flow map), water ribbons wrapping the handstand, camera travels hands → torso → feet. Toggle smooth vs on-twos water.'),
+    ('redesign/drafts/v4-sakuga/index.html', 'v4 · Sakuga impact frames (live)', 'Bold ink, concentration lines redrawn on threes, impact-frame flashes and smears on scroll, sakuga golf rotoscope.'),
     ('redesign/drafts/v3-cloud-ink/index.html', 'v3 · Cloud world + soft ink (live)', 'Painted sky, drifting clouds, redrawn handstand + rays, brush title that boils, golf rotoscope.'),
     ('redesign/drafts/v2-scribble/index.html', 'v2 · Paper & crayon (rejected)', 'Redrawn crayon letters, pastel rotoscope golf.'),
     ('redesign/drafts/v1-reveal/index.html', 'v1 · Machine-vision reveal (rejected)', 'Dark/lime cursor reveal.'),

@@ -6,7 +6,7 @@ window.LAB = {
    "title": "A \u00b7 Cloud world, soft ink",
    "blurb": "Ghibli-like painted clouds with soft indigo linework (ink ladder 2\u20133).",
    "notes": "",
-   "hasNotes": false,
+   "hasNotes": true,
    "images": [
     {
      "src": "a-cloud-soft-ink/01-hero.png",
@@ -43,12 +43,16 @@ window.LAB = {
    "id": "STYLE-LAB-b-sakuga-impact",
    "title": "B \u00b7 Sakuga impact frames",
    "blurb": "Bold brush ink, hatching and emphasis lines on airy pastel (ladder 4\u20135).",
-   "notes": "",
-   "hasNotes": false,
+   "notes": "STATUS: only 2 of the 9 requested mockups were generated (01-hero, 02-hero-alt) plus one accidental hero variant (01b). Codex hit its usage limit (\"try again at 6:05 AM\"). Re-run the prepared prompts in PROMPTS.md after that.",
+   "hasNotes": true,
    "images": [
     {
      "src": "b-sakuga-impact/01-hero.png",
      "name": "01-hero.png"
+    },
+    {
+     "src": "b-sakuga-impact/01b-hero-variant.png",
+     "name": "01b-hero-variant.png"
     },
     {
      "src": "b-sakuga-impact/02-hero-alt.png",
@@ -113,6 +117,10 @@ window.LAB = {
     {
      "src": "d-manga-panels/08-style-sheet.png",
      "name": "08-style-sheet.png"
+    },
+    {
+     "src": "d-manga-panels/10-hero-likeness.png",
+     "name": "10-hero-likeness.png"
     }
    ],
    "folder": "d-manga-panels"
@@ -160,7 +168,7 @@ window.LAB = {
    "title": "F \u00b7 Fluffy cloud UI",
    "blurb": "Clean product-like cloud interface with small ink accents.",
    "notes": "",
-   "hasNotes": false,
+   "hasNotes": true,
    "images": [
     {
      "src": "f-fluffy-ui/01-hero.png",
@@ -193,8 +201,8 @@ window.LAB = {
    "id": "STYLE-LAB-g-dusk-dream",
    "title": "G \u00b7 Dusk to night",
    "blurb": "Golden hour to starry pastel night as you scroll; glowing ink.",
-   "notes": "",
-   "hasNotes": false,
+   "notes": "Palette (day to night ramp): cream and butter, peach, lilac, periwinkle, dusty navy. No green.",
+   "hasNotes": true,
    "images": [
     {
      "src": "g-dusk-dream/01-hero-sunset.png",
@@ -224,7 +232,7 @@ window.LAB = {
    "title": "H \u00b7 90s pastel cel anime",
    "blurb": "Hand-inked cels, airbrushed skies, sparkles and VHS warmth.",
    "notes": "",
-   "hasNotes": false,
+   "hasNotes": true,
    "images": [
     {
      "src": "h-cel-90s/01-hero.png",
@@ -278,6 +286,56 @@ window.LAB = {
     }
    ],
    "folder": "codex-session"
+  },
+  {
+   "id": "HANDSTAND-DRAFTS",
+   "title": "Handstand camera drafts (Codex session)",
+   "blurb": "Water/ink/light treatments around your handstand plus a scroll camera path (hands \u2192 torso \u2192 feet). See CAMERA-PATH.md.",
+   "notes": "",
+   "hasNotes": false,
+   "images": [
+    {
+     "src": "../HANDSTAND-DRAFTS/01-elemental-current.png",
+     "name": "01-elemental-current.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/02-ink-and-vapor.png",
+     "name": "02-ink-and-vapor.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/03-solar-bloom.png",
+     "name": "03-solar-bloom.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/04-blackwater-silver.png",
+     "name": "04-blackwater-silver.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/05-risograph-drift.png",
+     "name": "05-risograph-drift.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/06-vision-through-body.png",
+     "name": "06-vision-through-body.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/07-topographic-silhouette.png",
+     "name": "07-topographic-silhouette.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/08-luminous-afterimage.png",
+     "name": "08-luminous-afterimage.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/09-current-minimal.png",
+     "name": "09-current-minimal.png"
+    },
+    {
+     "src": "../HANDSTAND-DRAFTS/10-body-camera-storyboard.png",
+     "name": "10-body-camera-storyboard.png"
+    }
+   ],
+   "folder": "../HANDSTAND-DRAFTS"
   },
   {
    "id": "STYLE-BLEND",
@@ -379,6 +437,16 @@ window.LAB = {
   }
  ],
  "protos": [
+  {
+   "href": "../redesign/drafts/v5-elemental/index.html",
+   "title": "v5 \u00b7 Elemental flow (latest direction, live)",
+   "blurb": "Cotton-sky water scene that actually flows (WebGL flow map), water ribbons wrapping the handstand, camera travels hands \u2192 torso \u2192 feet. Toggle smooth vs on-twos water."
+  },
+  {
+   "href": "../redesign/drafts/v4-sakuga/index.html",
+   "title": "v4 \u00b7 Sakuga impact frames (live)",
+   "blurb": "Bold ink, concentration lines redrawn on threes, impact-frame flashes and smears on scroll, sakuga golf rotoscope."
+  },
   {
    "href": "../redesign/drafts/v3-cloud-ink/index.html",
    "title": "v3 \u00b7 Cloud world + soft ink (live)",
