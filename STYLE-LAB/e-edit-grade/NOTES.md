@@ -26,3 +26,6 @@ Daniel grew up making COD edits and loves the Beautiful World edit. This directi
 
 ## Risks
 Flash frames and shake need a reduced-motion fallback (photosensitivity). Legibility of white scratchy type on bright cream skies: keep a soft teal shadow behind it.
+
+## Status
+7 of 8 mockups generated. `07-motion-storyboard.png` NOT generated: Codex hit its usage limit (resets ~6:05 AM). Prompt is ready in `p/07-motion-storyboard.txt`; rerun with `./run.sh p/07-motion-storyboard.txt` from this folder. Motion behaviour is described in "How it moves" above.
