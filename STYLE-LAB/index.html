@@ -83,12 +83,12 @@ document.getElementById('groups').innerHTML = L.groups.map(g => `
     <p class="blurb">${g.blurb}</p>
     ${g.notes ? `<p class="notes">${g.notes.replace(/</g, '&lt;')} ${g.hasNotes ? `<a href="${g.folder}/NOTES.md" target="_blank">full notes</a>` : ''}</p>` : ''}
     <div class="grid">${g.images.map(im => { all.push(im.src); return `
-      <figure class="tile${stars.has(im.src) ? ' on' : ''}" data-src="${im.src}">
+      <figure class="tile${stars.has(im.src) ? ' on' : ''}" data-src="${im.src}" data-i="${all.length - 1}">
         <img loading="lazy" src="${im.src}" alt="${g.title}: ${im.name}">
         <div class="cap"><span>${im.name}</span><button class="star${stars.has(im.src) ? ' on' : ''}" aria-label="star">★</button></div>
       </figure>`; }).join('')}</div>
   </section>`).join('');
-const count = () => document.getElementById('count').textContent = `· ${all.length} images · ${stars.size} starred`;
+const count = () => document.getElementById('count').textContent = `· ${new Set(all).size} images · ${stars.size} starred`;
 count();
 function toggle(src) {
   stars.has(src) ? stars.delete(src) : stars.add(src); save(); count();
@@ -97,7 +97,7 @@ function toggle(src) {
 }
 document.addEventListener('click', e => {
   const s = e.target.closest('.star'); if (s) return toggle(s.closest('.tile').dataset.src);
-  const im = e.target.closest('.tile img'); if (im) open(all.indexOf(im.closest('.tile').dataset.src));
+  const im = e.target.closest('.tile img'); if (im) open(+im.closest('.tile').dataset.i);
 });
 const viewer = document.getElementById('viewer'), vimg = viewer.querySelector('img'), vname = document.getElementById('vname'), vstar = document.getElementById('vstar');
 let cur = 0;
