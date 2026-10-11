@@ -296,4 +296,43 @@ gsap.utils.toArray('.sec h2').forEach(h => gsap.from(h.querySelectorAll('.lt-let
 // cards surface out of the water: rise + settle, on threes
 gsap.utils.toArray('.card').forEach((c, i) => gsap.from(c, { y: 80, opacity: 0, rotate: i % 2 ? 1.5 : -1.5, duration: .6, ease: 'steps(6)', scrollTrigger: { trigger: c, start: 'top 90%' } }));
 ScrollTrigger.addEventListener('refresh', layout);
+
+/* ---------- dive: the surface rises over the screen (we go under), then falls away below (we come up) ---------- */
+const dive = document.getElementById('dive'), dx = dive.getContext('2d');
+const bubbles = Array.from({ length: 70 }, () => ({ x: Math.random(), y: Math.random(), r: 2 + Math.random() * 7, v: .3 + Math.random() }));
+let diveP = 0;
+ScrollTrigger.create({ trigger: '#diveGap', start: 'top bottom', end: 'bottom top', onUpdate: st => diveP = st.progress });
+function surfaceY(x, base, t) { return base + Math.sin(x / 70 + t * 3) * 10 + Math.sin(x / 23 - t * 5) * 4; }
+function drawDive(now) {
+  requestAnimationFrame(drawDive);
+  const p = diveP;
+  if (p <= 0 || p >= 1) { if (dive.style.visibility !== 'hidden') { dive.style.visibility = 'hidden'; } return; }
+  dive.style.visibility = 'visible';
+  if (dive.width !== W * DPR) { dive.width = W * DPR; dive.height = H * DPR; }
+  dx.setTransform(DPR, 0, 0, DPR, 0, 0); dx.clearRect(0, 0, W, H);
+  const t = Math.floor(now / 1000 * 12) / 12;                       // the surface is redrawn on twos
+  const base = p < .5 ? H * (1 - p * 2.2) : H * ((p - .5) * 2.2 - .1);   // up past the top, then down past the bottom
+  const under = p < .5 ? 1 - p * 2 : (p - .5) * 2;                  // 0 at the deepest point
+  // water body below the surface
+  dx.beginPath(); dx.moveTo(0, H); for (let x = 0; x <= W + 20; x += 20) dx.lineTo(x, surfaceY(x, base, t)); dx.lineTo(W, H); dx.closePath();
+  const g = dx.createLinearGradient(0, Math.max(0, base), 0, H); g.addColorStop(0, Water.C.mid); g.addColorStop(.35, Water.C.deep); g.addColorStop(1, '#0d2a66');
+  dx.fillStyle = g; dx.fill();
+  dx.save(); dx.clip();
+  // light rays from the surface
+  dx.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < 11; i++) { const x = (i / 10) * W + Math.sin(t * .7 + i) * 50, w = 10 + (i % 4) * 14; const rg = dx.createLinearGradient(0, base, 0, base + H * .8); rg.addColorStop(0, 'rgba(220,238,255,.16)'); rg.addColorStop(1, 'rgba(220,238,255,0)'); dx.fillStyle = rg; dx.beginPath(); dx.moveTo(x - w, Math.max(0, base)); dx.lineTo(x + w, Math.max(0, base)); dx.lineTo(x + w * 2.6 - 120, H); dx.lineTo(x - w * .6 - 120, H); dx.closePath(); dx.fill(); }
+  dx.globalCompositeOperation = 'source-over';
+  // bubbles rising (inked rings)
+  dx.strokeStyle = 'rgba(255,255,255,.75)'; dx.lineWidth = 1.6;
+  for (const b of bubbles) { const y = ((b.y - t * .12 * b.v) % 1 + 1) % 1 * H; dx.beginPath(); dx.arc(b.x * W + Math.sin(t * 2 + b.y * 9) * 6, y, b.r, 0, 7); dx.stroke(); }
+  dx.restore();
+  // foam band along the surface, jittered per drawing
+  dx.strokeStyle = '#fff'; dx.lineWidth = 7; dx.setLineDash([60, 18]); dx.beginPath();
+  for (let x = 0; x <= W + 20; x += 20) dx.lineTo(x, surfaceY(x, base, t) + (Math.random() - .5) * 2); dx.stroke(); dx.setLineDash([]);
+  dx.strokeStyle = Water.C.ink; dx.globalAlpha = .5; dx.lineWidth = 1.4; dx.beginPath();
+  for (let x = 0; x <= W + 20; x += 20) dx.lineTo(x, surfaceY(x, base, t) - 5 + (Math.random() - .5) * 2); dx.stroke(); dx.globalAlpha = 1;
+  // splash crown when we break the surface on the way up
+  if (p > .5 && base > 0 && base < H * .6) { dx.fillStyle = '#fff'; for (let i = 0; i < 26; i++) { const x = (i * 97 % W), h = (1 - base / (H * .6)) * (40 + (i * 53) % 80); dx.beginPath(); dx.arc(x, base - h, 3 + i % 4, 0, 7); dx.fill(); } }
+}
+requestAnimationFrame(drawDive);
 })();
