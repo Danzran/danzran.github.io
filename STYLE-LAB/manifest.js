@@ -104,6 +104,98 @@ window.LAB = {
    "folder": ""
   },
   {
+   "id": "STYLE-LAB-handstand-orbit",
+   "title": "Handstand orbit \u00b7 panned shots (Codex)",
+   "blurb": "Turnaround sheet plus yaw \u221290\u2026+90, low/high angles and close crops. The v9 hero scrubs \u221260\u2026+60.",
+   "notes": "- The main stepping sequence is yaw-m90, yaw-m60, yaw-m40, yaw-m20, yaw-000, yaw-p20, yaw-p40, yaw-p60, yaw-p90. - The view set is coherent in palette, line treatment, clothing, white background, figure scale, and hand baseline. It is best suited to a slow, eased stepped/crossfade orbit, rather than a claim of a mathematically continuous 3D rotation. - low-hands.png, high-feet.png, close-hands.png, and close-torso.pn",
+   "hasNotes": true,
+   "images": [
+    {
+     "src": "handstand-orbit/00-turnaround.png",
+     "name": "00-turnaround.png"
+    },
+    {
+     "src": "handstand-orbit/close-hands.png",
+     "name": "close-hands.png"
+    },
+    {
+     "src": "handstand-orbit/close-torso.png",
+     "name": "close-torso.png"
+    },
+    {
+     "src": "handstand-orbit/high-feet.png",
+     "name": "high-feet.png"
+    },
+    {
+     "src": "handstand-orbit/low-hands.png",
+     "name": "low-hands.png"
+    },
+    {
+     "src": "handstand-orbit/strip.png",
+     "name": "strip.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-000.png",
+     "name": "yaw-000.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-m20.png",
+     "name": "yaw-m20.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-m40.png",
+     "name": "yaw-m40.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-m60.png",
+     "name": "yaw-m60.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-m90.png",
+     "name": "yaw-m90.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-p20.png",
+     "name": "yaw-p20.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-p40.png",
+     "name": "yaw-p40.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-p60.png",
+     "name": "yaw-p60.png"
+    },
+    {
+     "src": "handstand-orbit/yaw-p90.png",
+     "name": "yaw-p90.png"
+    }
+   ],
+   "folder": "handstand-orbit"
+  },
+  {
+   "id": "STYLE-LAB-timeline-r1",
+   "title": "Timeline inspiration (Codex)",
+   "blurb": "Constellation, editing timeline and moon-dial mockups for the Experience section. The moon-dial one invented a job description; ignore its text.",
+   "notes": "",
+   "hasNotes": false,
+   "images": [
+    {
+     "src": "timeline-r1/01-constellation.png",
+     "name": "01-constellation.png"
+    },
+    {
+     "src": "timeline-r1/02-nle.png",
+     "name": "02-nle.png"
+    },
+    {
+     "src": "timeline-r1/03-moon-dial.png",
+     "name": "03-moon-dial.png"
+    }
+   ],
+   "folder": "timeline-r1"
+  },
+  {
    "id": "STYLE-LAB-water-r3",
    "title": "Water round 3 \u00b7 tuning the winner",
    "blurb": "Ink ladder 1\u20135 for the water hero, the v8 river storyboard, a night-tide variant, a water close-up sheet for building it in code, and the green-free recolours.",
@@ -817,6 +909,31 @@ window.LAB = {
   }
  ],
  "protos": [
+  {
+   "href": "../redesign/drafts/v9-night/index.html",
+   "title": "v9 \u00b7 Night (your pick as base, live)",
+   "blurb": "Night tide only. Smooth mutating scribble headings, the hero turns around you on scroll (Codex orbit frames), the golf card now draws the club head and ball, Experience is an editing timeline with your reel, and the cursor is a scribble loop (?c=moonglow|inkring)."
+  },
+  {
+   "href": "../redesign/drafts/v9-night/labs/scribble/index.html",
+   "title": "v9 lab \u00b7 smooth scribble",
+   "blurb": "Five mutating scribble variants with sliders, the old stepped boil side by side, and a roto outline around the handstand."
+  },
+  {
+   "href": "../redesign/drafts/v9-night/labs/timeline/index.html",
+   "title": "v9 lab \u00b7 five Experience timelines",
+   "blurb": "Constellation, tide lanes, edit timeline (in v9), moon dial, depth flight."
+  },
+  {
+   "href": "../redesign/drafts/v9-night/labs/cursor/index.html",
+   "title": "v9 lab \u00b7 eight cursors",
+   "blurb": "Moonglow, ink ring, scribble (in v9), ripples, star motes, constellation, caustics, glint."
+  },
+  {
+   "href": "../redesign/drafts/v9-night/golf.html",
+   "title": "v9 \u00b7 golf case study (night)",
+   "blurb": "The case-study page on the night sky, with the club and ball overlay."
+  },
   {
    "href": "../redesign/drafts/v8-tide/golf.html",
    "title": "v8 \u00b7 Tide: golf case study (live)",
