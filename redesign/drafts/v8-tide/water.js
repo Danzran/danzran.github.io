@@ -2,7 +2,7 @@
    Body + flowing inner streaks move smoothly; the inked contour and foam curls are
    redrawn on twos (12 fps) so the drawn details have a hand-animated cadence. */
 window.Water = (() => {
-  const C = { deep: '#1557b0', mid: '#4fa9e8', light: '#a9d4ff', foam: '#ffffff', ink: '#25396c' };   // from STYLE-LAB/water-r3/34-water-closeups
+  const C = { deep: '#1557b0', mid: '#4fa9e8', light: '#a9d4ff', foam: '#ffffff', ink: '#25396c', edge: '#dceeff', s1: '#e6f3ff', s2: '#cfe6ff', s3: '#bfe0ff', glow: '' };  // glow: '' = none (night mode sets a gold glow)   // from STYLE-LAB/water-r3/34-water-closeups
 
   // Catmull-Rom through control points -> dense samples
   function spline(pts, per = 18) {
@@ -55,15 +55,16 @@ window.Water = (() => {
       const g = ctx.createLinearGradient(run[0].x, run[0].y - width, run[0].x, run[0].y + width);
       const mid = run[run.length >> 1], gw = width * 1.2;
       const g2 = ctx.createLinearGradient(mid.x + mid.nx * gw, mid.y + mid.ny * gw, mid.x - mid.nx * gw, mid.y - mid.ny * gw);
-      g2.addColorStop(0, '#dceeff'); g2.addColorStop(.45, C.mid); g2.addColorStop(1, C.deep);
+      g2.addColorStop(0, C.edge); g2.addColorStop(.45, C.mid); g2.addColorStop(1, C.deep);
       ctx.fillStyle = g2;
-      ctx.beginPath(); [...top, ...bot].forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.closePath(); ctx.fill();
+      if (C.glow) { ctx.shadowColor = C.glow; ctx.shadowBlur = width * .9; }
+      ctx.beginPath(); [...top, ...bot].forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.closePath(); ctx.fill(); ctx.shadowBlur = 0;
       // deeper band toward the lower edge
       ctx.fillStyle = C.deep; ctx.globalAlpha = alpha * .55;
       ctx.beginPath(); [...edge(-.15), ...edge(-1).reverse()].forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.closePath(); ctx.fill();
       ctx.globalAlpha = alpha;
       // flowing streaks: offset polylines with moving dashes
-      const streaks = [[.7, '#e6f3ff', 1.6, 90, 30], [.5, C.light, 1.4, 60, 50], [.25, '#cfe6ff', 1.1, 40, 46], [0, C.light, 1.2, 70, 60], [-.3, '#bfe0ff', 1, 50, 40], [-.6, C.light, 1.3, 90, 55], [.86, C.foam, 1.8, 30, 22]];
+      const streaks = [[.7, C.s1, 1.6, 90, 30], [.5, C.light, 1.4, 60, 50], [.25, C.s2, 1.1, 40, 46], [0, C.light, 1.2, 70, 60], [-.3, C.s3, 1, 50, 40], [-.6, C.light, 1.3, 90, 55], [.86, C.foam, 1.8, 30, 22]];
       for (const [k, col, lw, dash, gap] of streaks) {
         ctx.strokeStyle = col; ctx.lineWidth = lw * Math.max(.6, width / 46);
         ctx.setLineDash([dash, gap]); ctx.lineDashOffset = -t * 160 * (1 + k * .2);
