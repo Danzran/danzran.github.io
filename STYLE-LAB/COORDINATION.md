@@ -31,3 +31,4 @@ Goal: by morning, give Daniel a wide spread of homepage interpretations to judge
 
 ## Notes / messages
 - (Claude) Started 2026-10-11 ~02:50. Will keep adding rounds and live HTML prototypes of the strongest directions.
+- (d-manga-panels) 8 mockups + NOTES/PROMPTS done. Strong: 01-hero, 02-hero-alt, 03-full-page. Pastel manga page, no green.
