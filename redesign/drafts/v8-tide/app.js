@@ -7,6 +7,22 @@ const clock = () => { const t = performance.now() / 1000; return onTwos ? Math.f
 const btn = document.getElementById('cadence');
 btn.onclick = () => { onTwos = !onTwos; btn.textContent = 'water: ' + (onTwos ? 'on twos' : 'smooth'); btn.setAttribute('aria-pressed', onTwos); };
 
+/* ---------- day / night tide: night tints the sky navy and lights the water from inside with gold ---------- */
+const DAY = { ...Water.C };
+const NIGHT = { deep: '#14306e', mid: '#2f6fc4', light: '#ffd98a', foam: '#fff3c4', ink: '#0d1c40', edge: '#9cc8ff', s1: '#ffe9b0', s2: '#ffd27a', s3: '#f6c25e', glow: 'rgba(255,214,120,.55)' };
+const theme = { night: 0 };
+const nightBtn = document.getElementById('night');
+const stars = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random() * .8, r: Math.random() * 1.3 + .3, tw: Math.random() * 6 }));
+function setNight(on) {
+  document.documentElement.classList.toggle('night', on);
+  Object.assign(Water.C, on ? NIGHT : DAY);
+  nightBtn.textContent = on ? '☀ day' : '☾ night tide'; nightBtn.setAttribute('aria-pressed', on);
+  if (reduce || !window.gsap) theme.night = on ? 1 : 0;
+  else gsap.to(theme, { night: on ? 1 : 0, duration: .9, ease: 'steps(6)' });   // the sky changes in drawn steps, not a fade
+}
+nightBtn.onclick = () => setNight(!document.documentElement.classList.contains('night'));
+if (/[?&]night/.test(location.search)) setNight(true);   // index.html?night opens straight into night tide
+
 /* ---------- lettering + figure drawings on threes ---------- */
 document.querySelectorAll('[data-brush]').forEach((el, i) => Lettering.render(el, { seed: 9 + i * 29 }));
 if (!reduce) Lettering.start(7);
@@ -62,6 +78,22 @@ function drawSky(t, scroll) {
     const yy = ((y % (H * 3.4)) + H * 3.4) % (H * 3.4) - H * .5;   // wrap vertically so clouds keep coming
     sx.globalAlpha = .55 + c.depth; sx.drawImage(c.img, x, yy, w, h);
   }
+  sx.globalAlpha = 1;
+  const n = theme.night; if (!n) return;
+  // blue hour: navy wash over everything, then moonlit cloud edges, stars and the moon on top
+  const ng = sx.createLinearGradient(0, 0, 0, H);
+  ng.addColorStop(0, 'rgba(8,18,52,.94)'); ng.addColorStop(.6, 'rgba(20,44,108,.86)'); ng.addColorStop(1, 'rgba(34,66,140,.8)');
+  sx.globalAlpha = n; sx.fillStyle = ng; sx.fillRect(0, 0, W, H);
+  for (const c of clouds) {
+    const w = c.img.width * (W / 1600) * (.6 + c.depth), h = c.img.height * (W / 1600) * (.6 + c.depth);
+    const x = ((c.x + t * c.v) % 1.4 - .2) * W - w / 2, y = c.y * H - scroll * c.depth, yy = ((y % (H * 3.4)) + H * 3.4) % (H * 3.4) - H * .5;
+    sx.globalAlpha = n * (.12 + c.depth * .35); sx.drawImage(c.img, x, yy, w, h);
+  }
+  sx.fillStyle = '#fff6dc';
+  for (const st of stars) { sx.globalAlpha = n * (.45 + .45 * Math.sin(t * 2 + st.tw)); sx.beginPath(); sx.arc(st.x * W, st.y * H - (scroll * .05) % H, st.r, 0, 7); sx.fill(); }
+  const mx = W * .78, my = H * .16, mg = sx.createRadialGradient(mx, my, 0, mx, my, H * .35);
+  mg.addColorStop(0, 'rgba(255,244,214,1)'); mg.addColorStop(.09, 'rgba(255,240,200,.95)'); mg.addColorStop(.1, 'rgba(255,226,160,.35)'); mg.addColorStop(1, 'rgba(255,226,160,0)');
+  sx.globalAlpha = n; sx.fillStyle = mg; sx.fillRect(0, 0, W, H);
   sx.globalAlpha = 1;
 }
 
