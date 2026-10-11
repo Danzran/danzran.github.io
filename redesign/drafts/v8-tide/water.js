@@ -2,7 +2,7 @@
    Body + flowing inner streaks move smoothly; the inked contour and foam curls are
    redrawn on twos (12 fps) so the drawn details have a hand-animated cadence. */
 window.Water = (() => {
-  const C = { deep: '#1f5fbf', mid: '#3f8ee8', light: '#8cc4ff', foam: '#ffffff', ink: '#22345e' };
+  const C = { deep: '#1557b0', mid: '#4fa9e8', light: '#a9d4ff', foam: '#ffffff', ink: '#25396c' };   // from STYLE-LAB/water-r3/34-water-closeups
 
   // Catmull-Rom through control points -> dense samples
   function spline(pts, per = 18) {
@@ -55,7 +55,7 @@ window.Water = (() => {
       const g = ctx.createLinearGradient(run[0].x, run[0].y - width, run[0].x, run[0].y + width);
       const mid = run[run.length >> 1], gw = width * 1.2;
       const g2 = ctx.createLinearGradient(mid.x + mid.nx * gw, mid.y + mid.ny * gw, mid.x - mid.nx * gw, mid.y - mid.ny * gw);
-      g2.addColorStop(0, '#9fd0ff'); g2.addColorStop(.45, C.mid); g2.addColorStop(1, C.deep);
+      g2.addColorStop(0, '#dceeff'); g2.addColorStop(.45, C.mid); g2.addColorStop(1, C.deep);
       ctx.fillStyle = g2;
       ctx.beginPath(); [...top, ...bot].forEach(([x, y], i) => ctx[i ? 'lineTo' : 'moveTo'](x, y)); ctx.closePath(); ctx.fill();
       // deeper band toward the lower edge
