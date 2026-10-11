@@ -114,11 +114,6 @@ html.night .mini,html.night .golfvis{background:#e9eefb}
 html.night .links a,html.night .more a{border-color:#f3ead6}
 .golf-copy .case{margin-top:16px}
 
-/* dive transition between Work and Experience (STYLE-LAB/water-r3/54) */
-#dive{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40;visibility:hidden}
-.dive-gap{height:110vh}
-@media (prefers-reduced-motion:reduce){.dive-gap{height:10vh}}
-
 /* ink-strength picker (matches the 1-5 ladder) */
 .inkpick{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:4px;padding:4px 6px 4px 12px;border-radius:999px;border:1.5px solid var(--slate);background:rgba(251,248,241,.85);font-family:var(--hand);font-size:17px;color:var(--slate)}
 .inkpick button{width:28px;height:28px;border-radius:50%;border:0;background:none;font:inherit;color:inherit;cursor:pointer}
