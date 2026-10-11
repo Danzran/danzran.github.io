@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-boil="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Azran — Draft v7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="boil0"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="1"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+  <filter id="boil1"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="19"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+  <filter id="boil2"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="44"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+</svg>
+
+<nav class="nav" aria-label="Main">
+  <a class="bubble mark" href="#top">DA</a>
+  <a class="bubble" href="#work">work</a><a class="bubble" href="#experience">experience</a><a class="bubble" href="#about">about</a><a class="bubble" href="#contact">contact</a>
+</nav>
+
+<main class="page" id="top">
+  <!-- chapter title page -->
+  <section class="spread hero">
+    <div class="panel p-splash boil-border">
+      <div class="tone tone--sky"></div>
+      <div class="fig" id="heroFig"><img class="on" src="../v4-sakuga/assets/fig-0.webp" alt="Daniel doing a handstand"><img src="../v4-sakuga/assets/fig-1.webp" alt=""><img src="../v4-sakuga/assets/fig-2.webp" alt=""></div>
+      <canvas class="lines" data-lines aria-hidden="true"></canvas>
+      <h1 class="title brush" data-brush>Daniel Azran</h1>
+      <div class="caption">engineer · machine learning · video editor</div>
+      <span class="sfx brush s-fwoop" data-brush aria-hidden="true">FWOOP</span>
+      <div class="thought">scroll<br>down ↓</div>
+    </div>
+    <div class="panel p-small1 boil-border"><div class="tone tone--peach"></div><p class="narr">ch. 1 — <b>the guy who edits his own code</b></p></div>
+    <div class="panel p-small2 boil-border"><div class="tone tone--lilac"></div><img class="art" src="../v4-sakuga/assets/proj-digits.webp" alt=""><span class="sfx brush s-small" data-brush aria-hidden="true">?!</span></div>
+  </section>
+
+  <!-- work -->
+  <section class="spread work" id="work">
+    <h2 class="chapter brush" data-brush>The work</h2>
+    <div class="panel p-golf boil-border">
+      <div class="tone tone--sky"></div>
+      <div class="golfvis"><canvas id="golf" aria-label="Golf swing with pose analysis"></canvas></div>
+      <div class="golftxt">
+        <div class="speech">this is my actual swing, run through pose tracking!</div>
+        <h3>Golf Swing Analyzer</h3>
+        <div class="stats" id="golfStats"><div><b data-tempo></b><span>tempo</span></div><div><b data-back></b><span>back</span></div><div><b data-down></b><span>down</span></div><div><b data-speed></b><span>hand speed</span></div><div class="live"><span data-live></span></div></div>
+      </div>
+      <span class="sfx brush s-swish" data-brush aria-hidden="true">SWISH</span>
+    </div>
+    <a class="panel p-flow boil-border" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><div class="tone tone--lilac"></div><img class="art" src="../v4-sakuga/assets/proj-flow.webp" alt=""><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade tracking.</p></a>
+    <a class="panel p-digit boil-border" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener"><div class="tone tone--butter"></div><div class="speech small">it's a 7!</div><img class="art" src="../v4-sakuga/assets/proj-digits.webp" alt=""><h3>Digit Classifier</h3><p>Keras CNN · 98% on MNIST.</p></a>
+    <a class="panel p-house boil-border" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener"><div class="tone tone--peach"></div><img class="art" src="../v4-sakuga/assets/proj-house.webp" alt=""><h3>Real Estate Predictor</h3><p>−7% RMSE · log-price.</p><span class="sfx brush s-small" data-brush aria-hidden="true">$$?</span></a>
+    <div class="panel p-more boil-border"><div class="tone tone--sky"></div><p class="narr">also in this volume:</p><a href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener">PL/0 compiler ↗</a><a href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener">Mikal – Wix sync ↗</a><a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></div>
+  </section>
+
+  <!-- experience -->
+  <section class="spread exp" id="experience">
+    <h2 class="chapter brush" data-brush>Experience</h2>
+    <div class="panel p-reel boil-border"><div class="tone tone--peach"></div><video src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline aria-label="Video editing reel"></video><span class="sfx brush s-zip" data-brush aria-hidden="true">ZIP</span><p class="narr">2014–2020 · video editor. COD edits, compositing, camera tracking, leading 4 editors.</p></div>
+    <div class="panel p-job1 boil-border"><div class="tone tone--lilac"></div><img class="art" src="../v4-sakuga/assets/exp-backend.webp" alt=""><h3>Backend dev · Extropian</h3><p>2024–25 · golf app, Bluetooth + metrics</p></div>
+    <div class="panel p-job2 boil-border"><div class="tone tone--butter"></div><img class="art" src="../v4-sakuga/assets/exp-systems.webp" alt=""><h3>Systems &amp; IT</h3><p>2018–now · builds, networks, VMs</p></div>
+    <div class="panel p-job3 boil-border"><div class="tone tone--sky"></div><img class="art" src="../v4-sakuga/assets/exp-locksmith.webp" alt=""><h3>Lockout tech</h3><p>2022–23 · push-to-start keys</p><span class="sfx brush s-small" data-brush aria-hidden="true">CLICK</span></div>
+  </section>
+
+  <!-- about -->
+  <section class="spread about" id="about">
+    <div class="panel p-about boil-border">
+      <div class="tone tone--lilac"></div>
+      <div class="fig small" id="aboutFig"><img class="on" src="../v4-sakuga/assets/fig-0.webp" alt=""><img src="../v4-sakuga/assets/fig-1.webp" alt=""><img src="../v4-sakuga/assets/fig-2.webp" alt=""></div>
+      <div class="speech big">I'm a full-stack engineer focused on ML and data science, but what I really enjoy is solving problems. Editing taught me the viewer's side matters as much as what's behind it.</div>
+      <button class="song bubble" id="song" aria-pressed="false">♪ play my favorite song</button>
+      <audio id="audio" src="../../../tgrave.mp3" preload="none"></audio>
+    </div>
+  </section>
+
+  <footer class="spread contact" id="contact">
+    <div class="panel p-end boil-border">
+      <div class="tone tone--sky"></div>
+      <canvas class="lines" data-lines aria-hidden="true"></canvas>
+      <h2 class="title brush" data-brush>Say hi!</h2>
+      <a class="bubble cta" href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">let's talk →</a>
+      <div class="links"><a href="https://github.com/Danzran" target="_blank" rel="noopener">github</a><a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">linkedin</a><a href="../../../DanielAzranResume.pdf" target="_blank">resume</a></div>
+      <p class="narr end">to be continued… · draft v7 manga page</p>
+    </div>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="../../assets/fonts/brush-font.js"></script>
+<script src="../../assets/golf/swing.js"></script>
+<script src="lettering.js"></script>
+<script src="golf.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
