@@ -22,13 +22,14 @@ const figBox = () => ({ x: figEl.offsetLeft, y: figEl.offsetTop, w: figEl.offset
 /* ---------- cotton clouds: soft puffs pre-rendered to sprites (ivory tops, azure undersides, a touch of gold) ---------- */
 function cloudSprite(w, h) {
   const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
-  const n = 28;
-  for (let i = 0; i < n; i++) {
-    const u = i / n, x = w * (.12 + .76 * Math.random()), r = h * (.16 + .26 * Math.sin(Math.PI * (x / w)) * Math.random() + .08);
-    const y = h * .72 - r * (.4 + Math.random() * .7);
-    const rg = g.createRadialGradient(x, y, r * .2, x, y, r); rg.addColorStop(0, 'rgba(255,255,255,1)'); rg.addColorStop(.7, 'rgba(255,255,255,.92)'); rg.addColorStop(1, 'rgba(255,255,255,0)');
+  const puff = (x, y, r) => {
+    r = Math.min(r, x, w - x, y, h - y); if (r < 4) return;
+    const rg = g.createRadialGradient(x, y - r * .2, r * .1, x, y, r); rg.addColorStop(0, '#fff'); rg.addColorStop(.78, 'rgba(255,255,255,.96)'); rg.addColorStop(1, 'rgba(255,255,255,0)');
     g.fillStyle = rg; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill();
-  }
+  };
+  // a flat-bottomed cumulus: big puffs in the middle, smaller toward the edges, little bumps on top
+  for (let i = 0; i < 22; i++) { const u = Math.random(), x = w * (.15 + .7 * u), hump = Math.sin(Math.PI * u); puff(x, h * (.7 - .22 * hump * Math.random()), h * (.12 + .2 * hump)); }
+  for (let i = 0; i < 26; i++) { const u = Math.random(), x = w * (.2 + .6 * u), hump = Math.sin(Math.PI * u); puff(x, h * (.62 - .34 * hump), h * (.05 + .07 * Math.random())); }
   g.globalCompositeOperation = 'source-atop';
   const shade = g.createLinearGradient(0, 0, 0, h);
   shade.addColorStop(0, 'rgba(246,214,150,.35)'); shade.addColorStop(.45, 'rgba(255,255,255,0)'); shade.addColorStop(.8, 'rgba(120,160,220,.45)'); shade.addColorStop(1, 'rgba(90,130,200,.55)');
@@ -75,7 +76,7 @@ function layout() {
   const h = Math.min(hh * .66, hw * .95), w = h * 2 / 3, cx = hw > 820 ? hw * .68 : hw * .5;
   Object.assign(figEl.style, { height: h + 'px', width: w + 'px', left: (cx - w / 2) + 'px', top: (hh - h - hh * .05) + 'px' });
   const b = figBox();
-  spiralEnd = { x: b.x + b.w * 1.35, y: b.y + b.h * 1.02 };
+  spiralEnd = { x: b.x - b.w * 1.15, y: b.y + b.h * 1.06 };
   // the river visits each anchored element on its side, in document order, and ends in the pool
   const sy = scrollY, pts = [{ x: spiralEnd.x, y: spiralEnd.y }];
   const narrow = W < 820;
@@ -93,8 +94,8 @@ function layout() {
 }
 
 /* ---------- hero spiral (unwinds as you scroll the hero away) ---------- */
-const SPIRAL = [[-1.6, 1.04, 1], [-.5, .94, 1], [.55, .86, 1], [1.1, .76, -1], [.45, .66, -1], [-.3, .57, -1], [-.45, .46, 1], [.4, .36, 1], [1.2, .24, 1], [2.2, .1, 1]];
-const SECOND = [[2.0, .99, 1], [1.05, .9, 1], [.25, .8, -1], [-.5, .7, -1], [-1.0, .56, 1], [-.6, .42, 1], [.1, .3, -1], [.9, .2, -1], [1.35, 1.02, 1]];
+const SPIRAL = [[-1.15, 1.06, 1], [-.45, .95, 1], [.55, .86, 1], [1.1, .76, -1], [.45, .66, -1], [-.3, .57, -1], [-.45, .46, 1], [.4, .36, 1], [1.05, .25, 1], [1.5, .12, 1]];
+const SECOND = [[1.5, .99, 1], [.95, .9, 1], [.25, .8, -1], [-.45, .7, -1], [-.85, .56, 1], [-.55, .42, 1], [.1, .3, -1], [.75, .18, -1], [1.0, .06, 1]];
 function spiral(t, src, ph, open) {
   const b = figBox();
   return src.map(([u, v, z], i) => ({ x: b.x + b.w * (u * (1 + open * .9) + Math.sin(t * .7 + i * 1.3 + ph) * .05), y: b.y + b.h * (v + Math.cos(t * .6 + i) * .015 - open * .12 * (1 - v)), z }));
@@ -165,7 +166,7 @@ function frame(now) {
   const t = reduce ? 0 : clock(), drawing = Math.floor(now / (1000 / 12)), scroll = scrollY;
   drawSky(t, scroll);
   rx.clearRect(0, 0, W, H); fx.clearRect(0, 0, front.width, front.height);
-  const b = figBox(), open = Math.min(1, scroll / (H * .9)), width = b.h * .036;
+  const b = figBox(), open = Math.min(1, scroll / (H * .9)), width = b.h * .052;
   // hero ribbons: back halves on the fixed river canvas (offset by scroll), front halves above the figure
   if (scroll < H * 1.3) {
     const p1 = spiral(t, SPIRAL, 0, open), p2 = spiral(t, SECOND, 2, open);
@@ -180,7 +181,7 @@ function frame(now) {
   const pre = riverPrefix(t, scroll);
   if (pre.length > 1) {
     rx.save(); rx.translate(0, -scroll);
-    Water.setSeed(drawing + 11); Water.draw(rx, pre, { width: Math.max(22, Math.min(46, W * .03)), t, side: 0, drawn: 1, alpha: .95 });
+    Water.setSeed(drawing + 11); Water.draw(rx, pre, { width: Math.max(18, Math.min(38, W * .026)), t, side: 0, drawn: 1, alpha: .95, taper: 260 });
     rx.restore();
   }
   // cursor trail
