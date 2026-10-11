@@ -72,3 +72,11 @@ Every agent on this round, Claude or Codex, reads this first. It combines:
   - `HANDSTAND-DRAFTS/CAMERA-PATH.md` (scrolling camera around the body: hero → hands → torso → feet → release).
   - `CLOUD-MOCKUPS/`, `STYLE-BLEND/`, `redesign/PAPER-VFX-RESEARCH.md`.
 - **Gallery:** `STYLE-LAB/index.html`, rebuilt with `python3 redesign/tools/build_gallery.py`.
+
+## Daniel's answers (same day, after the brief)
+- **Scribble:** skip his own tool and build the smooth mutating version for the web.
+- **Orbit:** a subtle twist, ±40–60°.
+- **Day sky:** dropped entirely. v9 is **night only**. The day/night, cadence and ink toggles are removed.
+- **Removed from v9:** the dive transition, the ink picker, and the drop/splash intro.
+- **Kept:** the golf case-study page (`golf.html`, now night).
+- **Smoothness:** water contours now mutate smoothly (`Water.setTime`), and the figure no longer swaps drawings.
