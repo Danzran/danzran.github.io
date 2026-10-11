@@ -18,7 +18,7 @@ existing show or character.
   flow, digit classifier, price predictor). Readable. Card backgrounds drift painterly.
 - 04-experience.png: timeline plus the video-editor reel frame. The years and job titles
   are invented, not Daniel's real history. Replace them before any real use.
-- 05 (mobile), 06 (full page), 07 (style sheet): NOT produced. Codex hit its usage
+- 05-mobile.png, 06-full-page.png, 07-style-sheet.png: produced in round 1 after the Codex quota reset.
   limit during 05 and the run stopped there.
 
 ## How it moves
@@ -34,3 +34,14 @@ in these PNGs yet. A live version would step through 2-3 redrawn key frames per 
    `cat PROMPT.txt | codex exec --skip-git-repo-check --sandbox workspace-write -m gpt-5.6-terra -i ../_refs/handstand.png -i ../_refs/cloud-dream.png -`
 3. Put the Codex output PNG in this folder under the name the prompt asks for.
    Codex sometimes spells text oddly, so check any words in the image.
+
+## Round 2: elemental water (2x-water-*)
+A blue-led variant of the same cel system: powder blue, azure, slate indigo, ivory and
+restrained gold, with almost no pink. The elemental element is a stylized water ribbon
+(sakuga-style curling S-curves, white foam bands, tapering ends) that spirals around the
+handstand figure and dissolves into cotton-cloud mist. Water is the moving element: the
+big currents should slide smoothly across frames, while the foam edges and lettering
+change on a slower cadence, as the coordination brief asks. Files:
+2x-water-hero.png (desktop hero), 2x-water-projects.png (golf analyzer with pose nodes,
+angle arcs and a tempo/stats panel, plus three project cards), 2x-water-mobile.png (9:19.5
+hero). The water is the strongest new idea here; the projects page is the most usable.
