@@ -166,3 +166,4 @@ html[data-boil="2"] .boil{filter:url(#boil2)}
   .statement .w{opacity:1}
 }
 .theme-lilac .nav{background:linear-gradient(var(--lilac) 55%,transparent)}
+.hero__stage .hero__fig,.hero__stage .hero__aura{transform:scale(1.32) translateY(-4%)}
