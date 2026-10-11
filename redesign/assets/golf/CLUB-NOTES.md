@@ -30,3 +30,12 @@ OpenCV command writes a conventional JPEG. In this Linux sandbox, where OpenCV
 is unavailable, the tool's dependency-free fallback emitted PNG data under the
 same requested filename; it remains viewable by browser/image decoders and is
 overwritten as a JPEG when rerun with the supplied Windows environment.
+
+## Pass 2 (Claude, 2026-10-11)
+- **Head is now filled for all 50 frames, so the site can draw a continuous club path.**
+  - Frames read by eye from `club-debug.jpg` with the head visible (`est: false`): g06, g13, g15, g16, g18, g20, g21, g46–g49.
+  - Frames where the head is out of the crop or hidden behind his head (`est: true`, conf 0.4): g07–g12, g17, g22–g45. These are placed by eye along the visible shaft direction, and coordinates may fall outside 0..1.
+- **The pass-1 values that were clamped to 0 (g06, g47–g49) are replaced.**
+- **`ball_est[15]`:** a faint dot in raw f039, read by eye, which is probably the ball leaving.
+- **Dropped `club_speed_est_mph` (28 mph).** The 12 fps sampling cannot support a credible number, and a driver at 28 mph is implausible.
+- **Why this was done by hand:** a full-rate OpenCV pass needs Windows interop. The Codex sandbox blocks it, and running Codex unsandboxed was not permitted, so this pass was done by hand.
