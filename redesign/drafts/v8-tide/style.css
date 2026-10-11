@@ -93,3 +93,17 @@ main{position:relative;z-index:2}
 .proj:nth-child(3),.jobs .card:nth-child(3){animation-duration:4.3s;animation-delay:-2.1s}
 @keyframes bob{from{translate:0 calc(var(--bob,-7px) * -1)}to{translate:0 var(--bob,-7px)}}
 @media (prefers-reduced-motion:reduce){.proj:hover{transform:none}.proj,.jobs .card{animation:none}}
+
+/* night tide */
+.toggle--night{right:auto;left:var(--gutter)}
+html.night body{background:#0d1c40;color:#f3ead6}
+html.night .brush{color:#fff1cf;--dry:#14306e}
+html.night .nav a:not(.mark),html.night .nav .mark,html.night .toggle,html.night .pill{background:rgba(13,28,64,.6);color:#f3ead6;border-color:rgba(255,233,176,.6)}
+html.night .pill.solid{background:#f6c25e;color:#0d1c40}
+html.night .card{background:rgba(13,28,64,.55);border-color:rgba(255,233,176,.45);box-shadow:0 24px 70px rgba(0,0,0,.35)}
+html.night .card p,html.night .stats span,html.night .legal{color:#c9d3ec}
+html.night .tag,html.night .stats b{color:#ffd98a}
+html.night .stats div{background:rgba(255,255,255,.06);border-color:rgba(255,233,176,.35)}
+html.night .stats .live{background:rgba(246,194,94,.25)}
+html.night .mini,html.night .golfvis{background:#e9eefb}
+html.night .links a,html.night .more a{border-color:#f3ead6}
