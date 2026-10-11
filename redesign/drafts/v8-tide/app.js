@@ -9,7 +9,7 @@ btn.onclick = () => { onTwos = !onTwos; btn.textContent = 'water: ' + (onTwos ? 
 
 /* ---------- day / night tide: night tints the sky navy and lights the water from inside with gold ---------- */
 const DAY = { ...Water.C };
-const NIGHT = { deep: '#14306e', mid: '#2f6fc4', light: '#ffd98a', foam: '#fff3c4', ink: '#0d1c40', edge: '#9cc8ff', s1: '#ffe9b0', s2: '#ffd27a', s3: '#f6c25e', glow: 'rgba(255,214,120,.55)' };
+const NIGHT = { deep: '#1d4fa8', mid: '#4d8fe0', light: '#ffd98a', foam: '#fff3c4', ink: '#0d1c40', edge: '#d6e8ff', s1: '#ffe9b0', s2: '#ffd27a', s3: '#f6c25e', glow: 'rgba(255,214,120,.55)' };
 const theme = { night: 0 };
 const nightBtn = document.getElementById('night');
 const stars = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random() * .8, r: Math.random() * 1.3 + .3, tw: Math.random() * 6 }));
