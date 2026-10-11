@@ -44,7 +44,19 @@ function speedLines(ctx, drawing, scroll) {
 // v9: continuously mutating scribble (scribble.js); letters arrive on their own when first seen. ?scribble=calm|crawl|echo|torn|stepped
 document.querySelectorAll('[data-brush]').forEach((el, i) => Scribble.render(el, { seed: 9 + i * 29, delay: i ? 0 : .2 }));
 if (!reduce) Scribble.start();
-const figEl = document.getElementById('fig'), figs = [...figEl.querySelectorAll('img')]; let fk = 0;
+const figEl = document.getElementById('fig'), figs = [...figEl.querySelectorAll('img')];
+/* ---------- hero orbit: scrolling the hero away turns the camera around him (0 -> +60 deg), the pointer adds +-20 deg ---------- */
+const YAWS = figs.map(im => +im.dataset.yaw);
+let yawPointer = 0, yawSmooth = 0;
+if (!reduce && matchMedia('(pointer: fine)').matches) addEventListener('pointermove', e => { yawPointer = (e.clientX / innerWidth - .5) * 40; }, { passive: true });
+function setYaw(target) {
+  yawSmooth += (target - yawSmooth) * .08;                       // eased, so the turn glides
+  const y = Math.max(YAWS[0], Math.min(YAWS[YAWS.length - 1], yawSmooth));
+  // dissolve: the lower neighbour stays solid and the next one fades in over it (no see-through midpoint)
+  let i = 0; while (i < YAWS.length - 2 && YAWS[i + 1] < y) i++;
+  const k = (y - YAWS[i]) / (YAWS[i + 1] - YAWS[i]);
+  figs.forEach((im, j) => { const o = j === i ? 1 : j === i + 1 ? k : 0; if (im._o !== o) { im.style.opacity = o; im._o = o; } });
+}
 // v9: the figure no longer swaps between drawings every 125ms (read as "framey"); one drawing holds
 
 /* ---------- canvases ---------- */
@@ -220,6 +232,7 @@ function frame(now) {
   Water.setTime(t);   // contours mutate smoothly; setSeed below only picks which ribbon's noise stream
   drawSky(t, scroll);
   rx.clearRect(0, 0, W, H); fx.clearRect(0, 0, front.width, front.height);
+  if (!reduce && scroll < H * 1.3) setYaw(Math.min(1, scroll / (H * .8)) * 60 + yawPointer);
   const b = figBox(), open = Math.min(1, scroll / (H * .9)), width = b.h * .052;
   // hero ribbons: back halves on the fixed river canvas (offset by scroll), front halves above the figure
   rx.save(); rx.translate(0, -scroll); speedLines(rx, drawing, scroll); rx.restore();
