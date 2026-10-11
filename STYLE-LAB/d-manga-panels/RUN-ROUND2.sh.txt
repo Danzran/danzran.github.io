@@ -1,4 +1,0 @@
-D=/tmp/claude-1000/-mnt-c-dev-danzran-github-io/a7518836-399a-42e2-bfc1-a8af13df88ac/scratchpad/dmanga
-cd /mnt/c/dev/danzran.github.io/STYLE-LAB/d-manga-panels
-r(){ cat $D/$1.txt | codex exec --skip-git-repo-check --sandbox workspace-write -m gpt-5.6-terra -i ../_refs/handstand.png -i ../_refs/oikawa-serve.png - 2>&1 | tail -3 > $D/$1.log; }
-for g in "09 10" "11 12" "13 14"; do set -- $g; r $1 & r $2 & wait; done
