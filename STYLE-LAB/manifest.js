@@ -2,6 +2,108 @@
 window.LAB = {
  "groups": [
   {
+   "id": "water-round",
+   "title": "Water round \u00b7 all styles (newest)",
+   "blurb": "Round 2: every style agent's take on Cotton Sky + elemental water (blue/azure/ivory/gold, less pink, no green). Same images also appear in their own folders below.",
+   "notes": "",
+   "hasNotes": false,
+   "images": [
+    {
+     "src": "a-cloud-soft-ink/21-water-hero.png",
+     "name": "a / 21-water-hero.png"
+    },
+    {
+     "src": "a-cloud-soft-ink/22-water-projects.png",
+     "name": "a / 22-water-projects.png"
+    },
+    {
+     "src": "a-cloud-soft-ink/23-water-full-page.png",
+     "name": "a / 23-water-full-page.png"
+    },
+    {
+     "src": "b-sakuga-impact/21-water-hero.png",
+     "name": "b / 21-water-hero.png"
+    },
+    {
+     "src": "b-sakuga-impact/22-water-projects.png",
+     "name": "b / 22-water-projects.png"
+    },
+    {
+     "src": "b-sakuga-impact/23-water-full-page.png",
+     "name": "b / 23-water-full-page.png"
+    },
+    {
+     "src": "c-genga-pencil/2a-water-hero.png",
+     "name": "c / 2a-water-hero.png"
+    },
+    {
+     "src": "c-genga-pencil/2b-water-golf-card.png",
+     "name": "c / 2b-water-golf-card.png"
+    },
+    {
+     "src": "c-genga-pencil/2c-water-full-page.png",
+     "name": "c / 2c-water-full-page.png"
+    },
+    {
+     "src": "d-manga-panels/21-water-hero.png",
+     "name": "d / 21-water-hero.png"
+    },
+    {
+     "src": "d-manga-panels/22-water-projects.png",
+     "name": "d / 22-water-projects.png"
+    },
+    {
+     "src": "d-manga-panels/23-water-fullpage.png",
+     "name": "d / 23-water-fullpage.png"
+    },
+    {
+     "src": "e-edit-grade/21-water-hero.png",
+     "name": "e / 21-water-hero.png"
+    },
+    {
+     "src": "e-edit-grade/22-water-projects.png",
+     "name": "e / 22-water-projects.png"
+    },
+    {
+     "src": "e-edit-grade/23-water-mobile.png",
+     "name": "e / 23-water-mobile.png"
+    },
+    {
+     "src": "f-fluffy-ui/2x-water-hero.png",
+     "name": "f / 2x-water-hero.png"
+    },
+    {
+     "src": "f-fluffy-ui/2x-water-projects.png",
+     "name": "f / 2x-water-projects.png"
+    },
+    {
+     "src": "g-dusk-dream/2x-water-full-page.png",
+     "name": "g / 2x-water-full-page.png"
+    },
+    {
+     "src": "g-dusk-dream/2x-water-hero.png",
+     "name": "g / 2x-water-hero.png"
+    },
+    {
+     "src": "g-dusk-dream/2x-water-projects.png",
+     "name": "g / 2x-water-projects.png"
+    },
+    {
+     "src": "h-cel-90s/2x-water-hero.png",
+     "name": "h / 2x-water-hero.png"
+    },
+    {
+     "src": "h-cel-90s/2x-water-mobile.png",
+     "name": "h / 2x-water-mobile.png"
+    },
+    {
+     "src": "h-cel-90s/2x-water-projects.png",
+     "name": "h / 2x-water-projects.png"
+    }
+   ],
+   "folder": ""
+  },
+  {
    "id": "STYLE-LAB-a-cloud-soft-ink",
    "title": "A \u00b7 Cloud world, soft ink",
    "blurb": "Ghibli-like painted clouds with soft indigo linework (ink ladder 2\u20133).",
@@ -35,6 +137,22 @@ window.LAB = {
     {
      "src": "a-cloud-soft-ink/07-motion-storyboard.png",
      "name": "07-motion-storyboard.png"
+    },
+    {
+     "src": "a-cloud-soft-ink/08-style-sheet.png",
+     "name": "08-style-sheet.png"
+    },
+    {
+     "src": "a-cloud-soft-ink/21-water-hero.png",
+     "name": "21-water-hero.png"
+    },
+    {
+     "src": "a-cloud-soft-ink/22-water-projects.png",
+     "name": "22-water-projects.png"
+    },
+    {
+     "src": "a-cloud-soft-ink/23-water-full-page.png",
+     "name": "23-water-full-page.png"
     }
    ],
    "folder": "a-cloud-soft-ink"
@@ -57,6 +175,46 @@ window.LAB = {
     {
      "src": "b-sakuga-impact/02-hero-alt.png",
      "name": "02-hero-alt.png"
+    },
+    {
+     "src": "b-sakuga-impact/03-full-page.png",
+     "name": "03-full-page.png"
+    },
+    {
+     "src": "b-sakuga-impact/04-projects.png",
+     "name": "04-projects.png"
+    },
+    {
+     "src": "b-sakuga-impact/05-experience.png",
+     "name": "05-experience.png"
+    },
+    {
+     "src": "b-sakuga-impact/06-mobile.png",
+     "name": "06-mobile.png"
+    },
+    {
+     "src": "b-sakuga-impact/07-motion-storyboard.png",
+     "name": "07-motion-storyboard.png"
+    },
+    {
+     "src": "b-sakuga-impact/08-style-sheet.png",
+     "name": "08-style-sheet.png"
+    },
+    {
+     "src": "b-sakuga-impact/09-softened.png",
+     "name": "09-softened.png"
+    },
+    {
+     "src": "b-sakuga-impact/21-water-hero.png",
+     "name": "21-water-hero.png"
+    },
+    {
+     "src": "b-sakuga-impact/22-water-projects.png",
+     "name": "22-water-projects.png"
+    },
+    {
+     "src": "b-sakuga-impact/23-water-full-page.png",
+     "name": "23-water-full-page.png"
     }
    ],
    "folder": "b-sakuga-impact"
@@ -75,6 +233,42 @@ window.LAB = {
     {
      "src": "c-genga-pencil/02-hero-alt.png",
      "name": "02-hero-alt.png"
+    },
+    {
+     "src": "c-genga-pencil/03-full-page.png",
+     "name": "03-full-page.png"
+    },
+    {
+     "src": "c-genga-pencil/04-projects.png",
+     "name": "04-projects.png"
+    },
+    {
+     "src": "c-genga-pencil/05-experience.png",
+     "name": "05-experience.png"
+    },
+    {
+     "src": "c-genga-pencil/06-mobile.png",
+     "name": "06-mobile.png"
+    },
+    {
+     "src": "c-genga-pencil/07-motion-storyboard.png",
+     "name": "07-motion-storyboard.png"
+    },
+    {
+     "src": "c-genga-pencil/08-style-sheet.png",
+     "name": "08-style-sheet.png"
+    },
+    {
+     "src": "c-genga-pencil/2a-water-hero.png",
+     "name": "2a-water-hero.png"
+    },
+    {
+     "src": "c-genga-pencil/2b-water-golf-card.png",
+     "name": "2b-water-golf-card.png"
+    },
+    {
+     "src": "c-genga-pencil/2c-water-full-page.png",
+     "name": "2c-water-full-page.png"
     }
    ],
    "folder": "c-genga-pencil"
@@ -117,6 +311,42 @@ window.LAB = {
     {
      "src": "d-manga-panels/08-style-sheet.png",
      "name": "08-style-sheet.png"
+    },
+    {
+     "src": "d-manga-panels/09-mobile-v2.png",
+     "name": "09-mobile-v2.png"
+    },
+    {
+     "src": "d-manga-panels/10-hero-likeness.png",
+     "name": "10-hero-likeness.png"
+    },
+    {
+     "src": "d-manga-panels/11-hero-softer.png",
+     "name": "11-hero-softer.png"
+    },
+    {
+     "src": "d-manga-panels/12-experience-v2.png",
+     "name": "12-experience-v2.png"
+    },
+    {
+     "src": "d-manga-panels/13-project-detail.png",
+     "name": "13-project-detail.png"
+    },
+    {
+     "src": "d-manga-panels/14-transition.png",
+     "name": "14-transition.png"
+    },
+    {
+     "src": "d-manga-panels/21-water-hero.png",
+     "name": "21-water-hero.png"
+    },
+    {
+     "src": "d-manga-panels/22-water-projects.png",
+     "name": "22-water-projects.png"
+    },
+    {
+     "src": "d-manga-panels/23-water-fullpage.png",
+     "name": "23-water-fullpage.png"
     }
    ],
    "folder": "d-manga-panels"
@@ -153,8 +383,24 @@ window.LAB = {
      "name": "06-mobile.png"
     },
     {
+     "src": "e-edit-grade/07-motion-storyboard.png",
+     "name": "07-motion-storyboard.png"
+    },
+    {
      "src": "e-edit-grade/08-style-sheet.png",
      "name": "08-style-sheet.png"
+    },
+    {
+     "src": "e-edit-grade/21-water-hero.png",
+     "name": "21-water-hero.png"
+    },
+    {
+     "src": "e-edit-grade/22-water-projects.png",
+     "name": "22-water-projects.png"
+    },
+    {
+     "src": "e-edit-grade/23-water-mobile.png",
+     "name": "23-water-mobile.png"
     }
    ],
    "folder": "e-edit-grade"
@@ -189,6 +435,18 @@ window.LAB = {
     {
      "src": "f-fluffy-ui/06-full-page.png",
      "name": "06-full-page.png"
+    },
+    {
+     "src": "f-fluffy-ui/07-components.png",
+     "name": "07-components.png"
+    },
+    {
+     "src": "f-fluffy-ui/2x-water-hero.png",
+     "name": "2x-water-hero.png"
+    },
+    {
+     "src": "f-fluffy-ui/2x-water-projects.png",
+     "name": "2x-water-projects.png"
     }
    ],
    "folder": "f-fluffy-ui"
@@ -219,6 +477,26 @@ window.LAB = {
     {
      "src": "g-dusk-dream/05-full-page.png",
      "name": "05-full-page.png"
+    },
+    {
+     "src": "g-dusk-dream/06-mobile.png",
+     "name": "06-mobile.png"
+    },
+    {
+     "src": "g-dusk-dream/07-style-sheet.png",
+     "name": "07-style-sheet.png"
+    },
+    {
+     "src": "g-dusk-dream/2x-water-full-page.png",
+     "name": "2x-water-full-page.png"
+    },
+    {
+     "src": "g-dusk-dream/2x-water-hero.png",
+     "name": "2x-water-hero.png"
+    },
+    {
+     "src": "g-dusk-dream/2x-water-projects.png",
+     "name": "2x-water-projects.png"
     }
    ],
    "folder": "g-dusk-dream"
@@ -245,6 +523,30 @@ window.LAB = {
     {
      "src": "h-cel-90s/04-experience.png",
      "name": "04-experience.png"
+    },
+    {
+     "src": "h-cel-90s/05-mobile.png",
+     "name": "05-mobile.png"
+    },
+    {
+     "src": "h-cel-90s/06-full-page.png",
+     "name": "06-full-page.png"
+    },
+    {
+     "src": "h-cel-90s/07-style-sheet.png",
+     "name": "07-style-sheet.png"
+    },
+    {
+     "src": "h-cel-90s/2x-water-hero.png",
+     "name": "2x-water-hero.png"
+    },
+    {
+     "src": "h-cel-90s/2x-water-mobile.png",
+     "name": "2x-water-mobile.png"
+    },
+    {
+     "src": "h-cel-90s/2x-water-projects.png",
+     "name": "2x-water-projects.png"
     }
    ],
    "folder": "h-cel-90s"
