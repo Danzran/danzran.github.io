@@ -2,7 +2,7 @@
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const DPR = Math.min(devicePixelRatio || 1, 1.5);
 const rand = (a, b) => a + Math.random() * (b - a);
-let onTwos = true;                                   // framey by default; the toggle shows the smooth version
+let onTwos = false;                                  // smooth by default (v9); the toggle brings back the on-twos version
 const clock = () => { const t = performance.now() / 1000; return onTwos ? Math.floor(t * 12) / 12 : t; };
 const btn = document.getElementById('cadence');
 btn.onclick = () => { onTwos = !onTwos; btn.textContent = 'water: ' + (onTwos ? 'on twos' : 'smooth'); btn.setAttribute('aria-pressed', onTwos); };
@@ -13,15 +13,15 @@ const NIGHT = { deep: '#1d4fa8', mid: '#4d8fe0', light: '#ffd98a', foam: '#fff3c
 const theme = { night: 0 };
 const nightBtn = document.getElementById('night');
 const stars = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random() * .8, r: Math.random() * 1.3 + .3, tw: Math.random() * 6 }));
-function setNight(on) {
+function setNight(on, instant) {
   document.documentElement.classList.toggle('night', on);
   Object.assign(Water.C, on ? NIGHT : DAY);
   nightBtn.textContent = on ? '☀ day' : '☾ night tide'; nightBtn.setAttribute('aria-pressed', on);
-  if (reduce || !window.gsap) theme.night = on ? 1 : 0;
+  if (instant || reduce || !window.gsap) theme.night = on ? 1 : 0;
   else gsap.to(theme, { night: on ? 1 : 0, duration: .9, ease: 'steps(6)' });   // the sky changes in drawn steps, not a fade
 }
 nightBtn.onclick = () => setNight(!document.documentElement.classList.contains('night'));
-if (/[?&]night/.test(location.search)) setNight(true);   // index.html?night opens straight into night tide
+setNight(!/[?&]day/.test(location.search), true);   // v9: night tide is the base; ?day opens the day sky
 
 /* ---------- ink strength 1-5 (STYLE-LAB/water-r3/31 ink ladder): contour weight, jitter, and speed lines at 4-5 ---------- */
 const INK_LEVELS = { 1: [0, 0, 0], 2: [.9, .35, 1], 3: [1.6, .6, 1.6], 4: [2.8, .85, 2.6], 5: [4.2, 1, 3.6] };
@@ -176,22 +176,6 @@ function spiral(t, src, ph, open) {
   return src.map(([u, v, z], i) => ({ x: b.x + b.w * (u * (1 + open * .9) + Math.sin(t * .7 + i * 1.3 + ph) * .05), y: b.y + b.h * (v + Math.cos(t * .6 + i) * .015 - open * .12 * (1 - v)), z }));
 }
 
-/* ---------- river: grows from the handstand to just below the reading line ---------- */
-function riverPrefix(t, scroll) {
-  const p = docH > H ? scroll / (docH - H) : 1;
-  const head = scroll + H * (.62 + .55 * Math.pow(p, 3));
-  // a point is reached once the running max of y passes the head, so the closing whirl appears all at once
-  const out = []; let reach = -Infinity;
-  for (let i = 0; i < path.length; i++) {
-    const q = path[i], wob = Math.sin(t * .8 + i * 1.7) * 10; reach = Math.max(reach, q.y);
-    if (reach <= head) { out.push({ x: q.x + wob, y: q.y, z: 1 }); continue; }
-    const a = out[out.length - 1];
-    if (a && q.y > a.y) { const k = (head - a.y) / (q.y - a.y); out.push({ x: a.x + (q.x + wob - a.x) * k, y: head, z: 1 }); }
-    break;
-  }
-  return out;
-}
-
 /* ---------- mini project drawings, re-inked on twos ---------- */
 const minis = [...document.querySelectorAll('[data-mini]')].map(c => ({ c, g: c.getContext('2d'), kind: c.dataset.mini }));
 const INK = '#22345e', AZ = '#3f8ee8', DEEP = '#1f5fbf', GOLD = '#e9b85a';
@@ -229,10 +213,6 @@ function drawMini(m, t) {
     jl(g, Array.from({ length: 16 }, (_, i) => { const u = i / 15; return [w * (.5 + .44 * u), h * (.82 - .6 * Math.log1p(u * 4) / Math.log(5))]; }), .9);
   }
 }
-
-/* ---------- cursor stirs a little ribbon of water ---------- */
-const trail = [];
-addEventListener('pointermove', e => trail.push({ x: e.clientX, y: e.clientY + scrollY, life: 1 }), { passive: true });
 
 /* ---------- intro (STYLE-LAB/water-r3/42): a drop falls, splashes into a ring, the ring unspools into the spiral ---------- */
 const INTRO = { start: performance.now(), drop: .7, splash: .6, grow: 1.1 };
@@ -300,20 +280,6 @@ function frame(now) {
     rx.restore();
     if (p2) { Water.setSeed(drawing + 3); Water.draw(fx, p2, { width: width * .5, t: t * 1.2, side: 1, drawn: 1, alpha: .7 }); }
     if (p1) { Water.setSeed(drawing); Water.draw(fx, p1, { width, t, side: 1, drawn: 1, alpha: .92 }); }
-  }
-  // the river
-  const pre = intro.done ? riverPrefix(t, scroll) : [];
-  if (pre.length > 1) {
-    rx.save(); rx.translate(0, -scroll);
-    Water.setSeed(drawing + 11); Water.draw(rx, pre, { width: Math.max(18, Math.min(38, W * .026)), t, side: 0, drawn: 1, alpha: .95, taper: 260 });
-    rx.restore();
-  }
-  // cursor trail
-  trail.forEach(p => p.life -= .03); while (trail.length && trail[0].life <= 0) trail.shift(); if (trail.length > 26) trail.splice(0, trail.length - 26);
-  if (trail.length > 4 && !reduce) {
-    rx.save(); rx.translate(0, -scroll);
-    Water.setSeed(drawing + 7); Water.draw(rx, trail.filter((_, i) => i % 2 === 0).map(p => ({ x: p.x, y: p.y, z: 1 })), { width: 14, t, side: 0, drawn: 1, alpha: Math.min(1, trail.length / 14) });
-    rx.restore();
   }
   if (drawing !== lastDrawing && drawing % 2 === 0) { lastDrawing = drawing; minis.forEach(m => drawMini(m, t)); }
 }
