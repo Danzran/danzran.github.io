@@ -64,13 +64,6 @@ main{position:relative;z-index:2}
 .more{margin-top:4vh;font-family:var(--hand);font-size:21px}
 .more a{margin-left:14px;border-bottom:1.5px solid var(--slate)}
 
-.reel{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:26px;align-items:center}
-.reel video{width:100%;aspect-ratio:1280/614;object-fit:cover;border-radius:16px}
-.jobs{list-style:none;display:flex;flex-direction:column;gap:14vh;margin-top:10vh}
-/* a timeline down the river: stops alternate sides, the river swirls into a whirlpool beside each one */
-.jobs .card{width:min(520px,62%)}
-.jobs .card:nth-child(odd){align-self:flex-start}
-.jobs .card:nth-child(even){align-self:flex-end}
 
 .about-card{max-width:720px;margin-left:auto}
 .about-card h2{margin-bottom:2vh}
@@ -87,17 +80,16 @@ main{position:relative;z-index:2}
   .nav a:not(.mark):not([href="#work"]):not([href="#contact"]){display:none}
   .hero-copy{top:14vh;right:var(--gutter)}
   .hero h1{font-size:17vw}
-  .golf-card,.reel{grid-template-columns:1fr}
+  .golf-card{grid-template-columns:1fr}
   .row3{grid-template-columns:1fr}
-  .jobs .card{width:84%}
   .golfvis{max-width:360px;width:100%;margin:0 auto}
 }
 /* buoyancy lives on `translate` so it never fights the GSAP entrance (which owns `transform`) */
-.proj,.jobs .card{animation:bob 3.4s ease-in-out infinite alternate}
-.proj:nth-child(2),.jobs .card:nth-child(2){animation-duration:3.9s;animation-delay:-1.2s;--bob:7px}
-.proj:nth-child(3),.jobs .card:nth-child(3){animation-duration:4.3s;animation-delay:-2.1s}
+.proj{animation:bob 3.4s ease-in-out infinite alternate}
+.proj:nth-child(2){animation-duration:3.9s;animation-delay:-1.2s;--bob:7px}
+.proj:nth-child(3){animation-duration:4.3s;animation-delay:-2.1s}
 @keyframes bob{from{translate:0 calc(var(--bob,-7px) * -1)}to{translate:0 var(--bob,-7px)}}
-@media (prefers-reduced-motion:reduce){.proj:hover{transform:none}.proj,.jobs .card{animation:none}}
+@media (prefers-reduced-motion:reduce){.proj:hover{transform:none}.proj{animation:none}}
 
 /* night tide */
 .toggle--night{right:auto;left:var(--gutter)}
@@ -125,3 +117,7 @@ html[data-ink="4"] .card{border-width:2.5px;border-color:var(--slate)}
 html[data-ink="5"] .card{border-width:3.5px;border-color:#0d1c40;box-shadow:6px 6px 0 rgba(13,28,64,.85)}
 html[data-ink="1"] .card{border-color:transparent}
 @media (max-width:820px){.inkpick{bottom:64px}}
+
+/* v9 hero orbit (STYLE-LAB/handstand-orbit): 7 yaw drawings stacked; app.js cross-fades the two nearest */
+.fig.orbit img{visibility:visible;opacity:0;will-change:opacity}
+.fig.orbit img[data-yaw="000"]{opacity:1}
