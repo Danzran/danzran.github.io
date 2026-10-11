@@ -21,4 +21,7 @@ Palette (day to night ramp): cream and butter, peach, lilac, periwinkle, dusty n
 - Keep the figure and the reel as images. Use the same ink treatment in both.
 
 ## Status
-01 to 05 are generated. 06 (mobile) and 07 (style sheet) are blocked by a Codex usage limit (retry after 6:05 AM). See PROMPTS.md.
+All of 01 to 07 are generated (06 and 07 were added after the quota reset). Round 2 adds 2x-water-hero, 2x-water-projects and 2x-water-full-page. See PROMPTS.md.
+
+## Round 2: Cotton Sky + elemental water
+The round 2 set (`2x-water-*.png`) takes the same bones and moves the palette to powder blue, azure, slate indigo, ivory, and restrained gold, with no green and much less pink. The clouds are fluffy and voluminous. Around the handstand figure, water ribbons spiral in sakuga-style S-curves, with tapering white foam bands that dissolve into cloud mist. The golf swing analyzer card carries the pose nodes, angle arcs, and stat chips, and the project cards sit over the water ribbons. Build-wise, the water is a layered background: draw the ribbons as SVG paths with a foam stroke, and let them run behind the cards and the figure. Keep the figure, the reel, and the golf card as images so the ink treatment stays consistent. In the full-page mockup the sky picks up floating islands and waterfalls the prompt did not ask for. Treat that as an interpretation to review, not as the spec.
