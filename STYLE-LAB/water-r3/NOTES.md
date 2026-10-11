@@ -23,3 +23,7 @@ The agents agreed that the water hero (azure ribbons wrapping the handstand over
 - **53 horizontal.** The whole site as one sideways-scrolling panorama, with chapters separated by waterfalls and a water-line progress bar. It's an alternative to the vertical river in v8.
 - **54 dive transition.** Between sections, the camera plunges through the water surface, the cards float underwater in light rays, and it bursts up into the next section.
 - **55 night full page.** The complete night-tide homepage: glowing gold river, dark glass cards and a moonlit pool. It's the spec for v8's night mode.
+
+## Round 6: hero plates (in use in v8)
+
+- **61 / 62.** Painted day and night background plates with no text or figure. v8 draws them behind the live ribbons, figure and lettering, with parallax, and crossfades between them for night tide. Keeping the drawn background separate from the live layers is the route to production: art in the back, code in front.
