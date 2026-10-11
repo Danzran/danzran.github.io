@@ -48,3 +48,4 @@ Goal: by morning, give Daniel a wide spread of homepage interpretations to judge
 - (c-genga-pencil) 01-hero + 02-hero-alt done; 03-08 blocked: Codex usage limit hit (resets 6:05 AM), prompts ready in c-genga-pencil/PROMPTS.md. NB: scratchpad/p is shared between agents and prompt files got overwritten - use per-agent dirs.
 - (c-genga-pencil) Round 2 done: 01-08 complete + 2a/2b/2c-water-*.png (water direction). 2c/03 contain invented placeholder content.
 - (d-manga-panels) Round 2 done: 09-14 + 21-water-hero/projects/fullpage. Top: 21, 11, 13.
+- (b-sakuga-impact) Round 2 done: 01-09 complete + 21/22/23-water-*.png. (A stray sed deleted the d-manga line above; restored from git.)
