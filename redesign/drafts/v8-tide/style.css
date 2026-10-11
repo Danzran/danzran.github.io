@@ -17,11 +17,13 @@ img,video{display:block;max-width:100%}
 #sky{z-index:0}#river{z-index:1}
 main{position:relative;z-index:2}
 
-.nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:clamp(14px,3vw,44px);padding:18px var(--gutter);font-family:var(--serif);font-size:19px;letter-spacing:.12em}
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:clamp(6px,1.4vw,18px);padding:18px var(--gutter);font-family:var(--serif);font-size:19px;letter-spacing:.12em}
 .nav .sp{flex:1}
+.nav .links-wrap{display:contents}
+.nav a:not(.mark){padding:6px 14px;border-radius:999px;background:rgba(251,248,241,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .nav .mark{font-family:var(--hand);font-size:24px;letter-spacing:0;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:rgba(251,248,241,.75);border:1.5px solid var(--slate)}
 .nav a:not(.mark){position:relative}
-.nav a:not(.mark)::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1.5px;background:currentColor;transform:scaleX(0);transition:transform .4s}
+.nav a:not(.mark)::after{content:"";position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;background:currentColor;transform:scaleX(0);transition:transform .4s}
 .nav a:not(.mark):hover::after{transform:scaleX(1)}
 .toggle{position:fixed;right:var(--gutter);bottom:18px;z-index:60;font-family:var(--hand);font-size:17px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--slate);background:rgba(251,248,241,.85);color:var(--slate);cursor:pointer}
 
