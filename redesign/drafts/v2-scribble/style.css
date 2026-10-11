@@ -26,7 +26,7 @@ html[data-boil="2"] .boil{filter:url(#boil2)}
 .note{font-family:var(--hand);font-size:clamp(18px,1.6vw,24px);line-height:1.15}
 .scribble{display:inline-block;line-height:.95;white-space:nowrap}
 .sc-word{display:inline-flex;white-space:nowrap}
-.sc-letter{height:1.25em;overflow:visible;vertical-align:-.2em}
+.sc-letter{height:1.12em;overflow:visible;vertical-align:-.16em}
 
 /* highlighter swaths behind words */
 .swath{position:absolute;z-index:-1;pointer-events:none;overflow:visible}
@@ -44,7 +44,7 @@ html[data-boil="2"] .boil{filter:url(#boil2)}
 #crayonTrail{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 .hero__name{position:absolute;left:var(--gutter);top:15vh;z-index:3;font-size:clamp(70px,12.5vw,210px)}
 .hero__name .row{position:relative;display:block}
-.hero__name .row:nth-child(2){margin-left:.55em;margin-top:-.05em}
+.hero__name .row:nth-child(2){margin-left:.55em;margin-top:-.22em}
 .hero__note{position:absolute;z-index:3;left:calc(var(--gutter) + 2vw);bottom:12vh;max-width:22ch}
 .hero__note .hl{position:relative;display:inline-block;padding:2px 8px}
 .hero__arrow{position:absolute;left:-10px;top:-64px;width:70px;height:70px}
