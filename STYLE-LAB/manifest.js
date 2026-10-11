@@ -104,6 +104,40 @@ window.LAB = {
    "folder": ""
   },
   {
+   "id": "STYLE-LAB-water-r3",
+   "title": "Water round 3 \u00b7 tuning the winner",
+   "blurb": "Ink ladder 1\u20135 for the water hero, the v8 river storyboard, a night-tide variant, a water close-up sheet for building it in code, and the green-free recolours.",
+   "notes": "The agents agreed that the water hero (azure ribbons wrapping the handstand over cotton clouds) was the strongest image in every style. This round tests that direction rather than widening it:",
+   "hasNotes": true,
+   "images": [
+    {
+     "src": "water-r3/31-ink-ladder.png",
+     "name": "31-ink-ladder.png"
+    },
+    {
+     "src": "water-r3/32-river-storyboard.png",
+     "name": "32-river-storyboard.png"
+    },
+    {
+     "src": "water-r3/33-night-tide.png",
+     "name": "33-night-tide.png"
+    },
+    {
+     "src": "water-r3/34-water-closeups.png",
+     "name": "34-water-closeups.png"
+    },
+    {
+     "src": "water-r3/35-b23-recolored.png",
+     "name": "35-b23-recolored.png"
+    },
+    {
+     "src": "water-r3/36-h-projects-recolored.png",
+     "name": "36-h-projects-recolored.png"
+    }
+   ],
+   "folder": "water-r3"
+  },
+  {
    "id": "STYLE-LAB-a-cloud-soft-ink",
    "title": "A \u00b7 Cloud world, soft ink",
    "blurb": "Ghibli-like painted clouds with soft indigo linework (ink ladder 2\u20133).",
