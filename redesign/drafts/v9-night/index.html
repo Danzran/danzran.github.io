@@ -113,7 +113,7 @@
 <script src="labs/cursor/cursors/scribble.js"></script>
 <script src="labs/cursor/cursors/moonglow.js"></script>
 <script src="labs/cursor/cursors/inkring.js"></script>
-<script>/* cursor: scribble loop by default; ?c=moonglow | inkring | none to compare (labs/cursor has all 8) */
-(() => { const c = (location.search.match(/[?&]c=(\w+)/) || [, 'scribble'])[1]; if (window.CURSORS && CURSORS[c]) CURSORS[c].mount(); })();</script>
+<script>/* cursor: none by default (Daniel rejected the water trail and the scribble loop); ?c=scribble|moonglow|inkring to compare */
+(() => { const c = (location.search.match(/[?&]c=(\w+)/) || [, 'none'])[1]; if (window.CURSORS && CURSORS[c]) CURSORS[c].mount(); })();</script>
 </body>
 </html>
