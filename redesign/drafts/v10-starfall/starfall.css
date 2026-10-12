@@ -132,4 +132,5 @@ html.clouds .row3{margin-top:9vh}html.clouds .row2{margin-top:72px}
 html.clouds .more{margin-top:9vh}
 html.clouds .now-save{margin-top:5vh}
 html.clouds .about-grid{gap:64px}
+html.clouds .sec h2{margin-bottom:8vh}
 @media (prefers-reduced-motion:reduce){html.clouds .cloudbody{animation:none}}

@@ -73,8 +73,8 @@ function paint(it) {
     tg.fillStyle = fade; tg.fillRect(0, 0, t.width, t.height);
     o.globalAlpha = .92; o.drawImage(t, X0 - P * .1, Y0 - th * .3, cw, th); o.globalAlpha = 1;
   }
-  if (img.puff && Math.min(w, h) > 140) {
-    const left = rnd() < .5, sz = Math.min(P * 4.4, w * .4), px = left ? X0 - sz * .2 : X0 + BW - sz * .8, py = Y0 + P * 1.2 - sz * .9;
+  if (img.puff && Math.min(w, h) > 140 && innerWidth > 820) {   // phones: no tower, it would cover the text above the card
+    const left = rnd() < .5, sz = Math.min(P * 4.4, w * .4, (G + P * 1.2 - 4) / .9), px = left ? X0 - sz * .2 : X0 + BW - sz * .8, py = Y0 + P * 1.2 - sz * .9;
     const t = document.createElement('canvas'); t.width = Math.ceil(sz * DPR); t.height = Math.ceil(sz * DPR); const tg = t.getContext('2d');
     tg.drawImage(img.puff, 0, 0, t.width, t.height); tg.globalCompositeOperation = 'destination-in';
     const fade = tg.createLinearGradient(0, 0, 0, t.height); fade.addColorStop(0, '#000'); fade.addColorStop(.68, '#000'); fade.addColorStop(.92, 'rgba(0,0,0,0)');
