@@ -18,16 +18,25 @@ window.Scribble = (() => {
   const seeded = s => () => { s = (s + 0x6d2b79f5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 
   /* ---------- variants (text units: 1em = 100; outline units: CSS px) ---------- */
+  // giannis: Daniel's own edit (thi.gif). Chunky caps, the whole letterform re-shapes coherently (turbulent displace with
+  // evolution), roughened dry edges that re-roll every frame, paint drips hanging off stroke bottoms, rare film scratches.
+  const GIANNIS = { caps: 1, size: .82, weight: 3.2, track: 3, wide: 1.12, warp: 2.6, warpFreq: .022, amp: 1.4, freq: .035, detail: .35, speed: .55, crawl: 0,
+    grit: 1.3, gritFreq: .55, downRough: 3, spike: .18, hair: .55, hairDown: 1,  drips: 1, dripLen: 22, jitter: .25, echoes: 0, echoA: .3, echoLag: .25,
+    smear: 3, glow: .14, blur: 1.2, dry: .35, dryAng: -84, dryW: 2.6, dryBlob: 3, scratch: .06, texSteps: 12.5, texSpeed: 6 };
   const VARIANTS = {
+    giannis:       Object.assign({}, GIANNIS, { label: 'giannis (smooth shape, 12.5 fps edges)' }),
+    giannissmooth: Object.assign({}, GIANNIS, { label: 'giannis, all smooth', texSteps: 0, texSpeed: 3 }),
+    giannis12:     Object.assign({}, GIANNIS, { label: 'giannis on 12.5 fps (GIF rate)', steps: 12.5, speed: .9 }),
     calm:    { label: 'calm mutate',    grit: .25, hair: 0,   amp: 1.1, speed: .45, freq: .05, detail: .3,  spike: 0,   crawl: .35, jitter: .35, echoes: 0, echoA: .3,  echoLag: .25, smear: 3, glow: .22, blur: 1.2, dry: .25 },
     crawl:   { label: 'crawl',          grit: .9,  hair: .7,  amp: 2.1, speed: .9,  freq: .065, detail: .6, spike: .55, crawl: 1.1, jitter: .7,  echoes: 1, echoA: .35, echoLag: .22, smear: 4, glow: .35, blur: 1.4, dry: .5 },
     echo:    { label: 'echo smear',     grit: .6,  hair: .5,  amp: 1.8, speed: .8,  freq: .06, detail: .45, spike: .35, crawl: .8,  jitter: .6,  echoes: 3, echoA: .42, echoLag: .2,  smear: 6, glow: .45, blur: 1.6, dry: .35 },
     torn:    { label: 'torn dry-brush', grit: 1.1, hair: 1.2, amp: 1.5, speed: .7,  freq: .06, detail: .75, spike: 1.5, crawl: .7,  jitter: .5,  echoes: 0, echoA: .3,  echoLag: .25, smear: 3, glow: .25, blur: 1.2, dry: 1 },
     stepped: { label: 'stepped (v8-ish, on 7s)', grit: .4, hair: 0, amp: 1.6, speed: 1.4, freq: .06, detail: .4, spike: .2, crawl: 0, jitter: .9, echoes: 0, echoA: .3, echoLag: .25, smear: 3, glow: .2, blur: 1.2, dry: .4, steps: 7 },
   };
-  const q = (location.search.match(/[?&]scribble=([a-z]+)/) || [])[1];
-  const DEFAULT = VARIANTS[q] ? q : 'crawl';
-  const preset = name => Object.assign({ arrive: true, delay: 0, stagger: .075, arriveDur: 1.1, steps: 0, glowColor: null }, VARIANTS[name] || VARIANTS[DEFAULT], { variant: VARIANTS[name] ? name : DEFAULT });
+  const q = (location.search.match(/[?&]scribble=([a-z0-9]+)/) || [])[1];
+  const DEFAULT = VARIANTS[q] ? q : 'giannis';   // round 2: Daniel's own edit is the reference
+  const BASE = { arrive: true, delay: 0, stagger: .075, arriveDur: 1.1, steps: 0, glowColor: null, caps: 0, weight: 0, track: 0, warp: 0, warpFreq: .022, gritFreq: .42, downRough: 0, drips: 0, dripLen: 0, scratch: 0, texSteps: 0, texSpeed: 0, dryAng: null, dryW: 1, dryBlob: 0, wide: 1, hairDown: 0, size: 1 };
+  const preset = name => Object.assign({}, BASE, VARIANTS[name] || VARIANTS[DEFAULT], { variant: VARIANTS[name] ? name : DEFAULT });
 
   /* ---------- smooth 3D gradient noise (improved Perlin), roughly -1..1 ---------- */
   const perm = new Uint8Array(512);
@@ -161,18 +170,44 @@ window.Scribble = (() => {
   }
 
   /* ---------- lettering ---------- */
-  function letterPath(L, lt, ampMul, cfg, out) {
-    const p = out || new Path2D(), f = cfg.freq, f2 = f * 2.7, cr = cfg.crawl * lt, amp = cfg.amp * ampMul, det = cfg.detail * .5 * amp, sp = cfg.spike * ampMul * 22, gr = (cfg.grit || 0) * ampMul;
+  // one outline point -> displaced position in o[0], o[1]. lt: shape time, tt: edge-texture time (may be stepped)
+  function displace(L, x, y, nx, ny, lt, tt, ampMul, cfg, o) {
+    const f = cfg.freq, cr = cfg.crawl * lt, amp = cfg.amp * ampMul;
+    let d = cfg.weight + amp * noise(x * f + cr + L.ox, y * f + L.oy, lt) + cfg.detail * .5 * amp * noise(x * f * 2.7 - cr * 1.7 + L.oy, y * f * 2.7, lt * 1.6 + 9);
+    const down = cfg.downRough ? (ny > 0 ? 1 + cfg.downRough * ny * ny : .3) : 1;      // ragged mostly along the bottoms of strokes
+    if (cfg.grit) { const gf = cfg.gritFreq; d += cfg.grit * ampMul * down * noise(x * gf + cr * 2.3 + L.ox, y * gf, tt * 2.4 + 17); }                 // fine grit: scratchy edge
+    if (cfg.spike) { const sv = noise(x * .3 + L.ox, y * .3 - cr * .5, tt * 1.2 + 3) - .22; if (sv > 0) d += cfg.spike * ampMul * 22 * down * sv * sv; }   // torn barbs, outward only
+    let px = x + nx * d, py = y + ny * d;
+    if (cfg.warp) { const wf = cfg.warpFreq, w = cfg.warp * ampMul; px += w * noise(x * wf + L.ox, y * wf, lt * .8 + 31); py += w * noise(x * wf, y * wf + L.oy, lt * .8 + 47); }  // coherent re-shape
+    o[0] = px; o[1] = py;
+  }
+  const tmp = [0, 0];
+  function letterPath(L, lt, ampMul, cfg, tt = lt) {
+    const p = new Path2D();
     for (const c of L.g.contours) {
       const { xy, nm, n } = c;
       for (let i = 0; i < n; i++) {
-        const x = xy[i * 2], y = xy[i * 2 + 1];
-        let d = amp * noise(x * f + cr + L.ox, y * f + L.oy, lt) + det * noise(x * f2 - cr * 1.7 + L.oy, y * f2, lt * 1.6 + 9);
-        if (gr) d += gr * noise(x * .42 + cr * 2.3 + L.ox, y * .42, lt * 2.4 + 17);                                       // fine grit: the scratchy crawl
-        if (sp) { const s = noise(x * .3 + L.ox, y * .3 - cr * .5, lt * 1.2 + 3) - .22; if (s > 0) d += sp * s * s; }   // torn barbs, outward only
-        const px = x + nm[i * 2] * d, py = y + nm[i * 2 + 1] * d;
-        i ? p.lineTo(px, py) : p.moveTo(px, py);
+        displace(L, xy[i * 2], xy[i * 2 + 1], nm[i * 2], nm[i * 2 + 1], lt, tt, ampMul, cfg, tmp);
+        i ? p.lineTo(tmp[0], tmp[1]) : p.moveTo(tmp[0], tmp[1]);
       }
+      p.closePath();
+    }
+    return p;
+  }
+
+  // paint drips hanging off down-facing edges. Length follows slow noise, so they creep down and retract smoothly.
+  function dripPath(L, lt, tt, ampMul, cfg) {
+    const p = new Path2D();
+    for (const dp of L.drips) {
+      const v = noise(dp.ph, lt * .3, 23) * .5 + .5, len = cfg.dripLen * cfg.drips * dp.len * Math.max(0, v - .3) / .7;
+      if (len < 1.2) continue;
+      const { xy, nm } = dp.c, i = dp.i;
+      displace(L, xy[i * 2], xy[i * 2 + 1], nm[i * 2], nm[i * 2 + 1], lt, tt, ampMul, cfg, tmp);
+      const bx = tmp[0], by = tmp[1] - 2.5, w = dp.w * (.7 + .3 * v), sway = noise(dp.ph, lt * .5, 5) * 1.6, ey = by + len;
+      p.moveTo(bx - w * 1.4, by);
+      p.quadraticCurveTo(bx - w * .35, by + len * .35, bx - w * .4 + sway, ey);
+      p.arc(bx + sway, ey, w * .45, Math.PI, 0, true);
+      p.quadraticCurveTo(bx + w * .35, by + len * .35, bx + w * 1.4, by);
       p.closePath();
     }
     return p;
@@ -187,7 +222,9 @@ window.Scribble = (() => {
       const len = cfg.hair * h.len * v * 34 * ampMul; if (len < .6) continue;
       const { xy, nm, n } = h.c, i = (h.i + Math.round(noise(h.ph, lt * .2, 2) * 6) + n) % n;
       const x = xy[i * 2], y = xy[i * 2 + 1], nx = nm[i * 2], ny = nm[i * 2 + 1];
-      let dx = nx + Math.sign(nx || 1) * 1.1, dy = ny * .6 + noise(h.ph, lt * .5, 7) * .4; const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l;
+      if (cfg.hairDown && ny < .3) continue;                   // giannis: drag streaks only hang off the bottoms of strokes
+      let dx = cfg.hairDown ? nx * .25 + noise(h.ph, lt * .5, 7) * .12 : nx + Math.sign(nx || 1) * 1.1, dy = cfg.hairDown ? 1 : ny * .6 + noise(h.ph, lt * .5, 7) * .4;
+      const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l;
       const bw = .7 + .5 * h.len, bx = x - nx * 1.2, by = y - ny * 1.2;                // rooted just inside the ink
       const bend = noise(h.ph + 5, lt * .6, 3) * len * .25;
       p.moveTo(bx + ny * bw, by - nx * bw);
@@ -203,31 +240,50 @@ window.Scribble = (() => {
     const cfg = Object.assign(preset(opts.variant), opts, opts.variant ? {} : { variant: DEFAULT });
     const asc = (f.ascender / f.unitsPerEm) * UNITS, desc = (-f.descender / f.unitsPerEm) * UNITS;
     el.setAttribute('aria-label', text); el.textContent = '';
-    const rnd = seeded((opts.seed || 1) * 7919), letters = [];
-    let x = 0, i = 0;
     const space = (f.charToGlyph(' ').advanceWidth / f.unitsPerEm) * UNITS || 25;
-    for (const ch of text) {
-      if (ch === ' ') { x += space; continue; }
-      const g = glyph(ch), streaks = [];
-      const ang = (-18 + (rnd() - .5) * 20) * Math.PI / 180;
-      for (let k = 0; k < 16; k++) streaks.push({ cx: rnd() * g.adv, cy: -rnd() * asc * .9, len: 8 + rnd() * 34, w: .5 + rnd() * .7, ph: rnd() * 50, on: rnd() });
-      const hairs = [];
-      for (let k = 0; k < 22; k++) { const c = g.contours[(rnd() * g.contours.length) | 0]; hairs.push({ c, i: (rnd() * c.n) | 0, ph: rnd() * 90, len: .5 + rnd() }); }
-      letters.push({ g, x, hairs, ox: rnd() * 100, oy: rnd() * 100, phase: rnd() * 40, rank: i + (rnd() - .5) * 3.5, fromX: (rnd() - .5) * 30, fromY: 18 + rnd() * 26, rot: (rnd() - .5) * .5, ca: Math.cos(ang), sa: Math.sin(ang), streaks });
-      x += g.adv; i++;
-    }
-    const width = x, boxW = width + PAD * 2, boxH = asc + desc + PAD * 2;
     const box = document.createElement('span'), canvas = document.createElement('canvas');
     box.className = 'sc-line'; box.setAttribute('aria-hidden', 'true');
-    box.style.cssText = `display:inline-block;position:relative;vertical-align:-.28em;width:${boxW / UNITS}em;height:${boxH / UNITS}em;margin:0 ${-PAD / UNITS}em`;
-    canvas.style.cssText = `position:absolute;pointer-events:none;left:${-BLEED / UNITS}em;top:${-BLEED / UNITS}em;width:${(boxW + BLEED * 2) / UNITS}em;height:${(boxH + BLEED * 2) / UNITS}em`;
     box.appendChild(canvas); el.appendChild(box);
-    const s = surface(canvas);
-    const it = {
+    const s = surface(canvas), boxH = asc + desc + PAD * 2;
+    let boxW = 0, laidCaps = null, laidTrack = null;
+    function layout() {                                        // (re)built when caps/tracking change, e.g. switching variant in the lab
+      const rnd = seeded((opts.seed || 1) * 7919), letters = [], str = cfg.caps ? text.toUpperCase() : text;
+      let x = 0, i = 0;
+      for (const ch of str) {
+        if (ch === ' ') { x += space * cfg.wide + cfg.track; continue; }
+        // Caveat's capital I has bars; the ref's is a plain blunt stroke, so caps mode borrows 'l' squashed to cap height
+        const plainI = cfg.caps && ch === 'I', g = glyph(plainI ? 'l' : ch), streaks = [], hairs = [], drips = [];
+        const top = gl => Math.min(...gl.contours.map(c => { let m = 0; for (let j = 1; j < c.xy.length; j += 2) m = Math.min(m, c.xy[j]); return m; }));
+        const sy = plainI ? top(glyph('H')) / top(g) : 1;
+        const ang = (-18 + (rnd() - .5) * 20) * Math.PI / 180, angJ = (rnd() - .5) * 14;
+        for (let k = 0; k < 16; k++) streaks.push({ cx: rnd() * g.adv, cy: -rnd() * asc * .9, len: 8 + rnd() * 34, w: .5 + rnd() * .7, ph: rnd() * 50, on: rnd() });
+        for (let k = 0; k < 22; k++) { const c = g.contours[(rnd() * g.contours.length) | 0]; hairs.push({ c, i: (rnd() * c.n) | 0, ph: rnd() * 90, len: .5 + rnd() }); }
+        const cand = [];
+        for (const c of g.contours) for (let j = 0; j < c.n; j += 2) if (c.nm[j * 2 + 1] > .75) cand.push({ c, i: j, low: c.xy[j * 2 + 1] > -22 });
+        const pool = cand.filter(d => d.low).length >= 3 ? cand.filter(d => d.low) : cand;
+        for (let k = 0; k < Math.min(cfg.caps ? 2 : 4, pool.length); k++) { const d = pool[(rnd() * pool.length) | 0]; drips.push({ c: d.c, i: d.i, ph: rnd() * 70, len: .35 + rnd() * .9, w: .7 + rnd() * 1.7 }); }
+        letters.push({ g, x, sy, hairs, drips, ox: rnd() * 100, oy: rnd() * 100, phase: rnd() * 40, rank: i + (rnd() - .5) * 3.5, fromX: (rnd() - .5) * 30, fromY: 18 + rnd() * 26, rot: (rnd() - .5) * .5, ca: Math.cos(ang), sa: Math.sin(ang), angJ, streaks });
+        x += g.adv * cfg.wide + cfg.track; i++;
+      }
+      boxW = x - (i ? cfg.track : 0) + PAD * 2;
+      const E = cfg.size / UNITS;                               // size: giannis caps render a bit smaller so headings keep their footprint
+      box.style.cssText = `display:inline-block;position:relative;vertical-align:-.28em;width:${boxW * E}em;height:${boxH * E}em;margin:0 ${-PAD * E}em`;
+      canvas.style.cssText = `position:absolute;pointer-events:none;left:${-BLEED * E}em;top:${-BLEED * E}em;width:${(boxW + BLEED * 2) * E}em;height:${(boxH + BLEED * 2) * E}em`;
+      laidCaps = cfg.caps; laidTrack = cfg.track + cfg.wide * 1000 + cfg.size * 1e6;
+      if (it) { it.letters = letters; it.unitsW = boxW + BLEED * 2; }
+      return letters;
+    }
+    let it = null;
+    const letters = layout();
+    it = {
       el, box, canvas, cfg, letters, visible: false, born: reduce ? -1e9 : null, staticT: 0, lastStep: null, color: '#fff', frame: 0,
       ox: PAD + BLEED, oy: PAD + BLEED + asc, unitsW: boxW + BLEED * 2,
       resize() { const r = box.getBoundingClientRect(); s.resize(r.width * (it.unitsW / boxW), r.height * ((boxH + BLEED * 2) / boxH)); it.color = getComputedStyle(el).color; },
-      set(o) { if (o.variant) Object.assign(cfg, preset(o.variant)); Object.assign(cfg, o); it.lastStep = null; if (!started || reduce) it.draw(it.staticT); },
+      set(o) {
+        if (o.variant) Object.assign(cfg, preset(o.variant)); Object.assign(cfg, o); it.lastStep = null;
+        if (cfg.caps !== laidCaps || cfg.track + cfg.wide * 1000 + cfg.size * 1e6 !== laidTrack) { layout(); it.resize(); }
+        if (!started || reduce) it.draw(it.staticT);
+      },
       replay(delay = 0) { it.born = performance.now() / 1000 + delay; },
       draw(T) { drawText(it, s, T); },
     };
@@ -242,6 +298,7 @@ window.Scribble = (() => {
     const glowOn = cfg.glow > 0 || cfg.echoes > 0;
     s.clear(glowOn);
     const tq = cfg.steps ? Math.floor(T * cfg.steps) / cfg.steps : T;
+    const texT = cfg.texSteps ? Math.floor(T * cfg.texSteps) / cfg.texSteps : tq;     // edge texture can re-roll on 12.5s like the GIF
     ctx.fillStyle = it.color; ctx.strokeStyle = '#000'; ctx.lineCap = 'round'; gctx.fillStyle = cfg.glowColor || it.color;
     const born = it.born == null ? Infinity : it.born, still = reduce || !started;
     for (const L of it.letters) {
@@ -251,24 +308,29 @@ window.Scribble = (() => {
       const lt = tq * cfg.speed + L.phase, ampMul = 1 + 5 * ae, alpha = smooth(0, .3, a);
       const jx = cfg.jitter * noise(L.ox, lt * .35, 5.5) * 1.6 + L.fromX * ae * ae, jy = cfg.jitter * noise(L.oy, lt * .35, 7.1) * 1.6 + L.fromY * ae * ae;
       const rot = cfg.jitter * noise(L.ox + 3, lt * .3, 1.7) * .035 + L.rot * ae * ae, cx = L.g.adv / 2;
-      const place = (c, kk, ex = 0, ey = 0) => { c.setTransform(kk, 0, 0, kk, (it.ox + L.x + jx + ex) * kk, (it.oy + jy + ey) * kk); c.translate(cx, -35); c.rotate(rot); c.translate(-cx, 35); };
-      const body = letterPath(L, lt, ampMul, cfg);
+      const place = (c, kk, ex = 0, ey = 0) => { c.setTransform(kk, 0, 0, kk, (it.ox + L.x + jx + ex) * kk, (it.oy + jy + ey) * kk); c.translate(cx, -35); c.rotate(rot); c.translate(-cx, 35); if (cfg.wide !== 1 || L.sy !== 1) c.scale(cfg.wide, L.sy); };
+      const tt = cfg.texSpeed ? texT * cfg.texSpeed + L.phase : lt;
+      const body = letterPath(L, lt, ampMul, cfg, tt);
       const hair = cfg.hair > 0 ? hairPath(L, lt, ampMul, cfg) : null;
-      place(ctx, k); ctx.globalAlpha = alpha; ctx.fill(body); if (hair) ctx.fill(hair);
+      const drip = cfg.drips > 0 ? dripPath(L, lt, tt, ampMul, cfg) : null;
+      place(ctx, k); ctx.globalAlpha = alpha; ctx.fill(body); if (hair) ctx.fill(hair); if (drip) ctx.fill(drip);
       if (cfg.dry > 0) {                                         // dry-brush gaps: streaks that grow/shrink smoothly, erased from the ink
-        ctx.globalCompositeOperation = 'destination-out';
+        ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = '#000';
         const nS = Math.round(L.streaks.length * Math.min(1, cfg.dry));
         for (let j = 0; j < nS; j++) {
           const st = L.streaks[j], grow = noise(st.ph, lt * .4, 2.2) * .5 + .5, len = st.len * grow * (1 + (cfg.dry > 1 ? cfg.dry - 1 : 0));
           if (len < 2) continue;
           const dx = st.cx + noise(st.ph, lt * .25, 4) * 4, dy = st.cy + noise(st.ph + 9, lt * .25, 4) * 4;
-          ctx.globalAlpha = .85 * alpha; ctx.lineWidth = st.w * .8;
-          ctx.beginPath(); ctx.moveTo(dx - L.ca * len / 2, dy - L.sa * len / 2); ctx.lineTo(dx + L.ca * len / 2, dy + L.sa * len / 2); ctx.stroke();
+          let ca = L.ca, sa = L.sa;
+          if (cfg.dryAng != null) { const a = (cfg.dryAng + L.angJ) * Math.PI / 180; ca = Math.cos(a); sa = Math.sin(a); }
+          ctx.globalAlpha = .85 * alpha; ctx.lineWidth = st.w * .8 * cfg.dryW;
+          ctx.beginPath(); ctx.moveTo(dx - ca * len / 2, dy - sa * len / 2); ctx.lineTo(dx + ca * len / 2, dy + sa * len / 2); ctx.stroke();
+          if (cfg.dryBlob && st.on < .5) { ctx.beginPath(); ctx.ellipse(dx, dy, st.w * cfg.dryBlob * grow, st.w * cfg.dryBlob * 1.6 * grow, ca, 0, 6.283); ctx.fill(); }   // blotchy dry holes
         }
-        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = it.color;
       }
       if (glowOn) {
-        place(gctx, gk); gctx.globalAlpha = cfg.glow * alpha; gctx.fill(body); if (hair) gctx.fill(hair);
+        place(gctx, gk); gctx.globalAlpha = cfg.glow * alpha; gctx.fill(body); if (hair) gctx.fill(hair); if (drip) gctx.fill(drip);
         for (let j = 1; j <= cfg.echoes; j++) {                  // ghosts: the same letter from a moment ago, trailing left
           const ep = letterPath(L, lt - j * cfg.echoLag, ampMul * (1 + .35 * j), cfg);
           place(gctx, gk, -cfg.smear * j * (1 + 2 * ae), noise(L.oy, j * 1.3, lt * .5) * cfg.smear * .5);
@@ -277,6 +339,15 @@ window.Scribble = (() => {
       }
     }
     if (glowOn) s.composite(cfg.blur);
+    if (cfg.scratch && !still) {                               // film scratches: a thin vertical line on the odd frame
+      const fr = Math.floor(T * 12.5), r = seeded(fr * 977 + (it.ox | 0) * 13 + it.letters.length);
+      for (let j = 0; j < 2; j++) {
+        if (r() > cfg.scratch) { r(); r(); r(); continue; }
+        const x = r() * s.w, y0 = r() * s.h * .5, len = s.h * (.35 + .65 * r());
+        ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = .55; ctx.fillStyle = it.color; ctx.fillRect(x, y0, Math.max(1, s.dpr * .9), len);
+      }
+      ctx.globalAlpha = 1;
+    }
   }
 
   /* ---------- outlines: a painted, crawling stroke along any closed path / polyline ---------- */
