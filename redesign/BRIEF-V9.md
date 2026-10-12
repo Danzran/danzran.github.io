@@ -80,3 +80,12 @@ Every agent on this round, Claude or Codex, reads this first. It combines:
 - **Removed from v9:** the dive transition, the ink picker, and the drop/splash intro.
 - **Kept:** the golf case-study page (`golf.html`, now night).
 - **Smoothness:** water contours now mutate smoothly (`Water.setTime`), and the figure no longer swaps drawings.
+
+## Later feedback (same day)
+- **Scribble reference:** Daniel pointed at his own GIF, `thi.gif`. Stepping through it frame by frame, the "GIANNIS IS THE ROBIN?" title shows the effect he means. Frames are in `STYLE-LAB/_refs/giannis/`.
+  - The letters are chunky brush caps.
+  - The whole letterform re-shapes coherently every frame, like Turbulent Displace with Evolution animated.
+  - Edges are ragged dry-brush, with drips and drag streaks at the stroke bottoms.
+  - Occasional film scratches appear.
+  - The words are layered in grey ghost, white and cream.
+- **Cursor:** the scribble-loop cursor "sucks too". Both the water trail and the scribble loop are rejected. v9 has no custom cursor until a new pick.
