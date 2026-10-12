@@ -20,7 +20,7 @@ cat prompts/NAME.txt | codex exec --skip-git-repo-check --sandbox workspace-writ
 - **Keyed sprites** (clouds, frames, cords): the prompt asks for a flat `#00FF00` background. The key computes alpha from green dominance, un-mixes the green, applies the same guard as despill, and crops to content.
   - Afterwards the clouds get a warm pass: lemon yellows with `G >= 0.96R` are pulled to `G = 0.93R`, so cloud tops read gold, not lime.
 - **Horizons:** the flat navy top is detected and cropped, then the top 32% fades to alpha.
-- **Cut-outs:** `cutout.py` (white flood-fill) with 1 variant, max height 1400 and pastel 0.08.
+- **Cut-outs:** `cutout.py` (white flood-fill) with 1 variant, max height 1400 and pastel 0.08. A refine pass then removes pale low-saturation ground shadow at the edge in the bottom 25% (under the hands), and replaces the 1px edge ring with inward colour so no white halo shows on navy.
 - **Check:** every delivered file is scanned for green/teal pixels, and every one scores 0.00 to 0.04% (only edge specks).
 
 ## What worked / gotchas
@@ -33,7 +33,7 @@ cat prompts/NAME.txt | codex exec --skip-git-repo-check --sandbox workspace-writ
   - Some skies still lean amber/orange at the horizon (warm gold is in-palette); grade down in CSS if needed.
 - **Hero fidelity:** two refs (the painted photo plus the clean v9 orbit frame) and an explicit clothing list kept him consistent in every run. Explicitly saying "paint the beanie NAVY BLUE, never green" was needed, because the original photo's beanie reads dark green.
 - **Cloud frames:** asking for the inside to be "EMPTY, completely FLAT, solid #eef2fb" plus "billow border even in thickness" gave 9-slice-ready frames on the first try.
-- **Codex usage limit:** hit after about 37 images. `hero-falling-stars-landscape` and `cumulus-wisps` (round 2) failed on the limit and were not delivered.
+- **Codex usage limit:** hit after about 37 images. `hero-falling-stars-landscape` and `cumulus-wisps` (round 2) failed on the limit and were not delivered. A retry after the reported reset failed too, because the reset time is local (about 09:42 UTC). Their prompts are kept below the file list for a later run.
 
 ## Files and exact prompts
 
@@ -303,7 +303,7 @@ The attached reference images show Daniel, a real person, doing a straight hands
 
 #### `hero-cutout` → hero/handstand-cutout.webp
 
-Note: Best cut-out. White bg removed with cutout.py (1 variant, max_h 1400, pastel 0.08).
+Note: Best cut-out. White bg removed with cutout.py (1 variant, max_h 1400, pastel 0.08), then refined: pale ground-shadow near the hands removed, 1px defringe.
 
 Refs: `-i handstand.png -i orbit.png`
 
@@ -315,7 +315,7 @@ The attached reference images show Daniel, a real person, doing a straight hands
 
 #### `hero-cutout-rim` → hero/handstand-cutout-rim.webp
 
-Note: Night rim-lit variant, same cutout.py settings.
+Note: Night rim-lit variant, same cutout.py + refine settings.
 
 Refs: `-i handstand.png -i orbit.png`
 
@@ -385,4 +385,22 @@ A twilight light-leak overlay: a soft blurry glow of rose pink and lavender viol
 Generate ONE image with your image generation tool and save it in the current directory as lightleak-azure.png. The image must be landscape, 1536x1024 pixels. Do not write any other files.
 
 A dusk light-leak overlay: a wide soft band of azure and pale ivory light sweeping across the top of the frame like light from a low sun through a lens, with a thin warm gold edge, a long horizontal anamorphic flare streak across the upper third, and soft lens ghosts; the lower two-thirds fade smoothly to pure black. The background must be PURE BLACK (#000000) everywhere outside the light itself, completely flat, no stars, no sky, no gradient, no noise, so the image can be used as an additive light sprite with screen blending. Only glowing light on black. Palette strictly limited to: deep navy, royal blue, azure, ivory, warm gold and amber, with small accents of rose pink, soft magenta-rose and lavender violet. Absolutely NO green and NO teal, cyan-green, mint or turquoise anywhere in the image: where a twilight sky would normally turn teal near the horizon, push that band toward clear azure blue and lavender violet instead. No text, no logos, no watermark.
+```
+
+## Not delivered (Codex usage limit): prompts for a later run
+
+#### `hero-falling-stars-landscape`
+
+```text
+Generate ONE image with your image generation tool and save it in the current directory as hero-falling-stars-landscape.png. The image must be landscape, 1536x1024 pixels. Do not write any other files.
+
+The attached reference images show Daniel, a real person, doing a straight handstand: he wears a maroon / burgundy long-sleeve sweatshirt, light-blue denim jeans, beige-white low sneakers, and a navy-blue knit beanie with a pom-pom (paint the beanie NAVY BLUE, never green); short brown hair shows under the beanie; he is seen from behind, legs together pointing straight up, arms straight and hands flat on the ground. Keep his pose, body proportions, build and clothing exactly faithful to the references — it must clearly be the same person and the same pose. Do not show a face. Paint a new wide anime film still (Makoto Shinkai style) of him doing this handstand on a flat stone terrace at night, placed in the right third of the frame, figure about 55 percent of the image height. Many glowing shooting stars with long ivory, gold and rose trails fall diagonally from upper right to lower left across a deep navy and royal-blue starry sky with a dense Milky Way; sparkling glitter drifts around his body; warm gold rim light on his legs and sneakers, soft azure light on his jeans, reflections on the wet stone. Gold-rimmed cumulus near the horizon, tiny town lights far below. Keep the left half calm and open for a headline. Style: a hand-painted Japanese anime feature-film background in the luminous manner of Makoto Shinkai — hyper-detailed painted sky, magic-hour light, soft bloom and glow, anamorphic lens flare streaks, sparkling light specks, crisp dramatic cumulus with glowing gold and rose rims, fine atmospheric gradients. Painterly, cinematic, high dynamic range, clean edges, no photographic noise. Palette strictly limited to: deep navy, royal blue, azure, ivory, warm gold and amber, with small accents of rose pink, soft magenta-rose and lavender violet. Absolutely NO green and NO teal, cyan-green, mint or turquoise anywhere in the image: where a twilight sky would normally turn teal near the horizon, push that band toward clear azure blue and lavender violet instead. No green anywhere. No text, no logos, no watermark, no other people.
+```
+
+#### `cumulus-wisps`
+
+```text
+Generate ONE image with your image generation tool and save it in the current directory as cumulus-wisps.png. The image must be landscape, 1536x1024 pixels. Do not write any other files.
+
+Four separate, isolated, long thin horizontal stratus cloud wisps and streaks of different lengths, stacked with clear empty space between each so none touch, like the long glowing cloud streaks across a magic-hour sky in an anime film: their lower edges glow warm gold and rose, their upper parts soft lavender and pale azure, soft feathered painted edges. Each fully inside the frame. The background must be a completely flat, uniform, pure chroma-key green (#00FF00) everywhere outside the subject, with no shadows, no gradient and no texture, so it can be keyed out. The subject itself must contain no green at all, and no green spill on its edges. Palette strictly limited to: deep navy, royal blue, azure, ivory, warm gold and amber, with small accents of rose pink, soft magenta-rose and lavender violet. Absolutely NO green and NO teal, cyan-green, mint or turquoise anywhere in the image: where a twilight sky would normally turn teal near the horizon, push that band toward clear azure blue and lavender violet instead. No text, no logos, no watermark.
 ```
