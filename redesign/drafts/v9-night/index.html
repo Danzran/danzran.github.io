@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="timeline.css">
+<link rel="stylesheet" href="experience.css">
 </head>
 <body>
 <!-- fixed layers: sky + clouds behind, the river above them, content scrolls on top -->
@@ -58,24 +58,43 @@
 
   <section class="sec exp" id="experience">
     <h2 class="brush" data-brush data-anchor="R">Experience</h2>
-    <div class="nle" id="nle">
-      <div class="nle-top">
-        <div class="monitor" id="monitor">
-          <div class="mon-slate" aria-hidden="true"></div>
-          <video class="mon-reel" id="monReel" src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline aria-label="Video editing reel"></video>
-          <div class="mon-titles" id="monTitles" aria-hidden="true"></div>
-          <div class="mon-hud" aria-hidden="true"><span class="pgm">● PGM</span><span class="tc" id="monTC">TC 2014:01:00</span></div>
-        </div>
-        <div class="inspector"><p class="insp-h">inspector</p><div class="insp-deck" id="inspDeck"></div></div>
-      </div>
-      <div class="panel" id="panel">
-        <div class="heads" aria-hidden="true"><span></span><span>V3</span><span>V2</span><span>V1</span><span>A1</span></div>
-        <div class="tracks" id="tracks">
-          <div class="ruler" id="ruler" aria-hidden="true"></div>
-          <div class="lanes" id="lanes"><div class="lane"></div><div class="lane"></div><div class="lane"></div><div class="lane"></div></div>
-          <div class="playhead" id="playhead"><i></i></div>
-        </div>
-      </div>
+    <canvas id="vtBg" aria-hidden="true"></canvas>
+    <div class="vt" id="vt">
+      <div class="vt-spine" aria-hidden="true"><i class="vt-fill"></i></div>
+      <ol class="vt-list">
+        <li class="vt-item" data-theme="edit">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <p class="vt-year" aria-hidden="true">2014<small>to 2020</small></p>
+          <article class="card vt-card">
+            <div class="vt-vis"><video class="vt-reel" src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="My video editing reel"></video></div>
+            <div class="vt-copy"><span class="tag">2014–2020</span><h3>Video editor</h3><p>COD edits, compositing, camera tracking. Led a team of 4 editors.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="it">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <p class="vt-year" aria-hidden="true">2018<small>to now</small></p>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/it/plate-768.webp" alt="" data-viz="it"></div>
+            <div class="vt-copy"><span class="tag">2018–now</span><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="lock">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <p class="vt-year" aria-hidden="true">2022<small>to 2023</small></p>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/lock/plate-768.webp" alt="" data-viz="lock"></div>
+            <div class="vt-copy"><span class="tag">2022–23</span><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="ext">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <p class="vt-year" aria-hidden="true">2024<small>to 2025</small></p>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/extropian/plate-768.webp" alt="" data-viz="extropian"></div>
+            <div class="vt-copy"><span class="tag">2024–25 · Extropian</span><h3>Backend developer</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></div>
+          </article>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -109,7 +128,7 @@
 <script src="golf.js"></script>
 <script src="water.js"></script>
 <script src="app.js"></script>
-<script src="timeline.js"></script>
+<script src="experience.js"></script>
 <script src="labs/cursor/cursors/starcatch.js"></script>
 <script src="labs/cursor/cursors/lightleak.js"></script>
 <script src="labs/cursor/cursors/moonlight.js"></script>

@@ -278,7 +278,7 @@ const titleDelay = .2;
 // title letters: Scribble's own arrive (staggered, echo-smeared) replaces the stepped gsap drop
 gsap.from('.role, .hero .pill', { y: 20, opacity: 0, duration: .5, ease: 'steps(4)', stagger: .15, delay: titleDelay + .7 });
 // cards surface out of the water: rise + settle, on threes
-gsap.utils.toArray('.card').forEach((c, i) => gsap.from(c, { y: 80, opacity: 0, rotate: i % 2 ? 1.5 : -1.5, duration: .6, ease: 'steps(6)', scrollTrigger: { trigger: c, start: 'top 90%' } }));
+gsap.utils.toArray('.card:not(.vt-card)').forEach((c, i) => gsap.from(c, { y: 80, opacity: 0, rotate: i % 2 ? 1.5 : -1.5, duration: .6, ease: 'steps(6)', scrollTrigger: { trigger: c, start: 'top 90%' } }));
 ScrollTrigger.addEventListener('refresh', layout);
 
 })();
