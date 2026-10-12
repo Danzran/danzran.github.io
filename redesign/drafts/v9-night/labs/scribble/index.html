@@ -44,6 +44,16 @@ h2.sec{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:.0
 .demo-card{min-height:160px;margin-top:22px}
 .demo-card h3{font-family:var(--serif);font-size:26px;font-weight:600}
 #status{font-size:12.5px;color:var(--muted);margin-top:10px}
+.gi{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.gi figure{position:relative;background:#1b1716;border-radius:18px;overflow:hidden;aspect-ratio:520/300;margin:0}
+.gi-ref img{width:100%;height:100%;object-fit:cover;display:block}
+.gi figcaption{position:absolute;right:10px;bottom:8px;font-size:12px;color:#c9c0b0;background:rgba(0,0,0,.45);padding:2px 8px;border-radius:8px}
+.gi-ours{padding:0 4%;container-type:inline-size}.gi-ours>div{font-size:24cqw;line-height:.9;height:.9em}
+.gi-ours .brush{font-size:1em}
+.gi-l1{margin-top:-.36em;filter:blur(.6px)}.gi-l1 .brush{color:#6e6764}
+.gi-l2{margin:0 0 0 .08em}.gi-l2 .brush{color:#fbfaf7}
+.gi-l3{margin:.02em 0 0 -.06em}.gi-l3 .brush{color:#efdcbc}
+@media (max-width:760px){.gi{grid-template-columns:1fr}}
 @media (max-width:760px){.roto-wrap{grid-template-columns:1fr}}
 </style>
 </head>
@@ -59,6 +69,21 @@ h2.sec{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:.0
     <div><span class="brush name" data-v="stage">Daniel Azran</span></div>
     <div><span class="brush head" data-v="stage2">Selected work</span></div>
     <div class="ctl" id="stageCtl"></div>
+  </section>
+
+  <section>
+    <h2 class="sec">Giannis: Daniel's own edit vs the engine</h2>
+    <div class="gi">
+      <figure class="gi-ref"><img id="giRef" src="../../../../../STYLE-LAB/_refs/giannis/f01.png" alt="Reference: frames of Daniel's GIANNIS IS THE ROBIN? edit"><figcaption>reference · thi.gif, 12.5 fps</figcaption></figure>
+      <figure class="gi-ours" id="giOurs">
+        <div class="gi-l1"><span class="brush" data-gi>Giannis</span></div>
+        <div class="gi-l2"><span class="brush" data-gi>is the</span></div>
+        <div class="gi-l3"><span class="brush" data-gi>Robin?</span></div>
+        <figcaption>scribble · <span id="giRate">giannis</span></figcaption>
+      </figure>
+    </div>
+    <div class="tabs" id="giTabs" role="group" aria-label="giannis rate"></div>
+    <p class="note">Same font as before (Caveat Brush, rendered in caps), made heavier by pushing the outline outward. Of the candidates, Knewave, Rubik Wet Paint, Permanent Marker, Sedgwick Ave and Bangers, all were further from the ref's upright, blunt caps (<code>shots/v9/scribble-giannis-fonts.png</code>). The shape re-forms coherently through a low-frequency vector warp whose evolution runs in time. Roughened edges are heaviest on down-facing edges and re-roll at 12.5 fps. Drips hang off stroke bottoms, dry vertical drag holes are erased out of the ink, and a film scratch appears on about 1 frame in 7.</p>
   </section>
 
   <section>
@@ -106,6 +131,9 @@ h2.sec{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:.0
     crawl: 'Closest to the video. Bumps travel along the edges, with torn barbs, one ghost and a warm glow.',
     echo: 'Three trailing ghosts sampled from earlier noise time, smeared left and blurred.',
     torn: 'Heavy dry-brush gaps and outward barbs. The roughest, most distressed edge.',
+    giannis: 'From Daniel\'s own edit. Chunky caps re-shape coherently, edges re-roll at 12.5 fps, and drips and scratches are added.',
+    giannissmooth: 'Giannis with everything evolving per frame. The edge texture shimmers.',
+    giannis12: 'Giannis with everything on 12.5 fps, the GIF\'s own rate.',
     stepped: 'The same engine quantised to 7 fps, to show how stepping reads.',
   };
   function sliders(host, it, ranges) {
@@ -143,6 +171,13 @@ h2.sec{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:.0
     const it = Scribble.render(c.querySelector('.brush'), { seed: 9 + i * 13, variant: n });
     sliders(c.querySelector('.ctl'), it, TEXT_R);
   });
+
+  // giannis: ref frames at 12.5 fps next to the engine
+  const giRef = document.getElementById('giRef'); let gf = 0;
+  setInterval(() => { gf = (gf + 1) % 24; giRef.src = `../../../../../STYLE-LAB/_refs/giannis/f${String(gf + 1).padStart(2, '0')}.png`; }, 80);
+  const gis = [...document.querySelectorAll('[data-gi]')].map((el, i) => Scribble.render(el, { seed: 3 + i * 17, variant: 'giannis', size: 1, delay: i * .35, dry: [0, 0, .45][i], glow: i === 0 ? 0 : .14 }));
+  const giTabs = document.getElementById('giTabs');
+  ['giannis', 'giannissmooth', 'giannis12'].forEach(n => { const b = document.createElement('button'); b.dataset.v = n; b.textContent = V[n].label; b.setAttribute('aria-pressed', n === 'giannis'); b.onclick = () => { gis.forEach((it, i) => { it.set({ variant: n, size: 1, dry: [0, 0, .45][i], glow: i === 0 ? 0 : .14 }); it.replay(i * .35); }); document.getElementById('giRate').textContent = n; giTabs.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); }; giTabs.appendChild(b); });
 
   // old vs new
   Lettering.render(document.getElementById('old'), { seed: 9 }); Lettering.start(7);
