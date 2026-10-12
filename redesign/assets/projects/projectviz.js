@@ -186,9 +186,9 @@ window.ProjectViz = (() => {
           const v = G[r][c], near = Math.abs(r - kr) + Math.abs(c - kc) < 7;
           if (!v && !near) continue;
           const age = (read - idx) / 28;
-          ctx.globalAlpha = v ? clamp(.35 + v / 400, 0, 1) * (age < 2 ? 1 : .75) : .45 * (1 - (Math.abs(r - kr) + Math.abs(c - kc)) / 7);
+          ctx.globalAlpha = v ? clamp(.55 + v / 400, 0, 1) * (age < 2 ? 1 : .85) : .45 * (1 - (Math.abs(r - kr) + Math.abs(c - kc)) / 7);
           if (v) { ctx.fillStyle = `rgba(255,217,138,${v / 600})`; ctx.fillRect(x0 + c * cs, y0 + r * rs, cs, rs); }
-          ctx.font = `600 ${fs}px ${MONO}`; ctx.fillStyle = v ? INK : BLUE; ctx.fillText(v, x0 + (c + .5) * cs, y0 + (r + .68) * rs);
+          ctx.font = `600 ${fs}px ${MONO}`; ctx.fillStyle = v > 140 ? IVORY : v ? INK : BLUE; ctx.fillText(v, x0 + (c + .5) * cs, y0 + (r + .68) * rs);
         }
         ctx.textAlign = 'left'; ctx.globalAlpha = 1;
         // the 3x3 kernel

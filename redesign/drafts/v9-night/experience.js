@@ -204,7 +204,7 @@ function makeLock() {
     g.beginPath(); g.arc(bx, by, L * .13, 0, TAU); g.arc(bx - L * .04, by, L * .04, 0, TAU, true); g.fillStyle = rgba('cream', .5); g.fill('evenodd'); g.stroke();
     g.restore();
     // push-to-start ring
-    const [sx, sy, R] = md === 'wide' ? [w * .64, h * .17, clamp(m * .075, 34, 72)] : md === 'tall' ? [w * .8, h * .15, clamp(m * .1, 30, 54)] : [w * .82, h * .3, m * .17];
+    const [sx, sy, R] = md === 'wide' ? [w * .64, h * .25, clamp(m * .075, 34, 72)] : md === 'tall' ? [w * .8, h * .21, clamp(m * .1, 30, 54)] : [w * .82, h * .3, m * .17];
     for (let j = 0; j < 3; j++) { const u = fract(t * .32 + j / 3); g.globalAlpha = A * (1 - u) * (.45 + .4 * align); g.strokeStyle = rgba('gold', 1); g.lineWidth = 2; g.beginPath(); g.arc(sx, sy, R * (1 + u * 1.5), 0, TAU); g.stroke(); }
     g.globalAlpha = A; glow(g, sx, sy, R * 1.6, 'goldsoft', .12 + .25 * align);
     g.fillStyle = rgba('navy', .9); g.beginPath(); g.arc(sx, sy, R, 0, TAU); g.fill();
@@ -251,7 +251,7 @@ function makeExt() {
   return (g, w, h, t, A, o) => {
     const md = mode(w, h, o.mini), m = Math.min(w, h);
     const [cx, cy, R] = md === 'wide' ? [w * .74, h * .56, clamp(m * .27, 130, 280)] : md === 'tall' ? [w * .5, h * .58, w * .36] : [w * .3, h * .5, m * .36];
-    const [dx, dy, dR] = md === 'wide' ? [w * .3, h * .15, clamp(m * .06, 30, 56)] : md === 'tall' ? [w * .7, h * .12, w * .09] : [w * .78, h * .22, m * .1];
+    const [dx, dy, dR] = md === 'wide' ? [w * .3, h * .24, clamp(m * .06, 30, 56)] : md === 'tall' ? [w * .7, h * .2, w * .09] : [w * .78, h * .22, m * .1];
     const arc = a => [cx + Math.cos(a) * R, cy + Math.sin(a) * R * .86];
     g.globalAlpha = A; glow(g, cx, cy + R * .4, R * 2.2, 'azure', .14); glow(g, dx, dy, dR * 4, 'blue', .16);
     // swing plane
@@ -330,7 +330,7 @@ function frame(now) {
   requestAnimationFrame(frame);
   const t = reduce ? 2.4 : now / 1000;
   const sr = section.getBoundingClientRect();
-  const presence = smooth((H - sr.top) / (H * .6)) * smooth(sr.bottom / (H * .6));
+  const presence = smooth((H - sr.top) / (H * .6)) * smooth((sr.bottom - H * .35) / (H * .45));
   if (presence <= 0) {
     if (shown) { g.clearRect(0, 0, canvas.width, canvas.height); canvas.style.visibility = 'hidden'; shown = false; if (video && !video.paused) video.pause(); }
     return;
