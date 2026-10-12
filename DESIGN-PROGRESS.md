@@ -185,8 +185,8 @@ The parallel-session notes identify v8 as their newest starting point. That is a
   - Night only. No river, intro, dive, or toggles.
   - Water contours mutate smoothly (`Water.setTime`).
   - The hero figure is a 7-drawing orbit, turned by scroll (0→60°) and pointer (±20°).
-- **Lettering:** brush headings use `scribble.js` "crawl"; `?scribble=calm|echo|torn|stepped` switches the style.
-- **Cursor:** the scribble-loop cursor; `?c=moonglow|inkring|none` switches it.
+- **Lettering:** brush headings use the `scribble.js` "giannis" style, matched to the GIANNIS title in Daniel's `thi.gif`. `?scribble=giannissmooth|giannis12|crawl|...` switches the style.
+- **Pointer:** starcatch (the painted stars twinkle near the pointer; a click sends a shooting star) plus lightleak on card hover. Daniel rejected the water trail and the scribble loop. `?c=moonlight|parallax|rec|spotlight|none` switches it.
 - **Experience:** an editing-timeline concept (NLE tracks, playhead scrub, the reel in the monitor).
 - **Golf card:** draws the club shaft and head, the head path, the ball and the launch streak.
 
@@ -228,3 +228,4 @@ These are agent workflow instructions, not a filesystem watcher or background su
 | 2026-10-11 23:07 | Codex | Added conservative 2-D golf club/ball companion data, the generator, debug grid, and notes: `redesign/assets/golf/club.{js,json}`, `club-debug.jpg`, `CLUB-NOTES.md`, and `redesign/tools/golf_club_track.py`. Checked 50-frame mapping/array lengths and inspected the overlay sheet; 2-D speed is explicitly an illustrative 28 mph estimate, not measured performance data. |
 | 2026-10-11 23:27 | Codex | Generated the handstand orbit sheet and 13 illustration frames in `STYLE-LAB/handstand-orbit/`, documented exact prompts and scroll mapping, and inspected the navy yaw strip. Verified 13 fallback cutouts are valid 933 × 1400 RGBA PNGs; the Windows cutout utility failed under WSL and no WebP/JPEG codec was available, so required `cut/*.webp` and `strip.jpg` remain honestly undelivered (see `NOTES.md`). |
 | 2026-10-11 23:45 | Claude (coordinator) | Built v9 Night from Daniel's feedback and integrated the parallel work: scribble.js, the cursor lab, timeline C, the orbit hero, and the golf club/ball overlay. Codex orbit cutouts failed in its sandbox, so Claude cut them out to webp with `cutout.py`. Golf head data pass 2 (all 50 frames; est frames read by eye; 28 mph claim dropped) was done by hand, because running Codex unsandboxed was not permitted. Commit-message caveat: the timeline agent's `index.html`/`style.css` edits landed inside commits fcd2f5d and 58b640b (hero orbit). Checked with headless screenshots, desktop and phone. |
+| 2026-10-12 00:20 | Claude (coordinator) | Daniel pointed to the GIANNIS title in `thi.gif` as the scribble reference; the "giannis" variant was built and made the default, with a comparison strip in `redesign/shots/v9/scribble-giannis-vs-ref.png`. The scribble cursor was rejected; cursor round 2 has 6 scene and hover concepts, and v9 now uses starcatch + lightleak. Checked: no console errors in headless Chrome. |
