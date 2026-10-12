@@ -50,7 +50,7 @@ Every agent on this round, Claude or Codex, reads this first. It combines:
 - **Static site.** No build step; must work over `file://`.
   - Libraries only from cdnjs or jsdelivr with exact versions: GSAP 3.15.0, ScrollTrigger, Lenis 1.3.26, opentype.js 1.3.4.
 - **Respect `prefers-reduced-motion`.**
-- **Git:** work on the `redesign` branch, never `main`. **Never push.** Commit granularly and often; overcommitting is better than undercommitting. Use:
+- **Git:** work on the `redesign` branch, never `main`. **Never push.** Commit once per finished, coherent change (a feature, a fix, a lab round), not per file or per tweak; fold the DESIGN-PROGRESS update into that commit. (Daniel, 2026-10-11: the earlier "overcommit" rule produced too many commits.) Use:
   ```
   git -c user.name=Danzran -c user.email=125504166+Danzran@users.noreply.github.com commit -m "..."
   ```
