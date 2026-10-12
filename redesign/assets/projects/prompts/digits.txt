@@ -1,0 +1,6 @@
+Generate ONE image with your image generation tool and save it in the current directory as digits.png. Then reply with the path. Do not write any other files.
+
+SUBJECT: close-up of a single handwritten digit 7 drawn in thick marker on a sheet of graph paper, a marker lying beside it, top-down view. The digit should be clearly a 7 drawn by hand (this is the only allowed glyph). Large and centered-left, leaving room on the right.
+
+STYLE (match the attached reference frame exactly): a pastel rotoscoped illustration traced from real footage. Flat posterized fills in a small pastel palette (periwinkle/lavender, sky blue, butter yellow, soft pink, peach, ivory, navy ink), thick wobbly dark-navy ink outlines, slight paper grain, a few loose speckles. Simple, readable, bold shapes, like one frame of a hand-traced animation. Lots of calm flat space, because a live hand-drawn data overlay (nodes, arrows, numbers) will be drawn on top in code.
+HARD RULES: absolutely no green and no teal anywhere (no plants, no green screens, no green LEDs). No text, letters, numbers, logos or UI in the image (the code adds all labels). No people's faces in close-up. Landscape 3:2, 1536x1024.
