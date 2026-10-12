@@ -110,10 +110,19 @@
 <script src="water.js"></script>
 <script src="app.js"></script>
 <script src="timeline.js"></script>
-<script src="labs/cursor/cursors/scribble.js"></script>
-<script src="labs/cursor/cursors/moonglow.js"></script>
-<script src="labs/cursor/cursors/inkring.js"></script>
-<script>/* cursor: none by default (Daniel rejected the water trail and the scribble loop); ?c=scribble|moonglow|inkring to compare */
-(() => { const c = (location.search.match(/[?&]c=(\w+)/) || [, 'none'])[1]; if (window.CURSORS && CURSORS[c]) CURSORS[c].mount(); })();</script>
+<script src="labs/cursor/cursors/starcatch.js"></script>
+<script src="labs/cursor/cursors/lightleak.js"></script>
+<script src="labs/cursor/cursors/moonlight.js"></script>
+<script src="labs/cursor/cursors/parallax.js"></script>
+<script src="labs/cursor/cursors/rec.js"></script>
+<script src="labs/cursor/cursors/spotlight.js"></script>
+<script>/* pointer: starcatch (painted stars wake near the pointer, click = shooting star) + lightleak on card hover by default.
+   ?c=moonlight | parallax | rec | spotlight | none (one at a time); the lab has all 14 */
+(() => {
+  const q = (location.search.match(/[?&]c=(\w+)/) || [])[1], pick = q ? [q] : ['starcatch', 'lightleak'];
+  const fit = { posY: .5, zoom: 1.06, scrollK: .35 };   // matches drawPlate in app.js
+  if (q === 'parallax') document.getElementById('sky').dataset.parallax = '1';
+  pick.forEach(c => { const m = window.CURSORS && CURSORS[c]; if (!m) return; if (c === 'starcatch' || c === 'moonlight') m.fit = fit; m.mount(); });
+})();</script>
 </body>
 </html>
