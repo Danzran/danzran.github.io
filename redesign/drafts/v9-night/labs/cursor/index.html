@@ -10,8 +10,10 @@
 <link rel="stylesheet" href="../../style.css">
 <style>
   /* v9-like night backdrop: the painted plate, fixed, with a little navy at the foot for reading */
-  html.night body{background:#0d1c40 url(../../assets/plate-night.webp) center 30%/cover fixed;min-height:100vh}
-  body::before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(13,28,64,0) 30%,rgba(13,28,64,.55) 100%);pointer-events:none}
+  html.night body{background:#0d1c40;min-height:100vh}
+  /* the plate is its own fixed layer so the parallax concept can move it (data-parallax) */
+  .plate{position:fixed;inset:0;z-index:0;background:url(../../assets/plate-night.webp) center 30%/cover;pointer-events:none}
+  .plate::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,28,64,0) 30%,rgba(13,28,64,.55) 100%)}
   .lab{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:84px var(--gutter) 140px}
   .lab h1{font-size:clamp(56px,6.5vw,104px);margin-bottom:6px}
   .lab .role{color:#f3ead6}
@@ -27,12 +29,14 @@
     background:rgba(13,28,64,.7);border:1.5px solid rgba(255,233,176,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:var(--hand);font-size:17px}
   .switch button{border:0;background:none;color:#f3ead6;font:inherit;padding:4px 12px;border-radius:999px;cursor:pointer}
   .switch button[aria-pressed="true"]{background:#f6c25e;color:#0d1c40}
+  .switch .sep{align-self:center;font-size:13px;color:#ffd98a;opacity:.7;padding:0 4px 0 8px}
   .note{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:70;max-width:min(680px,calc(100% - 32px));text-align:center;font-size:14px;line-height:1.45;color:#c9d3ec;
     background:rgba(13,28,64,.6);border:1px solid rgba(255,233,176,.3);border-radius:14px;padding:8px 14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
   .note b{font-family:var(--hand);font-weight:400;font-size:18px;color:#ffd98a;margin-right:6px}
 </style>
 </head>
 <body>
+<div class="plate" data-parallax="1" aria-hidden="true"></div>
 <nav class="switch" id="switch" aria-label="Cursor concept"></nav>
 
 <main class="lab">
@@ -65,6 +69,14 @@
 <script src="../../../../assets/fonts/brush-font.js"></script>
 <script src="../../lettering.js"></script>
 <!-- each concept registers itself on window.CURSORS as { label, note, mount(), unmount() } -->
+<!-- round 2 (after the water trail and the scribble loop were rejected): no trails, no outlines -->
+<script src="cursors/moonlight.js"></script>
+<script src="cursors/parallax.js"></script>
+<script src="cursors/lightleak.js"></script>
+<script src="cursors/spotlight.js"></script>
+<script src="cursors/rec.js"></script>
+<script src="cursors/starcatch.js"></script>
+<!-- round 1 -->
 <script src="cursors/moonglow.js"></script>
 <script src="cursors/inkring.js"></script>
 <script src="cursors/scribble.js"></script>
@@ -87,6 +99,7 @@
     const u = new URL(location.href); u.searchParams.set('c', name); history.replaceState(null, '', u);
   }
   [...names, 'none'].forEach(n => {
+    if (n === 'moonglow' || n === 'moonlight') { const t = document.createElement('span'); t.className = 'sep'; t.textContent = n === 'moonlight' ? 'round 2' : 'round 1'; sw.appendChild(t); }
     const b = document.createElement('button'); b.type = 'button'; b.dataset.c = n; b.textContent = C[n] ? C[n].label : 'none';
     b.onclick = () => pick(n); sw.appendChild(b);
   });
