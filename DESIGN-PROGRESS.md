@@ -64,6 +64,7 @@ These ingredients are not one established style name. Useful technical/search te
   - Drop the day sky entirely.
   - Drop the dive transition, ink picker and intro.
   - Keep the golf case-study page.
+- **Git (later the same day):** the per-file commit granularity was "too much"; commit once per coherent change instead. Still the `redesign` branch, still never push.
 
 No favorite among the ten handstand drafts was selected in this session. Suggestions by Codex or Claude, agent consensus, and the existence of a later prototype are **not user decisions**. If another conversation contains newer explicit feedback, verify it and record its source here.
 
@@ -229,3 +230,4 @@ These are agent workflow instructions, not a filesystem watcher or background su
 | 2026-10-11 23:27 | Codex | Generated the handstand orbit sheet and 13 illustration frames in `STYLE-LAB/handstand-orbit/`, documented exact prompts and scroll mapping, and inspected the navy yaw strip. Verified 13 fallback cutouts are valid 933 × 1400 RGBA PNGs; the Windows cutout utility failed under WSL and no WebP/JPEG codec was available, so required `cut/*.webp` and `strip.jpg` remain honestly undelivered (see `NOTES.md`). |
 | 2026-10-11 23:45 | Claude (coordinator) | Built v9 Night from Daniel's feedback and integrated the parallel work: scribble.js, the cursor lab, timeline C, the orbit hero, and the golf club/ball overlay. Codex orbit cutouts failed in its sandbox, so Claude cut them out to webp with `cutout.py`. Golf head data pass 2 (all 50 frames; est frames read by eye; 28 mph claim dropped) was done by hand, because running Codex unsandboxed was not permitted. Commit-message caveat: the timeline agent's `index.html`/`style.css` edits landed inside commits fcd2f5d and 58b640b (hero orbit). Checked with headless screenshots, desktop and phone. |
 | 2026-10-12 00:20 | Claude (coordinator) | Daniel pointed to the GIANNIS title in `thi.gif` as the scribble reference; the "giannis" variant was built and made the default, with a comparison strip in `redesign/shots/v9/scribble-giannis-vs-ref.png`. The scribble cursor was rejected; cursor round 2 has 6 scene and hover concepts, and v9 now uses starcatch + lightleak. Checked: no console errors in headless Chrome. |
+| 2026-10-12 00:35 | Claude (coordinator) | Daniel said the commit granularity (556 commits on `redesign` in one day) was too much. The rule in `BRIEF-V9.md` is now one commit per coherent change, with the DESIGN-PROGRESS update included. History was not rewritten. |
