@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Azran — Draft v6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Patrick+Hand&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="flash" id="flash" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="chrome" aria-hidden="true">
+  <span class="rec"><i></i> REC</span>
+  <span class="tc" id="tc">00:00:00:00</span>
+  <span class="clip" id="clipName">A001 · HERO</span>
+</div>
+<nav class="nav"><a href="#work">work</a><a href="#experience">reel</a><a href="#about">about</a><a href="#contact">contact</a></nav>
+
+<main>
+  <section class="hero" id="hero" data-clip="A001 · HERO">
+    <div class="hero__shot"><img src="assets/handstand-graded.webp" alt="Daniel doing a handstand at sunset"></div>
+    <div class="leak" aria-hidden="true"></div>
+    <div class="bars" aria-hidden="true"><i></i><i></i></div>
+    <div class="hero__copy">
+      <h1 class="scratch" data-brush>Daniel Azran</h1>
+      <p class="hero__sub">engineer · machine learning · video editor</p>
+    </div>
+    <p class="hint">scroll to play ▸</p>
+  </section>
+
+  <section class="work" id="work" data-clip="A002 · WORK">
+    <div class="work__head"><h2 class="scratch" data-brush>the work</h2><p class="mono">4 clips · drag the playhead by scrolling</p></div>
+    <div class="viewer">
+      <div class="monitor" id="monitor">
+        <div class="slide on" data-i="0"><canvas id="golf" aria-label="Golf swing with pose analysis"></canvas></div>
+        <div class="slide" data-i="1"><img src="../v3-cloud-ink/assets/proj-flow.webp" alt=""></div>
+        <div class="slide" data-i="2"><img src="../v3-cloud-ink/assets/proj-digits.webp" alt=""></div>
+        <div class="slide" data-i="3"><img src="../v3-cloud-ink/assets/proj-house.webp" alt=""></div>
+        <div class="monitor__tc mono" id="monTc">01:00:00:00</div>
+      </div>
+      <div class="info">
+        <article class="clipinfo on" data-i="0"><span class="mono">clip 01 · 2024–25</span><h3>Golf Swing Analyzer</h3><p>Real-time swing analysis from wearable sensors. My own swing through MediaPipe pose: joint angles, hand path, tempo.</p>
+          <div class="stats" id="golfStats"><div><b data-tempo></b><span>tempo</span></div><div><b data-back></b><span>backswing</span></div><div><b data-down></b><span>downswing</span></div><div><b data-speed></b><span>hand speed</span></div><div class="live"><span data-live></span></div></div></article>
+        <article class="clipinfo" data-i="1"><span class="mono">clip 02 · computer vision</span><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade tracking with Shi–Tomasi corners, forward–backward checks and dense flow.</p><a class="go" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener">github ↗</a></article>
+        <article class="clipinfo" data-i="2"><span class="mono">clip 03 · deep learning</span><h3>Digit Classifier</h3><p>A Keras CNN at 98% on MNIST. Next: draw a digit right here.</p><a class="go" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener">github ↗</a></article>
+        <article class="clipinfo" data-i="3"><span class="mono">clip 04 · machine learning</span><h3>Real Estate Predictor</h3><p>Four models compared; 7% lower RMSE with tuning and log-price targets.</p><a class="go" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener">github ↗</a></article>
+      </div>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="ruler mono"><span>00:00</span><span>00:04</span><span>00:08</span><span>00:12</span><span>00:16</span></div>
+      <div class="track v"><span>V1</span><i style="--c:#ffd1e6">golf_swing.mov</i><i style="--c:#bff3ff">optical_flow.mp4</i><i style="--c:#e5d4ff">mnist.ipynb</i><i style="--c:#fff3c4">real_estate.R</i></div>
+      <div class="track a"><span>A1</span><b></b></div>
+      <div class="playhead" id="playhead"></div>
+    </div>
+    <p class="more mono">also: <a href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener">pl/0 compiler</a> · <a href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener">mikal–wix sync</a> · <a href="https://github.com/Danzran" target="_blank" rel="noopener">github</a></p>
+  </section>
+
+  <section class="reel" id="experience" data-clip="A003 · REEL">
+    <div class="reel__frame"><video src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline aria-label="Video editing reel"></video><div class="bars"><i></i><i></i></div></div>
+    <div class="reel__copy">
+      <h2 class="scratch" data-brush>where it started</h2>
+      <p>2014–2020: COD edits, 3D compositing, camera tracking, thumbnails, and leading up to four editors. The viewer only sees the cut.</p>
+      <ul class="mono">
+        <li><span>2024–25</span> backend developer · extropian</li>
+        <li><span>2018–now</span> systems assembler &amp; it</li>
+        <li><span>2022–23</span> lockout technician</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="about" id="about" data-clip="A004 · ABOUT">
+    <h2 class="scratch" data-brush>about me</h2>
+    <p>I'm a full-stack engineer focused on machine learning and data science, but what I really enjoy is solving problems — with tools I've picked up or ones built from scratch. Editing taught me that what the viewer sees matters as much as what's behind it.</p>
+    <button class="song" id="song" aria-pressed="false"><img src="../../../redlight.png" alt="">play my favorite song ♪</button>
+    <audio id="audio" src="../../../tgrave.mp3" preload="none"></audio>
+  </section>
+
+  <footer class="contact" id="contact" data-clip="A005 · END CARD">
+    <div class="contact__bg"><img src="assets/sky-graded.webp" alt=""></div>
+    <h2 class="scratch big" data-brush>say hi</h2>
+    <a class="btn" href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">let's talk →</a>
+    <div class="links mono"><a href="https://github.com/Danzran" target="_blank" rel="noopener">github</a><a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">linkedin</a><a href="../../../DanielAzranResume.pdf" target="_blank">resume</a></div>
+    <p class="legal mono">© 2026 daniel azran · draft v6 · the edit</p>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="../../assets/fonts/brush-font.js"></script>
+<script src="../../assets/golf/swing.js"></script>
+<script src="lettering.js"></script>
+<script src="golf.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

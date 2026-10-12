@@ -1,0 +1,23 @@
+# codex run logs
+redesign/**/log-*.txt
+redesign/codex-lando-log.txt
+
+# all codex run logs
+**/log-*.txt
+
+# third-party reference frames (not ours to publish)
+STYLE-BLEND/reference/oikawa-serve.png
+CLOUD-MOCKUPS/reference/beautiful-world-*.png
+# shared reference copies for agents (originals are committed elsewhere)
+STYLE-LAB/_refs/
+redesign/drafts/v3-cloud-ink/assets/01-hero-soft-ink.png
+redesign/drafts/v3-cloud-ink/assets/cloud-dream.png
+redesign/drafts/v3-cloud-ink/assets/handstand.png
+redesign/drafts/v4-sakuga/assets/handstand.png
+redesign/drafts/v4-sakuga/assets/golf-impact.png
+redesign/drafts/v4-sakuga/assets/02-hero-strong-ink.png
+redesign/drafts/v4-sakuga/assets/oikawa-serve.png
+
+# per-agent prompt/log scratch dirs
+STYLE-LAB/*/p/
+STYLE-LAB/handstand-orbit/cut/

@@ -1,0 +1,16 @@
+/* B · tide lanes: pinned horizontal scroll; years along a moonlit tide line, jobs as parallel water currents */
+.td-stage{position:relative;height:100vh;height:100svh;overflow:hidden}
+.td-canvas{position:absolute;inset:0;width:100%;height:100%}
+.td-track{position:absolute;left:0;top:0;height:100%;will-change:transform}
+.td-track .card{position:absolute;left:0;top:0;width:380px;padding:16px 20px;will-change:transform,opacity}
+.td-track .card.has-video{width:560px;display:grid;grid-template-columns:250px 1fr;column-gap:18px;align-items:center}
+.td-track .card.has-video video{grid-row:1/4;margin:0}
+.td-track .card h3{font-size:26px}
+.td-year{position:absolute;top:0;font-family:var(--serif);font-weight:500;color:rgba(255,233,176,.5);font-size:clamp(18px,1.6vw,24px);letter-spacing:.12em;transform:translateX(-50%)}
+@media (max-width:820px){
+  .td-track .card,.td-track .card.has-video{width:290px;padding:12px 14px}
+  .td-track .card.has-video{display:block}
+  .td-track .card.has-video video{margin-bottom:8px}
+  .td-track .card h3{font-size:22px}
+  .td-track .card p{font-size:14px}
+}

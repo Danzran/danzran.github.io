@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" class="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timeline C · Edit timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tl.css">
+<link rel="stylesheet" href="c-edit-timeline.css">
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<nav class="nav"><a class="mark" href="index.html">DA</a><span class="sp"></span><a href="#experience">Experience</a><a href="index.html">All concepts</a></nav>
+<main>
+  <section class="hero"><div>
+    <p class="labtag">timeline lab · C · edit timeline</p>
+    <h1 class="brush" data-brush>Daniel Azran</h1>
+    <p class="role">ENGINEER / ML / VIDEO EDITOR</p>
+    <a class="pill" href="#experience">experience ↓</a>
+  </div></section>
+
+  <section class="sec exp" id="experience">
+    <div class="sec-head"><h2 class="brush" data-brush>Experience</h2><p>cut like an edit: every job is a clip, scroll scrubs the playhead</p></div>
+    <div class="nle" id="nle">
+      <div class="nle-top">
+        <div class="monitor" id="monitor">
+          <div class="mon-slate" aria-hidden="true"></div>
+          <video class="mon-reel" id="monReel" src="../../../../assets/video/edit.mp4" poster="../../../../assets/video/edit-poster.jpg" autoplay muted loop playsinline aria-label="Video editing reel"></video>
+          <div class="mon-titles" id="monTitles" aria-hidden="true"></div>
+          <div class="mon-hud" aria-hidden="true"><span class="pgm">● PGM</span><span class="tc" id="monTC">TC 2014:01:00</span></div>
+        </div>
+        <div class="inspector"><p class="insp-h">inspector</p><div class="insp-deck" id="inspDeck"></div></div>
+      </div>
+      <div class="panel" id="panel">
+        <div class="heads"><span></span><span>V3</span><span>V2</span><span>V1</span><span>A1</span></div>
+        <div class="tracks" id="tracks">
+          <div class="ruler" id="ruler"></div>
+          <div class="lanes" id="lanes"><div class="lane"></div><div class="lane"></div><div class="lane"></div><div class="lane"></div></div>
+          <div class="playhead" id="playhead"><i></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="outro">end of lab · <a href="index.html">all timeline concepts</a></div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="../../../../assets/fonts/brush-font.js"></script>
+<script src="../../lettering.js"></script>
+<script src="tl.js"></script>
+<script src="c-edit-timeline.js"></script>
+</body>
+</html>

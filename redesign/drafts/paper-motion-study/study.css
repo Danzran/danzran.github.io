@@ -1,0 +1,49 @@
+:root {
+  --paper: #f7f0e3;
+  --ink: #332b40;
+  --peach: #f4afa0;
+  --lilac: #bdb0e6;
+  --blue: #a9cce5;
+  --butter: #f0d77d;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: system-ui, sans-serif; }
+main { max-width: 1200px; margin: auto; padding: 48px 32px 28px; }
+a { color: inherit; text-underline-offset: .2em; }
+header { margin-bottom: 30px; }
+.eyebrow, .study-label { font: 11px ui-monospace, monospace; letter-spacing: .04em; }
+h1 { font: normal clamp(45px, 7vw, 90px)/1.1 Georgia, serif; letter-spacing: -.05em; margin: 24px 0 12px; }
+.intro { margin: 0; font-size: 18px; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 18px 0 24px; border-top: 1px solid #332b4038; }
+.controls label { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 12px; }
+button, select { font: inherit; color: var(--ink); border: 1px solid #332b4066; border-radius: 5px; padding: 9px 12px; background: #fff8ee; }
+button { cursor: pointer; font-size: 12px; }
+button:disabled, select:disabled { opacity: .5; cursor: default; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+input { accent-color: var(--ink); }
+#status { font: 11px ui-monospace, monospace; }
+.studies { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.paper { padding: 22px; overflow: hidden; border: 1px solid #332b401a; box-shadow: 0 4px 0 #332b400c; }
+.name-study { grid-column: 1 / -1; background: var(--lilac); }
+.study-label { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.lettering { display: block; width: min(100%, 690px); margin: 18px auto 10px; overflow: visible; }
+.lettering path { fill: none; stroke: var(--ink); stroke-width: 4.8; stroke-linecap: round; stroke-linejoin: round; }
+.paper p { font-size: 13px; line-height: 1.6; max-width: 65ch; margin: 12px 0 0; }
+.mark-study { background: #fcf6e9; }
+.collage-study { background: #eee5f3; }
+h2 { font: normal 32px Georgia, serif; letter-spacing: -.03em; margin: 22px 0 0; }
+.marks, .collage { display: block; width: 100%; max-height: 260px; margin-top: 10px; }
+.marks path { fill: none; stroke: var(--ink); stroke-width: 2.7; stroke-linecap: round; stroke-linejoin: round; }
+.paper-shadow { filter: drop-shadow(3px 5px 2px #332b4028); }
+footer { font-size: 12px; line-height: 1.7; max-width: 80ch; padding-top: 24px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 640px) {
+  main { padding: 28px 16px; }
+  .studies { grid-template-columns: 1fr; }
+  .paper { padding: 16px; }
+  .controls { gap: 12px; }
+  .controls > label:first-child { width: 100%; }
+  .lettering { margin-block: 30px; }
+}

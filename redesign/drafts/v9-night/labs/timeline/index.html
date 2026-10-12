@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" class="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timeline Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tl.css">
+<style>
+  html{background:#22428c}
+  body{background:linear-gradient(#081234,#142c6c 45%,#22428c);min-height:100vh}
+  .wrap{max-width:1280px;margin:0 auto;padding:9vh var(--gutter) 12vh}
+  .wrap h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,5vw,72px);color:var(--ivory)}
+  .lede{font-family:var(--hand);font-size:21px;color:var(--muted);margin:8px 0 5vh;max-width:760px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:24px}
+  .tile{display:block;padding:12px 12px 18px;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  .tile:hover{transform:translateY(-4px)}
+  .tile img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:14px;margin-bottom:12px;background:#0d1c40}
+  .tile .tag{display:block;margin:0 6px}
+  .tile h3{margin:4px 6px}
+  .tile p{margin:0 6px}
+  .rec{color:var(--gold);font-family:var(--hand);font-size:17px;margin-left:6px}
+  .back{display:inline-block;margin-top:6vh;font-family:var(--hand);font-size:20px;border-bottom:1.5px solid var(--cream)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Experience timeline · lab</h1>
+  <p class="lede">Five ways to put the four jobs on a timeline in the night-tide look. Each page is a hero stub plus the Experience section; scroll to drive it. Same facts on every page, and the periods overlap.</p>
+  <div class="grid">
+    <a class="card tile" href="c-edit-timeline.html"><img src="../../../../shots/v9/timeline-c-edit-timeline.png" alt="Edit timeline concept" loading="lazy"><span class="tag">C · recommended <span class="rec">★</span></span><h3>Edit timeline</h3><p>An editing app floating in the sky: each job is a clip on V1/V2/V3 with the reel's audio on A1. Scroll scrubs the playhead; the program monitor plays the reel, and the other jobs show as titles over it.</p></a>
+    <a class="card tile" href="a-constellation.html"><img src="../../../../shots/v9/timeline-a-constellation.png" alt="Constellation concept" loading="lazy"><span class="tag">A</span><h3>Constellation</h3><p>Each job is a star figure above a gold ecliptic of years. A comet moves along it, stars light up and the lines draw between them.</p></a>
+    <a class="card tile" href="d-moon-dial.html"><img src="../../../../shots/v9/timeline-d-moon-dial.png" alt="Moon dial concept" loading="lazy"><span class="tag">D</span><h3>Moon dial</h3><p>The years form a dial around the moon. Jobs are gold water orbits at different radii. The dial turns so the current year stays at the top, and the moon waxes to full.</p></a>
+    <a class="card tile" href="b-tide-lanes.html"><img src="../../../../shots/v9/timeline-b-tide-lanes.png" alt="Tide lanes concept" loading="lazy"><span class="tag">B</span><h3>Tide lanes</h3><p>A pinned horizontal scroll along a moonlit tide line. Each job is a water current in its own lane, and its card rides the current, then stops where the job ended.</p></a>
+    <a class="card tile" href="e-depth.html"><img src="../../../../shots/v9/timeline-e-depth.png" alt="Depth flight concept" loading="lazy"><span class="tag">E</span><h3>Depth flight</h3><p>The camera flies forward through a gold halo for each year. Cards hang at the depth of their start year, and gold rails along the floor show how long each job lasted.</p></a>
+  </div>
+  <a class="back" href="../../index.html">← back to v9</a>
+</main>
+</body>
+</html>

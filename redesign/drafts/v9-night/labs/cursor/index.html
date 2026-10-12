@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" class="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursor Lab v9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<style>
+  /* v9-like night backdrop: the painted plate, fixed, with a little navy at the foot for reading */
+  html.night body{background:#0d1c40;min-height:100vh}
+  /* the plate is its own fixed layer so the parallax concept can move it (data-parallax) */
+  .plate{position:fixed;inset:0;z-index:0;background:url(../../assets/plate-night.webp) center 30%/cover;pointer-events:none}
+  .plate::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,28,64,0) 30%,rgba(13,28,64,.55) 100%)}
+  .lab{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:84px var(--gutter) 140px}
+  .lab h1{font-size:clamp(56px,6.5vw,104px);margin-bottom:6px}
+  .lab .role{color:#f3ead6}
+  .lab .cta{display:flex;gap:18px;align-items:center;margin:0 0 5vh;font-family:var(--hand);font-size:22px}
+  .lab .cta a.txt{border-bottom:1.5px solid #f3ead6}
+  .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+  .pair .card{display:block}
+  .pair .card p{margin-top:6px}
+  .pair .mini{aspect-ratio:16/6}
+  @media (max-width:820px){.pair{grid-template-columns:1fr}}
+
+  .switch{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:70;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:5px;border-radius:22px;max-width:calc(100% - 32px);
+    background:rgba(13,28,64,.7);border:1.5px solid rgba(255,233,176,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-family:var(--hand);font-size:17px}
+  .switch button{border:0;background:none;color:#f3ead6;font:inherit;padding:4px 12px;border-radius:999px;cursor:pointer}
+  .switch button[aria-pressed="true"]{background:#f6c25e;color:#0d1c40}
+  .switch .sep{align-self:center;font-size:13px;color:#ffd98a;opacity:.7;padding:0 4px 0 8px}
+  .note{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:70;max-width:min(680px,calc(100% - 32px));text-align:center;font-size:14px;line-height:1.45;color:#c9d3ec;
+    background:rgba(13,28,64,.6);border:1px solid rgba(255,233,176,.3);border-radius:14px;padding:8px 14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .note b{font-family:var(--hand);font-weight:400;font-size:18px;color:#ffd98a;margin-right:6px}
+</style>
+</head>
+<body>
+<div class="plate" data-parallax="1" aria-hidden="true"></div>
+<nav class="switch" id="switch" aria-label="Cursor concept"></nav>
+
+<main class="lab">
+  <h1 class="brush" data-brush>Daniel Azran</h1>
+  <p class="role">ENGINEER / ML / VIDEO EDITOR</p>
+  <div class="cta">
+    <button class="pill solid" type="button">get in touch</button>
+    <a class="txt" href="#work">see the work →</a>
+  </div>
+
+  <section class="pair" id="work">
+    <a class="card proj" href="#work">
+      <svg class="mini" viewBox="0 0 320 160" aria-hidden="true"><path d="M20 120 C80 40 140 140 200 70 S290 50 300 30" fill="none" stroke="#1f5fbf" stroke-width="3"/><g fill="#e9b85a"><circle cx="20" cy="120" r="5"/><circle cx="200" cy="70" r="5"/><circle cx="300" cy="30" r="5"/></g></svg>
+      <span class="tag">computer vision</span>
+      <h3>Optical Flow Tracker</h3>
+      <p>Tracks motion between video frames and draws the flow field over the footage.</p>
+    </a>
+    <a class="card proj" href="#work">
+      <svg class="mini" viewBox="0 0 320 160" aria-hidden="true"><path d="M60 40 h70 l-40 90" fill="none" stroke="#22345e" stroke-width="8" stroke-linecap="round"/><g fill="#3f8ee8"><rect x="190" y="40" width="14" height="90" rx="3"/><rect x="214" y="80" width="14" height="50" rx="3"/><rect x="238" y="20" width="14" height="110" rx="3" fill="#e9b85a"/></g></svg>
+      <span class="tag">machine learning</span>
+      <h3>MNIST Digit Classifier</h3>
+      <p>A small network that reads handwritten digits. Hover the cards and the links to judge each cursor.</p>
+    </a>
+  </section>
+</main>
+
+<p class="note" id="note"></p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script src="../../../../assets/fonts/brush-font.js"></script>
+<script src="../../lettering.js"></script>
+<!-- each concept registers itself on window.CURSORS as { label, note, mount(), unmount() } -->
+<!-- round 2 (after the water trail and the scribble loop were rejected): no trails, no outlines -->
+<script src="cursors/moonlight.js"></script>
+<script src="cursors/parallax.js"></script>
+<script src="cursors/lightleak.js"></script>
+<script src="cursors/spotlight.js"></script>
+<script src="cursors/rec.js"></script>
+<script src="cursors/starcatch.js"></script>
+<!-- round 1 -->
+<script src="cursors/moonglow.js"></script>
+<script src="cursors/inkring.js"></script>
+<script src="cursors/scribble.js"></script>
+<script src="cursors/ripples.js"></script>
+<script src="cursors/fireflies.js"></script>
+<script src="cursors/constellation.js"></script>
+<script src="cursors/caustics.js"></script>
+<script src="cursors/glint.js"></script>
+<script>
+  try { document.querySelectorAll('[data-brush]').forEach((el, i) => Lettering.render(el, { seed: 9 + i * 29 })); } catch (e) {}
+  const C = window.CURSORS || {}, names = Object.keys(C), sw = document.getElementById('switch'), note = document.getElementById('note');
+  let cur = null;
+  function pick(name) {
+    if (!C[name]) name = 'none';
+    if (cur && C[cur]) C[cur].unmount();
+    cur = name;
+    if (C[name]) C[name].mount();
+    sw.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.c === name));
+    note.innerHTML = C[name] ? `<b>${C[name].label}</b>${C[name].note}` : '<b>none</b>native cursor only';
+    const u = new URL(location.href); u.searchParams.set('c', name); history.replaceState(null, '', u);
+  }
+  [...names, 'none'].forEach(n => {
+    if (n === 'moonglow' || n === 'moonlight') { const t = document.createElement('span'); t.className = 'sep'; t.textContent = n === 'moonlight' ? 'round 2' : 'round 1'; sw.appendChild(t); }
+    const b = document.createElement('button'); b.type = 'button'; b.dataset.c = n; b.textContent = C[n] ? C[n].label : 'none';
+    b.onclick = () => pick(n); sw.appendChild(b);
+  });
+  pick(new URLSearchParams(location.search).get('c') || names[0]);
+</script>
+</body>
+</html>

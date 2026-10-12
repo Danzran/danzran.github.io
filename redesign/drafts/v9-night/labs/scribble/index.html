@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scribble Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#fff1cf;--gold:#f6c25e;--goldsoft:#ffd98a;--line:rgba(255,233,176,.45);--card:rgba(13,28,64,.55);--text:#f3ead6;--muted:#c9d3ec;--serif:"Cormorant Garamond",Georgia,serif;--hand:"Patrick Hand",cursive;--body:"Nunito",system-ui,sans-serif;--gutter:clamp(16px,4vw,56px)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1c40;color:var(--text);font-family:var(--body);overflow-x:hidden;min-height:100vh}
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,#081330 0%,#0d1c40 38%,#1a3570 72%,#3a5590 92%,#7d7a8e 100%)}
+.sky::after{content:"";position:absolute;inset:0;background:url(../../assets/plate-night.webp) center bottom/cover no-repeat;opacity:.38;mix-blend-mode:screen}
+.sky i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff6dc;opacity:.7}
+main{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:40px var(--gutter) 80px}
+.kicker{font-family:var(--serif);letter-spacing:.3em;text-transform:uppercase;font-size:14px;color:var(--goldsoft)}
+h1.lab{font-family:var(--serif);font-weight:600;font-size:clamp(28px,3vw,40px);margin:6px 0 8px}
+.note{color:var(--muted);max-width:70ch;line-height:1.55;font-size:15px}
+.brush{display:inline-block;line-height:.9;white-space:nowrap;color:var(--ink)}
+.lt-word{display:inline-flex;white-space:nowrap}.lt-letter{overflow:visible;vertical-align:-.28em}
+.card{position:relative;background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid var(--line);border-radius:26px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
+section{margin-top:44px}
+h2.sec{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:.06em;margin-bottom:14px;color:var(--goldsoft)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.tabs button,.btn{font-family:var(--hand);font-size:18px;padding:6px 16px;border-radius:999px;border:1.5px solid var(--line);background:rgba(13,28,64,.6);color:var(--text);cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--gold);color:#0d1c40;border-color:var(--gold)}
+.stage .name{font-size:clamp(64px,10vw,168px)}
+.stage .head{font-size:clamp(46px,6.4vw,104px);margin-top:28px}
+.ctl{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-top:18px;font-size:14px;color:var(--muted)}
+.ctl label{display:flex;align-items:center;gap:8px}
+.ctl input[type=range]{width:130px;accent-color:var(--gold)}
+.ctl output{font-variant-numeric:tabular-nums;color:var(--text);min-width:2.6em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:20px}
+.grid .brush{font-size:clamp(48px,5.4vw,78px)}
+.grid h3,.cmp h3{font-family:var(--hand);font-weight:400;font-size:22px;color:var(--goldsoft)}
+.grid p,.cmp p{font-size:13.5px;color:var(--muted);line-height:1.5;margin:4px 0 10px}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
+.cmp .brush{font-size:clamp(48px,5.6vw,84px)}
+.roto-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:28px;align-items:center}
+.roto{position:relative;width:min(100%,380px);aspect-ratio:2/3;margin:0 auto}
+.roto img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.demo-card{min-height:160px;margin-top:22px}
+.demo-card h3{font-family:var(--serif);font-size:26px;font-weight:600}
+#status{font-size:12.5px;color:var(--muted);margin-top:10px}
+.gi{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.gi figure{position:relative;background:#1b1716;border-radius:18px;overflow:hidden;aspect-ratio:520/300;margin:0}
+.gi-ref img{width:100%;height:100%;object-fit:cover;display:block}
+.gi figcaption{position:absolute;right:10px;bottom:8px;font-size:12px;color:#c9c0b0;background:rgba(0,0,0,.45);padding:2px 8px;border-radius:8px}
+.gi-ours{padding:0 4%;container-type:inline-size}.gi-ours>div{font-size:24cqw;line-height:.9;height:.9em}
+.gi-ours .brush{font-size:1em}
+.gi-l1{margin-top:-.36em;filter:blur(.6px)}.gi-l1 .brush{color:#6e6764}
+.gi-l2{margin:0 0 0 .08em}.gi-l2 .brush{color:#fbfaf7}
+.gi-l3{margin:.02em 0 0 -.06em}.gi-l3 .brush{color:#efdcbc}
+@media (max-width:760px){.gi{grid-template-columns:1fr}}
+@media (max-width:760px){.roto-wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="sky" id="sky" aria-hidden="true"></div>
+<main>
+  <p class="kicker">v9 night · lab</p>
+  <h1 class="lab">Scribble: lines that mutate instead of swap</h1>
+  <p class="note">Every frame, each point on the glyph outline is pushed along its normal by smooth multi-octave noise in (x, y, time). The noise phase drifts, so bumps crawl along the edges and nothing pops between drawings. The old v8 boil, which swapped 3 drawings per letter at 7 fps, is at the bottom for comparison. Click a variant to load it on the stage. Each card has its own sliders. <b>replay</b> re-runs the arrive.</p>
+
+  <section class="card stage" id="stage">
+    <div class="tabs" id="tabs" role="group" aria-label="variant"></div>
+    <div><span class="brush name" data-v="stage">Daniel Azran</span></div>
+    <div><span class="brush head" data-v="stage2">Selected work</span></div>
+    <div class="ctl" id="stageCtl"></div>
+  </section>
+
+  <section>
+    <h2 class="sec">Giannis: Daniel's own edit vs the engine</h2>
+    <div class="gi">
+      <figure class="gi-ref"><img id="giRef" src="../../../../../STYLE-LAB/_refs/giannis/f01.png" alt="Reference: frames of Daniel's GIANNIS IS THE ROBIN? edit"><figcaption>reference · thi.gif, 12.5 fps</figcaption></figure>
+      <figure class="gi-ours" id="giOurs">
+        <div class="gi-l1"><span class="brush" data-gi>Giannis</span></div>
+        <div class="gi-l2"><span class="brush" data-gi>is the</span></div>
+        <div class="gi-l3"><span class="brush" data-gi>Robin?</span></div>
+        <figcaption>scribble · <span id="giRate">giannis</span></figcaption>
+      </figure>
+    </div>
+    <div class="tabs" id="giTabs" role="group" aria-label="giannis rate"></div>
+    <p class="note">Same font as before (Caveat Brush, rendered in caps), made heavier by pushing the outline outward. Of the candidates, Knewave, Rubik Wet Paint, Permanent Marker, Sedgwick Ave and Bangers, all were further from the ref's upright, blunt caps (<code>shots/v9/scribble-giannis-fonts.png</code>). The shape re-forms coherently through a low-frequency vector warp whose evolution runs in time. Roughened edges are heaviest on down-facing edges and re-roll at 12.5 fps. Drips hang off stroke bottoms, dry vertical drag holes are erased out of the ink, and a film scratch appears on about 1 frame in 7.</p>
+  </section>
+
+  <section>
+    <h2 class="sec">Variants side by side</h2>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section>
+    <h2 class="sec">Old vs new</h2>
+    <div class="cmp">
+      <div class="card"><h3>v8 stepped boil (old lettering.js)</h3><p>3 drawings per letter, swapped at about 7 fps. This is the "framey" one.</p><span class="brush" id="old">Daniel Azran</span></div>
+      <div class="card"><h3>v9 scribble · crawl</h3><p>Continuous noise displacement, evaluated every frame.</p><span class="brush" id="new">Daniel Azran</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Roto outline · painted crawl around the alpha silhouette</h2>
+    <div class="card roto-wrap">
+      <figure class="roto" id="roto"><img id="fig" src="../../../v3-cloud-ink/assets/fig-0.webp" alt="Daniel doing a handstand"></figure>
+      <div>
+        <p class="note">Contour from the cutout's alpha channel. Under <code>file://</code>, Chrome taints canvas reads of local images, so the lab first tries a runtime Moore trace and then falls back to a precomputed OpenCV contour (<code>assets/fig-0-contour.js</code>). Strokes are variable-width ribbons. Where a smooth noise field drops below a threshold the width eases to zero, so strokes split, grow and heal continuously, and dry bristle tails run a little past each end.</p>
+        <div class="tabs" id="rotoTabs" role="group" aria-label="outline variant"></div>
+        <div class="ctl" id="rotoCtl"></div>
+        <p id="status"></p>
+        <div class="card demo-card" id="demoCard"><span class="kicker">general helper</span><h3>Scribble.outline(card)</h3><p class="note">The same treatment on an element's rounded box. Use it for card borders.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script src="../../../../assets/fonts/brush-font.js"></script>
+<script src="../../assets/fig-0-contour.js"></script>
+<script src="../../lettering.js"></script>
+<script src="../../scribble.js"></script>
+<script>
+(() => {
+  // a few stars
+  const sky = document.getElementById('sky');
+  for (let i = 0; i < 90; i++) { const s = document.createElement('i'); s.style.left = Math.random() * 100 + '%'; s.style.top = Math.random() * 60 + '%'; s.style.opacity = .3 + Math.random() * .6; sky.appendChild(s); }
+
+  const V = Scribble.VARIANTS, names = Object.keys(V);
+  const NOTES = {
+    calm: 'Subtle. The edges breathe and no echo. Safe for long reading sections.',
+    crawl: 'Closest to the video. Bumps travel along the edges, with torn barbs, one ghost and a warm glow.',
+    echo: 'Three trailing ghosts sampled from earlier noise time, smeared left and blurred.',
+    torn: 'Heavy dry-brush gaps and outward barbs. The roughest, most distressed edge.',
+    giannis: 'From Daniel\'s own edit. Chunky caps re-shape coherently, edges re-roll at 12.5 fps, and drips and scratches are added.',
+    giannissmooth: 'Giannis with everything evolving per frame. The edge texture shimmers.',
+    giannis12: 'Giannis with everything on 12.5 fps, the GIF\'s own rate.',
+    stepped: 'The same engine quantised to 7 fps, to show how stepping reads.',
+  };
+  function sliders(host, it, ranges) {
+    host.innerHTML = '';
+    for (const [key, label, min, max, step] of ranges) {
+      const l = document.createElement('label'), r = document.createElement('input'), o = document.createElement('output');
+      Object.assign(r, { type: 'range', min, max, step, value: it.cfg[key] }); o.value = (+it.cfg[key]).toFixed(step < 1 ? 2 : 0);
+      r.oninput = () => { it.set({ [key]: +r.value }); o.value = (+r.value).toFixed(step < 1 ? 2 : 0); };
+      l.append(label, r, o); host.appendChild(l);
+    }
+    const b = document.createElement('button'); b.className = 'btn'; b.textContent = 'replay'; b.onclick = () => it.replay(0); host.appendChild(b);
+  }
+  const TEXT_R = [['amp', 'amplitude', 0, 6, .05], ['speed', 'speed', 0, 2.5, .05], ['echoes', 'echoes', 0, 3, 1]];
+  const OUT_R = [['amp', 'amplitude', 0, 10, .1], ['speed', 'speed', 0, 2.5, .05], ['echoes', 'echoes', 0, 3, 1], ['width', 'width', 1, 12, .5]];
+
+  // stage
+  const q = (location.search.match(/[?&]scribble=([a-z]+)/) || [])[1];
+  let cur = V[q] ? q : Scribble.DEFAULT;
+  const stage = [Scribble.render(document.querySelector('[data-v=stage]'), { seed: 9, variant: cur }), Scribble.render(document.querySelector('[data-v=stage2]'), { seed: 38, variant: cur, delay: .4 })];
+  const tabs = document.getElementById('tabs');
+  function pick(n) {
+    cur = n; stage.forEach((it, i) => { it.set({ variant: n }); it.replay(i * .35); });
+    tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === n));
+    sliders(document.getElementById('stageCtl'), { cfg: stage[0].cfg, set: o => stage.forEach(it => it.set(o)), replay: () => stage.forEach((it, i) => it.replay(i * .35)) }, TEXT_R);
+  }
+  names.forEach(n => { const b = document.createElement('button'); b.dataset.v = n; b.textContent = V[n].label; b.onclick = () => pick(n); tabs.appendChild(b); });
+  pick(cur);
+
+  // grid: one card per variant
+  const grid = document.getElementById('grid');
+  names.forEach((n, i) => {
+    const c = document.createElement('div'); c.className = 'card';
+    c.innerHTML = `<h3>${V[n].label}</h3><p>${NOTES[n]}</p><span class="brush">Daniel Azran</span><div class="ctl"></div>`;
+    grid.appendChild(c);
+    const it = Scribble.render(c.querySelector('.brush'), { seed: 9 + i * 13, variant: n });
+    sliders(c.querySelector('.ctl'), it, TEXT_R);
+  });
+
+  // giannis: ref frames at 12.5 fps next to the engine
+  const giRef = document.getElementById('giRef'); let gf = 0;
+  setInterval(() => { gf = (gf + 1) % 24; giRef.src = `../../../../../STYLE-LAB/_refs/giannis/f${String(gf + 1).padStart(2, '0')}.png`; }, 80);
+  const gis = [...document.querySelectorAll('[data-gi]')].map((el, i) => Scribble.render(el, { seed: 3 + i * 17, variant: 'giannis', size: 1, delay: i * .35, dry: [0, 0, .45][i], glow: i === 0 ? 0 : .14 }));
+  const giTabs = document.getElementById('giTabs');
+  ['giannis', 'giannissmooth', 'giannis12'].forEach(n => { const b = document.createElement('button'); b.dataset.v = n; b.textContent = V[n].label; b.setAttribute('aria-pressed', n === 'giannis'); b.onclick = () => { gis.forEach((it, i) => { it.set({ variant: n, size: 1, dry: [0, 0, .45][i], glow: i === 0 ? 0 : .14 }); it.replay(i * .35); }); document.getElementById('giRate').textContent = n; giTabs.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); }; giTabs.appendChild(b); });
+
+  // old vs new
+  Lettering.render(document.getElementById('old'), { seed: 9 }); Lettering.start(7);
+  Scribble.render(document.getElementById('new'), { seed: 9, variant: 'crawl' });
+
+  // roto + card outline
+  const img = document.getElementById('fig'), status = document.getElementById('status');
+  let rotoIt = null;
+  const go = () => {
+    let source = 'precomputed contour', contour = window.SCRIBBLE_CONTOURS && SCRIBBLE_CONTOURS['fig-0'];
+    try { const c = Scribble.traceAlpha(img); if (c.length && c[0].length > 20) { contour = { contours: c }; source = `runtime alpha trace (${c[0].length} pts)`; } }
+    catch (e) { source = `runtime read blocked: ${e.name} (file:// taint), using precomputed contour (${contour.contours[0].length} pts)`; }
+    rotoIt = Scribble.roto(img, { contour, variant: cur === 'stepped' ? 'stepped' : 'crawl', glowColor: '#ffd98a' });
+    status.textContent = 'contour source: ' + source;
+    const rt = document.getElementById('rotoTabs');
+    Object.keys(Scribble.OUTLINE_VARIANTS).forEach(n => { const b = document.createElement('button'); b.dataset.v = n; b.textContent = n; b.setAttribute('aria-pressed', n === rotoIt.cfg.variant); b.onclick = () => { rotoIt.set({ variant: n }); rotoIt.replay(); rt.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); sliders(document.getElementById('rotoCtl'), rotoIt, OUT_R); }; rt.appendChild(b); });
+    sliders(document.getElementById('rotoCtl'), rotoIt, OUT_R);
+    Scribble.outline(document.getElementById('demoCard'), 'box', { width: 3, amp: 2, offset: 0, gap: -.35, color: '#ffe9b0', glowColor: '#f6c25e', bleed: 18 });
+    Scribble.start();
+  };
+  img.complete ? go() : img.addEventListener('load', go, { once: true });
+})();
+</script>
+</body>
+</html>
