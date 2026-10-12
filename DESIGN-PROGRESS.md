@@ -66,6 +66,16 @@ These ingredients are not one established style name. Useful technical/search te
   - Keep the golf case-study page.
 - **Git (later the same day):** the per-file commit granularity was "too much"; commit once per coherent change instead. Still the `redesign` branch, still never push.
 - **Cards + experience (same night):** redo the assets for every project/experience card except the golf analyzer and the video editor, using Codex, themed like the golf card. Replace the NLE experience timeline with a vertical timeline where each job takes focus on scroll, with a themed background per job.
+- **2026-10-12 (before sleeping, verbatim in `redesign/BRIEF-V10.md`):**
+  - make v9 the main site page;
+  - timeline newest → oldest, with months and the old site's details on the empty side, and a shorter scroll;
+  - a Safe Ship Moving Services section (current job: call ingestion, AI call analysis, MongoDB bill nearly halved, about $6k/month, $70k+/year) with Codex assets;
+  - then "Your Name" (Kimi no Nawa) variations made with subagents and Codex:
+    - shooting-star-driven scroll;
+    - more About details, some of them on the hero;
+    - the song as a shooting-star easter egg;
+    - versions with and without fluffy cloud card containers.
+  - Keep the main page as it is.
 
 No favorite among the ten handstand drafts was selected in this session. Suggestions by Codex or Claude, agent consensus, and the existence of a later prototype are **not user decisions**. If another conversation contains newer explicit feedback, verify it and record its source here.
 
@@ -234,3 +244,4 @@ These are agent workflow instructions, not a filesystem watcher or background su
 | 2026-10-12 00:35 | Claude (coordinator) | Daniel said the commit granularity (556 commits on `redesign` in one day) was too much. The rule in `BRIEF-V9.md` is now one commit per coherent change, with the DESIGN-PROGRESS update included. History was not rewritten. |
 | 2026-10-12 01:30 | Claude (coordinator) + Codex + subagent | Codex made 8 pastel plates (flow, digits, house, compiler, sync, it, lock, extropian) in `redesign/assets/projects/`, with prompts. `projectviz.js` adds a golf-style live overlay to each, and the preview page is `assets/projects/index.html`. v9 project cards now use these overlays, and PL/0 and Mikal–Wix were promoted to cards. A subagent replaced Experience with a vertical focus timeline (`experience.js/.css`, commit d361bce) whose IT, lockout and Extropian cards mount ProjectViz. Checked with headless screenshots: desktop and phone, no console errors. Open: the experience background is busy on phone near the heading, and the digit grid is faint in the prediction phase. |
 | 2026-10-12 01:50 | Claude (coordinator) | Polish: the experience backgrounds now fade out before About, the lockout start ring and the Extropian database sit lower (clear of the nav), and the digit grid's numbers are legible on the ink. Checked with screenshots at 5 scroll stops, desktop and phone. Still open: the film-strip theme sits behind the Experience heading on phone. |
+| 2026-10-12 03:00 | Claude (coordinator) + Codex | v9 got a Safe Ship "Now" section with 4 Codex plates and ProjectViz overlays (`ssm`, `ssm-calls`, `ssm-ai`, `ssm-db`). The timeline is now newest-first with month ranges, bullets and tags, entries are 74vh, and there is a Safe Ship background theme. The root `index.html` is generated from v9 by `redesign/tools/promote_v9.py` (`window.V9_BASE` hook), on `redesign` only, not live. Safe-Ship-Moving repos are private: the commit history and the crispx-movers logo could not be read without credentials, so the Safe Ship copy uses only Daniel's own summary. Launched the kimi asset-pack agent and three variation agents (`v10-comet`, `v10-starfall`, `v10-magichour`, each with `?clouds=1`). Checked with headless screenshots of the root and v9, desktop and phone, with no page errors. |
