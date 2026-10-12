@@ -6,7 +6,7 @@
 <title>Daniel Azran — Draft v9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&family=Gochi+Hand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="experience.css">
 </head>
@@ -49,12 +49,15 @@
       </div>
     </article>
     <div class="row3">
-      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><canvas class="mini" data-mini="flow" aria-hidden="true"></canvas><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade point tracking.</p></a>
-      <a class="card proj" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener"><canvas class="mini" data-mini="digits" aria-hidden="true"></canvas><h3>Digit Classifier</h3><p>Keras CNN · 98% on MNIST.</p></a>
-      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener"><canvas class="mini" data-mini="house" aria-hidden="true"></canvas><h3>Real Estate Predictor</h3><p>−7% RMSE with a log-price target.</p></a>
+      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="flow" aria-hidden="true"></canvas><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade point tracking.</p></a>
+      <a class="card proj" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="digits" aria-hidden="true"></canvas><h3>Digit Classifier</h3><p>Keras CNN · 98% on MNIST.</p></a>
+      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="house" aria-hidden="true"></canvas><h3>Real Estate Predictor</h3><p>−7% RMSE with a log-price target.</p></a>
     </div>
-    <p class="more">also: <a href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener">PL/0 compiler ↗</a> <a href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener">Mikal – Wix sync ↗</a> <a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></p>
-  </section>
+    <div class="row2">
+      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="compiler" aria-hidden="true"></canvas><h3>PL/0 Compiler</h3><p>Lexer, parser and code generator in C for a stack-based VM.</p></a>
+      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="sync" aria-hidden="true"></canvas><h3>Mikal – Wix sync</h3><p>Parses Mikal appointment reports into busy blocks.</p></a>
+    </div>
+    <p class="more">also: <a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></p>  </section>
 
   <section class="sec exp" id="experience">
     <h2 class="brush" data-brush data-anchor="R">Experience</h2>
@@ -128,6 +131,9 @@
 <script src="golf.js"></script>
 <script src="water.js"></script>
 <script src="app.js"></script>
+<script src="../../assets/projects/data.js"></script>
+<script src="../../assets/projects/projectviz.js"></script>
+<script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, '../../assets/projects'));</script>
 <script src="experience.js"></script>
 <script src="labs/cursor/cursors/starcatch.js"></script>
 <script src="labs/cursor/cursors/lightleak.js"></script>

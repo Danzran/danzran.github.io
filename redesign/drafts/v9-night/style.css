@@ -58,6 +58,8 @@ main{position:relative;z-index:2}
 .stats span{font-size:12px;color:#56628a}
 .stats .live{grid-column:1/-1;background:var(--goldsoft);border-color:var(--gold)}
 .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:6vh}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:22px}
+.mini.viz{aspect-ratio:3/2}
 .proj{display:block;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 .proj:hover{transform:translateY(-6px) rotate(-.6deg)}
 .mini{width:100%;aspect-ratio:16/10;display:block;border-radius:14px;background:var(--mist);margin-bottom:10px}
@@ -81,7 +83,7 @@ main{position:relative;z-index:2}
   .hero-copy{top:14vh;right:var(--gutter)}
   .hero h1{font-size:17vw}
   .golf-card{grid-template-columns:1fr}
-  .row3{grid-template-columns:1fr}
+  .row3,.row2{grid-template-columns:1fr}
   .golfvis{max-width:360px;width:100%;margin:0 auto}
 }
 /* buoyancy lives on `translate` so it never fights the GSAP entrance (which owns `transform`) */
