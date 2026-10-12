@@ -15,7 +15,7 @@
 <canvas id="sky" aria-hidden="true"></canvas>
 <canvas id="river" aria-hidden="true"></canvas>
 
-<nav class="nav"><a class="mark" href="#top">DA</a><span class="sp"></span><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+<nav class="nav"><a class="mark" href="#top">DA</a><span class="sp"></span><a href="#now">Now</a><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
 
 <main id="top">
   <section class="hero" id="hero">
@@ -28,6 +28,21 @@
       <img src="assets/orbit/yaw-m60.webp" alt="" data-yaw="-60"><img src="assets/orbit/yaw-m40.webp" alt="" data-yaw="-40"><img src="assets/orbit/yaw-m20.webp" alt="" data-yaw="-20"><img src="assets/orbit/yaw-000.webp" alt="Daniel doing a handstand" data-yaw="000"><img src="assets/orbit/yaw-p20.webp" alt="" data-yaw="+20"><img src="assets/orbit/yaw-p40.webp" alt="" data-yaw="+40"><img src="assets/orbit/yaw-p60.webp" alt="" data-yaw="+60">
     </div>
     <canvas id="ribbonFront" aria-hidden="true"></canvas>
+  </section>
+
+  <section class="sec now" id="now">
+    <h2 class="brush" data-brush data-anchor="L">Now</h2>
+    <p class="now-lead">Currently at <b>Safe Ship Moving Services</b>.</p>
+    <div class="now-save card" data-anchor="R">
+      <div class="now-num"><b>−$6k</b><span>per month on MongoDB</span></div>
+      <div class="now-num"><b>$70k+</b><span>saved per year</span></div>
+      <p>Optimized our MongoDB usage and cut the bill nearly in half.</p>
+    </div>
+    <div class="row3">
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>Getting the company’s calls into one pipeline.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI call analysis</h3><p>The infrastructure that analyses those calls.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-db" aria-hidden="true"></canvas><h3>MongoDB cost cut</h3><p>Nearly half the bill: about $6k less a month.</p></article>
+    </div>
   </section>
 
   <section class="sec work" id="work">
@@ -65,36 +80,89 @@
     <div class="vt" id="vt">
       <div class="vt-spine" aria-hidden="true"><i class="vt-fill"></i></div>
       <ol class="vt-list">
-        <li class="vt-item" data-theme="edit">
+        <li class="vt-item" data-theme="ssm">
           <span class="vt-dot" aria-hidden="true"></span>
-          <p class="vt-year" aria-hidden="true">2014<small>to 2020</small></p>
+          <div class="vt-side">
+            <p class="vt-year">Now<small>current job</small></p>
+            <p class="vt-org">Safe Ship Moving Services</p>
+            <ul class="vt-pts">
+            <li>Built the pipeline that ingests the company’s calls.</li>
+            <li>Built the AI call-analysis infrastructure on top of it.</li>
+            <li>Optimized our MongoDB usage and cut the bill nearly in half: about $6k less per month, over $70k a year.</li>
+            </ul>
+            <p class="vt-tags"><span>MongoDB</span><span>AI</span><span>Data pipelines</span></p>
+          </div>
           <article class="card vt-card">
-            <div class="vt-vis"><video class="vt-reel" src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="My video editing reel"></video></div>
-            <div class="vt-copy"><span class="tag">2014–2020</span><h3>Video editor</h3><p>COD edits, compositing, camera tracking. Led a team of 4 editors.</p></div>
-          </article>
-        </li>
-        <li class="vt-item" data-theme="it">
-          <span class="vt-dot" aria-hidden="true"></span>
-          <p class="vt-year" aria-hidden="true">2018<small>to now</small></p>
-          <article class="card vt-card">
-            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/it/plate-768.webp" alt="" data-viz="it"></div>
-            <div class="vt-copy"><span class="tag">2018–now</span><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></div>
-          </article>
-        </li>
-        <li class="vt-item" data-theme="lock">
-          <span class="vt-dot" aria-hidden="true"></span>
-          <p class="vt-year" aria-hidden="true">2022<small>to 2023</small></p>
-          <article class="card vt-card">
-            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/lock/plate-768.webp" alt="" data-viz="lock"></div>
-            <div class="vt-copy"><span class="tag">2022–23</span><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></div>
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/ssm/plate-768.webp" alt="" data-viz="ssm"></div>
+            <div class="vt-copy"><span class="tag">now</span><h3>Safe Ship Moving Services</h3><p>Call ingestion, AI call analysis, and a MongoDB bill cut nearly in half.</p></div>
           </article>
         </li>
         <li class="vt-item" data-theme="ext">
           <span class="vt-dot" aria-hidden="true"></span>
-          <p class="vt-year" aria-hidden="true">2024<small>to 2025</small></p>
+          <div class="vt-side">
+            <p class="vt-year">2024<small>Sep 2024 — May 2025</small></p>
+            <p class="vt-org">Extropian · Orlando, FL</p>
+            <ul class="vt-pts">
+            <li>Built a cross-platform Flutter app for real-time golf swing analysis from wearable sensor data.</li>
+            <li>Led the Bluetooth streaming and metric layer; cut packet loss from tens to single digits per session.</li>
+            <li>Worked in a 6-person Agile team with Git and Jira.</li>
+            </ul>
+            <p class="vt-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>Bluetooth</span></p>
+          </div>
           <article class="card vt-card">
             <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/extropian/plate-768.webp" alt="" data-viz="extropian"></div>
-            <div class="vt-copy"><span class="tag">2024–25 · Extropian</span><h3>Backend developer</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></div>
+            <div class="vt-copy"><span class="tag">Sep 2024 – May 2025 · Extropian</span><h3>Backend software developer</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="lock">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2022<small>Aug 2022 — Dec 2023</small></p>
+            <p class="vt-org">Sonic Locksmith · Hollywood, FL</p>
+            <ul class="vt-pts">
+            <li>Programmed and cut keys for push-to-start and traditional vehicles.</li>
+            <li>Resolved on-site lockouts under time pressure, with clear communication.</li>
+            <li>Kept the key-cutting and diagnostic tools stocked and calibrated.</li>
+            </ul>
+            <p class="vt-tags"><span>Key programming</span><span>Diagnostics</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/lock/plate-768.webp" alt="" data-viz="lock"></div>
+            <div class="vt-copy"><span class="tag">Aug 2022 – Dec 2023</span><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="it">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2018<small>Sep 2018 — Present</small></p>
+            <p class="vt-org">Freelance · Multiple locations</p>
+            <ul class="vt-pts">
+            <li>Designed and assembled desktops for gaming, editing and servers.</li>
+            <li>Set up small-business networks with virtual machines.</li>
+            <li>Diagnosed hardware and software issues and delivered stable builds.</li>
+            </ul>
+            <p class="vt-tags"><span>PC builds</span><span>Networking</span><span>VirtualBox</span><span>Windows admin</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/it/plate-768.webp" alt="" data-viz="it"></div>
+            <div class="vt-copy"><span class="tag">Sep 2018 – now</span><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="edit">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2014<small>2014 — 2020</small></p>
+            <p class="vt-org">Freelance · Remote</p>
+            <ul class="vt-pts">
+            <li>Edited with 3D elements, camera tracking and thumbnails.</li>
+            <li>Worked with organizations on large projects; coordinated up to four editors.</li>
+            <li>Kept in touch with clients so the result matched their vision.</li>
+            </ul>
+            <p class="vt-tags"><span>After Effects</span><span>Premiere Pro</span><span>Photoshop</span><span>Sony Vegas</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><video class="vt-reel" src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="My video editing reel"></video></div>
+            <div class="vt-copy"><span class="tag">2014–2020</span><h3>Video editor</h3><p>COD edits, compositing, camera tracking. Led a team of 4 editors.</p></div>
           </article>
         </li>
       </ol>
@@ -133,7 +201,7 @@
 <script src="app.js"></script>
 <script src="../../assets/projects/data.js"></script>
 <script src="../../assets/projects/projectviz.js"></script>
-<script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, '../../assets/projects'));</script>
+<script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, (window.V9_BASE || '') + '../../assets/projects'));</script>
 <script src="experience.js"></script>
 <script src="labs/cursor/cursors/starcatch.js"></script>
 <script src="labs/cursor/cursors/lightleak.js"></script>

@@ -1,0 +1,6 @@
+Generate ONE image with your image generation tool and save it in the current directory as ssm-truck.png. Then reply with the path. Do not write any other files.
+
+SUBJECT: a box moving truck (blank sides, no lettering) driving on a highway at twilight, seen three-quarter from the front, headlights on, city lights and a big lavender-to-peach sky, motion streaks on the road. Leave the sky calm for overlays.
+
+STYLE (match the two attached reference images exactly): a pastel rotoscoped illustration traced from real footage. Flat posterized fills in a small pastel palette (periwinkle/lavender, sky blue, butter yellow, soft pink, peach, ivory, navy ink), thick wobbly dark-navy ink outlines, slight paper grain, a few loose speckles. Bold, readable shapes; calm flat areas, because a live hand-drawn data overlay (waveforms, nodes, numbers, charts) will be drawn on top in code.
+HARD RULES: absolutely no green and no teal anywhere (no plants, no green LEDs, no leaf logos). No text, letters, numbers, logos or brand marks anywhere (no company name on the truck or screens; screens are blank pale blue). No close-up faces. Landscape 3:2, 1536x1024.

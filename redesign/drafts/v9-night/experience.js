@@ -299,7 +299,50 @@ function makeExt() {
   };
 }
 
-const MAKERS = { edit: makeEdit, it: makeIT, lock: makeLock, ext: makeExt };
+/* ---- Safe Ship: call lines streaming in as waveforms, folding into transcripts + analysis tags, a database whose
+   monthly bill drops to about half (the ~$6k/month cut Daniel made) ---- */
+function makeSSM() {
+  return (g, w, h, t, A, o) => {
+    const md = mode(w, h, o.mini), m = Math.min(w, h);
+    const [x0, x1, y0, gap] = md === 'wide' ? [w * .04, w * .46, h * .14, clamp(m * .045, 24, 44)] : md === 'tall' ? [w * .04, w * .7, h * .8, w * .07] : [w * .06, w * .55, h * .28, h * .12];
+    const [dx, dy, dR] = md === 'wide' ? [w * .58, h * .2, clamp(m * .05, 26, 48)] : md === 'tall' ? [w * .82, h * .84, w * .06] : [w * .7, h * .5, m * .1];
+    g.globalAlpha = A; glow(g, (x0 + x1) / 2, y0 + gap * 1.5, (x1 - x0) * .8, 'blue', .14); glow(g, dx, dy, dR * 4, 'azure', .12);
+    // 4 call lines: a waveform scrolls right; it flattens into transcript dashes as it reaches the pipe
+    for (let L = 0; L < 4; L++) {
+      const y = y0 + L * gap, ph = L * 1.9, live = .5 + .5 * Math.sin(t * .5 + L * 1.3);
+      g.strokeStyle = rgba(L % 2 ? 'azure' : 'goldsoft', .85); g.lineWidth = 1.6; g.globalAlpha = A * (.45 + .55 * live);
+      g.beginPath();
+      for (let x = x0; x <= x1; x += 3) {
+        const u = (x - x0) / (x1 - x0), env = Math.pow(Math.max(0, Math.sin((x * .021 - t * 2.2 + ph))), 2) * (1 - smooth((u - .55) / .3));
+        const a = gap * .32 * env * (Math.sin(x * .31 + t * 9 + ph) * .6 + Math.sin(x * .13 - t * 5) * .4);
+        x === x0 ? g.moveTo(x, y + a) : g.lineTo(x, y + a);
+      }
+      g.stroke();
+      // transcript words after the fold, with analysis tags lighting up
+      for (let k = 0; k < 6; k++) {
+        const u = fract(t * .12 + k / 6 + L * .17), x = lerp(x0 + (x1 - x0) * .62, dx - dR * 1.6, u), wd = gap * (.35 + .3 * fract(k * .618 + L * .3));
+        g.globalAlpha = A * Math.sin(Math.PI * u) * .9; g.fillStyle = rgba(k % 3 === 1 ? 'pink' : k % 3 ? 'ivory' : 'gold', 1); rr(g, x, y - 2, wd, 4, 2); g.fill();
+      }
+      g.globalAlpha = A; glow(g, x0, y, 10, 'gold', .6);
+    }
+    // database stack
+    for (let j = 2; j >= 0; j--) {
+      const y = dy + (j - 1) * dR * .42;
+      g.globalAlpha = A; g.fillStyle = rgba('navy', .92); g.strokeStyle = rgba('ivory', .7); g.lineWidth = 1.4;
+      g.beginPath(); g.ellipse(dx, y + dR * .2, dR, dR * .32, 0, 0, Math.PI); g.lineTo(dx - dR, y); g.ellipse(dx, y, dR, dR * .32, 0, Math.PI, TAU); g.closePath(); g.fill(); g.stroke();
+    }
+    // monthly bill: bars step down to about half at the cut, then stay there
+    const n = 10, bw = dR * .34, bx0 = dx + dR * 1.6, base = dy + dR * .7, cut = 5, roll = fract(t / 10) * n;
+    for (let i = 0; i < n; i++) {
+      const hgt = dR * 2.2 * (i < cut ? 1 - .03 * Math.sin(i * 2.1) : .52 + .02 * Math.sin(i * 1.7)), on = smooth(roll - i);
+      g.globalAlpha = A * (.25 + .75 * on); g.fillStyle = rgba(i < cut ? 'azure' : 'goldsoft', .75); rr(g, bx0 + i * bw * 1.35, base - hgt * on, bw, hgt * on, 2); g.fill();
+    }
+    if (roll > cut + .5) { const k = smooth(roll - cut - .5); g.globalAlpha = A * k; g.fillStyle = rgba('goldsoft', 1); g.font = `600 ${Math.round(dR * .42)}px ${getComputedStyle(document.body).fontFamily}`; g.fillText('−$6k / month', bx0 + cut * bw * 1.35, base - dR * 1.5); }
+    g.globalAlpha = 1;
+  };
+}
+
+const MAKERS = { ssm: makeSSM, edit: makeEdit, it: makeIT, lock: makeLock, ext: makeExt };
 
 /* ================= wiring ================= */
 const canvas = document.getElementById('vtBg'), g = canvas.getContext('2d');
@@ -312,7 +355,7 @@ items.forEach(it => {
   if (!em) return;
   it.emblem = { c: em, g: em.getContext('2d'), draw: MAKERS[it.id]() };
   if (!img) return;
-  const ok = () => { it.el.classList.add('has-plate'); it.emblem = null; if (window.ProjectViz && img.dataset.viz) { try { ProjectViz.mount(em, img.dataset.viz, '../../assets/projects'); it.el.classList.add('has-viz'); } catch (e) {} } };
+  const ok = () => { it.el.classList.add('has-plate'); it.emblem = null; if (window.ProjectViz && img.dataset.viz) { try { ProjectViz.mount(em, img.dataset.viz, (window.V9_BASE || '') + '../../assets/projects'); it.el.classList.add('has-viz'); } catch (e) {} } };
   const bad = () => img.remove();
   if (img.complete) img.naturalWidth ? ok() : bad(); else { img.addEventListener('load', ok); img.addEventListener('error', bad); }
 });
@@ -348,10 +391,10 @@ function frame(now) {
   const wts = ds.map((d, i) => { if (i === 0) d = Math.min(d, 0); if (i === ds.length - 1) d = Math.max(d, 0); return smooth(1 - Math.abs(d) / .55); });
   const sum = wts.reduce((a, b) => a + b, 0) || 1;
   g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, W, H);
-  items.forEach((it, i) => { const a = presence * wts[i] / Math.max(1, sum); if (a > .004) { g.save(); it.bg(g, W, H, t, a, { video }); g.restore(); } });
+  items.forEach((it, i) => { const a = presence * wts[i] / Math.max(1, sum) * (W < 820 ? .55 : 1); /* quieter behind the stacked phone layout */ if (a > .004) { g.save(); it.bg(g, W, H, t, a, { video }); g.restore(); } });
   // the reel plays while its entry or theme is on screen
   if (video && !reduce) {
-    const want = wts[0] > .01 || Math.abs(ds[0]) < .9;
+    const ei = items.findIndex(it => it.id === 'edit'), want = ei >= 0 && (wts[ei] > .01 || Math.abs(ds[ei]) < .9);
     if (want && video.paused) video.play().catch(() => {}); else if (!want && !video.paused) video.pause();
   }
   // emblems for entries without a plate, only when near the viewport

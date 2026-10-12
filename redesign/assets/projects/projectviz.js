@@ -458,6 +458,119 @@ window.ProjectViz = (() => {
       };
     }
 
+
+    /* Safe Ship Moving Services (current job). Daniel's own summary is the only source: call ingestion, the AI
+       call-analysis infrastructure, and the MongoDB optimisation (about $6k less per month). Tags and labels stay generic. */
+    const wave = (x0, x1, y, amp, ph, col, w = 2) => {
+      const pts = []; for (let x = x0; x <= x1; x += 4 * k) { const u = (x - x0) / (x1 - x0), env = Math.pow(Math.max(0, Math.sin(x * .02 / k - t * 2.4 + ph)), 2) * Math.sin(Math.PI * u);
+        pts.push([x, y + amp * env * (Math.sin(x * .3 / k + t * 9 + ph) * .6 + Math.sin(x * .13 / k - t * 5) * .4)]); }
+      poly(pts, col, w);
+    };
+    const dbStack = (cx, cy, r, glowOn) => {
+      for (let i = 2; i >= 0; i--) {
+        const y = cy + (i - 1) * r * .5;
+        ctx.fillStyle = i === 0 && glowOn ? '#fff0b8' : 'rgba(255,248,226,.92)'; ctx.strokeStyle = INK; ctx.lineWidth = 1.6 * k;
+        ctx.beginPath(); ctx.ellipse(cx, y + r * .22, r, r * .3, 0, 0, Math.PI); ctx.lineTo(cx - r, y); ctx.ellipse(cx, y, r, r * .3, 0, Math.PI, Math.PI * 2); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(cx, y, r, r * .3, 0, 0, Math.PI * 2); ctx.stroke();
+      }
+    };
+
+    // calls: the phone rings, each call becomes a waveform lane on the wall, and the lanes feed an ingest queue
+    R['ssm-calls'] = () => {
+      const phone = Q(.13, .8), head = Q(.5, .8), [x0] = Q(.74, 0), [x1] = Q(.97, 0), [qx, qy] = Q(.86, .5);
+      for (let i = 0; i < 2; i++) { const v = (t * .8 + i / 2) % 1; ctx.globalAlpha = (1 - v) * .9; ring(...phone, (16 + v * 46) * k, GOLD, 2.4, -2.4, -.7); }
+      ctx.globalAlpha = 1;
+      const lanes = 4;
+      for (let L = 0; L < lanes; L++) {
+        const [, y] = Q(0, .12 + L * .1), live = .5 + .5 * Math.sin(t * .6 + L * 1.7);
+        ctx.globalAlpha = .35 + .65 * live; wave(x0, x1, y, 16 * k, L * 1.9, L % 2 ? BLUE : ROSE, 2.2);
+        ctx.globalAlpha = 1; dot(x0 - 8 * k, y, 3.4, L % 2 ? SKY : PINK);
+        mono(`call ${String(L + 1).padStart(2, '0')}`, x0 - 14 * k, y + 4 * k, 9.5, INK, 'right');
+      }
+      // queue on the right: received calls stack up as little cards
+      const n = 3 + Math.floor((t * .6) % 4);
+      for (let i = 0; i < n; i++) { ctx.fillStyle = i === n - 1 ? '#fff0b8' : 'rgba(255,248,226,.9)'; ctx.beginPath(); ctx.roundRect(qx - 18 * k, qy + 70 * k - i * 12 * k, 36 * k, 9 * k, 3 * k); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 1.3 * k; ctx.stroke(); }
+      chip('ingest', qx, qy - 6 * k, 15, BLUE, undefined, 'center');
+      // the two monitors scroll an ingest log
+      [[.05, .26, .58, .72], [.3, .48, .56, .72]].forEach(([a, b, c, d], m) => {
+        const [ax, ay] = Q(a, c), [bx, by] = Q(b, d), rows = 5;
+        for (let r = 0; r < rows; r++) { const y = ay + ((r + t * .9 + m * .5) % rows) / rows * (by - ay), w = (bx - ax) * (.4 + .5 * ((r * 7 + m * 3) % 5) / 5);
+          ctx.globalAlpha = .55; ctx.fillStyle = r % 3 ? INK : ROSE; ctx.fillRect(ax + 4 * k, y + 2 * k, w - 8 * k, 3 * k); }
+        ctx.globalAlpha = 1;
+      });
+      line(...head, x0 - 40 * k, Q(0, .44)[1], 'rgba(255,255,255,.8)', 1.4, 10);
+      sticker('calls in');
+    };
+
+    // AI analysis: the monitor fills with a transcript, spans get highlighted and tagged; the rack blinks as it works
+    R['ssm-ai'] = () => {
+      const [mx0, my0] = Q(.565, .17), [mx1, my1] = Q(.745, .3), lines = 7, lh = (Q(0, .3)[1] - Q(0, .17)[1]);
+      const [sx0, sy0] = Q(.56, .16), [sx1, sy1] = Q(.745, .315);
+      const [ax, ay] = Q(.555, .15), [bx, by] = Q(.75, .32);
+      // monitor: plate monitor is at (.54..0.75, .15..0.32) in the 768 sheet -> left half of the frame here
+      const [px0, py0] = Q(.075, .3), [px1, py1] = Q(.49, .62), rh = (py1 - py0) / (lines + 1);
+      const cyc = 9, u = (t % cyc) / cyc, shown = clamp(u / .5, 0, 1) * lines;
+      for (let r = 0; r < lines; r++) {
+        if (r > shown) break;
+        const y = py0 + (r + 1) * rh, w = (px1 - px0) * (.55 + .4 * ((r * 5) % 7) / 7) * clamp(shown - r, 0, 1);
+        ctx.fillStyle = 'rgba(34,52,94,.55)'; ctx.fillRect(px0 + 10 * k, y - 3 * k, w - 20 * k, 5 * k);
+        if (r % 3 === 1 && u > .5) { const hx = px0 + 10 * k + (w - 20 * k) * .3, hw = (w - 20 * k) * .35; ctx.fillStyle = r % 2 ? 'rgba(255,217,138,.75)' : 'rgba(224,103,154,.45)'; ctx.fillRect(hx, y - 6 * k, hw, 11 * k); }
+      }
+      const tags = ['summary', 'sentiment', 'topics'];
+      tags.forEach((tg, i) => { const a = clamp((u - .55 - i * .08) / .1, 0, 1); if (a <= 0) return; ctx.globalAlpha = a; chip(tg, px1 + 14 * k, py0 + (i * 2 + 2) * rh, 15, [ROSE, BLUE, LAV][i]); });
+      ctx.globalAlpha = 1;
+      // pipeline across the sky
+      const steps = ['audio', 'text', 'model', 'insights'], [lx0, ly] = Q(.1, .12), [lx1] = Q(.62, 0);
+      steps.forEach((st, i) => {
+        const x = lx0 + (lx1 - lx0) * i / 3, on = Math.floor((t * .8) % 4) === i;
+        dot(x, ly, on ? 6 : 4.4, on ? GOLD : WHITE); hand(st, x, ly + 22 * k, 14, on ? ROSE : INK, 0, 'center');
+        if (i) line(x - (lx1 - lx0) / 3 + 10 * k, ly, x - 10 * k, ly, WHITE, 1.8, 2);
+      });
+      // rack lights + a packet along the cable to the monitor
+      for (let i = 0; i < 6; i++) { const [x, y] = Q(.84 + (i % 3) * .035, .5 + Math.floor(i / 3) * .08); ctx.globalAlpha = .4 + .6 * (Math.sin(t * 6 + i * 2.3) > 0 ? 1 : .2); dot(x, y, 2.6, i % 2 ? GOLD : PINK, null); }
+      ctx.globalAlpha = 1;
+      const a = Q(.85, .47), b = Q(.5, .5), c = [(a[0] + b[0]) / 2, a[1] - 40 * k];
+      for (let i = 0; i < 3; i++) dot(...qpt(a, c, b, (t * .5 + i / 3) % 1), 3, i % 2 ? GOLD : WHITE);
+      sticker(u < .5 ? 'transcribing' : 'analysing');
+    };
+
+    // MongoDB cost: the monthly bill drops to about half at the cut and stays there; the stack slims down with it
+    R['ssm-db'] = () => {
+      const [ax, ay] = Q(.06, .62), [bx, by] = Q(.48, .1), pw = bx - ax, ph = ay - by, n = 10, cut = 5;
+      const cyc = 9, u = (t % cyc) / cyc, shown = clamp(u / .6, 0, 1) * n;
+      ctx.fillStyle = 'rgba(255,248,226,.55)'; ctx.beginPath(); ctx.roundRect(ax - 14 * k, by - 18 * k, pw + 28 * k, ph + 40 * k, 12 * k); ctx.fill();
+      line(ax, ay, ax + pw, ay, INK, 2); line(ax, ay, ax, by, INK, 2);
+      hand('monthly bill', ax + 6 * k, by - 2 * k, 15, INK);
+      const bw = pw / n * .62;
+      for (let i = 0; i < n; i++) {
+        const v = clamp(shown - i, 0, 1); if (!v) continue;
+        const hgt = ph * .86 * (i < cut ? 1 - .04 * Math.sin(i * 2.1) : .53 + .02 * Math.sin(i * 1.7)) * ease(v);
+        const x = ax + (i + .2) * pw / n;
+        ctx.fillStyle = i < cut ? SKY : GOLD; ctx.beginPath(); ctx.roundRect(x, ay - hgt, bw, hgt, 3 * k); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 1.4 * k; ctx.stroke();
+      }
+      if (shown > cut) {
+        const x = ax + cut * pw / n - 4 * k; ctx.setLineDash([5 * k, 5 * k]); line(x, by + 10 * k, x, ay, ROSE, 2, 0); ctx.setLineDash([]);
+        hand('optimized', x + 6 * k, by + 26 * k, 15, ROSE);
+      }
+      if (shown > cut + 2) chip('≈ −$6k / month', ax + pw * .78, ay - ph * .62, 17, '#9a6a12', undefined, 'center');
+      if (u > .75) chip('$70k+ / year', ax + pw * .78, ay - ph * .62 + 26 * k, 16, ROSE, undefined, 'center');
+      const [sx, sy] = Q(.43, .89); line(sx - 30 * k, sy - 6 * k + Math.sin(t * 6) * 3 * k, sx + 30 * k, sy + 6 * k, ROSE, 2.2, 1);
+      sticker(shown < cut ? 'before' : 'after');
+    };
+
+    // timeline card: the truck on the road, a route arc across the sky, and a call bubble riding with it
+    R.ssm = () => {
+      const a = Q(.05, .5), b = Q(.95, .42), c = Q(.5, .05), v = (t * .12) % 1, p = qpt(a, c, b, v);
+      qcurve(a, c, b, 'rgba(255,255,255,.75)', 2, [6, 7]);
+      [.15, .5, .85].forEach(u => dot(...qpt(a, c, b, u), 3.4, WHITE));
+      dot(...p, 6, GOLD);
+      const [tx, ty] = Q(.62, .58);
+      ctx.fillStyle = 'rgba(255,248,226,.9)'; ctx.beginPath(); ctx.roundRect(tx, ty - 34 * k, 110 * k, 30 * k, 12 * k); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 1.5 * k; ctx.stroke();
+      wave(tx + 10 * k, tx + 100 * k, ty - 19 * k, 9 * k, 0, ROSE, 2);
+      dbStack(...Q(.12, .3), 22 * k, Math.sin(t * 2) > 0);
+      sticker('on the road');
+    };
+
     function frame() {
       n = 0; ctx.clearRect(0, 0, W, H);
       if (plate.complete && plate.naturalWidth) ctx.drawImage(plate, ox, oy, dw, dh);
@@ -475,5 +588,5 @@ window.ProjectViz = (() => {
     else { new IntersectionObserver(([e]) => playing = e.isIntersecting).observe(canvas); raf = requestAnimationFrame(loop); }
     return { destroy: () => cancelAnimationFrame(raf), get t() { return t; } };
   }
-  return { mount, ids: ['flow', 'digits', 'house', 'compiler', 'sync', 'it', 'lock', 'extropian'] };
+  return { mount, ids: ['flow', 'digits', 'house', 'compiler', 'sync', 'it', 'lock', 'extropian', 'ssm', 'ssm-calls', 'ssm-ai', 'ssm-db'] };
 })();
