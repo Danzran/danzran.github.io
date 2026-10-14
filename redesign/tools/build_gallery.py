@@ -31,7 +31,12 @@ for extra in sorted(os.listdir(LAB)):
         GROUPS.append((p, extra, ''))
 
 PROTOS = [
-    ('redesign/drafts/v9-night/index.html', 'v9 · Night (your pick as base, live)', 'Night tide only. Smooth mutating scribble headings, the hero turns around you on scroll (Codex orbit frames), the golf card now draws the club head and ball, Experience is an editing timeline with your reel, and the cursor is a scribble loop (?c=moonglow|inkring).'),
+    ('redesign/drafts/v10-comet/index.html', 'v10 · Comet (Your Name direction; ?clouds=1)', 'Blue-hour mirror lake; the comet splits above your feet and its gold fragment becomes the progress line through the timeline. Catch three falling stars to make a wish and play your song.'),
+    ('redesign/drafts/v10-starfall/index.html', 'v10 · Starfall (Your Name direction; ?clouds=1)', 'Milky Way over a mirror lake, meteors all the time; scrolling turns the sky like a time-lapse and meteors light each heading. Your song is a hidden note constellation in the hero sky.'),
+    ('redesign/drafts/v10-magichour/index.html', 'v10 · Magic hour (Your Name direction; ?clouds=1)', 'One continuous dusk from golden hour to night; the comet trail is the progress bar and splits over Contact. After dark, catch the music-note shooting star to play your song.'),
+    ('redesign/assets/kimi/index.html', 'Your Name asset pack (Codex)', 'Skies, comet and meteor sprites, cumulus pieces, cloud-card frames, your handstand in Shinkai style, red cord and music-note star.'),
+    ('redesign/assets/projects/index.html', 'Project + job card assets (Codex + live overlays)', 'All project, Safe Ship and job illustrations with their golf-style animated analysis layers.'),
+    ('redesign/drafts/v9-night/index.html', 'v9 · Night (main page: the repo root serves this)', 'Night tide. Now (Safe Ship) section, newest-first vertical Experience timeline with months and details, project cards with live overlays, golf card with club and ball.'),
     ('redesign/drafts/v9-night/labs/scribble/index.html', 'v9 lab · smooth scribble', 'Five mutating scribble variants with sliders, the old stepped boil side by side, and a roto outline around the handstand.'),
     ('redesign/drafts/v9-night/labs/timeline/index.html', 'v9 lab · five Experience timelines', 'Constellation, tide lanes, edit timeline (in v9), moon dial, depth flight.'),
     ('redesign/drafts/v9-night/labs/cursor/index.html', 'v9 lab · eight cursors', 'Moonglow, ink ring, scribble (in v9), ripples, star motes, constellation, caustics, glint.'),

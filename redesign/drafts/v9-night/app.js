@@ -91,7 +91,7 @@ clouds.sort((a, b) => a.depth - b.depth);
 
 /* painted hero plates (STYLE-LAB/water-r3/61, 62): cover the hero, drift slower than the page, fade out below it */
 const plates = { day: new Image(), night: new Image() };
-plates.day.src = 'assets/plate-day.webp'; plates.night.src = 'assets/plate-night.webp';
+plates.day.src = (window.V9_BASE || '') + 'assets/plate-day.webp'; plates.night.src = (window.V9_BASE || '') + 'assets/plate-night.webp';
 // the plate's bottom quarter is faded to transparent once (destination-out), so no hard edge shows when it scrolls up
 const fadedPlate = new Map();
 function faded(img) {
@@ -259,7 +259,7 @@ function frame(now) {
   minis.forEach(m => drawMini(m, t));
 }
 layout();
-document.fonts.ready.then(() => { layout(); GolfSwing.mount(document.getElementById('golf'), document.getElementById('golfStats'), '../v5-elemental/assets/golf'); });
+document.fonts.ready.then(() => { layout(); GolfSwing.mount(document.getElementById('golf'), document.getElementById('golfStats'), (window.V9_BASE || '') + '../v5-elemental/assets/golf'); });
 addEventListener('load', layout);
 addEventListener('resize', layout);
 requestAnimationFrame(frame);
@@ -278,7 +278,7 @@ const titleDelay = .2;
 // title letters: Scribble's own arrive (staggered, echo-smeared) replaces the stepped gsap drop
 gsap.from('.role, .hero .pill', { y: 20, opacity: 0, duration: .5, ease: 'steps(4)', stagger: .15, delay: titleDelay + .7 });
 // cards surface out of the water: rise + settle, on threes
-gsap.utils.toArray('.card').forEach((c, i) => gsap.from(c, { y: 80, opacity: 0, rotate: i % 2 ? 1.5 : -1.5, duration: .6, ease: 'steps(6)', scrollTrigger: { trigger: c, start: 'top 90%' } }));
+gsap.utils.toArray('.card:not(.vt-card)').forEach((c, i) => gsap.from(c, { y: 80, opacity: 0, rotate: i % 2 ? 1.5 : -1.5, duration: .6, ease: 'steps(6)', scrollTrigger: { trigger: c, start: 'top 90%' } }));
 ScrollTrigger.addEventListener('refresh', layout);
 
 })();

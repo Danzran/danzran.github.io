@@ -910,9 +910,34 @@ window.LAB = {
  ],
  "protos": [
   {
+   "href": "../redesign/drafts/v10-comet/index.html",
+   "title": "v10 \u00b7 Comet (Your Name direction; ?clouds=1)",
+   "blurb": "Blue-hour mirror lake; the comet splits above your feet and its gold fragment becomes the progress line through the timeline. Catch three falling stars to make a wish and play your song."
+  },
+  {
+   "href": "../redesign/drafts/v10-starfall/index.html",
+   "title": "v10 \u00b7 Starfall (Your Name direction; ?clouds=1)",
+   "blurb": "Milky Way over a mirror lake, meteors all the time; scrolling turns the sky like a time-lapse and meteors light each heading. Your song is a hidden note constellation in the hero sky."
+  },
+  {
+   "href": "../redesign/drafts/v10-magichour/index.html",
+   "title": "v10 \u00b7 Magic hour (Your Name direction; ?clouds=1)",
+   "blurb": "One continuous dusk from golden hour to night; the comet trail is the progress bar and splits over Contact. After dark, catch the music-note shooting star to play your song."
+  },
+  {
+   "href": "../redesign/assets/kimi/index.html",
+   "title": "Your Name asset pack (Codex)",
+   "blurb": "Skies, comet and meteor sprites, cumulus pieces, cloud-card frames, your handstand in Shinkai style, red cord and music-note star."
+  },
+  {
+   "href": "../redesign/assets/projects/index.html",
+   "title": "Project + job card assets (Codex + live overlays)",
+   "blurb": "All project, Safe Ship and job illustrations with their golf-style animated analysis layers."
+  },
+  {
    "href": "../redesign/drafts/v9-night/index.html",
-   "title": "v9 \u00b7 Night (your pick as base, live)",
-   "blurb": "Night tide only. Smooth mutating scribble headings, the hero turns around you on scroll (Codex orbit frames), the golf card now draws the club head and ball, Experience is an editing timeline with your reel, and the cursor is a scribble loop (?c=moonglow|inkring)."
+   "title": "v9 \u00b7 Night (main page: the repo root serves this)",
+   "blurb": "Night tide. Now (Safe Ship) section, newest-first vertical Experience timeline with months and details, project cards with live overlays, golf card with club and ball."
   },
   {
    "href": "../redesign/drafts/v9-night/labs/scribble/index.html",

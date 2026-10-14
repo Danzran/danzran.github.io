@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project card assets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #14254f; --card: rgba(24,40,86,.72); --line: rgba(255,236,190,.38); --ink: #f6eedb; --mute: #b9c6e8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: radial-gradient(120% 80% at 70% 0%, #2c4a8e 0%, var(--bg) 60%) fixed; color: var(--ink); font: 15px/1.5 Nunito, system-ui, sans-serif; }
+  main { max-width: 1240px; margin: 0 auto; padding: 40px 16px 80px; }
+  h1 { font: 600 40px/1.1 "Cormorant Garamond", serif; margin: 0 0 6px; }
+  .lede { color: var(--mute); margin: 0 0 28px; max-width: 70ch; }
+  h2 { font: 600 24px "Cormorant Garamond", serif; margin: 36px 0 12px; color: #ffd98a; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 12px; backdrop-filter: blur(8px); }
+  canvas { display: block; width: 100%; aspect-ratio: 3 / 2; border-radius: 12px; background: #b9a8f0; }
+  .card h3 { font: 600 21px "Cormorant Garamond", serif; margin: 10px 4px 2px; }
+  .card p { margin: 0 4px 4px; color: var(--mute); font-size: 13.5px; }
+  .card code { color: #ffd98a; font-size: 12px; }
+  @media (max-width: 420px) { .grid { grid-template-columns: 1fr; } h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Project card assets</h1>
+  <p class="lede">Plates by Codex (prompts in <code>prompts/</code>), each with a live analysis layer from <code>projectviz.js</code>, in the same language as the golf card. These are independent of the page UI: <code>ProjectViz.mount(canvas, id, { base })</code>.</p>
+  <h2>Projects</h2>
+  <div class="grid" id="proj"></div>
+  <h2>Safe Ship (now)</h2>
+  <div class="grid" id="now"></div>
+  <h2>Experience</h2>
+  <div class="grid" id="exp"></div>
+</main>
+<script src="../golf/swing.js"></script>
+<script src="data.js"></script>
+<script src="projectviz.js"></script>
+<script>
+  const P = [
+    ['proj', 'flow', 'Optical Flow Tracker', 'Shi–Tomasi corners baked from the plate, tracked with trails; a scan bar prints each flow vector; forward–backward rejects re-seed.'],
+    ['proj', 'digits', 'Digit Classifier', 'The drawn 7 resampled to 28×28; a 3×3 kernel reads the grid while the softmax settles on 7.'],
+    ['proj', 'house', 'Real Estate Predictor', 'Madrid-houses features pinned on the facade; linear, k-NN and random forest take turns on an illustrative scatter.'],
+    ['proj', 'compiler', 'PL/0 Compiler', 'Source typed on the CRT, tokens lexed, stack-VM code emitted with a live stack.'],
+    ['proj', 'sync', 'Mikal – Wix sync', 'The .LST report is regex-parsed row by row (names redacted) into busy blocks on a week grid.'],
+    ['now', 'ssm-calls', 'Call ingestion', 'Calls ring in, each becomes a waveform lane and lands in the ingest queue.'],
+    ['now', 'ssm-ai', 'AI call analysis', 'A transcript fills the monitor, spans get highlighted and tagged; audio → text → model → insights.'],
+    ['now', 'ssm-db', 'MongoDB cost cut', 'The monthly bill drops to about half at the optimization (about $6k less a month, $70k+ a year).'],
+    ['exp', 'ssm', 'Safe Ship Moving Services', 'Timeline card: the truck on the road, a route arc and a call riding along.'],
+    ['exp', 'it', 'Systems assembler & IT', 'Build checklist with leader lines, the fan turning, packets on the switch cables, VMs stacking.'],
+    ['exp', 'lock', 'Lockout technician', 'Programmer bytes ride the cable, the push-to-start fob answers with RF rings until the key is learned.'],
+    ['exp', 'extropian', 'Backend developer · Extropian', 'BLE sensor pulses, IMU axes, packets sensor → phone → Firebase; the trace is the real lead-arm angle from the golf swing.'],
+  ];
+  // ?only=<id> shows one card large (for close inspection / screenshots)
+  const only = new URLSearchParams(location.search).get('only');
+  if (only) document.querySelector('main').style.maxWidth = '1600px', document.querySelectorAll('.grid').forEach(g => g.style.gridTemplateColumns = '1fr');
+  document.fonts.load('16px "Gochi Hand"').finally(() => P.filter(r => !only || r[1] === only).forEach(([g, id, h, p]) => {
+    const el = document.createElement('article'); el.className = 'card';
+    el.innerHTML = `<canvas aria-label="${h}: animated illustration"></canvas><h3>${h}</h3><p>${p} <code>${id}</code></p>`;
+    document.getElementById(g).appendChild(el);
+    ProjectViz.mount(el.querySelector('canvas'), id, { base: '.' });
+  }));
+</script>
+</body>
+</html>

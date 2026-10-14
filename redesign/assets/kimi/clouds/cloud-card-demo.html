@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cloud Card Demo</title>
+<style>
+  :root {
+    --navy: #0d1b3d; --navy-2: #16295a; --azure: #8fb4ff; --ivory: #fbf6ea;
+    --gold: #f2c86b; --rose: #f2a7c3; --violet: #b9a3f0; --ink: #1b2a52;
+    --panel: #eef2fb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 16px 80px; color: var(--ivory);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: radial-gradient(120% 80% at 70% 0%, #2b4fa8 0%, var(--navy-2) 45%, var(--navy) 100%) fixed;
+    min-height: 100vh;
+  }
+  h1 { font-weight: 600; letter-spacing: .02em; margin: 0 0 6px; }
+  h2 { margin: 56px 0 6px; font-weight: 600; color: var(--gold); }
+  p.lede { max-width: 72ch; opacity: .85; margin: 0 0 8px; }
+  code { background: rgba(255,255,255,.08); padding: 1px 5px; border-radius: 4px; }
+  .row { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; margin-top: 18px; }
+  .card h3 { margin: 0 0 6px; font-size: 1.15rem; color: var(--ink); }
+  .card p { margin: 0; color: #33416b; font-size: .95rem; }
+  .w-wide { width: min(560px, 100%); }
+  .w-sq { width: min(300px, 100%); min-height: 260px; }
+  .w-tall { width: min(240px, 100%); min-height: 420px; }
+
+  /* ---------- A. 9-slice border-image from the Codex frame (cloud-frame-square.webp) ---------- */
+  .nine {
+    /* cloud-frame-square.webp is 1024x1024; its billow ring is ~160-185px deep, so slice at 215
+       (just inside the flat #ebf0fa centre) and draw that slice 64px wide. */
+    border: 64px solid transparent;
+    border-image: url("cloud-frame-square.webp") 215 fill / 64px / 14px round;
+    padding: 0 6px;
+    filter: drop-shadow(0 10px 24px rgba(5, 10, 40, .45));
+  }
+
+  /* ---------- B. pure-CSS scallop mask (any size, no image) ---------- */
+  .scallop {
+    --r: 16px;                                   /* puff radius */
+    position: relative; padding: calc(var(--r) * 2.2);
+    background:
+      radial-gradient(120% 90% at 30% 0%, #fffaf0 0%, var(--panel) 55%, #dfe3fb 100%);
+    -webkit-mask:
+      radial-gradient(var(--r), #000 98%, #0000) round 0 0 / calc(var(--r) * 2) calc(var(--r) * 2),
+      linear-gradient(#000 0 0) 50% / calc(100% - var(--r) * 2) calc(100% - var(--r) * 2) no-repeat;
+            mask:
+      radial-gradient(var(--r), #000 98%, #0000) round 0 0 / calc(var(--r) * 2) calc(var(--r) * 2),
+      linear-gradient(#000 0 0) 50% / calc(100% - var(--r) * 2) calc(100% - var(--r) * 2) no-repeat;
+  }
+  .scallop-wrap { filter: drop-shadow(0 0 1px rgba(242,167,195,.9)) drop-shadow(0 10px 22px rgba(5,10,40,.45)); }
+
+  /* ---------- C. SVG puffs + filter (any size, organic, shaded) ---------- */
+  .svgcloud { position: relative; padding: 40px 38px; isolation: isolate; }
+  .svgcloud > svg.bg { position: absolute; inset: -22px; width: calc(100% + 44px); height: calc(100% + 44px); z-index: -1; overflow: visible; }
+  .svgcloud > *:not(svg) { position: relative; }
+
+  .note { margin-top: 10px; font-size: .9rem; opacity: .8; max-width: 72ch; }
+  table { border-collapse: collapse; margin-top: 12px; font-size: .92rem; max-width: 900px; width: 100%; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.12); vertical-align: top; }
+  th { color: var(--gold); font-weight: 600; }
+  @media (max-width: 600px) { .w-sq, .w-tall { width: 100%; } }
+</style>
+</head>
+<body>
+<h1>Fluffy cloud card containers</h1>
+<p class="lede">Three ways to put a cumulus edge around a card of any size. Resize the window: every card below holds real text and stretches with it.</p>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="cloudFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset=".55" stop-color="#f3f0fb"/>
+      <stop offset="1" stop-color="#c9c4f2"/>
+    </linearGradient>
+    <!-- wispy edge + soft top light + rose rim -->
+    <filter id="cumulus" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G" result="wobble"/>
+      <feGaussianBlur in="wobble" stdDeviation="0.5" result="soft"/>
+      <!-- underside shading: alpha blurred and shifted up, used to darken the bottoms of puffs -->
+      <feGaussianBlur in="SourceAlpha" stdDeviation="7" result="ab"/>
+      <feOffset in="ab" dy="-9" result="abUp"/>
+      <feComposite in="soft" in2="abUp" operator="out" result="under"/>
+      <feFlood flood-color="#9f8fe8" flood-opacity=".55"/>
+      <feComposite in2="under" operator="in" result="underTint"/>
+      <!-- rose rim outside -->
+      <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="dil"/>
+      <feGaussianBlur in="dil" stdDeviation="1.8" result="rimB"/>
+      <feFlood flood-color="#f2a7c3" flood-opacity=".5"/>
+      <feComposite in2="rimB" operator="in" result="rim"/>
+      <feMerge><feMergeNode in="rim"/><feMergeNode in="soft"/><feMergeNode in="underTint"/></feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<h2>A. 9-slice <code>border-image</code> from a Codex frame (recommended)</h2>
+<p class="note">Uses <code>cloud-frame-square.webp</code> (keyed to alpha). The corners stay painted; the edges repeat with <code>round</code>. Slice <code>215</code> sits just inside the flat centre, so the panel has no seams. This keeps the painted look closest, holds up from 240px to 560px wide, and costs one image (~100 KB). On very long cards the repeated edge puffs can show a rhythm. The panel tint is the painting's <code>#ebf0fa</code>.</p>
+<div class="row">
+  <div class="card nine w-wide"><h3>Golf Swing Analyzer</h3><p>Flutter, Dart, Firebase and Bluetooth. Pose nodes, angles and swing stats on the real footage.</p></div>
+  <div class="card nine w-sq"><h3>Square card</h3><p>Short text, same frame.</p></div>
+  <div class="card nine w-tall"><h3>Tall card</h3><p>A taller card stretches the left and right edges.</p></div>
+</div>
+
+<h2>B. Pure-CSS scallop mask</h2>
+<p class="note">Circles repeated along each edge with <code>mask</code>, plus a <code>drop-shadow</code> rose rim. No image, any size, very cheap. It reads as tidy scallops rather than painted cumulus: good for small chips and tags.</p>
+<div class="row">
+  <div class="scallop-wrap"><div class="card scallop w-wide"><h3>Optical Flow Tracker</h3><p>Same card copy at a wide size. The puffs stay round because <code>round</code> resizes the tiles to fit.</p></div></div>
+  <div class="scallop-wrap"><div class="card scallop w-sq" style="--r:22px"><h3>Bigger puffs</h3><p><code>--r: 22px</code></p></div></div>
+  <div class="scallop-wrap"><div class="card scallop w-tall" style="--r:12px"><h3>Small puffs</h3><p><code>--r: 12px</code></p></div></div>
+</div>
+
+<h2>C. SVG puffs + filter (procedural fallback)</h2>
+<p class="note">A small script lays random-radius circles round the card's edge (re-run on resize via <code>ResizeObserver</code>, seeded so it is stable). An SVG filter adds turbulence wobble, lavender undersides and a rose rim. Any size, organic, no image weight; the centre is a flat panel colour for text.</p>
+<div class="row">
+  <div class="card svgcloud w-wide" data-cloud="3"><h3>MNIST Digit Classifier</h3><p>Same card copy at a wide size. Puffs are re-laid as the card resizes, so long cards never show a tile rhythm.</p></div>
+  <div class="card svgcloud w-sq" data-cloud="11"><h3>Square</h3><p>Seed 11.</p></div>
+  <div class="card svgcloud w-tall" data-cloud="5"><h3>Tall</h3><p>Seed 5. Works for timeline entries too.</p></div>
+</div>
+
+<h2>Comparison</h2>
+<table>
+  <tr><th></th><th>A. border-image</th><th>B. CSS mask</th><th>C. SVG + filter</th></tr>
+  <tr><td>Look</td><td>Most painterly (real Codex paint), best match for the skies</td><td>Neat, graphic scallops</td><td>Soft cumulus, shaded</td></tr>
+  <tr><td>Any size</td><td>Yes, but edge repeats show</td><td>Yes</td><td>Yes, re-laid per size</td></tr>
+  <tr><td>Weight</td><td>One ~100 KB webp</td><td>0</td><td>~1 KB JS</td></tr>
+  <tr><td>Cost</td><td>Cheapest to paint</td><td>Cheap</td><td>Filter per card; fine for up to ~12 cards. Avoid animating it.</td></tr>
+  <tr><td>Use for</td><td>Project and job cards (default)</td><td>Chips, tags, small badges</td><td>Very long or very variable cards, or when no image request is wanted</td></tr>
+</table>
+
+<script>
+// C: lay puffs around each [data-cloud] card. Deterministic per seed.
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  function rng(seed) { let s = seed >>> 0 || 1; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+  function build(card) {
+    const pad = 22, w = card.offsetWidth + pad * 2, h = card.offsetHeight + pad * 2;
+    let svg = card.querySelector(':scope > svg.bg');
+    if (!svg) { svg = document.createElementNS(NS, 'svg'); svg.setAttribute('class', 'bg'); svg.setAttribute('aria-hidden', 'true'); card.prepend(svg); }
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    const r = rng(+card.dataset.cloud || 1), inset = pad + 16, rmin = 14, rmax = 26;
+    let out = `<g filter="url(#cumulus)" fill="url(#cloudFill)">`;
+    // walk the rectangle perimeter at the inset
+    const x0 = inset, y0 = inset, x1 = w - inset, y1 = h - inset;
+    const sides = [[x0, y0, x1, y0], [x1, y0, x1, y1], [x1, y1, x0, y1], [x0, y1, x0, y0]];
+    for (const [ax, ay, bx, by] of sides) {
+      const len = Math.hypot(bx - ax, by - ay); let t = 0;
+      while (t < len) {
+        const rad = rmin + r() * (rmax - rmin), k = t / len;
+        const top = ay === by && ay === y0;                 // bigger puffs on the top edge
+        const rr = top ? rad * 1.15 : rad;
+        out += `<circle cx="${(ax + (bx - ax) * k + (r() - .5) * 6).toFixed(1)}" cy="${(ay + (by - ay) * k + (r() - .5) * 6).toFixed(1)}" r="${rr.toFixed(1)}"/>`;
+        t += rad * 1.05;
+      }
+    }
+    out += `<rect x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" rx="10"/></g>`;
+    // flat text panel
+    out += `<rect x="${x0 + 6}" y="${y0 + 6}" width="${x1 - x0 - 12}" height="${y1 - y0 - 12}" rx="14" fill="#eef2fb"/>`;
+    svg.innerHTML = out;
+  }
+  const cards = document.querySelectorAll('[data-cloud]');
+  const ro = new ResizeObserver(es => es.forEach(e => build(e.target)));
+  cards.forEach(c => { build(c); ro.observe(c); });
+})();
+</script>
+</body>
+</html>

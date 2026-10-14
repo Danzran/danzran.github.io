@@ -6,16 +6,16 @@
 <title>Daniel Azran — Draft v9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&family=Gochi+Hand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="timeline.css">
+<link rel="stylesheet" href="experience.css">
 </head>
 <body>
 <!-- fixed layers: sky + clouds behind, the river above them, content scrolls on top -->
 <canvas id="sky" aria-hidden="true"></canvas>
 <canvas id="river" aria-hidden="true"></canvas>
 
-<nav class="nav"><a class="mark" href="#top">DA</a><span class="sp"></span><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+<nav class="nav"><a class="mark" href="#top">DA</a><span class="sp"></span><a href="#now">Now</a><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
 
 <main id="top">
   <section class="hero" id="hero">
@@ -28,6 +28,21 @@
       <img src="assets/orbit/yaw-m60.webp" alt="" data-yaw="-60"><img src="assets/orbit/yaw-m40.webp" alt="" data-yaw="-40"><img src="assets/orbit/yaw-m20.webp" alt="" data-yaw="-20"><img src="assets/orbit/yaw-000.webp" alt="Daniel doing a handstand" data-yaw="000"><img src="assets/orbit/yaw-p20.webp" alt="" data-yaw="+20"><img src="assets/orbit/yaw-p40.webp" alt="" data-yaw="+40"><img src="assets/orbit/yaw-p60.webp" alt="" data-yaw="+60">
     </div>
     <canvas id="ribbonFront" aria-hidden="true"></canvas>
+  </section>
+
+  <section class="sec now" id="now">
+    <h2 class="brush" data-brush data-anchor="L">Now</h2>
+    <p class="now-lead">Currently at <b>Safe Ship Moving Services</b>.</p>
+    <div class="now-save card" data-anchor="R">
+      <div class="now-num"><b>−$6k</b><span>per month on MongoDB</span></div>
+      <div class="now-num"><b>$70k+</b><span>saved per year</span></div>
+      <p>Optimized our MongoDB usage and cut the bill nearly in half.</p>
+    </div>
+    <div class="row3">
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>Getting the company’s calls into one pipeline.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI call analysis</h3><p>The infrastructure that analyses those calls.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-db" aria-hidden="true"></canvas><h3>MongoDB cost cut</h3><p>Nearly half the bill: about $6k less a month.</p></article>
+    </div>
   </section>
 
   <section class="sec work" id="work">
@@ -49,33 +64,108 @@
       </div>
     </article>
     <div class="row3">
-      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><canvas class="mini" data-mini="flow" aria-hidden="true"></canvas><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade point tracking.</p></a>
-      <a class="card proj" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener"><canvas class="mini" data-mini="digits" aria-hidden="true"></canvas><h3>Digit Classifier</h3><p>Keras CNN · 98% on MNIST.</p></a>
-      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener"><canvas class="mini" data-mini="house" aria-hidden="true"></canvas><h3>Real Estate Predictor</h3><p>−7% RMSE with a log-price target.</p></a>
+      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="flow" aria-hidden="true"></canvas><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade point tracking.</p></a>
+      <a class="card proj" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="digits" aria-hidden="true"></canvas><h3>Digit Classifier</h3><p>Keras CNN · 98% on MNIST.</p></a>
+      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="house" aria-hidden="true"></canvas><h3>Real Estate Predictor</h3><p>−7% RMSE with a log-price target.</p></a>
     </div>
-    <p class="more">also: <a href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener">PL/0 compiler ↗</a> <a href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener">Mikal – Wix sync ↗</a> <a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></p>
-  </section>
+    <div class="row2">
+      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="compiler" aria-hidden="true"></canvas><h3>PL/0 Compiler</h3><p>Lexer, parser and code generator in C for a stack-based VM.</p></a>
+      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="sync" aria-hidden="true"></canvas><h3>Mikal – Wix sync</h3><p>Parses Mikal appointment reports into busy blocks.</p></a>
+    </div>
+    <p class="more">also: <a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></p>  </section>
 
   <section class="sec exp" id="experience">
     <h2 class="brush" data-brush data-anchor="R">Experience</h2>
-    <div class="nle" id="nle">
-      <div class="nle-top">
-        <div class="monitor" id="monitor">
-          <div class="mon-slate" aria-hidden="true"></div>
-          <video class="mon-reel" id="monReel" src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline aria-label="Video editing reel"></video>
-          <div class="mon-titles" id="monTitles" aria-hidden="true"></div>
-          <div class="mon-hud" aria-hidden="true"><span class="pgm">● PGM</span><span class="tc" id="monTC">TC 2014:01:00</span></div>
-        </div>
-        <div class="inspector"><p class="insp-h">inspector</p><div class="insp-deck" id="inspDeck"></div></div>
-      </div>
-      <div class="panel" id="panel">
-        <div class="heads" aria-hidden="true"><span></span><span>V3</span><span>V2</span><span>V1</span><span>A1</span></div>
-        <div class="tracks" id="tracks">
-          <div class="ruler" id="ruler" aria-hidden="true"></div>
-          <div class="lanes" id="lanes"><div class="lane"></div><div class="lane"></div><div class="lane"></div><div class="lane"></div></div>
-          <div class="playhead" id="playhead"><i></i></div>
-        </div>
-      </div>
+    <canvas id="vtBg" aria-hidden="true"></canvas>
+    <div class="vt" id="vt">
+      <div class="vt-spine" aria-hidden="true"><i class="vt-fill"></i></div>
+      <ol class="vt-list">
+        <li class="vt-item" data-theme="ssm">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">Now<small>current job</small></p>
+            <p class="vt-org">Safe Ship Moving Services</p>
+            <ul class="vt-pts">
+            <li>Built the pipeline that ingests the company’s calls.</li>
+            <li>Built the AI call-analysis infrastructure on top of it.</li>
+            <li>Optimized our MongoDB usage and cut the bill nearly in half: about $6k less per month, over $70k a year.</li>
+            </ul>
+            <p class="vt-tags"><span>MongoDB</span><span>AI</span><span>Data pipelines</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/ssm/plate-768.webp" alt="" data-viz="ssm"></div>
+            <div class="vt-copy"><span class="tag">now</span><h3>Safe Ship Moving Services</h3><p>Call ingestion, AI call analysis, and a MongoDB bill cut nearly in half.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="ext">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2024<small>Sep 2024 — May 2025</small></p>
+            <p class="vt-org">Extropian · Orlando, FL</p>
+            <ul class="vt-pts">
+            <li>Built a cross-platform Flutter app for real-time golf swing analysis from wearable sensor data.</li>
+            <li>Led the Bluetooth streaming and metric layer; cut packet loss from tens to single digits per session.</li>
+            <li>Worked in a 6-person Agile team with Git and Jira.</li>
+            </ul>
+            <p class="vt-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>Bluetooth</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/extropian/plate-768.webp" alt="" data-viz="extropian"></div>
+            <div class="vt-copy"><span class="tag">Sep 2024 – May 2025 · Extropian</span><h3>Backend software developer</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="lock">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2022<small>Aug 2022 — Dec 2023</small></p>
+            <p class="vt-org">Sonic Locksmith · Hollywood, FL</p>
+            <ul class="vt-pts">
+            <li>Programmed and cut keys for push-to-start and traditional vehicles.</li>
+            <li>Resolved on-site lockouts under time pressure, with clear communication.</li>
+            <li>Kept the key-cutting and diagnostic tools stocked and calibrated.</li>
+            </ul>
+            <p class="vt-tags"><span>Key programming</span><span>Diagnostics</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/lock/plate-768.webp" alt="" data-viz="lock"></div>
+            <div class="vt-copy"><span class="tag">Aug 2022 – Dec 2023</span><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="it">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2018<small>Sep 2018 — Present</small></p>
+            <p class="vt-org">Freelance · Multiple locations</p>
+            <ul class="vt-pts">
+            <li>Designed and assembled desktops for gaming, editing and servers.</li>
+            <li>Set up small-business networks with virtual machines.</li>
+            <li>Diagnosed hardware and software issues and delivered stable builds.</li>
+            </ul>
+            <p class="vt-tags"><span>PC builds</span><span>Networking</span><span>VirtualBox</span><span>Windows admin</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/it/plate-768.webp" alt="" data-viz="it"></div>
+            <div class="vt-copy"><span class="tag">Sep 2018 – now</span><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="edit">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2014<small>2014 — 2020</small></p>
+            <p class="vt-org">Freelance · Remote</p>
+            <ul class="vt-pts">
+            <li>Edited with 3D elements, camera tracking and thumbnails.</li>
+            <li>Worked with organizations on large projects; coordinated up to four editors.</li>
+            <li>Kept in touch with clients so the result matched their vision.</li>
+            </ul>
+            <p class="vt-tags"><span>After Effects</span><span>Premiere Pro</span><span>Photoshop</span><span>Sony Vegas</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><video class="vt-reel" src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="My video editing reel"></video></div>
+            <div class="vt-copy"><span class="tag">2014–2020</span><h3>Video editor</h3><p>COD edits, compositing, camera tracking. Led a team of 4 editors.</p></div>
+          </article>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -109,7 +199,10 @@
 <script src="golf.js"></script>
 <script src="water.js"></script>
 <script src="app.js"></script>
-<script src="timeline.js"></script>
+<script src="../../assets/projects/data.js"></script>
+<script src="../../assets/projects/projectviz.js"></script>
+<script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, (window.V9_BASE || '') + '../../assets/projects'));</script>
+<script src="experience.js"></script>
 <script src="labs/cursor/cursors/starcatch.js"></script>
 <script src="labs/cursor/cursors/lightleak.js"></script>
 <script src="labs/cursor/cursors/moonlight.js"></script>

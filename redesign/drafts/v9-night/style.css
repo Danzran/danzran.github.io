@@ -58,6 +58,8 @@ main{position:relative;z-index:2}
 .stats span{font-size:12px;color:#56628a}
 .stats .live{grid-column:1/-1;background:var(--goldsoft);border-color:var(--gold)}
 .row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:6vh}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:22px}
+.mini.viz{aspect-ratio:3/2}
 .proj{display:block;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 .proj:hover{transform:translateY(-6px) rotate(-.6deg)}
 .mini{width:100%;aspect-ratio:16/10;display:block;border-radius:14px;background:var(--mist);margin-bottom:10px}
@@ -81,7 +83,7 @@ main{position:relative;z-index:2}
   .hero-copy{top:14vh;right:var(--gutter)}
   .hero h1{font-size:17vw}
   .golf-card{grid-template-columns:1fr}
-  .row3{grid-template-columns:1fr}
+  .row3,.row2{grid-template-columns:1fr}
   .golfvis{max-width:360px;width:100%;margin:0 auto}
 }
 /* buoyancy lives on `translate` so it never fights the GSAP entrance (which owns `transform`) */
@@ -121,3 +123,11 @@ html[data-ink="1"] .card{border-color:transparent}
 /* v9 hero orbit (STYLE-LAB/handstand-orbit): 7 yaw drawings stacked; app.js cross-fades the two nearest */
 .fig.orbit img{visibility:visible;opacity:0;will-change:opacity}
 .fig.orbit img[data-yaw="000"]{opacity:1}
+
+/* Now: Safe Ship Moving Services (current job) */
+.now-lead{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);color:#f3ead6;margin:2vh 0 3vh}
+.now-lead b{color:#ffd98a;font-weight:600}
+.now-save{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 44px;padding:26px 30px}
+.now-num b{display:block;font-family:var(--serif);font-weight:600;font-size:clamp(48px,6vw,84px);line-height:.9;color:#ffe9b0;text-shadow:0 0 28px rgba(255,214,120,.45)}
+.now-num span{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#ffd98a}
+.now-save p{flex:1 1 240px;margin:0;color:#d8e2fb}

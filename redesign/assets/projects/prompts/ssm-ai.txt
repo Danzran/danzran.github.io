@@ -1,0 +1,6 @@
+Generate ONE image with your image generation tool and save it in the current directory as ssm-ai.png. Then reply with the path. Do not write any other files.
+
+SUBJECT: a small server rack and a workstation at night, cables neatly bundled, a large blank monitor glowing pale blue showing nothing, little status lights in butter-yellow and pink (never green), a mug and a notebook. Cozy engineering-at-night mood. Leave the monitor and the space above the rack calm for an overlay of transcripts and analysis tags.
+
+STYLE (match the two attached reference images exactly): a pastel rotoscoped illustration traced from real footage. Flat posterized fills in a small pastel palette (periwinkle/lavender, sky blue, butter yellow, soft pink, peach, ivory, navy ink), thick wobbly dark-navy ink outlines, slight paper grain, a few loose speckles. Bold, readable shapes; calm flat areas, because a live hand-drawn data overlay (waveforms, nodes, numbers, charts) will be drawn on top in code.
+HARD RULES: absolutely no green and no teal anywhere (no plants, no green LEDs, no leaf logos). No text, letters, numbers, logos or brand marks anywhere (no company name on the truck or screens; screens are blank pale blue). No close-up faces. Landscape 3:2, 1536x1024.
