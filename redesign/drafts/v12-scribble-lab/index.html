@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unchained Scribble Lab</title>
+<style>
+:root{--ink:#f4efe4;--dim:#9fb0cc;--line:rgba(244,239,228,.18);--bg1:#0b1430;--bg2:#1b2a55;--gold:#f2c46d}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg1) 70%) fixed;font:15px/1.5 system-ui,sans-serif;overflow-x:hidden}
+header{padding:28px 16px 0;max-width:1200px;margin:auto}
+header p{color:var(--dim);max-width:760px;margin:6px 0 0}
+header code{color:var(--gold)}
+.hero{display:grid;place-items:center;min-height:52vh;padding:40px 16px;overflow-x:clip}
+.hero h1{margin:0;font-weight:400;font-size:clamp(56px,11vw,168px);line-height:1;text-align:center;color:var(--ink)}
+.controls{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;padding:0 16px 26px;max-width:1200px;margin:auto}
+.group{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.group>span{color:var(--dim);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-right:4px}
+button,select{font:inherit;color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:5px 13px;cursor:pointer}
+button[aria-pressed=true]{background:var(--ink);color:var(--bg1);border-color:var(--ink)}
+select{border-radius:8px}
+input[type=range]{width:120px;accent-color:var(--gold)}
+h2{max-width:1200px;margin:10px auto 6px;padding:0 16px;font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1200px;margin:0 auto 60px;padding:0 16px}
+.cell{border:1px solid var(--line);border-radius:14px;padding:30px 10px 14px;display:grid;place-items:center;gap:8px;min-height:170px;overflow:hidden}
+.cell .w{font-size:clamp(34px,4.6vw,64px);line-height:1;margin:0;font-weight:400}
+.cell small{color:var(--dim);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+@media (max-width:720px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <p style="color:var(--ink);font-weight:600;margin:0">Unchained Scribble, web port</p>
+  <p>From <code>Unchained's 2D Presets and Elements</code>: three stacked Turbulent Displace effects, each with Evolution <code>wiggle(8,1000)</code>. Choppy versions add Posterize Time at 15 or 10 fps. The Amount and Size values come straight from the .aep file.</p>
+</header>
+
+<section class="hero"><h1 id="hero">Daniel Azran</h1></section>
+
+<div class="controls">
+  <div class="group" data-k="level"><span>Preset</span><button data-v="low">Low</button><button data-v="mid">Mid</button><button data-v="high">High</button></div>
+  <div class="group" data-k="fps"><span>Cadence</span><button data-v="60">60 fps</button><button data-v="30">Smooth (30)</button><button data-v="15">Choppy (15)</button><button data-v="10">Very choppy (10)</button></div>
+  <div class="group"><span>Font</span><select id="font"></select></div>
+  <div class="group"><span>Gain</span><input id="gain" type="range" min=".3" max="2.5" step=".05" value="1"><output id="gainv">1.00</output></div>
+  <div class="group"><span>Wiggle amp</span><input id="wig" type="range" min="20" max="1000" step="10" value="1000"><output id="wigv">1000</output></div>
+</div>
+
+<h2>The nine presets (as in the AE comp)</h2>
+<div class="grid" id="grid"></div>
+
+<script src="../../assets/fonts/shrikhand-font.js"></script>
+<script src="../../assets/fonts/dm-serif-display-font.js"></script>
+<script src="../../assets/fonts/kaushan-script-font.js"></script>
+<script src="../../assets/fonts/mochiy-pop-font.js"></script>
+<script src="../../assets/fonts/shippori-mincho-font.js"></script>
+<script src="../../assets/fonts/marker-font.js"></script>
+<script src="../../assets/fonts/brush-font.js"></script>
+<script src="../../assets/fonts/pencil-font.js"></script>
+<script src="../../assets/lettering/unchained-scribble.js"></script>
+<script>
+(async () => {
+  const LF = window.LETTER_FONTS || {};
+  const FONTS = [
+    ['Shrikhand', LF['shrikhand']], ['Permanent Marker', window.MARKER_FONT_B64], ['Kaushan Script', LF['kaushan-script']],
+    ['Mochiy Pop One', LF['mochiy-pop']], ['DM Serif Display', LF['dm-serif-display']], ['Shippori Mincho', LF['shippori-mincho']],
+    ['Kalam', window.PENCIL_FONT_B64], ['Caveat Brush', window.BRUSH_FONT_B64],
+  ].filter(f => f[1]);
+  const buf = b64 => { const s = atob(b64), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u.buffer; };
+  await Promise.all(FONTS.map(([n, b]) => new FontFace(n, buf(b)).load().then(f => document.fonts.add(f)).catch(() => {})));
+
+  const q = new URLSearchParams(location.search);
+  const state = { level: q.get('level') || 'mid', fps: +(q.get('fps') || 30), font: q.get('font') || 'Shrikhand', gain: 1, wiggle: 1000 };
+  const sel = document.getElementById('font');
+  FONTS.forEach(([n]) => sel.add(new Option(n, n, false, n === state.font)));
+  const famOf = n => `"${n}", cursive`;
+
+  const hero = document.getElementById('hero');
+  hero.style.fontFamily = famOf(state.font);
+  const big = UnchainedScribble.mount(hero, { level: state.level, fps: state.fps, color: '#f4efe4' });
+
+  const grid = document.getElementById('grid'), cells = [];
+  for (const [fps, cname] of [[30, 'smooth'], [15, 'choppy'], [10, 'very choppy']])
+    for (const lv of ['low', 'mid', 'high']) {
+      const c = document.createElement('div'); c.className = 'cell';
+      c.innerHTML = `<p class="w">Daniel</p><small>${lv} · ${cname}</small>`; grid.appendChild(c);
+      const w = c.querySelector('.w'); w.style.fontFamily = famOf(state.font);
+      cells.push({ el: w, fx: UnchainedScribble.mount(w, { level: lv, fps, color: '#f4efe4' }) });
+    }
+
+  const sync = () => document.querySelectorAll('.group[data-k]').forEach(g => g.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v == state[g.dataset.k]))));
+  document.querySelectorAll('.group[data-k] button').forEach(b => b.onclick = () => {
+    const k = b.parentElement.dataset.k; state[k] = k === 'fps' ? +b.dataset.v : b.dataset.v; big.set({ [k]: state[k] }); sync();
+  });
+  sel.onchange = () => { state.font = sel.value; hero.style.fontFamily = famOf(state.font); big.set({ font: null });
+    cells.forEach(c => { c.el.style.fontFamily = famOf(state.font); c.fx.set({ font: null }); }); };
+  const gain = document.getElementById('gain'), wig = document.getElementById('wig');
+  gain.oninput = () => { state.gain = +gain.value; document.getElementById('gainv').value = state.gain.toFixed(2); big.set({ gain: state.gain }); cells.forEach(c => c.fx.set({ gain: state.gain })); };
+  wig.oninput = () => { state.wiggle = +wig.value; document.getElementById('wigv').value = state.wiggle; big.set({ wiggle: state.wiggle }); cells.forEach(c => c.fx.set({ wiggle: state.wiggle })); };
+  sync();
+})();
+</script>
+</body>
+</html>
