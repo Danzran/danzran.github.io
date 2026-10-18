@@ -14,6 +14,7 @@
      color: CSS colour                       font: CSS family (defaults to the element's computed one)
      scale: AE px per CSS px of a 150px headline (default 1 = text as big as a typical 1080p AE title)
      gain:  displacement multiplier          wiggle: the wiggle amplitude in degrees (1000 in the preset)
+     weight: extra stroke in em (thickens hairline fonts, e.g. .012)
    The element keeps its real text for screen readers; the canvas is aria-hidden. prefers-reduced-motion = one still frame. */
 (() => {
   const PRESETS = {
@@ -63,7 +64,7 @@ void main(){vec2 q=v*res;
   }
 
   function mount(el, opts = {}) {
-    const o = Object.assign({ level: 'mid', fps: 30, gain: 1, wiggle: 1000, scale: 1, color: null, font: null }, opts);
+    const o = Object.assign({ level: 'mid', fps: 30, gain: 1, wiggle: 1000, scale: 1, color: null, font: null, weight: 0 }, opts);
     const text = el.textContent.trim();
     if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
     el.innerHTML = '';
@@ -98,8 +99,8 @@ void main(){vec2 q=v*res;
       sx.setTransform(dpr, 0, 0, dpr, 0, 0); sx.clearRect(0, 0, W, H);
       sx.font = `${cs.fontStyle} ${cs.fontWeight} ${fs}px ${o.font || cs.fontFamily}`;
       sx.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing;
-      sx.textBaseline = 'middle'; sx.fillStyle = '#fff';
-      for (const s of words) { if (!s.textContent.trim()) continue; const b = s.getBoundingClientRect(); sx.fillText(s.textContent, b.left - r.left + pad, b.top - r.top + b.height / 2 + pad); }
+      sx.textBaseline = 'middle'; sx.fillStyle = sx.strokeStyle = '#fff'; sx.lineWidth = o.weight * fs; sx.lineJoin = 'round';
+      for (const s of words) { if (!s.textContent.trim()) continue; const b = s.getBoundingClientRect(), x = b.left - r.left + pad, y = b.top - r.top + b.height / 2 + pad; sx.fillText(s.textContent, x, y); if (o.weight) sx.strokeText(s.textContent, x, y); }
       gl.viewport(0, 0, cv.width, cv.height);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src);
       gl.uniform2f(u.res, cv.width, cv.height);
@@ -131,6 +132,7 @@ void main(){vec2 q=v*res;
     (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { layout(); draw(0); start(); });
 
     return {
+      canvas: cv,
       set(n) { const relayout = 'font' in n || 'scale' in n || 'gain' in n; Object.assign(o, n); last = -1; relayout ? layout() : apply(); draw(0); },
       frame: () => draw(last / o.fps || 0),
       destroy() { stop(); io.disconnect(); ro.disconnect(); cv.remove(); el.textContent = text; el.style.color = ''; },
