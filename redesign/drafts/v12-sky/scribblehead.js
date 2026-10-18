@@ -1,16 +1,22 @@
-/* v12 Sky lettering: Daniel's Unchained LOW scribble (smooth, 30 fps) in his "cloud" font, replacing the light painting.
+/* v12 Sky lettering: Daniel's Unchained LOW scribble (calmed, 60 fps) in Peachy or his "cloud" font, replacing the light painting.
    Keeps the LightPaint API that app.js, starfall.js and golf-page.js call (mount, play, playing, headAt), so the meteor
    that lands on each heading still "writes" it: play() wipes the scribbling word in from left to right.
-   The boil itself is ../../assets/lettering/unchained-scribble.js. ?level=mid|high and ?fps=15|10 try the other presets. */
+   The boil itself is ../../assets/lettering/unchained-scribble.js. ?level=mid|high and ?fps=15|10 try the other presets.
+   Calmer than the AE original by default: the preset's wiggle(8,1000) re-randomises the edge every frame (jittery);
+   a smaller amplitude lets it drift and morph instead. ?wig=1000 restores the original, ?gain= scales the displacement.
+   Fonts: ?font=peachy (default; fan-made "your name."-style) | cloud. */
 window.LightPaint = (() => {
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const q = new URLSearchParams(location.search);
-const LEVEL = q.get('level') || 'low', FPS = +(q.get('fps') || 30);
+const LEVEL = q.get('level') || 'low', FPS = +(q.get('fps') || 60), WIG = +(q.get('wig') || 140), GAIN = +(q.get('gain') || .85);
 const CF = window.CLOUD_FONTS || {};
+const FONT = CF[q.get('font')] ? q.get('font') : CF.peachy ? 'peachy' : 'cloud';
+const WEIGHT = { peachy: [.004, .008], cloud: [.016, .022] }[FONT] || [0, 0];   // extra stroke [h1, h2] in em
+document.documentElement.dataset.font = FONT;
 let ready = Promise.resolve();
-if (CF.cloud) {
-  const s = atob(CF.cloud), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i);
-  try { const ff = new FontFace('cloud', u.buffer); document.fonts.add(ff); ready = ff.load().catch(() => {}); } catch (e) {}
+if (CF[FONT]) {
+  const s = atob(CF[FONT]), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i);
+  try { const ff = new FontFace('sh-' + FONT, u.buffer); document.fonts.add(ff); ready = ff.load().catch(() => {}); } catch (e) {}
 }
 const items = new Map();
 
@@ -19,7 +25,7 @@ function mount(el) {
   const it = { el, fx: null, shown: false };
   items.set(el, it);
   ready.then(() => document.fonts.ready).then(() => {
-    it.fx = UnchainedScribble.mount(el, { level: LEVEL, fps: FPS, color: '#fff3e8', weight: el.tagName === 'H1' ? .016 : .022 });
+    it.fx = UnchainedScribble.mount(el, { level: LEVEL, fps: FPS, wiggle: WIG, gain: GAIN, color: '#fff3e8', weight: WEIGHT[el.tagName === 'H1' ? 0 : 1] });
     it.fx.canvas.classList.add('sh-canvas');
     if (reduce || it.shown) show(it, 0);
   });

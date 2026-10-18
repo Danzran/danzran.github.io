@@ -107,3 +107,7 @@ html[data-font="modak"] .lp-h{line-height:.95}
 .hero .fig img{visibility:inherit}
 @media (prefers-reduced-motion:reduce){.sh-canvas{transition:none}}
 @media (max-width:820px){.hero h1.lp-h{white-space:normal;font-size:clamp(64px,19vw,110px);line-height:1.05}}
+/* v12c: font switch (scribblehead.js sets html[data-font]); Peachy has capitals, so no forced lowercase */
+html[data-font="cloud"] .lp-h{font-family:"sh-cloud",Georgia,serif}
+html[data-font="peachy"] .lp-h{font-family:"sh-peachy",Georgia,serif;text-transform:none;letter-spacing:0;line-height:1.2}
+html[data-font="peachy"] .hero h1.lp-h{font-size:clamp(76px,10vw,172px)}
