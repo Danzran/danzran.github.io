@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lettering Lab · v11</title>
+<link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>v11 lettering lab</h1>
+      <p>Eight typeface and animated-scribble pairs to choose from, on a live night-to-dusk sky. None of them use the noise-displaced outline or drips. Each effect is a reusable module in <code>redesign/assets/lettering/</code>.</p>
+    </div>
+    <div class="controls">
+      <button type="button" id="replay-all">Replay all</button>
+      <label class="toggle"><input type="checkbox" id="loop"> Loop</label>
+    </div>
+  </header>
+  <main class="grid" id="grid"></main>
+  <footer>
+    Fonts (all SIL Open Font License 1.1): Shippori Mincho B1, Mochiy Pop One, Kaushan Script, DM Serif Display, Shrikhand (Google Fonts),
+    EMS Allure, EMS Nixish (single-line SVG fonts from the Inkscape Hershey Text extension), Relief SingleLine.
+    Textures: Codex (gpt-5.6-terra), see PROMPTS.md. URL options: <code>?only=3</code> shows one tile, <code>?loop=1</code> starts looping.
+  </footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script src="../../assets/fonts/shippori-mincho-font.js"></script>
+<script src="../../assets/fonts/mochiy-pop-font.js"></script>
+<script src="../../assets/fonts/kaushan-script-font.js"></script>
+<script src="../../assets/fonts/dm-serif-display-font.js"></script>
+<script src="../../assets/fonts/shrikhand-font.js"></script>
+<script src="../../assets/fonts/ems-allure-font.js"></script>
+<script src="../../assets/fonts/ems-nixish-font.js"></script>
+<script src="../../assets/fonts/relief-singleline-font.js"></script>
+<script src="../../assets/lettering/core.js"></script>
+<script src="../../assets/lettering/light-paint.js"></script>
+<script src="../../assets/lettering/pencil-scribble.js"></script>
+<script src="../../assets/lettering/ink-brush.js"></script>
+<script src="../../assets/lettering/sketch-pass.js"></script>
+<script src="../../assets/lettering/red-cord.js"></script>
+<script src="../../assets/lettering/constellation.js"></script>
+<script src="../../assets/lettering/chalk-pastel.js"></script>
+<script src="../../assets/lettering/neon-write.js"></script>
+<script src="sky.js"></script>
+<script src="lab.js"></script>
+</body>
+</html>
