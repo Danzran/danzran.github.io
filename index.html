@@ -1,54 +1,71 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- generated from redesign/drafts/v9-night/index.html by redesign/tools/promote_v9.py; edit the draft, not this file -->
-<script>window.V9_BASE = 'redesign/drafts/v9-night/';</script>
+<!-- generated from redesign/drafts/v12-sky/index.html by redesign/tools/promote.py; edit the draft, not this file -->
+<script>window.V9_BASE = 'redesign/drafts/v12-sky/';</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Daniel Azran — Draft v9</title>
+<title>Daniel Azran</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&family=Patrick+Hand&family=Gochi+Hand&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="redesign/drafts/v9-night/style.css">
-<link rel="stylesheet" href="redesign/drafts/v9-night/experience.css">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="redesign/drafts/v12-sky/style.css">
+<link rel="stylesheet" href="redesign/drafts/v12-sky/experience.css">
+<link rel="stylesheet" href="redesign/drafts/v12-sky/starfall.css">
+<link rel="stylesheet" href="redesign/drafts/v12-sky/skyshader.css">
+<script>/* clouds toggle before first paint: ?clouds=1 (or the on-page switch, remembered per tab) */
+(() => { let on = /[?&]clouds=1\b/.test(location.search); if (!/[?&]clouds=/.test(location.search)) { try { on = sessionStorage.getItem("sf-clouds") === "1"; } catch (e) {} } document.documentElement.classList.toggle("clouds", on); })();</script>
 </head>
 <body>
-<!-- fixed layers: sky + clouds behind, the river above them, content scrolls on top -->
+<!-- fixed layers: the living WebGL sky (sky.js) behind everything, meteors + sparkles above it (starfall.js); pointer-events: none -->
 <canvas id="sky" aria-hidden="true"></canvas>
-<canvas id="river" aria-hidden="true"></canvas>
+<canvas id="fx" aria-hidden="true"></canvas>
 
 <nav class="nav"><a class="mark" href="#top">DA</a><span class="sp"></span><a href="#now">Now</a><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
 
 <main id="top">
   <section class="hero" id="hero">
     <div class="hero-copy">
-      <h1 class="brush" data-brush>Daniel Azran</h1>
-      <p class="role">ENGINEER / ML / VIDEO EDITOR</p>
-      <a class="pill" href="#work">follow the water ↓</a>
+      <h1 class="lp-h" data-lp><span class="ln">Daniel</span> <span class="ln">Azran</span></h1>
+      <p class="role">FULL-STACK ENGINEER · ML &amp; DATA</p>
+      <a class="pill" href="#now">follow the falling stars ↓</a>
+      <button class="egg-hint" id="eggHint" type="button">♪ connect the note in the stars</button>
     </div>
-    <div class="fig orbit" id="fig">
-      <img src="redesign/drafts/v9-night/assets/orbit/yaw-m60.webp" alt="" data-yaw="-60"><img src="redesign/drafts/v9-night/assets/orbit/yaw-m40.webp" alt="" data-yaw="-40"><img src="redesign/drafts/v9-night/assets/orbit/yaw-m20.webp" alt="" data-yaw="-20"><img src="redesign/drafts/v9-night/assets/orbit/yaw-000.webp" alt="Daniel doing a handstand" data-yaw="000"><img src="redesign/drafts/v9-night/assets/orbit/yaw-p20.webp" alt="" data-yaw="+20"><img src="redesign/drafts/v9-night/assets/orbit/yaw-p40.webp" alt="" data-yaw="+40"><img src="redesign/drafts/v9-night/assets/orbit/yaw-p60.webp" alt="" data-yaw="+60">
+    <div class="fig" id="fig"><img src="redesign/drafts/v12-sky/assets/orbit/yaw-000.webp" alt="Daniel doing a handstand" class="on"></div>
+    <!-- sky-chart annotations: real facts, hand-lettered beside the figure (positions set in starfall.js) -->
+    <svg class="chart-lines" id="chartLines" aria-hidden="true"></svg>
+    <ul class="chart" id="chart" aria-label="A few facts">
+      <li data-at="feet"><i>✦ I</i>addicted to learning new <br>things and real progress</li>
+      <li data-at="hip"><i>✦ II</i>machine learning <br>&amp; data science</li>
+      <li data-at="sky"><i>✦ III</i>happiest putting the <br>puzzle pieces together</li>
+      <li data-at="head"><i>✦ IV</i>tools I've picked up, <br>or built from scratch</li>
+      <li data-at="hands"><i>✦ V</i>now: 5,000+ calls a day, <br>every one AI-analysed</li>
+    </ul>
+    <!-- the hidden constellation: seven stars in the shape of a note. Click them in order. -->
+    <div class="constel" id="constel">
+      <img class="note-glow" src="redesign/drafts/v12-sky/assets/sf/note-glow.webp" alt="" aria-hidden="true">
+      <svg class="constel-lines" aria-hidden="true"></svg>
     </div>
-    <canvas id="ribbonFront" aria-hidden="true"></canvas>
+    <p class="np" id="np" aria-live="polite"></p>
   </section>
 
   <section class="sec now" id="now">
-    <h2 class="brush" data-brush data-anchor="L">Now</h2>
-    <p class="now-lead">Currently at <b>Safe Ship Moving Services</b>.</p>
+    <h2 class="lp-h" data-lp data-anchor="L">Now</h2>
+    <p class="now-lead">At <b>Safe Ship Moving Services</b>, I build the pipeline that ingests the company's phone calls and runs AI analysis on every one.</p>
     <div class="now-save card" data-anchor="R">
-      <div class="now-num"><b>−$6k</b><span>per month on MongoDB</span></div>
-      <div class="now-num"><b>$70k+</b><span>saved per year</span></div>
-      <p>Optimized our MongoDB usage and cut the bill nearly in half.</p>
+      <div class="now-num"><b>5,000+</b><span>calls ingested every day</span></div>
+      <div class="now-num"><b>100%</b><span>analysed by AI</span></div>
+      <p>Every call lands in one pipeline and gets analysed automatically, every day, at that volume.</p>
     </div>
     <div class="row3">
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>Getting the company’s calls into one pipeline.</p></article>
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI call analysis</h3><p>The infrastructure that analyses those calls.</p></article>
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-db" aria-hidden="true"></canvas><h3>MongoDB cost cut</h3><p>Nearly half the bill: about $6k less a month.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>5,000+ calls a day flow into one pipeline.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI call analysis</h3><p>AI analysis runs on every single call.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-db" aria-hidden="true"></canvas><h3>Leaner database</h3><p>Reworked our MongoDB usage and cut its cost nearly in half.</p></article>
     </div>
   </section>
 
   <section class="sec work" id="work">
-    <h2 class="brush" data-brush data-anchor="L">Selected work</h2>
+    <h2 class="lp-h" data-lp data-anchor="L">Selected work</h2>
     <article class="card golf-card" data-anchor="R">
       <div class="golfvis"><canvas id="golf" aria-label="My golf swing with live pose analysis"></canvas></div>
       <div class="golf-copy">
@@ -62,7 +79,7 @@
           <div><b data-speed></b><span>hand speed (est.)</span></div>
           <div class="live"><span data-live></span></div>
         </div>
-        <a class="pill case" href="redesign/drafts/v9-night/golf.html">read the case study →</a>
+        <a class="pill case" href="redesign/drafts/v12-sky/golf.html">read the case study →</a>
       </div>
     </article>
     <div class="row3">
@@ -77,8 +94,7 @@
     <p class="more">also: <a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></p>  </section>
 
   <section class="sec exp" id="experience">
-    <h2 class="brush" data-brush data-anchor="R">Experience</h2>
-    <canvas id="vtBg" aria-hidden="true"></canvas>
+    <h2 class="lp-h" data-lp data-anchor="R">Experience</h2>
     <div class="vt" id="vt">
       <div class="vt-spine" aria-hidden="true"><i class="vt-fill"></i></div>
       <ol class="vt-list">
@@ -88,15 +104,15 @@
             <p class="vt-year">Now<small>current job</small></p>
             <p class="vt-org">Safe Ship Moving Services</p>
             <ul class="vt-pts">
-            <li>Built the pipeline that ingests the company’s calls.</li>
-            <li>Built the AI call-analysis infrastructure on top of it.</li>
-            <li>Optimized our MongoDB usage and cut the bill nearly in half: about $6k less per month, over $70k a year.</li>
+            <li>Built the pipeline that ingests 5,000+ of the company’s calls every day.</li>
+            <li>Built the AI analysis that runs on every one of those calls.</li>
+            <li>Optimized our MongoDB usage, cutting its cost nearly in half.</li>
             </ul>
-            <p class="vt-tags"><span>MongoDB</span><span>AI</span><span>Data pipelines</span></p>
+            <p class="vt-tags"><span>Data pipelines</span><span>AI</span><span>MongoDB</span></p>
           </div>
           <article class="card vt-card">
             <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/ssm/plate-768.webp" alt="" data-viz="ssm"></div>
-            <div class="vt-copy"><span class="tag">now</span><h3>Safe Ship Moving Services</h3><p>Call ingestion, AI call analysis, and a MongoDB bill cut nearly in half.</p></div>
+            <div class="vt-copy"><span class="tag">now</span><h3>Safe Ship Moving Services</h3><p>5,000+ calls a day, every one ingested and AI-analysed.</p></div>
           </article>
         </li>
         <li class="vt-item" data-theme="ext">
@@ -172,52 +188,58 @@
   </section>
 
   <section class="sec about" id="about">
-    <div class="card about-card" data-anchor="R">
-      <h2 class="brush" data-brush>About</h2>
-      <p>I'm a full-stack engineer focused on machine learning and data science, but what I really enjoy is solving problems — with tools I've picked up or ones built from scratch.</p>
-      <button class="pill" id="song" aria-pressed="false">♪ play my favorite song</button>
-      <audio id="audio" src="tgrave.mp3" preload="none"></audio>
+    <h2 class="lp-h" data-lp data-anchor="L">About</h2>
+    <div class="about-grid">
+      <div class="card about-card about-main">
+        <p class="about-lead">I'm a full-stack engineer addicted to learning new things and real progress. My focus has been machine learning and data science, but what I really enjoy is solving problems.</p>
+        <p>Whether it's with tools I've picked up or ones built from scratch, nothing beats putting the puzzle pieces together. Right now that means <b>Safe Ship Moving Services</b>, where I build the system that ingests more than 5,000 calls a day and runs AI analysis on every one.</p>
+        <blockquote class="quote">“What the consumer sees is just as important as behind the scenes.”<cite>— six years as a video editor, 2014–2020</cite></blockquote>
+      </div>
+      <div class="card about-card about-facts">
+        <dl class="facts">
+          <div><dt>Education</dt><dd>B.S. Computer Science, University of Central Florida · 3.5 GPA</dd></div>
+          <div><dt>Coursework</dt><dd class="chips"><span>Data Structures &amp; Algorithms</span><span>Computer Organization</span><span>Machine Learning</span><span>Artificial Intelligence</span><span>Robot Vision</span><span>Object-Oriented Programming</span><span>Statistics</span></dd></div>
+          <div><dt>Languages</dt><dd>Hebrew</dd></div>
+          <div><dt>Skills</dt><dd class="chips"><span>Java</span><span>Dart</span><span>Python</span><span>Rust</span><span>JavaScript</span><span>React</span><span>Node</span><span>R</span><span>C/C++</span><span>Flutter</span><span>Firebase</span><span>AWS</span><span>MongoDB</span></dd></div>
+        </dl>
+        <p class="hint">p.s. my favourite song is hidden in the music note in the hero sky. Tap its glowing stars in order.</p>
+      </div>
     </div>
+    <audio id="audio" src="tgrave.mp3" preload="none"></audio>
   </section>
 
   <footer class="sec contact" id="contact">
-    <h2 class="brush big" data-brush data-anchor="L">Say hello</h2>
+    <h2 class="lp-h big" data-lp data-anchor="L">Say hello</h2>
     <a class="pill solid" href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">let's talk →</a>
     <div class="links"><a href="https://github.com/Danzran" target="_blank" rel="noopener">GitHub</a><a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">LinkedIn</a><a href="DanielAzranResume.pdf" target="_blank">Resume</a></div>
     <div class="pool" id="pool" data-anchor="C"></div>
-    <p class="legal">© 2026 Daniel Azran · draft v9 · night</p>
+    <p class="legal">© 2026 Daniel Azran · v12 · sky</p>
   </footer>
 </main>
 
+<button class="toggle" id="cloudToggle" aria-pressed="false" title="Moonlit cloud cards on/off"><span class="tg-ic" aria-hidden="true"></span>clouds</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
-<script src="redesign/assets/fonts/brush-font.js"></script>
+<script src="redesign/assets/fonts/cloud-rubik-bubbles-font.js"></script>
+<script src="redesign/assets/fonts/cloud-cherry-bomb-one-font.js"></script>
+<script src="redesign/assets/fonts/cloud-sniglet-font.js"></script>
+<script src="redesign/assets/fonts/cloud-modak-font.js"></script>
+<script src="redesign/drafts/v12-sky/lightpaint.js"></script>
+<script src="redesign/drafts/v12-sky/skytex.js"></script>
+<script src="redesign/drafts/v12-sky/sky.js"></script>
 <script src="redesign/assets/golf/swing.js"></script>
 <script src="redesign/assets/golf/club.js"></script>
-<script src="redesign/drafts/v9-night/scribble.js"></script>
-<script src="redesign/drafts/v9-night/golf.js"></script>
-<script src="redesign/drafts/v9-night/water.js"></script>
-<script src="redesign/drafts/v9-night/app.js"></script>
+<script src="redesign/drafts/v12-sky/golf.js"></script>
+<script src="redesign/drafts/v12-sky/app.js"></script>
+<script>window.PV_NO_DOLLARS = true;</script>
 <script src="redesign/assets/projects/data.js"></script>
 <script src="redesign/assets/projects/projectviz.js"></script>
 <script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, (window.V9_BASE || '') + '../../assets/projects'));</script>
-<script src="redesign/drafts/v9-night/experience.js"></script>
-<script src="redesign/drafts/v9-night/labs/cursor/cursors/starcatch.js"></script>
-<script src="redesign/drafts/v9-night/labs/cursor/cursors/lightleak.js"></script>
-<script src="redesign/drafts/v9-night/labs/cursor/cursors/moonlight.js"></script>
-<script src="redesign/drafts/v9-night/labs/cursor/cursors/parallax.js"></script>
-<script src="redesign/drafts/v9-night/labs/cursor/cursors/rec.js"></script>
-<script src="redesign/drafts/v9-night/labs/cursor/cursors/spotlight.js"></script>
-<script>/* pointer: starcatch (painted stars wake near the pointer, click = shooting star) + lightleak on card hover by default.
-   ?c=moonlight | parallax | rec | spotlight | none (one at a time); the lab has all 14 */
-(() => {
-  const q = (location.search.match(/[?&]c=(\w+)/) || [])[1], pick = q ? [q] : ['starcatch', 'lightleak'];
-  const fit = { posY: .5, zoom: 1.06, scrollK: .35 };   // matches drawPlate in app.js
-  if (q === 'parallax') document.getElementById('sky').dataset.parallax = '1';
-  pick.forEach(c => { const m = window.CURSORS && CURSORS[c]; if (!m) return; if (c === 'starcatch' || c === 'moonlight') m.fit = fit; m.mount(); });
-})();</script>
+<script src="redesign/drafts/v12-sky/experience.js"></script>
+<script src="redesign/drafts/v12-sky/starfall.js"></script>
+<script src="redesign/drafts/v12-sky/clouds.js"></script>
 </body>
 </html>

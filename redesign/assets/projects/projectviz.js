@@ -552,8 +552,9 @@ window.ProjectViz = (() => {
         const x = ax + cut * pw / n - 4 * k; ctx.setLineDash([5 * k, 5 * k]); line(x, by + 10 * k, x, ay, ROSE, 2, 0); ctx.setLineDash([]);
         hand('optimized', x + 6 * k, by + 26 * k, 15, ROSE);
       }
-      if (shown > cut + 2) chip('≈ −$6k / month', ax + pw * .78, ay - ph * .62, 17, '#9a6a12', undefined, 'center');
-      if (u > .75) chip('$70k+ / year', ax + pw * .78, ay - ph * .62 + 26 * k, 16, ROSE, undefined, 'center');
+      // window.PV_NO_DOLLARS (v12+): relative savings only, no absolute company spend
+      if (shown > cut + 2) chip(window.PV_NO_DOLLARS ? 'cost nearly halved' : '≈ −$6k / month', ax + pw * .78, ay - ph * .62, 17, '#9a6a12', undefined, 'center');
+      if (u > .75 && !window.PV_NO_DOLLARS) chip('$70k+ / year', ax + pw * .78, ay - ph * .62 + 26 * k, 16, ROSE, undefined, 'center');
       const [sx, sy] = Q(.43, .89); line(sx - 30 * k, sy - 6 * k + Math.sin(t * 6) * 3 * k, sx + 30 * k, sy + 6 * k, ROSE, 2.2, 1);
       sticker(shown < cut ? 'before' : 'after');
     };
