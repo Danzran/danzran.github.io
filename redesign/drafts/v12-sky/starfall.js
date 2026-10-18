@@ -162,7 +162,7 @@ function clickStar(i) {
 const hint = document.getElementById('eggHint');
 function hintText() {
   if (!hint) return;
-  hint.textContent = solved ? (audio.paused ? '♪ play my favourite song' : '♪ pause the song') : clicked ? `♪ ${clicked} of ${NOTE.length} stars, keep going` : '♪ connect the note in the stars';
+  hint.textContent = solved ? (audio.paused ? '♪ play my favorite song' : '♪ pause the song') : clicked ? `♪ ${clicked} of ${NOTE.length} stars, keep going` : '♪ connect the note in the stars';
 }
 let demoing = false;
 if (hint) hint.addEventListener('click', () => {
@@ -181,7 +181,7 @@ function shower() {
 }
 function toggleSong(force) {
   const play = force || audio.paused;
-  if (play) { audio.play().catch(() => {}); np.innerHTML = '♪ my favourite song <span>· tap the note to pause</span>'; }
+  if (play) { audio.play().catch(() => {}); np.innerHTML = '♪ my favorite song <span>· tap the note to pause</span>'; }
   else { audio.pause(); np.innerHTML = '♪ paused <span>· tap the note to play</span>'; }
   np.classList.add('show'); constel.classList.toggle('playing', play);
 }

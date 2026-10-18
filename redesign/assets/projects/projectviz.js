@@ -531,7 +531,7 @@ window.ProjectViz = (() => {
       ctx.globalAlpha = 1;
       const a = Q(.85, .47), b = Q(.5, .5), c = [(a[0] + b[0]) / 2, a[1] - 40 * k];
       for (let i = 0; i < 3; i++) dot(...qpt(a, c, b, (t * .5 + i / 3) % 1), 3, i % 2 ? GOLD : WHITE);
-      sticker(u < .5 ? 'transcribing' : 'analysing');
+      sticker(u < .5 ? 'transcribing' : 'analyzing');
     };
 
     // MongoDB cost: the monthly bill drops to about half at the cut and stays there; the stack slims down with it

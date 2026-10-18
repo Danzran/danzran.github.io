@@ -111,3 +111,6 @@ html[data-font="modak"] .lp-h{line-height:.95}
 html[data-font="cloud"] .lp-h{font-family:"sh-cloud",Georgia,serif}
 html[data-font="peachy"] .lp-h{font-family:"sh-peachy",Georgia,serif;text-transform:none;letter-spacing:0;line-height:1.2}
 html[data-font="peachy"] .hero h1.lp-h{font-size:clamp(76px,10vw,172px)}
+/* v12d: tighter gap between first and last name; depth = a soft dusk-violet drop shadow under the glow */
+.hero h1.lp-h{word-spacing:-.32em}
+.sh-canvas{filter:drop-shadow(0 4px 3px rgba(34,22,78,.55)) drop-shadow(0 10px 18px rgba(24,16,64,.35)) drop-shadow(0 0 14px rgba(255,214,236,.35))}
