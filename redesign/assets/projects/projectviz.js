@@ -516,7 +516,7 @@ window.ProjectViz = (() => {
         ctx.fillStyle = 'rgba(34,52,94,.55)'; ctx.fillRect(px0 + 10 * k, y - 3 * k, w - 20 * k, 5 * k);
         if (r % 3 === 1 && u > .5) { const hx = px0 + 10 * k + (w - 20 * k) * .3, hw = (w - 20 * k) * .35; ctx.fillStyle = r % 2 ? 'rgba(255,217,138,.75)' : 'rgba(224,103,154,.45)'; ctx.fillRect(hx, y - 6 * k, hw, 11 * k); }
       }
-      const tags = ['summary', 'sentiment', 'topics'];
+      const tags = window.PV_SSM_AI_TAGS || ['summary', 'sentiment', 'topics'];   // v12 overrides: rubric / coaching / score
       tags.forEach((tg, i) => { const a = clamp((u - .55 - i * .08) / .1, 0, 1); if (a <= 0) return; ctx.globalAlpha = a; chip(tg, px1 + 14 * k, py0 + (i * 2 + 2) * rh, 15, [ROSE, BLUE, LAV][i]); });
       ctx.globalAlpha = 1;
       // pipeline across the sky
@@ -572,6 +572,75 @@ window.ProjectViz = (() => {
       sticker('on the road');
     };
 
+    // partner portal: the leads table fills the laptop, an invoice is drawn up on the wall and stamped, sheet rows
+    // reconcile against site rows, and the keys on the desk become API keys
+    R['ssm-portal'] = () => {
+      const cyc = 10, u = (t % cyc) / cyc;
+      // laptop: big panel = leads & calls table, rows slide in
+      const [tx0, ty0] = Q(.478, .405), [tx1, ty1] = Q(.65, .505), rows = 5, rh = (ty1 - ty0) / rows;
+      for (let r = 0; r < rows; r++) {
+        const y = ty0 + (r + .6) * rh, v = clamp(u * 7 - r * .6, 0, 1); if (!v) continue;
+        ctx.globalAlpha = v; dot(tx0 + 8 * k, y, 2.6, r % 3 === 1 ? PINK : GOLD, null);
+        ctx.fillStyle = 'rgba(34,52,94,.55)'; ctx.fillRect(tx0 + 16 * k, y - 2 * k, (tx1 - tx0 - 60 * k) * (.5 + .45 * ((r * 3) % 5) / 5), 4 * k);
+        ctx.fillStyle = 'rgba(63,95,184,.5)'; ctx.fillRect(tx1 - 36 * k, y - 2 * k, 26 * k, 4 * k);
+      }
+      ctx.globalAlpha = 1;
+      // tall panel: weekly invoices as bars
+      const [bx0, by1] = Q(.665, .59), [bx1, by0] = Q(.735, .44);
+      for (let i = 0; i < 4; i++) { const h = (by1 - by0) * (.35 + .15 * i) * ease(clamp(u * 4 - i * .4, 0, 1)), w = (bx1 - bx0) / 6, x = bx0 + i * (bx1 - bx0) / 4 + 2 * k;
+        ctx.fillStyle = i === 3 ? GOLD : SKY; ctx.beginPath(); ctx.roundRect(x, by1 - h, w, h, 2 * k); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 1.2 * k; ctx.stroke(); }
+      // invoice on the wall
+      const [ix0, iy0] = Q(.06, .09), [ix1, iy1] = Q(.27, .46);
+      ctx.fillStyle = 'rgba(255,248,226,.9)'; ctx.beginPath(); ctx.roundRect(ix0, iy0, ix1 - ix0, iy1 - iy0, 10 * k); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 1.6 * k; ctx.stroke();
+      hand('invoice', ix0 + 12 * k, iy0 + 26 * k, 17, INK);
+      for (let r = 0; r < 4; r++) { const y = iy0 + (52 + r * 22) * k, v = clamp(u * 6 - 1 - r * .5, 0, 1); if (!v) continue;
+        ctx.globalAlpha = v; mono(`week ${r + 1}`, ix0 + 12 * k, y, 10, INK); ctx.fillStyle = 'rgba(34,52,94,.45)'; ctx.fillRect(ix1 - 54 * k, y - 6 * k, 40 * k, 4 * k); }
+      ctx.globalAlpha = 1;
+      if (u > .55) { const a = clamp((u - .55) / .08, 0, 1); ctx.save(); ctx.globalAlpha = a; ctx.translate(...Q(.2, .4)); ctx.rotate(-.18);
+        ctx.strokeStyle = ROSE; ctx.lineWidth = 2.4 * k; ctx.beginPath(); ctx.roundRect(-34 * k, -16 * k, 68 * k, 26 * k, 6 * k); ctx.stroke(); hand('paid', -18 * k, 4 * k, 19, ROSE); ctx.restore(); }
+      // reconcile: sheet rows vs site rows
+      const [cx0, cy0] = Q(.33, .13), [cx1] = Q(.47, 0), gap = 20 * k;
+      hand('sheet', cx0 - 14 * k, cy0 - 8 * k, 14, INK); hand('site', cx1 - 10 * k, cy0 - 8 * k, 14, INK);
+      for (let r = 0; r < 5; r++) {
+        const y = cy0 + 10 * k + r * gap, on = clamp(u * 6 - 1.5 - r * .35, 0, 1), miss = r === 3 && u < .7;
+        dot(cx0, y, 3.4, WHITE); dot(cx1, y, 3.4, miss ? PINK : WHITE);
+        if (on) { ctx.globalAlpha = on; line(cx0 + 6 * k, y, cx1 - 6 * k, y, miss ? ROSE : BLUE, 1.6, 2); if (!miss) hand('✓', cx1 + 8 * k, y + 5 * k, 14, BLUE); ctx.globalAlpha = 1; }
+      }
+      // keys -> API key chip, dashed hop to the laptop
+      const kk = Q(.42, .8), lp = Q(.52, .66);
+      qcurve(kk, [(kk[0] + lp[0]) / 2, kk[1] - 50 * k], lp, 'rgba(255,255,255,.85)', 1.6, [5, 6]);
+      chip('api key  ••••3f9a', kk[0] - 30 * k, kk[1] + 46 * k, 14, LAV);
+      sticker(u < .55 ? 'invoicing' : 'reconciled');
+    };
+
+    // the jobs-API split: one 33k-line block on the wall breaks into 61 module tiles while pieces of the scroll
+    // travel up into the cabinet and each drawer lights with its domain
+    R['ssm-split'] = () => {
+      const cyc = 11, u = (t % cyc) / cyc, [gx0, gy0] = Q(.68, .08), [gx1, gy1] = Q(.97, .47), N = 61, cols = 8;
+      const split = ease(clamp((u - .2) / .45, 0, 1)), cw = (gx1 - gx0) / cols, chh = (gy1 - gy0) / 8;
+      for (let i = 0; i < N; i++) {
+        const c = i % cols, r = Math.floor(i / cols), tx = gx0 + c * cw + 2 * k, ty = gy0 + r * chh + 2 * k;
+        const fx = gx0 + (gx1 - gx0) * .15, fy = gy0 + (gy1 - gy0) * .2, fw = (gx1 - gx0) * .7, fh = (gy1 - gy0) * .45;
+        const x = fx + (c / cols) * fw + (tx - fx - (c / cols) * fw) * split, y = fy + (r / 8) * fh + (ty - fy - (r / 8) * fh) * split;
+        const w = (fw / cols) + (cw - 4 * k - fw / cols) * split, h = (fh / 8) + (chh - 4 * k - fh / 8) * split;
+        ctx.fillStyle = split < .02 ? 'rgba(255,248,226,.92)' : ['rgba(255,248,226,.9)', 'rgba(169,200,255,.9)', 'rgba(255,217,138,.9)', 'rgba(255,196,216,.9)'][(i * 7) % 4];
+        ctx.fillRect(x, y, w + (split < .02 ? 1 : 0), h + (split < .02 ? 1 : 0));
+        if (split > .02) { ctx.strokeStyle = INK; ctx.lineWidth = 1 * k; ctx.strokeRect(x, y, w, h); }
+      }
+      if (split < .1) { const [lx, ly] = Q(.75, .21); hand('jobs.ts', lx, ly, 18, INK); mono('33,000 lines', lx, ly + 18 * k, 11, INK); }
+      if (split > .9) chip('61 modules', ...Q(.8, .52), 16, ROSE, undefined, 'center');
+      // pieces of the scroll ride up into the drawers
+      const drawers = [[.48, .26, 'pricing'], [.555, .26, 'dispatch'], [.62, .26, 'billing'], [.48, .37, 'notes'], [.555, .37, 'schedule'], [.625, .38, 'search'], [.48, .48, 'export'], [.555, .48, 'QA'], [.625, .5, 'verify']];
+      const a = Q(.3, .56), active = Math.floor((t * .9) % drawers.length);
+      drawers.forEach(([x, y, name], i) => {
+        const p = Q(x, y), on = i === active, done = i < active;
+        if (on) { const v = (t * .9) % 1, c = [(a[0] + p[0]) / 2, Math.min(a[1], p[1]) - 60 * k]; dot(...qpt(a, c, p, v), 3.6, GOLD); }
+        dot(p[0], p[1], on ? 4.6 : 3, on ? GOLD : done ? WHITE : 'rgba(255,255,255,.4)', on ? INK : null);
+        if (on) chip(name, p[0] + 10 * k, p[1] - 10 * k, 14, BLUE);
+      });
+      sticker(split < .5 ? 'one file' : 'split');
+    };
+
     function frame() {
       n = 0; ctx.clearRect(0, 0, W, H);
       if (plate.complete && plate.naturalWidth) ctx.drawImage(plate, ox, oy, dw, dh);
@@ -589,5 +658,5 @@ window.ProjectViz = (() => {
     else { new IntersectionObserver(([e]) => playing = e.isIntersecting).observe(canvas); raf = requestAnimationFrame(loop); }
     return { destroy: () => cancelAnimationFrame(raf), get t() { return t; } };
   }
-  return { mount, ids: ['flow', 'digits', 'house', 'compiler', 'sync', 'it', 'lock', 'extropian', 'ssm', 'ssm-calls', 'ssm-ai', 'ssm-db'] };
+  return { mount, ids: ['flow', 'digits', 'house', 'compiler', 'sync', 'it', 'lock', 'extropian', 'ssm', 'ssm-calls', 'ssm-ai', 'ssm-db', 'ssm-portal', 'ssm-split'] };
 })();

@@ -37,7 +37,7 @@
       <li data-at="hip">machine learning <br>&amp; data science</li>
       <li data-at="sky">happiest putting the <br>puzzle pieces together</li>
       <li data-at="head">tools I've picked up, <br>or built from scratch</li>
-      <li data-at="hands">now: 5,000+ calls a day, <br>every one AI-analyzed</li>
+      <li data-at="hands">now: building AI tools on <br>40,000+ calls a day</li>
     </ul>
     <!-- the hidden constellation: seven stars in the shape of a note. Click them in order. -->
     <div class="constel" id="constel">
@@ -49,11 +49,13 @@
 
   <section class="sec now" id="now">
     <h2 class="lp-h" data-lp data-anchor="L">Now</h2>
-    <p class="now-lead">At <b>Safe Ship Moving Services</b>, I build the pipeline that ingests more than 5,000 of the company's phone calls a day and runs AI analysis on every one.</p>
-    <div class="row3">
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>5,000+ calls a day flow into one pipeline.</p></article>
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI call analysis</h3><p>AI analysis runs on every single call.</p></article>
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-db" aria-hidden="true"></canvas><h3>Leaner database</h3><p>Reworked our MongoDB usage and cut its cost nearly in half.</p></article>
+    <p class="now-lead">At <b>Safe Ship Moving Services</b>, I build the systems behind the phones: a pipeline that captures more than 40,000 calls a day, makes the recordings searchable, and puts AI review on every sales call.</p>
+    <p class="now-sub">Along the way I cut our MongoDB bill nearly in half.</p>
+    <div class="row2 now-grid">
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>40,000+ calls a day archived. Recordings transcribed and searchable, with 99.8% coverage.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI compliance &amp; coaching</h3><p>Scores sales calls against a versioned rubric and turns the misses into coaching.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-portal" aria-hidden="true"></canvas><h3>Partner portal</h3><p>Built full-stack in five weeks: invoicing, API keys, and reconciliation that replaced shared spreadsheets.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-split" aria-hidden="true"></canvas><h3>A 33,000-line file, untangled</h3><p>Split the core jobs API into 61 focused modules over 18 staged, reviewable changes.</p></article>
     </div>
   </section>
 
@@ -96,15 +98,17 @@
             <p class="vt-year">Now<small>current job</small></p>
             <p class="vt-org">Safe Ship Moving Services</p>
             <ul class="vt-pts">
-            <li>Built the pipeline that ingests 5,000+ of the company’s calls every day.</li>
-            <li>Built the AI analysis that runs on every one of those calls.</li>
-            <li>Optimized our MongoDB usage, cutting its cost nearly in half.</li>
+            <li>Built the pipeline that captures 40,000+ calls a day and makes the recordings searchable.</li>
+            <li>Built AI compliance scoring and sales coaching on top of those calls.</li>
+            <li>Built the partner portal full-stack: invoicing, API keys, reconciliation.</li>
+            <li>Split a 33,000-line API file into 61 focused modules.</li>
+            <li>Cut our MongoDB costs nearly in half.</li>
             </ul>
-            <p class="vt-tags"><span>Data pipelines</span><span>AI</span><span>MongoDB</span></p>
+            <p class="vt-tags"><span>TypeScript</span><span>Python</span><span>React</span><span>MongoDB</span><span>RingCentral</span><span>AssemblyAI</span><span>LLMs</span></p>
           </div>
           <article class="card vt-card">
             <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/ssm/plate-768.webp" alt="" data-viz="ssm"></div>
-            <div class="vt-copy"><h3>Safe Ship Moving Services</h3><p>5,000+ calls a day, every one ingested and AI-analyzed.</p></div>
+            <div class="vt-copy"><h3>Safe Ship Moving Services</h3><p>40,000+ calls a day, AI call review, a partner portal, and a database bill cut nearly in half.</p></div>
           </article>
         </li>
         <li class="vt-item" data-theme="ext">
@@ -184,7 +188,7 @@
     <div class="about-grid">
       <div class="card about-card about-main">
         <p class="about-lead">I'm a full-stack engineer addicted to learning new things and real progress. My focus has been machine learning and data science, but what I really enjoy is solving problems.</p>
-        <p>Whether it's with tools I've picked up or ones built from scratch, nothing beats putting the puzzle pieces together. Right now that means <b>Safe Ship Moving Services</b>, where I build the system that ingests more than 5,000 calls a day and runs AI analysis on every one.</p>
+        <p>Whether it's with tools I've picked up or ones built from scratch, nothing beats putting the puzzle pieces together. Right now that means <b>Safe Ship Moving Services</b>, where I build the system that captures more than 40,000 calls a day and the AI that reviews them.</p>
         <blockquote class="quote">“What the consumer sees is just as important as behind the scenes.”<cite>— six years as a video editor, 2014–2020</cite></blockquote>
       </div>
       <div class="card about-card about-facts">
@@ -224,7 +228,7 @@
 <script src="../../assets/golf/club.js"></script>
 <script src="golf.js"></script>
 <script src="app.js"></script>
-<script>window.PV_NO_DOLLARS = true;</script>
+<script>window.PV_NO_DOLLARS = true; window.PV_SSM_AI_TAGS = ['rubric check', 'coaching', 'score'];</script>
 <script src="../../assets/projects/data.js"></script>
 <script src="../../assets/projects/projectviz.js"></script>
 <script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, (window.V9_BASE || '') + '../../assets/projects'));</script>
