@@ -19,11 +19,17 @@ if (CF[FONT]) {
   try { const ff = new FontFace('sh-' + FONT, u.buffer); document.fonts.add(ff); ready = ff.load().catch(() => {}); } catch (e) {}
 }
 const items = new Map();
+/* the meteor lander normally reveals each heading; if it has not by the time the heading is well on screen, reveal it anyway */
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return; io.unobserve(e.target); const it = items.get(e.target);
+  setTimeout(() => { if (it && !it.shown) show(it, 0); }, 900);
+}), { threshold: .6 }) : null;
 
 function mount(el) {
   el.classList.add('sh');
   const it = { el, fx: null, shown: false };
   items.set(el, it);
+  if (io) io.observe(el);
   ready.then(() => document.fonts.ready).then(() => {
     it.fx = UnchainedScribble.mount(el, { level: LEVEL, fps: FPS, wiggle: WIG, gain: GAIN, color: '#fff3e8', weight: WEIGHT[el.tagName === 'H1' ? 0 : 1] });
     it.fx.canvas.classList.add('sh-canvas');

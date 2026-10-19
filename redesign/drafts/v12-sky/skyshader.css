@@ -114,3 +114,70 @@ html[data-font="peachy"] .hero h1.lp-h{font-size:clamp(76px,10vw,172px)}
 /* v12d: tighter gap between first and last name; depth = a soft dusk-violet drop shadow under the glow */
 .hero h1.lp-h{word-spacing:-.32em}
 .sh-canvas{filter:drop-shadow(0 4px 3px rgba(34,22,78,.55)) drop-shadow(0 10px 18px rgba(24,16,64,.35)) drop-shadow(0 0 14px rgba(255,214,236,.35))}
+/* v12e mobile: the constellation's note-glow image spilled past the right edge, which widened the layout viewport
+   to ~620px on phones (the whole page rendered zoomed out). Clip horizontal overflow at the hero and the root. */
+html,body{overflow-x:clip}
+.hero{overflow-x:clip}
+
+/* ---------- v12f polish (impeccable pass): remove template tells, theme browser surfaces, adapt for phones ---------- */
+/* browser surfaces carry the palette */
+::selection{background:#ffe7a8;color:#0b1a44}
+html{scrollbar-color:rgba(255,217,138,.45) #0b1a44;caret-color:#ffd98a}
+:focus-visible{outline:2px solid #ffd98a;outline-offset:3px;border-radius:6px}
+a{text-underline-offset:.22em;text-decoration-thickness:1px}
+/* the "clouds" switch was a review control, not a visitor feature (?clouds=1 still works) */
+.toggle{display:none!important}
+/* golf stats: measurements, not nested cards. A ruled row instead of four boxed tiles */
+.stats{gap:14px 28px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,233,176,.22)}
+.stats div,html.night .stats div,html.clouds .stats div{border:0;border-radius:0;padding:0;background:none}
+.stats .live,html.night .stats .live{background:none;padding-top:12px;border-top:1px solid rgba(255,233,176,.14);color:#c9d3ec;font-size:13px;letter-spacing:.02em}
+.stats span{display:block;margin-top:4px}
+/* About quote: no colored rule; it hangs on its own opening mark */
+.quote{border-left:0;padding:6px 0 6px 0;text-indent:-.42em}
+.quote cite{text-indent:0}
+.hint::before{content:none}
+/* the song controls get a drawn note, not a text glyph */
+.egg-hint,.np{--note:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 12.2V3.6l7-1.6v8.4' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cellipse cx='4.2' cy='12.4' rx='2.2' ry='1.7' fill='%23000'/%3E%3Cellipse cx='11.2' cy='10.6' rx='2.2' ry='1.7' fill='%23000'/%3E%3C/svg%3E")}
+.egg-hint{display:inline-flex;align-items:center;gap:8px;min-height:40px}
+.egg-hint::before,.np::before{content:"";flex:none;width:15px;height:15px;background:currentColor;-webkit-mask:var(--note) center/contain no-repeat;mask:var(--note) center/contain no-repeat}
+.np::before{display:inline-block;vertical-align:-2px;margin-right:6px}
+.np[data-side="l"]::before{display:none}
+.now-lead{max-width:34ch}
+
+@media (max-width:820px){
+  /* nav: every section stays reachable; links scroll sideways under a scrim instead of three of them vanishing */
+  .nav{gap:8px;padding:10px var(--gutter) 18px;background:linear-gradient(rgba(9,14,44,.86),rgba(9,14,44,.55) 70%,transparent)}
+  .nav .sp{display:none}
+  .nav .mark{flex:none;width:40px;height:40px;font-size:15px}
+  .nav a:not(.mark),.nav a:not(.mark):not([href="#work"]):not([href="#contact"]){display:inline-flex;align-items:center;min-height:40px;padding:0 12px;font-size:14px;letter-spacing:.06em;white-space:nowrap}
+  .nav{overflow-x:auto;scrollbar-width:none;-webkit-mask:linear-gradient(90deg,#000 88%,transparent);mask:linear-gradient(90deg,#000 88%,transparent)}
+  .nav::-webkit-scrollbar{display:none}
+  /* timeline: readable as you scroll a stacked column; focus is a gentle lift, never blur */
+  .vt-side,.vt-item:nth-child(even) .vt-side{opacity:calc(.55 + .45 * var(--f));filter:none}
+  .vt-vis,.vt-copy{filter:brightness(calc(.82 + .18 * var(--f)))}
+  .vt-year{font-size:clamp(44px,13vw,64px)}
+  .now-lead{font-size:20px;line-height:1.45}
+  .sec h2.lp-h{font-size:clamp(46px,14vw,64px);margin-bottom:3vh}
+  .egg-hint{margin:12px 0 0}
+}
+@media (pointer:coarse){ .pill{min-height:44px;display:inline-flex;align-items:center} }
+@media (max-width:820px){
+  .vt-year small{display:block;margin:6px 0 0;line-height:1.3}
+}
+/* timeline copy sits on the open night sky (moon, Milky Way): a soft offset shadow keeps it legible */
+.vt-side{text-shadow:0 1px 2px rgba(6,10,36,.7),0 2px 14px rgba(6,10,36,.6)}
+/* cards: a hairline and a real (offset) shadow, no dashed inner frame */
+html.night .card{border-width:1px;border-color:rgba(255,233,176,.24);box-shadow:0 2px 4px rgba(4,8,30,.22),0 22px 44px -18px rgba(4,8,30,.6)}
+html.night .card::after{content:none}
+/* timeline focus reads through border brightness and lift, not a gold halo */
+html.night .vt-card{box-shadow:0 2px 4px rgba(4,8,30,.25),0 calc(14px + var(--f) * 14px) 44px -16px rgba(4,8,30,.65)}
+.vt-year{text-shadow:0 2px 3px rgba(6,10,36,.5)}
+/* tablet: two columns, so one illustration never fills the whole screen; a 3-card row ends on a full-width card */
+@media (min-width:600px) and (max-width:820px){
+  .row3,.row2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .row3 > :last-child:nth-child(odd){grid-column:1/-1}
+}
+/* cards no longer bob forever; the sky, the meteors and the scribble are the page's motion */
+.proj{animation:none}
+.role span{white-space:nowrap}
+@media (max-width:820px){ .role .sep{display:none} .role span:not(.sep){display:block} }

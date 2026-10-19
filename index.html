@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="night">
 <head>
 <!-- generated from redesign/drafts/v12-sky/index.html by redesign/tools/promote.py; edit the draft, not this file -->
 <script>window.V9_BASE = 'redesign/drafts/v12-sky/';</script>
@@ -27,19 +27,19 @@
   <section class="hero" id="hero">
     <div class="hero-copy">
       <h1 class="lp-h" data-lp><span class="ln">Daniel</span> <span class="ln">Azran</span></h1>
-      <p class="role">FULL-STACK ENGINEER · ML &amp; DATA</p>
+      <p class="role"><span>FULL-STACK ENGINEER</span><span class="sep" aria-hidden="true"> · </span><span>ML &amp; DATA</span></p>
       <a class="pill" href="#now">follow the falling stars ↓</a>
-      <button class="egg-hint" id="eggHint" type="button">♪ connect the note in the stars</button>
+      <button class="egg-hint" id="eggHint" type="button">connect the note in the stars</button>
     </div>
     <div class="fig" id="fig"><img src="redesign/drafts/v12-sky/assets/orbit/yaw-000.webp" alt="Daniel doing a handstand"></div>
     <!-- sky-chart annotations: real facts, hand-lettered beside the figure (positions set in starfall.js) -->
     <svg class="chart-lines" id="chartLines" aria-hidden="true"></svg>
     <ul class="chart" id="chart" aria-label="A few facts">
-      <li data-at="feet"><i>✦ I</i>addicted to learning new <br>things and real progress</li>
-      <li data-at="hip"><i>✦ II</i>machine learning <br>&amp; data science</li>
-      <li data-at="sky"><i>✦ III</i>happiest putting the <br>puzzle pieces together</li>
-      <li data-at="head"><i>✦ IV</i>tools I've picked up, <br>or built from scratch</li>
-      <li data-at="hands"><i>✦ V</i>now: 5,000+ calls a day, <br>every one AI-analyzed</li>
+      <li data-at="feet">addicted to learning new <br>things and real progress</li>
+      <li data-at="hip">machine learning <br>&amp; data science</li>
+      <li data-at="sky">happiest putting the <br>puzzle pieces together</li>
+      <li data-at="head">tools I've picked up, <br>or built from scratch</li>
+      <li data-at="hands">now: 5,000+ calls a day, <br>every one AI-analyzed</li>
     </ul>
     <!-- the hidden constellation: seven stars in the shape of a note. Click them in order. -->
     <div class="constel" id="constel">
@@ -51,12 +51,7 @@
 
   <section class="sec now" id="now">
     <h2 class="lp-h" data-lp data-anchor="L">Now</h2>
-    <p class="now-lead">At <b>Safe Ship Moving Services</b>, I build the pipeline that ingests the company's phone calls and runs AI analysis on every one.</p>
-    <div class="now-save card" data-anchor="R">
-      <div class="now-num"><b>5,000+</b><span>calls ingested every day</span></div>
-      <div class="now-num"><b>100%</b><span>analyzed by AI</span></div>
-      <p>Every call lands in one pipeline and gets analyzed automatically, every day, at that volume.</p>
-    </div>
+    <p class="now-lead">At <b>Safe Ship Moving Services</b>, I build the pipeline that ingests more than 5,000 of the company's phone calls a day and runs AI analysis on every one.</p>
     <div class="row3">
       <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>5,000+ calls a day flow into one pipeline.</p></article>
       <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI call analysis</h3><p>AI analysis runs on every single call.</p></article>
@@ -69,7 +64,6 @@
     <article class="card golf-card" data-anchor="R">
       <div class="golfvis"><canvas id="golf" aria-label="My golf swing with live pose analysis"></canvas></div>
       <div class="golf-copy">
-        <span class="tag">featured · computer vision</span>
         <h3>Golf Swing Analyzer</h3>
         <p>Real-time swing analysis from wearable sensors (Flutter, Dart, Firebase, Bluetooth). This is my own swing run through MediaPipe pose: joint angles, hand path, tempo.</p>
         <div class="stats" id="golfStats">
@@ -112,7 +106,7 @@
           </div>
           <article class="card vt-card">
             <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/ssm/plate-768.webp" alt="" data-viz="ssm"></div>
-            <div class="vt-copy"><span class="tag">now</span><h3>Safe Ship Moving Services</h3><p>5,000+ calls a day, every one ingested and AI-analyzed.</p></div>
+            <div class="vt-copy"><h3>Safe Ship Moving Services</h3><p>5,000+ calls a day, every one ingested and AI-analyzed.</p></div>
           </article>
         </li>
         <li class="vt-item" data-theme="ext">
@@ -129,7 +123,7 @@
           </div>
           <article class="card vt-card">
             <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/extropian/plate-768.webp" alt="" data-viz="extropian"></div>
-            <div class="vt-copy"><span class="tag">Sep 2024 – May 2025 · Extropian</span><h3>Backend software developer</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></div>
+            <div class="vt-copy"><h3>Backend software developer</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></div>
           </article>
         </li>
         <li class="vt-item" data-theme="lock">
@@ -146,7 +140,7 @@
           </div>
           <article class="card vt-card">
             <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/lock/plate-768.webp" alt="" data-viz="lock"></div>
-            <div class="vt-copy"><span class="tag">Aug 2022 – Dec 2023</span><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></div>
+            <div class="vt-copy"><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></div>
           </article>
         </li>
         <li class="vt-item" data-theme="it">
@@ -163,7 +157,7 @@
           </div>
           <article class="card vt-card">
             <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/it/plate-768.webp" alt="" data-viz="it"></div>
-            <div class="vt-copy"><span class="tag">Sep 2018 – now</span><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></div>
+            <div class="vt-copy"><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></div>
           </article>
         </li>
         <li class="vt-item" data-theme="edit">
@@ -180,7 +174,7 @@
           </div>
           <article class="card vt-card">
             <div class="vt-vis"><video class="vt-reel" src="redesign/assets/video/edit.mp4" poster="redesign/assets/video/edit-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="My video editing reel"></video></div>
-            <div class="vt-copy"><span class="tag">2014–2020</span><h3>Video editor</h3><p>COD edits, compositing, camera tracking. Led a team of 4 editors.</p></div>
+            <div class="vt-copy"><h3>Video editor</h3><p>COD edits, compositing, camera tracking. Led a team of 4 editors.</p></div>
           </article>
         </li>
       </ol>
@@ -213,7 +207,7 @@
     <a class="pill solid" href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">let's talk →</a>
     <div class="links"><a href="https://github.com/Danzran" target="_blank" rel="noopener">GitHub</a><a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">LinkedIn</a><a href="DanielAzranResume.pdf" target="_blank">Resume</a></div>
     <div class="pool" id="pool" data-anchor="C"></div>
-    <p class="legal">© 2026 Daniel Azran · v12 · sky</p>
+    <p class="legal">© 2026 Daniel Azran</p>
   </footer>
 </main>
 

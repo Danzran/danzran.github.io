@@ -381,9 +381,11 @@ function frame(now) {
   }
   if (!shown) { if (g) canvas.style.visibility = 'visible'; shown = true; }
   // focus: distance of each card's centre from the viewport centre, in viewport heights
-  const ds = items.map(it => { const r = it.card.getBoundingClientRect(); return (r.top + r.height / 2 - H / 2) / H; });
+  // phone (stacked: text above card): measure the whole entry, or the text you are reading stays dimmed
+  const ds = items.map(it => { const r = (W < 820 ? it.el : it.card).getBoundingClientRect(); return (r.top + r.height / 2 - H / 2) / H; });
+  const fall = W < 820 ? .8 : .5;
   items.forEach((it, i) => {
-    const f = +(1 - smooth(Math.abs(ds[i]) / .5)).toFixed(3);
+    const f = +(1 - smooth(Math.abs(ds[i]) / fall)).toFixed(3);
     if (f !== it.f) { it.f = f; it.el.style.setProperty('--f', f); it.el.classList.toggle('is-focus', f > .6); }
   });
   const lr = list.getBoundingClientRect();

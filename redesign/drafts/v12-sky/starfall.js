@@ -162,7 +162,7 @@ function clickStar(i) {
 const hint = document.getElementById('eggHint');
 function hintText() {
   if (!hint) return;
-  hint.textContent = solved ? (audio.paused ? '♪ play my favorite song' : '♪ pause the song') : clicked ? `♪ ${clicked} of ${NOTE.length} stars, keep going` : '♪ connect the note in the stars';
+  hint.textContent = solved ? (audio.paused ? 'play my favorite song' : 'pause the song') : clicked ? `${clicked} of ${NOTE.length} stars, keep going` : 'connect the note in the stars';
 }
 let demoing = false;
 if (hint) hint.addEventListener('click', () => {
@@ -170,7 +170,7 @@ if (hint) hint.addEventListener('click', () => {
   if (demoing) return; demoing = true; constel.classList.add('demo');
   cstars.forEach((b, i) => setTimeout(() => { b.classList.add('flash'); setTimeout(() => b.classList.remove('flash'), 520); }, i * 260));
   setTimeout(() => { demoing = false; constel.classList.remove('demo'); }, NOTE.length * 260 + 600);
-  hint.textContent = '♪ tap the pulsing star, then follow the line';
+  hint.textContent = 'tap the pulsing star, then follow the line';
 });
 litLines();
 function shower() {
@@ -181,12 +181,12 @@ function shower() {
 }
 function toggleSong(force) {
   const play = force || audio.paused;
-  if (play) { audio.play().catch(() => {}); np.innerHTML = '♪ my favorite song <span>· tap the note to pause</span>'; }
-  else { audio.pause(); np.innerHTML = '♪ paused <span>· tap the note to play</span>'; }
+  if (play) { audio.play().catch(() => {}); np.innerHTML = 'my favorite song <span>· tap the note to pause</span>'; }
+  else { audio.pause(); np.innerHTML = 'paused <span>· tap the note to play</span>'; }
   np.classList.add('show'); constel.classList.toggle('playing', play);
 }
 audio.addEventListener('play', hintText); audio.addEventListener('pause', hintText);
-audio.addEventListener('ended', () => { constel.classList.remove('playing'); np.innerHTML = '♪ <span>tap the note to play it again</span>'; });
+audio.addEventListener('ended', () => { constel.classList.remove('playing'); np.innerHTML = '<span>tap the note to play it again</span>'; });
 
 /* ---------- layout + loop ---------- */
 function resize() {
