@@ -1,0 +1,157 @@
+/* v11 Cloud Sea (from v10 Comet): layers, hero, About, the wish UI, and the optional cloud cards (html.clouds, ?clouds=1) */
+:root{--rose:#f2a7c3;--violet:#b9a3f0;--ink-n:#0d1c40}
+html.night body{background:#0b1638}
+#comet{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+/* ---------- hero ---------- */
+.hero-copy{top:22vh;max-width:min(640px,52vw)}
+.hero h1{font-size:clamp(72px,9vw,150px);filter:drop-shadow(0 4px 24px rgba(8,18,52,.45))}
+.role{text-shadow:0 2px 14px rgba(8,18,52,.6);margin:10px 0 18px}
+.facts{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;margin:0 0 28px;font-family:var(--serif);font-size:clamp(15px,1.25vw,19px);color:#f3ead6;text-shadow:0 1px 10px rgba(8,18,52,.8)}
+.facts li{display:inline-block;white-space:nowrap}
+.facts li+li::before{content:"";display:inline-block;vertical-align:middle;width:5px;height:5px;margin:0 14px;border-radius:50%;background:#ffd98a;box-shadow:0 0 8px 2px rgba(255,214,138,.7)}
+.facts b{font-weight:600;color:#ffe9b0}
+
+/* section headings flare when the comet head passes them */
+.sec h2.brush{transition:filter 1.6s ease}
+.sec h2.brush.lit{animation:lit 2.2s ease-out}
+@keyframes lit{0%{filter:drop-shadow(0 0 0 rgba(255,214,138,0))}18%{filter:drop-shadow(0 0 22px rgba(255,214,138,.95)) brightness(1.25)}100%{filter:drop-shadow(0 0 0 rgba(255,214,138,0))}}
+.vt-item.lit .vt-dot{animation:dotflare 1.6s ease-out}
+@keyframes dotflare{0%{box-shadow:0 0 0 0 rgba(255,214,138,.9)}30%{box-shadow:0 0 0 14px rgba(255,214,138,.0),0 0 40px 10px rgba(255,214,138,.8)}100%{box-shadow:0 0 calc(var(--f) * 26px) rgba(255,214,120,.9)}}
+/* the comet's line is the timeline spine now */
+.vt-fill{display:none}
+.vt-spine{background:linear-gradient(rgba(255,233,176,0),rgba(255,233,176,.12) 8%,rgba(255,233,176,.12) 92%,rgba(255,233,176,0))}
+.now-lead{text-shadow:0 1px 2px rgba(8,18,52,.9),0 2px 18px rgba(8,18,52,.85)}
+
+/* ---------- About ---------- */
+.about h2{margin-bottom:4vh}
+.about-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start}
+.about-card{max-width:none;margin:0;padding:30px 34px}
+.about-card p{font-size:17px;line-height:1.65;margin-bottom:16px}
+.about-card .about-lead{font-family:var(--serif);font-size:clamp(22px,2vw,28px);line-height:1.3;color:#fff1cf}
+.about-card q{color:#ffe9b0;font-style:italic;quotes:"“" "”"}
+.about-card b{color:#ffe9b0;font-weight:600}
+.wish-hint{font-family:var(--hand);font-size:18px!important;color:#c9bff2!important;opacity:.8;margin:6px 0 0!important}
+.wish-hint::before{content:"✦ ";color:#ffd98a}
+.about-facts{display:grid;gap:16px}
+.fact{padding:20px 22px}
+.fact h3{margin:6px 0 4px}
+.fact .gpa{color:#ffe9b0;font-weight:600}
+.tag.sub{display:block;margin-top:14px}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips li{font-size:13px;padding:3px 11px;border-radius:99px;border:1px solid rgba(255,233,176,.4);color:#ffe9b0;background:rgba(13,28,64,.45)}
+
+/* ---------- wish UI, now playing, clouds switch ---------- */
+.wishes{position:fixed;left:50%;bottom:20px;translate:-50% 0;z-index:61;display:flex;align-items:center;gap:12px;padding:8px 16px 8px 12px;border-radius:999px;background:rgba(13,28,64,.6);border:1px solid rgba(255,233,176,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-family:var(--hand);font-size:17px;color:#f3ead6;opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s;pointer-events:none}
+.wishes.show{opacity:1;transform:none}
+.ws{display:flex;gap:6px}
+.ws i{width:13px;height:13px;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);background:rgba(255,233,176,.25);transition:background .4s,filter .4s}
+.ws i.on{background:#ffe2a6;filter:drop-shadow(0 0 6px #ffd98a)}
+.np{position:fixed;left:var(--gutter);bottom:20px;z-index:62;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;border:1px solid rgba(255,233,176,.4);background:rgba(13,28,64,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#f3ead6;font-family:var(--hand);font-size:16px;cursor:pointer;opacity:0;transform:scale(.6);transition:opacity .8s,transform .8s cubic-bezier(.2,1.4,.4,1)}
+.np.show{opacity:1;transform:none}
+.np-star{position:relative;width:30px;height:30px;display:block}
+.np-star::before{content:"";position:absolute;inset:3px;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);background:radial-gradient(#fff,#ffe2a6 45%,#f6c25e);filter:drop-shadow(0 0 6px #ffd98a);animation:npspin 6s linear infinite}
+.np-star::after{content:"♪";position:absolute;right:-4px;top:-6px;font-size:13px;color:#c9b8ff;animation:npbob 1.6s ease-in-out infinite alternate}
+.np-t{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .5s}
+.np:hover .np-t,.np:focus-visible .np-t{max-width:220px}
+@keyframes npspin{to{transform:rotate(360deg)}}
+@keyframes npbob{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.cloud-switch{position:fixed;right:var(--gutter);bottom:20px;z-index:61;font-family:var(--hand);font-size:16px;padding:5px 14px;border-radius:999px;border:1px solid rgba(255,233,176,.4);background:rgba(13,28,64,.55);color:#c9d3ec;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .3s,color .3s}
+.cloud-switch[aria-pressed="true"]{background:rgba(255,233,176,.88);color:#0d1c40}
+.cloud-switch:hover{color:#fff1cf}
+
+/* ---------- cloud cards (html.clouds): twilight cumulus, flat-bottomed, billowing tops rimmed with the last gold ---------- */
+html.clouds .card{--cl-top:#5d64ad;--cl-mid:#45539c;--cl-bot:#2d3f86;--cl-back:#7a78bd;
+  border:0;border-radius:30px 30px 46px 46px;overflow:visible;
+  background:
+    radial-gradient(70% 60% at 50% 100%,rgba(185,163,240,.22),transparent 70%),
+    linear-gradient(180deg,var(--cl-top) 0,var(--cl-top) 24px,var(--cl-mid) 45%,var(--cl-bot));
+  box-shadow:inset 0 -18px 34px rgba(20,30,80,.38),0 30px 60px rgba(4,10,40,.45),0 0 70px rgba(185,163,240,.12)}
+html.clouds .card::before,html.clouds .card::after{content:"";position:absolute;pointer-events:none;height:70px}
+/* front billows: heavily overlapping circles in the card's top colour, centred 22px inside the card so they merge */
+html.clouds .card::before{z-index:0;left:3%;right:3%;top:-54px;height:54px;
+  background:
+    radial-gradient(circle at 4% calc(100% + 22px),var(--cl-top) 0 29px,transparent 30px),
+    radial-gradient(circle at 12% calc(100% + 22px),var(--cl-top) 0 43px,transparent 44px),
+    radial-gradient(circle at 21% calc(100% + 22px),var(--cl-top) 0 35px,transparent 36px),
+    radial-gradient(circle at 30% calc(100% + 22px),var(--cl-top) 0 51px,transparent 52px),
+    radial-gradient(circle at 40% calc(100% + 22px),var(--cl-top) 0 38px,transparent 39px),
+    radial-gradient(circle at 49% calc(100% + 22px),var(--cl-top) 0 47px,transparent 48px),
+    radial-gradient(circle at 59% calc(100% + 22px),var(--cl-top) 0 36px,transparent 37px),
+    radial-gradient(circle at 68% calc(100% + 22px),var(--cl-top) 0 53px,transparent 54px),
+    radial-gradient(circle at 78% calc(100% + 22px),var(--cl-top) 0 39px,transparent 40px),
+    radial-gradient(circle at 87% calc(100% + 22px),var(--cl-top) 0 45px,transparent 46px),
+    radial-gradient(circle at 96% calc(100% + 22px),var(--cl-top) 0 30px,transparent 31px);
+  filter:drop-shadow(0 -1.5px 0 rgba(255,222,170,.7)) drop-shadow(0 -8px 14px rgba(255,196,140,.22))}
+/* back billows: paler, taller, offset, so the top reads as two layers of cloud */
+html.clouds .card::after{z-index:-1;left:8%;right:10%;top:-62px;height:62px;opacity:.85;
+  background:
+    radial-gradient(circle at 8% calc(100% + 6px),var(--cl-back) 0 34px,transparent 35px),
+    radial-gradient(circle at 24% calc(100% + 6px),var(--cl-back) 0 52px,transparent 53px),
+    radial-gradient(circle at 42% calc(100% + 6px),var(--cl-back) 0 40px,transparent 41px),
+    radial-gradient(circle at 60% calc(100% + 6px),var(--cl-back) 0 58px,transparent 59px),
+    radial-gradient(circle at 80% calc(100% + 6px),var(--cl-back) 0 44px,transparent 45px),
+    radial-gradient(circle at 95% calc(100% + 6px),var(--cl-back) 0 30px,transparent 31px);
+  filter:drop-shadow(0 -1.5px 0 rgba(255,214,160,.85)) drop-shadow(0 -10px 18px rgba(255,180,150,.25))}
+html.clouds .card>*{position:relative;z-index:1}
+html.clouds .card .ll{position:absolute}
+html.clouds .proj:nth-child(2n)::before,html.clouds .proj:nth-child(2n)::after{transform:scaleX(-1)}
+html.clouds .row3,html.clouds .row2{row-gap:56px}
+html.clouds .row3{margin-top:9vh}
+html.clouds .row2{margin-top:56px}
+html.clouds .about-facts{gap:52px}
+html.clouds .about-grid{gap:52px 26px}
+html.clouds .mini,html.clouds .golfvis{border-radius:26px}
+html.clouds .vt-card{overflow:visible}
+html.clouds .vt-vis{border-radius:46px 46px 18px 18px;border-bottom:0}
+html.clouds .stats div{border-radius:20px;background:rgba(255,255,255,.08)}
+html.clouds .now-save{margin-top:64px}
+html.clouds .chips li{background:rgba(255,255,255,.08)}
+
+@media (max-width:820px){
+  .hero-copy{top:13vh;max-width:none}
+  .hero h1{font-size:16vw}
+  .facts{font-size:14px;margin-bottom:20px}
+  .facts li+li::before{margin:0 9px}
+  .about-grid{grid-template-columns:1fr}
+  .about-card{padding:22px}
+  .wishes{bottom:70px}
+  .np{bottom:66px}
+  .cloud-switch{bottom:16px}
+  html.clouds .card{border-radius:34px}
+  html.clouds .card::before,html.clouds .card::after{transform:scaleY(.7);transform-origin:50% 100%}
+  html.clouds .proj:nth-child(2n)::before,html.clouds .proj:nth-child(2n)::after{transform:scale(-1,.7)}
+}
+@media (prefers-reduced-motion:reduce){
+  .sec h2.brush.lit,.vt-item.lit .vt-dot{animation:none}
+  .np-star::before,.np-star::after{animation:none}
+}
+
+/* ---------- v11: the WebGL cloud sea, ink-brush headings, clean UI type ---------- */
+html.night body{background:#0b1638 linear-gradient(180deg,#1b2a6b 0,#5a5ea8 60vh,#2a2f6e 100vh,#0b1638 160vh,#050a22) no-repeat}
+#sky{z-index:0;image-rendering:auto}
+html.no-gl #sky{display:none}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.brush{line-height:1;white-space:normal;color:#fff1cf}
+.ink-cv{display:block;pointer-events:none;filter:drop-shadow(0 2px 10px rgba(6,10,40,.45))}
+.hero-copy{max-width:min(780px,60vw)}
+.hero h1{font-size:clamp(70px,8.4vw,138px);filter:none}
+.sec h2{font-size:clamp(54px,6vw,96px)}
+.contact h2.big{font-size:clamp(78px,10vw,170px)}
+.role{font-family:var(--body);font-weight:600;font-size:clamp(13px,1.05vw,16px);letter-spacing:.38em}
+.nav{font-family:var(--body);font-size:14px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.nav .mark{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:.02em;text-transform:none}
+.pill,.more,.links{font-family:var(--body);font-weight:500}
+.pill{font-size:16px;letter-spacing:.04em}
+.wish-hint{font-size:15px!important;font-style:italic}
+.stats b{font-family:var(--serif);font-weight:600}
+.facts{font-family:var(--body);font-size:clamp(14px,1.1vw,17px)}
+@media (max-width:820px){
+  .hero-copy{top:12vh;max-width:none}
+  .hero h1{font-size:19vw}
+  /* the cloud-card billows stay inside the card's width on phones, so they are not cut off at the screen edge */
+  html.clouds .card::before{left:9%;right:9%}
+  html.clouds .card::after{left:14%;right:16%}
+  html.clouds .card{border-radius:30px}
+}
+html.night .nav a:not(.mark),html.night .nav .mark{background:rgba(13,24,60,.82)}

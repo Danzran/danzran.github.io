@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scribble Variants</title>
+<style>
+:root{--ink:#fff3e8;--dim:#d7cdec;--line:rgba(255,243,232,.18)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);background:linear-gradient(#2b2b66,#6b4f8f 55%,#c98a8f) fixed;font:15px/1.5 system-ui,sans-serif;overflow-x:hidden}
+header{max-width:1200px;margin:auto;padding:28px 16px 8px}
+header h1{font-size:18px;margin:0 0 4px;font-weight:600}
+header p{margin:0;color:var(--dim);max-width:820px}
+code{color:#ffd98a}
+.grid{max-width:1200px;margin:16px auto 60px;padding:0 16px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.v{border:1px solid var(--line);border-radius:16px;padding:18px 18px 14px;background:rgba(20,18,60,.28);overflow:hidden}
+.v .w{margin:6px 0 10px;font-family:"sh-peachy",cursive;font-weight:400;font-size:clamp(54px,6vw,92px);line-height:1.15;white-space:nowrap}
+.v h2{margin:0;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.v p{margin:2px 0 8px;color:var(--dim);font-size:13.5px}
+.v a{color:#ffd98a;font-size:13px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Scribble variants, from calm to choppy</h1>
+  <p>Every variant is the Unchained LOW preset in Peachy. Only the cadence (Posterize Time fps) and the wiggle amplitude change. A big wiggle re-randomizes the edge every frame, so it jitters. A small wiggle lets the edge drift. A low fps holds each drawing for several frames, like hand-drawn line boil. Each card links to the full site with those settings.</p>
+</header>
+<div class="grid" id="grid"></div>
+<script src="../../assets/fonts/cloud-peachy-font.js"></script>
+<script src="../../assets/lettering/unchained-scribble.js"></script>
+<script>
+const V = [
+  ['Calm', 'Drifts, never jumps. wiggle 140 · 60 fps', { level: 'low', wig: 140, fps: 60 }],
+  ['Calm on 12s', 'The same drift, held for 5 frames each. A gentle hand-drawn step. wiggle 140 · 12 fps', { level: 'low', wig: 140, fps: 12 }],
+  ['Line boil on 8s', 'A new drawing every 3rd frame, classic animated line boil. wiggle 400 · 8 fps', { level: 'low', wig: 400, fps: 8 }],
+  ['Slow redraw (site default)', 'A big change but rarely, like frames swapped by hand. wiggle 1000 · 5 fps', { level: 'low', wig: 1000, fps: 5 }],
+  ['AE: LOW CHOPPY', 'Your original preset. wiggle 1000 · 15 fps', { level: 'low', wig: 1000, fps: 15 }],
+  ['AE: LOW VERY CHOPPY', 'Your original preset. wiggle 1000 · 10 fps', { level: 'low', wig: 1000, fps: 10 }],
+  ['Mid, choppy but calm', 'Stronger warp, moderate steps. MID · wiggle 220 · 12 fps', { level: 'mid', wig: 220, fps: 12 }],
+  ['AE: LOW SMOOTH (reference)', 'The original, every frame new. wiggle 1000 · 30 fps', { level: 'low', wig: 1000, fps: 30 }],
+];
+const s = atob(window.CLOUD_FONTS.peachy), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i);
+const ff = new FontFace('sh-peachy', u.buffer); document.fonts.add(ff);
+ff.load().then(() => {
+  const grid = document.getElementById('grid');
+  for (const [name, desc, o] of V) {
+    const c = document.createElement('div'); c.className = 'v';
+    const q = new URLSearchParams({ level: o.level, wig: o.wig, fps: o.fps }).toString();
+    c.innerHTML = `<h2>${name}</h2><p>${desc}</p><p class="w">Daniel Azran</p><a href="index.html?${q}">open the site with these settings →</a>`;
+    grid.appendChild(c);
+    UnchainedScribble.mount(c.querySelector('.w'), { level: o.level, wiggle: o.wig, fps: o.fps, gain: .85, weight: .004, color: '#fff3e8' });
+  }
+});
+</script>
+</body>
+</html>

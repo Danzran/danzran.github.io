@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" class="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golf Swing Analyzer — Daniel Azran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="golf-page.css">
+</head>
+<body class="project">
+<canvas id="sky" aria-hidden="true"></canvas>
+<nav class="nav"><a class="mark" href="index.html">DA</a><span class="sp"></span><a href="index.html#work">Work</a><a href="index.html#contact">Contact</a></nav>
+
+<main>
+  <header class="p-head">
+    <h1 class="pencil" data-pencil>Golf Swing Analyzer</h1>
+    <p class="tags">FLUTTER · DART · FIREBASE · BLUETOOTH · MEDIAPIPE</p>
+  </header>
+
+  <section class="card p-main">
+    <div class="golfvis big"><canvas id="golf" aria-label="My golf swing with live pose analysis"></canvas></div>
+    <div class="p-side">
+      <span class="tag">2024–25 · Extropian</span>
+      <p>A golf app that reads swing data from wearable Bluetooth sensors and gives feedback in real time. For this page I ran my own swing through MediaPipe pose: every node, angle and the hand path you see is measured, not drawn by hand.</p>
+      <div class="stats" id="golfStats">
+        <div><b data-tempo></b><span>tempo</span></div>
+        <div><b data-back></b><span>backswing</span></div>
+        <div><b data-down></b><span>downswing</span></div>
+        <div><b data-speed></b><span>hand speed (est.)</span></div>
+        <div class="live"><span data-live></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="keys" aria-label="Swing keyframes">
+    <h2 class="pencil" data-pencil>Five frames</h2>
+    <ol class="keystrip" id="keys"></ol>
+  </section>
+
+  <section class="how">
+    <h2 class="pencil" data-pencil>How it works</h2>
+    <ol class="steps">
+      <li class="card"><span class="num">1</span><h3>Sensor</h3><p>A wrist sensor streams motion over Bluetooth to the Flutter app.</p></li>
+      <li class="card"><span class="num">2</span><h3>Pose model</h3><p>Video frames go through a pose model; joints become angles and a hand path.</p></li>
+      <li class="card"><span class="num">3</span><h3>Feedback</h3><p>Tempo, backswing and downswing timing, stored in Firebase and compared swing to swing.</p></li>
+    </ol>
+  </section>
+
+  <p class="back"><a class="pill" href="index.html#work">← back to all work</a></p>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="../../assets/fonts/pencil-font.js"></script>
+<script src="../../assets/golf/swing.js"></script>
+<script src="../../assets/golf/club.js"></script>
+<script src="pencil.js"></script>
+<script src="golf.js"></script>
+<script src="golf-page.js"></script>
+</body>
+</html>

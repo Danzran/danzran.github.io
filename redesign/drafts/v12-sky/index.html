@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en" class="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Azran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Space+Grotesk:wght@700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="experience.css">
+<link rel="stylesheet" href="starfall.css">
+<link rel="stylesheet" href="skyshader.css">
+<script>/* clouds toggle before first paint: ?clouds=1 (or the on-page switch, remembered per tab) */
+(() => { let on = /[?&]clouds=1\b/.test(location.search); if (!/[?&]clouds=/.test(location.search)) { try { on = sessionStorage.getItem("sf-clouds") === "1"; } catch (e) {} } document.documentElement.classList.toggle("clouds", on); })();</script>
+</head>
+<body>
+<!-- fixed layers: the living WebGL sky (sky.js) behind everything, meteors + sparkles above it (starfall.js); pointer-events: none -->
+<canvas id="sky" aria-hidden="true"></canvas>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<nav class="nav"><a class="mark" href="#top">DA</a><span class="sp"></span><a href="#now">Now</a><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="hero-copy">
+      <h1 class="lp-h" data-lp><span class="ln">Daniel</span> <span class="ln">Azran</span></h1>
+      <p class="role"><span>FULL-STACK ENGINEER</span><span class="sep" aria-hidden="true"> · </span><span>ML &amp; DATA</span></p>
+      <a class="pill" href="#now">follow the falling stars ↓</a>
+      <button class="egg-hint" id="eggHint" type="button">connect the note in the stars</button>
+    </div>
+    <div class="fig" id="fig"><img src="assets/orbit/yaw-000.webp" alt="Daniel doing a handstand"></div>
+    <!-- sky-chart annotations: real facts, hand-lettered beside the figure (positions set in starfall.js) -->
+    <svg class="chart-lines" id="chartLines" aria-hidden="true"></svg>
+    <ul class="chart" id="chart" aria-label="A few facts">
+      <li data-at="feet">addicted to learning new <br>things and real progress</li>
+      <li data-at="hip">machine learning <br>&amp; data science</li>
+      <li data-at="sky">happiest putting the <br>puzzle pieces together</li>
+      <li data-at="head">tools I've picked up, <br>or built from scratch</li>
+      <li data-at="hands">now: building AI tools on <br>40,000+ calls a day</li>
+    </ul>
+    <!-- the hidden constellation: seven stars in the shape of a note. Click them in order. -->
+    <div class="constel" id="constel">
+      <img class="note-glow" src="assets/sf/note-glow.webp" alt="" aria-hidden="true">
+      <svg class="constel-lines" aria-hidden="true"></svg>
+    </div>
+    <p class="np" id="np" aria-live="polite"></p>
+  </section>
+
+  <section class="sec now" id="now">
+    <h2 class="lp-h" data-lp data-anchor="L">Now</h2>
+    <p class="now-lead">At <b>Safe Ship Moving Services</b>, I build the systems behind the phones: a pipeline that captures more than 40,000 calls a day, makes the recordings searchable, and puts AI review on every sales call.</p>
+    <p class="now-sub">Along the way I cut our MongoDB bill nearly in half.</p>
+    <div class="row2 now-grid">
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>40,000+ calls a day archived. Recordings transcribed and searchable, with 99.8% coverage.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI compliance &amp; coaching</h3><p>Scores sales calls against a versioned rubric and turns the misses into coaching.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-portal" aria-hidden="true"></canvas><h3>Partner portal</h3><p>Built full-stack in five weeks: invoicing, API keys, and reconciliation that replaced shared spreadsheets.</p></article>
+      <article class="card proj"><canvas class="mini viz" data-viz="ssm-split" aria-hidden="true"></canvas><h3>A 33,000-line file, untangled</h3><p>Split the core jobs API into 61 focused modules over 18 staged, reviewable changes.</p></article>
+    </div>
+  </section>
+
+  <section class="sec work" id="work">
+    <h2 class="lp-h" data-lp data-anchor="L">Selected work</h2>
+    <article class="card spreed-card" data-anchor="L">
+      <div class="spreed-copy">
+        <h3 class="spreed-logo" aria-label="Spreed"><span class="sl-ghost c" aria-hidden="true">spreed</span><span class="sl-ghost m" aria-hidden="true">spreed</span><span class="sl-main" aria-hidden="true">s<span class="sl-p">p<i></i></span>reed</span></h3>
+        <p class="spreed-lede">A competitive speed-reading game. Words flash one at a time, then timed questions check that you actually understood them. Speed only scores if comprehension holds.</p>
+        <ul class="spreed-modes">
+          <li><b>Ranked 1v1</b> Elo matchmaking, the same unseen text at the same speed, Bronze to Master.</li>
+          <li><b>Party rooms</b> A room code, everyone reads together, live leaderboard between questions.</li>
+          <li><b>Daily challenge</b> One text a day, one attempt, streaks.</li>
+        </ul>
+        <p class="spreed-stack">Matchmaking, Elo and scoring run as Postgres functions, so the client can't award itself a win. Every sound is synthesized in WebAudio. React 19, TypeScript, Supabase Realtime.</p>
+        <a class="pill solid case" href="https://spreed-ruby.vercel.app" target="_blank" rel="noopener">play it ↗</a>
+      </div>
+      <div class="spx" aria-label="Spreed's reader flashing one word at a time, then a timed comprehension question">
+        <div class="spx-prog"><i></i></div>
+        <div class="spx-rsvp" aria-hidden="true"><span class="spx-word"><span class="b">bea</span><span class="o">m</span><span class="a">ed</span></span></div>
+        <div class="spx-quiz" aria-hidden="true">
+          <div class="spx-qhead"><span>Question 1 / 4</span><span class="spx-secs">12s</span></div>
+          <div class="spx-timer"><i></i></div>
+          <p class="spx-q">How did the text reach you?</p>
+          <ol class="spx-opts">
+            <li><svg viewBox="0 0 10 10"><path d="M5 1.5 9 8.5H1z"/></svg>All at once</li>
+            <li class="ok"><svg viewBox="0 0 10 10"><path d="M5 1 9 5 5 9 1 5z"/></svg>One word at a time</li>
+            <li><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.8"/></svg>Line by line</li>
+            <li><svg viewBox="0 0 10 10"><path d="M1.5 1.5h7v7h-7z"/></svg>Read aloud</li>
+          </ol>
+        </div>
+      </div>
+    </article>
+    <article class="card golf-card" data-anchor="R">
+      <div class="golfvis"><canvas id="golf" aria-label="My golf swing with live pose analysis"></canvas></div>
+      <div class="golf-copy">
+        <h3>Golf Swing Analyzer</h3>
+        <p>Real-time swing analysis from wearable sensors (Flutter, Dart, Firebase, Bluetooth). This is my own swing run through MediaPipe pose: joint angles, hand path, tempo.</p>
+        <div class="stats" id="golfStats">
+          <div><b data-tempo></b><span>tempo</span></div>
+          <div><b data-back></b><span>backswing</span></div>
+          <div><b data-down></b><span>downswing</span></div>
+          <div><b data-speed></b><span>hand speed (est.)</span></div>
+          <div class="live"><span data-live></span></div>
+        </div>
+        <a class="pill case" href="golf.html">read the case study →</a>
+      </div>
+    </article>
+    <div class="row3">
+      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="flow" aria-hidden="true"></canvas><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade point tracking.</p></a>
+      <a class="card proj" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="digits" aria-hidden="true"></canvas><h3>Digit Classifier</h3><p>Keras CNN · 98% on MNIST.</p></a>
+      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="house" aria-hidden="true"></canvas><h3>Real Estate Predictor</h3><p>−7% RMSE with a log-price target.</p></a>
+    </div>
+    <div class="row2">
+      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="compiler" aria-hidden="true"></canvas><h3>PL/0 Compiler</h3><p>Lexer, parser and code generator in C for a stack-based VM.</p></a>
+      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="sync" aria-hidden="true"></canvas><h3>Mikal – Wix sync</h3><p>Parses Mikal appointment reports into busy blocks.</p></a>
+    </div>
+    <p class="more">also: <a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></p>  </section>
+
+  <section class="sec exp" id="experience">
+    <h2 class="lp-h" data-lp data-anchor="R">Experience</h2>
+    <div class="vt" id="vt">
+      <div class="vt-spine" aria-hidden="true"><i class="vt-fill"></i></div>
+      <ol class="vt-list">
+        <li class="vt-item" data-theme="ssm">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">Now<small>current job</small></p>
+            <p class="vt-org">Safe Ship Moving Services</p>
+            <ul class="vt-pts">
+            <li>Built the pipeline that captures 40,000+ calls a day and makes the recordings searchable.</li>
+            <li>Built AI compliance scoring and sales coaching on top of those calls.</li>
+            <li>Built the partner portal full-stack: invoicing, API keys, reconciliation.</li>
+            <li>Split a 33,000-line API file into 61 focused modules.</li>
+            <li>Cut our MongoDB costs nearly in half.</li>
+            </ul>
+            <p class="vt-tags"><span>TypeScript</span><span>Python</span><span>React</span><span>MongoDB</span><span>RingCentral</span><span>AssemblyAI</span><span>LLMs</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/ssm/plate-768.webp" alt="" data-viz="ssm"></div>
+            <div class="vt-copy"><h3>Safe Ship Moving Services</h3><p>40,000+ calls a day, AI call review, a partner portal, and a database bill cut nearly in half.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="ext">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2024<small>Sep 2024 — May 2025</small></p>
+            <p class="vt-org">Extropian · Orlando, FL</p>
+            <ul class="vt-pts">
+            <li>Built a cross-platform Flutter app for real-time golf swing analysis from wearable sensor data.</li>
+            <li>Led the Bluetooth streaming and metric layer; cut packet loss from tens to single digits per session.</li>
+            <li>Worked in a 6-person Agile team with Git and Jira.</li>
+            </ul>
+            <p class="vt-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>Bluetooth</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/extropian/plate-768.webp" alt="" data-viz="extropian"></div>
+            <div class="vt-copy"><h3>Backend software developer</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="lock">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2022<small>Aug 2022 — Dec 2023</small></p>
+            <p class="vt-org">Sonic Locksmith · Hollywood, FL</p>
+            <ul class="vt-pts">
+            <li>Programmed and cut keys for push-to-start and traditional vehicles.</li>
+            <li>Resolved on-site lockouts under time pressure, with clear communication.</li>
+            <li>Kept the key-cutting and diagnostic tools stocked and calibrated.</li>
+            </ul>
+            <p class="vt-tags"><span>Key programming</span><span>Diagnostics</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/lock/plate-768.webp" alt="" data-viz="lock"></div>
+            <div class="vt-copy"><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="it">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2018<small>Sep 2018 — Present</small></p>
+            <p class="vt-org">Freelance · Multiple locations</p>
+            <ul class="vt-pts">
+            <li>Designed and assembled desktops for gaming, editing and servers.</li>
+            <li>Set up small-business networks with virtual machines.</li>
+            <li>Diagnosed hardware and software issues and delivered stable builds.</li>
+            </ul>
+            <p class="vt-tags"><span>PC builds</span><span>Networking</span><span>VirtualBox</span><span>Windows admin</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="../../assets/projects/it/plate-768.webp" alt="" data-viz="it"></div>
+            <div class="vt-copy"><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></div>
+          </article>
+        </li>
+        <li class="vt-item" data-theme="edit">
+          <span class="vt-dot" aria-hidden="true"></span>
+          <div class="vt-side">
+            <p class="vt-year">2014<small>2014 — 2020</small></p>
+            <p class="vt-org">Freelance · Remote</p>
+            <ul class="vt-pts">
+            <li>Edited with 3D elements, camera tracking and thumbnails.</li>
+            <li>Worked with organizations on large projects; coordinated up to four editors.</li>
+            <li>Kept in touch with clients so the result matched their vision.</li>
+            </ul>
+            <p class="vt-tags"><span>After Effects</span><span>Premiere Pro</span><span>Photoshop</span><span>Sony Vegas</span></p>
+          </div>
+          <article class="card vt-card">
+            <div class="vt-vis"><video class="vt-reel" src="../../assets/video/edit.mp4" poster="../../assets/video/edit-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="My video editing reel"></video></div>
+            <div class="vt-copy"><h3>Video editor</h3><p>COD edits, compositing, camera tracking. Led a team of 4 editors.</p></div>
+          </article>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec about" id="about">
+    <h2 class="lp-h" data-lp data-anchor="L">About</h2>
+    <div class="about-grid">
+      <div class="card about-card about-main">
+        <p class="about-lead">I'm a full-stack engineer addicted to learning new things and real progress. My focus has been machine learning and data science, but what I really enjoy is solving problems.</p>
+        <p>Whether it's with tools I've picked up or ones built from scratch, nothing beats putting the puzzle pieces together. Right now that means <b>Safe Ship Moving Services</b>, where I build the system that captures more than 40,000 calls a day and the AI that reviews them.</p>
+        <blockquote class="quote">“What the consumer sees is just as important as behind the scenes.”<cite>— six years as a video editor, 2014–2020</cite></blockquote>
+      </div>
+      <div class="card about-card about-facts">
+        <dl class="facts">
+          <div><dt>Education</dt><dd>B.S. Computer Science, University of Central Florida · 3.5 GPA</dd></div>
+          <div><dt>Coursework</dt><dd class="chips"><span>Data Structures &amp; Algorithms</span><span>Computer Organization</span><span>Machine Learning</span><span>Artificial Intelligence</span><span>Robot Vision</span><span>Object-Oriented Programming</span><span>Statistics</span></dd></div>
+          <div><dt>Languages</dt><dd>Hebrew</dd></div>
+          <div><dt>Skills</dt><dd class="chips"><span>Java</span><span>Dart</span><span>Python</span><span>Rust</span><span>JavaScript</span><span>React</span><span>Node</span><span>R</span><span>C/C++</span><span>Flutter</span><span>Firebase</span><span>AWS</span><span>MongoDB</span></dd></div>
+        </dl>
+        <p class="hint">p.s. my favorite song is hidden in the music note in the hero sky. Tap its glowing stars in order.</p>
+      </div>
+    </div>
+    <audio id="audio" src="../../../tgrave.mp3" preload="none"></audio>
+  </section>
+
+  <footer class="sec contact" id="contact">
+    <h2 class="lp-h big" data-lp data-anchor="L">Say hello</h2>
+    <a class="pill solid" href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">let's talk →</a>
+    <div class="links"><a href="https://github.com/Danzran" target="_blank" rel="noopener">GitHub</a><a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">LinkedIn</a><a href="../../../DanielAzranResume.pdf" target="_blank">Resume</a></div>
+    <div class="pool" id="pool" data-anchor="C"></div>
+    <p class="legal">© 2026 Daniel Azran</p>
+  </footer>
+</main>
+
+<button class="toggle" id="cloudToggle" aria-pressed="false" title="Moonlit cloud cards on/off"><span class="tg-ic" aria-hidden="true"></span>clouds</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="../../assets/fonts/cloud-cloud-font.js"></script>
+<script src="../../assets/fonts/cloud-peachy-font.js"></script>
+<script src="../../assets/lettering/unchained-scribble.js"></script>
+<script src="scribblehead.js"></script>
+<script src="skytex.js"></script>
+<script src="sky.js"></script>
+<script src="../../assets/golf/swing.js"></script>
+<script src="../../assets/golf/club.js"></script>
+<script src="golf.js"></script>
+<script src="app.js"></script>
+<script>window.PV_NO_DOLLARS = true; window.PV_SSM_AI_TAGS = ['rubric check', 'coaching', 'score'];</script>
+<script src="../../assets/projects/data.js"></script>
+<script src="../../assets/projects/projectviz.js"></script>
+<script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, (window.V9_BASE || '') + '../../assets/projects'));</script>
+<script src="spreed-demo.js"></script>
+<script src="experience.js"></script>
+<script src="starfall.js"></script>
+<script src="clouds.js"></script>
+</body>
+</html>
