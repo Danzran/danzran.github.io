@@ -8,7 +8,7 @@
 <title>Daniel Azran</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Space+Grotesk:wght@700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="redesign/drafts/v12-sky/style.css">
 <link rel="stylesheet" href="redesign/drafts/v12-sky/experience.css">
 <link rel="stylesheet" href="redesign/drafts/v12-sky/starfall.css">
@@ -65,7 +65,7 @@
     <h2 class="lp-h" data-lp data-anchor="L">Selected work</h2>
     <article class="card spreed-card" data-anchor="L">
       <div class="spreed-copy">
-        <h3>Spreed</h3>
+        <h3 class="spreed-logo" aria-label="Spreed"><span class="sl-ghost c" aria-hidden="true">spreed</span><span class="sl-ghost m" aria-hidden="true">spreed</span><span class="sl-main" aria-hidden="true">s<span class="sl-p">p<i></i></span>reed</span></h3>
         <p class="spreed-lede">A competitive speed-reading game. Words flash one at a time, then timed questions check that you actually understood them. Speed only scores if comprehension holds.</p>
         <ul class="spreed-modes">
           <li><b>Ranked 1v1</b> Elo matchmaking, the same unseen text at the same speed, Bronze to Master.</li>
@@ -75,7 +75,21 @@
         <p class="spreed-stack">Matchmaking, Elo and scoring run as Postgres functions, so the client can't award itself a win. Every sound is synthesized in WebAudio. React 19, TypeScript, Supabase Realtime.</p>
         <a class="pill solid case" href="https://spreed-ruby.vercel.app" target="_blank" rel="noopener">play it ↗</a>
       </div>
-      <div class="spreed-vis"><canvas class="viz" data-viz="spreed" aria-label="A word flashing one at a time while two readers race"></canvas></div>
+      <div class="spx" aria-label="Spreed's reader flashing one word at a time, then a timed comprehension question">
+        <div class="spx-prog"><i></i></div>
+        <div class="spx-rsvp" aria-hidden="true"><span class="spx-word"><span class="b">bea</span><span class="o">m</span><span class="a">ed</span></span></div>
+        <div class="spx-quiz" aria-hidden="true">
+          <div class="spx-qhead"><span>Question 1 / 4</span><span class="spx-secs">12s</span></div>
+          <div class="spx-timer"><i></i></div>
+          <p class="spx-q">How did the text reach you?</p>
+          <ol class="spx-opts">
+            <li><svg viewBox="0 0 10 10"><path d="M5 1.5 9 8.5H1z"/></svg>All at once</li>
+            <li class="ok"><svg viewBox="0 0 10 10"><path d="M5 1 9 5 5 9 1 5z"/></svg>One word at a time</li>
+            <li><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.8"/></svg>Line by line</li>
+            <li><svg viewBox="0 0 10 10"><path d="M1.5 1.5h7v7h-7z"/></svg>Read aloud</li>
+          </ol>
+        </div>
+      </div>
     </article>
     <article class="card golf-card" data-anchor="R">
       <div class="golfvis"><canvas id="golf" aria-label="My golf swing with live pose analysis"></canvas></div>
@@ -248,6 +262,7 @@
 <script src="redesign/assets/projects/data.js"></script>
 <script src="redesign/assets/projects/projectviz.js"></script>
 <script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, (window.V9_BASE || '') + '../../assets/projects'));</script>
+<script src="redesign/drafts/v12-sky/spreed-demo.js"></script>
 <script src="redesign/drafts/v12-sky/experience.js"></script>
 <script src="redesign/drafts/v12-sky/starfall.js"></script>
 <script src="redesign/drafts/v12-sky/clouds.js"></script>
