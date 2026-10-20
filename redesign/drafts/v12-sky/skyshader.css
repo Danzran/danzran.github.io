@@ -185,3 +185,18 @@ html.night .vt-card{box-shadow:0 2px 4px rgba(4,8,30,.25),0 calc(14px + var(--f)
 .now-sub{margin:-1vh 0 3vh;font-size:clamp(16px,1.3vw,19px);color:#d8e2fb;max-width:52ch}
 .now-grid{margin-top:4vh}
 @media (max-width:599px){ .now-grid{grid-template-columns:1fr} }
+/* Spreed: the lead project. Copy left, a wide live plate right (the golf card mirrors it below) */
+.spreed-card{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:32px;align-items:center;margin-bottom:22px}
+.spreed-card h3{font-size:clamp(34px,3.4vw,52px);margin:0 0 10px}
+.spreed-lede{font-size:clamp(16px,1.25vw,18px)!important;max-width:44ch}
+.spreed-modes{list-style:none;margin:18px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,233,176,.22);display:grid;gap:10px}
+.spreed-modes li{font-size:15px;line-height:1.5;color:#c9d3ec;max-width:46ch}
+.spreed-modes b{display:block;font-family:var(--serif);font-weight:600;font-size:18px;color:#ffd98a}
+.spreed-stack{margin-top:16px!important;font-size:14px!important;max-width:46ch}
+.spreed-copy .case{margin-top:18px}
+.spreed-vis{position:relative;aspect-ratio:3/2;border-radius:18px;overflow:hidden;background:#e9eefb}
+.spreed-vis canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+@media (max-width:820px){
+  .spreed-card{grid-template-columns:1fr;gap:20px}
+  .spreed-vis{order:-1}
+}

@@ -63,6 +63,20 @@
 
   <section class="sec work" id="work">
     <h2 class="lp-h" data-lp data-anchor="L">Selected work</h2>
+    <article class="card spreed-card" data-anchor="L">
+      <div class="spreed-copy">
+        <h3>Spreed</h3>
+        <p class="spreed-lede">A competitive speed-reading game. Words flash one at a time, then timed questions check that you actually understood them. Speed only scores if comprehension holds.</p>
+        <ul class="spreed-modes">
+          <li><b>Ranked 1v1</b> Elo matchmaking, the same unseen text at the same speed, Bronze to Master.</li>
+          <li><b>Party rooms</b> A room code, everyone reads together, live leaderboard between questions.</li>
+          <li><b>Daily challenge</b> One text a day, one attempt, streaks.</li>
+        </ul>
+        <p class="spreed-stack">Matchmaking, Elo and scoring run as Postgres functions, so the client can't award itself a win. Every sound is synthesized in WebAudio. React 19, TypeScript, Supabase Realtime.</p>
+        <a class="pill solid case" href="https://spreed-ruby.vercel.app" target="_blank" rel="noopener">play it ↗</a>
+      </div>
+      <div class="spreed-vis"><canvas class="viz" data-viz="spreed" aria-label="A word flashing one at a time while two readers race"></canvas></div>
+    </article>
     <article class="card golf-card" data-anchor="R">
       <div class="golfvis"><canvas id="golf" aria-label="My golf swing with live pose analysis"></canvas></div>
       <div class="golf-copy">

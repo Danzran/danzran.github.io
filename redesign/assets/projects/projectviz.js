@@ -1,7 +1,7 @@
 /* Project + job cards: a pastel rotoscoped plate (Codex, prompts in ./prompts) with a live hand-drawn
    analysis layer on top, in the same node/annotation language as the golf card (drafts/v9-night/golf.js).
    UI-independent: ProjectViz.mount(canvas, id, { base }) where base is the path to assets/projects.
-   ids: flow digits house compiler sync it lock extropian. Pixel data (corners, digit grid) comes from
+   ids: flow digits house compiler sync it lock extropian, the ssm-* job cards, spreed. Pixel data (corners, digit grid) comes from
    data.js (tools/projects_data.py), since getImageData is blocked over file://.
    Motion is continuous: every wobble is smooth noise in (stroke index, time), never re-drawn on twos. */
 window.ProjectViz = (() => {
@@ -641,6 +641,63 @@ window.ProjectViz = (() => {
       sticker(split < .5 ? 'one file' : 'split');
     };
 
+    // Spreed: the RSVP reader itself. One word at a time with its optimal recognition point pinned to a pink
+    // pivot, speeding up; two readers race below; then a timed question, a check, and the Elo it was worth
+    const SP_WORDS = 'speed means nothing if you never understood a single word you just read'.split(' ');
+    const SP_SERIF = '"Shippori Mincho B1", "LP Mincho", Georgia, serif';
+    const orp = w => w.length < 2 ? 0 : w.length < 6 ? 1 : w.length < 10 ? 2 : 3;
+    R.spreed = () => {
+      const cyc = 12, u = (t % cyc) / cyc, read = clamp(u / .58, 0, 1);
+      // the reader: a calm ivory strip in front of the window
+      const [cx, cy] = Q(.43, .2), fs = Math.min(1, W * .55 / (260 * k)), bw = 260 * k * fs, bh = 80 * k * fs;
+      ctx.fillStyle = 'rgba(255,248,226,.94)'; ctx.beginPath(); ctx.roundRect(cx - bw / 2 + j(), cy - bh / 2 + j(), bw, bh, 12 * k); ctx.fill();
+      ctx.strokeStyle = INK; ctx.lineWidth = 1.8 * k; ctx.stroke();
+      line(cx, cy - bh / 2 + 4 * k, cx, cy - bh / 2 + 11 * k, ROSE, 2, 0); line(cx, cy + bh / 2 - 11 * k, cx, cy + bh / 2 - 4 * k, ROSE, 2, 0);
+      if (u < .6) {
+        // words come faster as the run goes on (an ease-in over the word index)
+        const i = Math.min(SP_WORDS.length - 1, Math.floor(Math.pow(read, .72) * SP_WORDS.length)), w = SP_WORDS[i], p = orp(w);
+        ctx.font = `600 ${30 * k * fs}px ${SP_SERIF}`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        const pre = ctx.measureText(w.slice(0, p)).width, pw = ctx.measureText(w[p]).width, x = cx - pre - pw / 2;
+        ctx.fillStyle = INK; ctx.fillText(w.slice(0, p), x, cy + 1 * k);
+        ctx.fillStyle = ROSE; ctx.fillText(w[p], x + pre, cy + 1 * k);
+        ctx.fillStyle = INK; ctx.fillText(w.slice(p + 1), x + pre + pw, cy + 1 * k);
+        ctx.textBaseline = 'alphabetic';
+        chip(`${Math.round(300 + 320 * Math.pow(read, 1.4))} wpm`, cx, cy + bh / 2 + 26 * k, 15, BLUE, undefined, 'center');
+      } else {
+        // the question, four answers, one picked
+        const q = clamp((u - .6) / .06, 0, 1), pick = u > .76;
+        ctx.globalAlpha = q; ctx.font = `600 ${15 * k * Math.max(fs, .85)}px ${SP_SERIF}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = INK; ctx.fillText('what counts most?', cx, cy + 1 * k); ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+        const opts = ['speed', 'understanding', 'streaks', 'luck'];
+        opts.forEach((o, n2) => {
+          const ox2 = cx + (n2 % 2 ? 8 : -8) * k, oy2 = cy + bh / 2 + (22 + Math.floor(n2 / 2) * 30) * k, right = n2 === 1;
+          chip(o, ox2, oy2, 15, pick && right ? ROSE : INK, pick && right ? 'rgba(255,240,184,.95)' : undefined, n2 % 2 ? 'left' : 'right');
+          if (pick && right) hand('✓', ox2 + ctx.measureText(o).width + 14 * k, oy2, 18, ROSE);
+        });
+        // the answer timer runs down until the pick
+        const tl = pick ? .62 : 1 - (u - .6) / .16;
+        ctx.fillStyle = 'rgba(34,52,94,.25)'; ctx.fillRect(cx - bw / 2 + 14 * k, cy + bh / 2 - 10 * k, bw - 28 * k, 3 * k);
+        ctx.fillStyle = GOLD; ctx.fillRect(cx - bw / 2 + 14 * k, cy + bh / 2 - 10 * k, (bw - 28 * k) * tl, 3 * k);
+        ctx.globalAlpha = 1;
+      }
+      // the stopwatch runs while you read
+      const sw = Q(.722, .8), sr = Math.min(dw, dh) * .052;
+      if (u < .6) { ring(sw[0], sw[1], sr * 1.4, WHITE, 2.8, -1.57, -1.57 + 6.28 * read); }
+      // ranked 1v1: two lanes racing through the same text
+      const [lx0, ly] = Q(.24, .95), [lx1] = Q(.6, 0);
+      [['you', read, GOLD], ['rival', Math.min(1, read * .93), SKY]].forEach(([who, v, col], r) => {
+        const y = ly - (1 - r) * 24 * k;
+        ctx.fillStyle = 'rgba(255,248,226,.8)'; ctx.beginPath(); ctx.roundRect(lx0 - 8 * k, y - 11 * k, lx1 - lx0 + 16 * k, 20 * k, 10 * k); ctx.fill();
+        hand(who, lx0, y + 5 * k, 14, INK);
+        const a = lx0 + 46 * k, b = lx1 - 6 * k;
+        line(a, y, b, y, 'rgba(34,52,94,.35)', 1.4, 1);
+        line(a, y, a + (b - a) * v, y, col === GOLD ? AMBER : BLUE, 2.6, 1);
+        dot(a + (b - a) * v, y, 4.2, col);
+      });
+      if (u > .8) { const a = clamp((u - .8) / .05, 0, 1); ctx.globalAlpha = a; chip('+16 elo', lx1 + 24 * k, ly - 6 * k, 18, ROSE); ctx.globalAlpha = 1; }
+      sticker(u < .6 ? 'reading' : u < .8 ? 'quiz' : 'ranked win');
+    };
+
     function frame() {
       n = 0; ctx.clearRect(0, 0, W, H);
       if (plate.complete && plate.naturalWidth) ctx.drawImage(plate, ox, oy, dw, dh);
@@ -658,5 +715,5 @@ window.ProjectViz = (() => {
     else { new IntersectionObserver(([e]) => playing = e.isIntersecting).observe(canvas); raf = requestAnimationFrame(loop); }
     return { destroy: () => cancelAnimationFrame(raf), get t() { return t; } };
   }
-  return { mount, ids: ['flow', 'digits', 'house', 'compiler', 'sync', 'it', 'lock', 'extropian', 'ssm', 'ssm-calls', 'ssm-ai', 'ssm-db', 'ssm-portal', 'ssm-split'] };
+  return { mount, ids: ['flow', 'digits', 'house', 'compiler', 'sync', 'it', 'lock', 'extropian', 'ssm', 'ssm-calls', 'ssm-ai', 'ssm-db', 'ssm-portal', 'ssm-split', 'spreed'] };
 })();
