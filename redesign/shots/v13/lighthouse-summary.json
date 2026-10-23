@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-20T14:08:15.056Z",
+  "url": "http://127.0.0.1:8000/",
+  "tool": "Lighthouse 13.5.0",
+  "mode": "Mobile, simulated throttling, local Python HTTP server, isolated browser run",
+  "scores": {
+    "performance": 96,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100
+  },
+  "metrics": {
+    "first-contentful-paint": "1.5\u00a0s",
+    "largest-contentful-paint": "2.7\u00a0s",
+    "total-blocking-time": "0\u00a0ms",
+    "cumulative-layout-shift": "0"
+  },
+  "limitations": "Local lab result, not production field data. No real-device testing. Prior concurrent browser runs were variable; this isolated run was made after fixing root responsive srcset paths."
+}

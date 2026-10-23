@@ -1,270 +1,40 @@
 <!doctype html>
-<html lang="en" class="night">
-<head>
-<!-- generated from redesign/drafts/v12-sky/index.html by redesign/tools/promote.py; edit the draft, not this file -->
-<script>window.V9_BASE = 'redesign/drafts/v12-sky/';</script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Daniel Azran</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Space+Grotesk:wght@700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="redesign/drafts/v12-sky/style.css">
-<link rel="stylesheet" href="redesign/drafts/v12-sky/experience.css">
-<link rel="stylesheet" href="redesign/drafts/v12-sky/starfall.css">
-<link rel="stylesheet" href="redesign/drafts/v12-sky/skyshader.css">
-<script>/* clouds toggle before first paint: ?clouds=1 (or the on-page switch, remembered per tab) */
-(() => { let on = /[?&]clouds=1\b/.test(location.search); if (!/[?&]clouds=/.test(location.search)) { try { on = sessionStorage.getItem("sf-clouds") === "1"; } catch (e) {} } document.documentElement.classList.toggle("clouds", on); })();</script>
-</head>
-<body>
-<!-- fixed layers: the living WebGL sky (sky.js) behind everything, meteors + sparkles above it (starfall.js); pointer-events: none -->
-<canvas id="sky" aria-hidden="true"></canvas>
-<canvas id="fx" aria-hidden="true"></canvas>
-
-<nav class="nav"><a class="mark" href="#top">DA</a><span class="sp"></span><a href="#now">Now</a><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
-
-<main id="top">
-  <section class="hero" id="hero">
-    <div class="hero-copy">
-      <h1 class="lp-h" data-lp><span class="ln">Daniel</span> <span class="ln">Azran</span></h1>
-      <p class="role"><span>FULL-STACK ENGINEER</span><span class="sep" aria-hidden="true"> · </span><span>ML &amp; DATA</span></p>
-      <a class="pill" href="#now">follow the falling stars ↓</a>
-      <button class="egg-hint" id="eggHint" type="button">connect the note in the stars</button>
-    </div>
-    <div class="fig" id="fig"><img src="redesign/drafts/v12-sky/assets/orbit/yaw-000.webp" alt="Daniel doing a handstand"></div>
-    <!-- sky-chart annotations: real facts, hand-lettered beside the figure (positions set in starfall.js) -->
-    <svg class="chart-lines" id="chartLines" aria-hidden="true"></svg>
-    <ul class="chart" id="chart" aria-label="A few facts">
-      <li data-at="feet">addicted to learning new <br>things and real progress</li>
-      <li data-at="hip">machine learning <br>&amp; data science</li>
-      <li data-at="sky">happiest putting the <br>puzzle pieces together</li>
-      <li data-at="head">tools I've picked up, <br>or built from scratch</li>
-      <li data-at="hands">now: building AI tools on <br>40,000+ calls a day</li>
-    </ul>
-    <!-- the hidden constellation: seven stars in the shape of a note. Click them in order. -->
-    <div class="constel" id="constel">
-      <img class="note-glow" src="redesign/drafts/v12-sky/assets/sf/note-glow.webp" alt="" aria-hidden="true">
-      <svg class="constel-lines" aria-hidden="true"></svg>
-    </div>
-    <p class="np" id="np" aria-live="polite"></p>
-  </section>
-
-  <section class="sec now" id="now">
-    <h2 class="lp-h" data-lp data-anchor="L">Now</h2>
-    <p class="now-lead">At <b>Safe Ship Moving Services</b>, I build the systems behind the phones: a pipeline that captures more than 40,000 calls a day, makes the recordings searchable, and puts AI review on every sales call.</p>
-    <p class="now-sub">Along the way I cut our MongoDB bill nearly in half.</p>
-    <div class="row2 now-grid">
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-calls" aria-hidden="true"></canvas><h3>Call ingestion</h3><p>40,000+ calls a day archived. Recordings transcribed and searchable, with 99.8% coverage.</p></article>
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-ai" aria-hidden="true"></canvas><h3>AI compliance &amp; coaching</h3><p>Scores sales calls against a versioned rubric and turns the misses into coaching.</p></article>
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-portal" aria-hidden="true"></canvas><h3>Partner portal</h3><p>Built full-stack in five weeks: invoicing, API keys, and reconciliation that replaced shared spreadsheets.</p></article>
-      <article class="card proj"><canvas class="mini viz" data-viz="ssm-split" aria-hidden="true"></canvas><h3>A 33,000-line file, untangled</h3><p>Split the core jobs API into 61 focused modules over 18 staged, reviewable changes.</p></article>
-    </div>
-  </section>
-
-  <section class="sec work" id="work">
-    <h2 class="lp-h" data-lp data-anchor="L">Selected work</h2>
-    <article class="card spreed-card" data-anchor="L">
-      <div class="spreed-copy">
-        <h3 class="spreed-logo" aria-label="Spreed"><span class="sl-ghost c" aria-hidden="true">spreed</span><span class="sl-ghost m" aria-hidden="true">spreed</span><span class="sl-main" aria-hidden="true">s<span class="sl-p">p<i></i></span>reed</span></h3>
-        <p class="spreed-lede">A competitive speed-reading game. Words flash one at a time, then timed questions check that you actually understood them. Speed only scores if comprehension holds.</p>
-        <ul class="spreed-modes">
-          <li><b>Ranked 1v1</b> Elo matchmaking, the same unseen text at the same speed, Bronze to Master.</li>
-          <li><b>Party rooms</b> A room code, everyone reads together, live leaderboard between questions.</li>
-          <li><b>Daily challenge</b> One text a day, one attempt, streaks.</li>
-        </ul>
-        <p class="spreed-stack">Matchmaking, Elo and scoring run as Postgres functions, so the client can't award itself a win. Every sound is synthesized in WebAudio. React 19, TypeScript, Supabase Realtime.</p>
-        <a class="pill solid case" href="https://spreed-ruby.vercel.app" target="_blank" rel="noopener">play it ↗</a>
-      </div>
-      <div class="spx" aria-label="Spreed's reader flashing one word at a time, then a timed comprehension question">
-        <div class="spx-prog"><i></i></div>
-        <div class="spx-rsvp" aria-hidden="true"><span class="spx-word"><span class="b">bea</span><span class="o">m</span><span class="a">ed</span></span></div>
-        <div class="spx-quiz" aria-hidden="true">
-          <div class="spx-qhead"><span>Question 1 / 4</span><span class="spx-secs">12s</span></div>
-          <div class="spx-timer"><i></i></div>
-          <p class="spx-q">How did the text reach you?</p>
-          <ol class="spx-opts">
-            <li><svg viewBox="0 0 10 10"><path d="M5 1.5 9 8.5H1z"/></svg>All at once</li>
-            <li class="ok"><svg viewBox="0 0 10 10"><path d="M5 1 9 5 5 9 1 5z"/></svg>One word at a time</li>
-            <li><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3.8"/></svg>Line by line</li>
-            <li><svg viewBox="0 0 10 10"><path d="M1.5 1.5h7v7h-7z"/></svg>Read aloud</li>
-          </ol>
-        </div>
-      </div>
-    </article>
-    <article class="card golf-card" data-anchor="R">
-      <div class="golfvis"><canvas id="golf" aria-label="My golf swing with live pose analysis"></canvas></div>
-      <div class="golf-copy">
-        <h3>Golf Swing Analyzer</h3>
-        <p>Real-time swing analysis from wearable sensors (Flutter, Dart, Firebase, Bluetooth). This is my own swing run through MediaPipe pose: joint angles, hand path, tempo.</p>
-        <div class="stats" id="golfStats">
-          <div><b data-tempo></b><span>tempo</span></div>
-          <div><b data-back></b><span>backswing</span></div>
-          <div><b data-down></b><span>downswing</span></div>
-          <div><b data-speed></b><span>hand speed (est.)</span></div>
-          <div class="live"><span data-live></span></div>
-        </div>
-        <a class="pill case" href="redesign/drafts/v12-sky/golf.html">read the case study →</a>
-      </div>
-    </article>
-    <div class="row3">
-      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="flow" aria-hidden="true"></canvas><h3>Optical Flow Tracker</h3><p>30+ FPS Lucas–Kanade point tracking.</p></a>
-      <a class="card proj" href="https://github.com/Danzran/MNIST-Handwritten-Digit-Classification" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="digits" aria-hidden="true"></canvas><h3>Digit Classifier</h3><p>Keras CNN · 98% on MNIST.</p></a>
-      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Real-Estate-Price-Predictor" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="house" aria-hidden="true"></canvas><h3>Real Estate Predictor</h3><p>−7% RMSE with a log-price target.</p></a>
-    </div>
-    <div class="row2">
-      <a class="card proj" data-anchor="L" href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="compiler" aria-hidden="true"></canvas><h3>PL/0 Compiler</h3><p>Lexer, parser and code generator in C for a stack-based VM.</p></a>
-      <a class="card proj" data-anchor="R" href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener"><canvas class="mini viz" data-viz="sync" aria-hidden="true"></canvas><h3>Mikal – Wix sync</h3><p>Parses Mikal appointment reports into busy blocks.</p></a>
-    </div>
-    <p class="more">also: <a href="https://github.com/Danzran" target="_blank" rel="noopener">all repos ↗</a></p>  </section>
-
-  <section class="sec exp" id="experience">
-    <h2 class="lp-h" data-lp data-anchor="R">Experience</h2>
-    <div class="vt" id="vt">
-      <div class="vt-spine" aria-hidden="true"><i class="vt-fill"></i></div>
-      <ol class="vt-list">
-        <li class="vt-item" data-theme="ssm">
-          <span class="vt-dot" aria-hidden="true"></span>
-          <div class="vt-side">
-            <p class="vt-year">Now<small>current job</small></p>
-            <p class="vt-org">Safe Ship Moving Services</p>
-            <ul class="vt-pts">
-            <li>Built the pipeline that captures 40,000+ calls a day and makes the recordings searchable.</li>
-            <li>Built AI compliance scoring and sales coaching on top of those calls.</li>
-            <li>Built the partner portal full-stack: invoicing, API keys, reconciliation.</li>
-            <li>Split a 33,000-line API file into 61 focused modules.</li>
-            <li>Cut our MongoDB costs nearly in half.</li>
-            </ul>
-            <p class="vt-tags"><span>TypeScript</span><span>Python</span><span>React</span><span>MongoDB</span><span>RingCentral</span><span>AssemblyAI</span><span>LLMs</span></p>
-          </div>
-          <article class="card vt-card">
-            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/ssm/plate-768.webp" alt="" data-viz="ssm"></div>
-            <div class="vt-copy"><h3>Safe Ship Moving Services</h3><p>40,000+ calls a day, AI call review, a partner portal, and a database bill cut nearly in half.</p></div>
-          </article>
-        </li>
-        <li class="vt-item" data-theme="ext">
-          <span class="vt-dot" aria-hidden="true"></span>
-          <div class="vt-side">
-            <p class="vt-year">2024<small>Sep 2024 — May 2025</small></p>
-            <p class="vt-org">Extropian · Orlando, FL</p>
-            <ul class="vt-pts">
-            <li>Built a cross-platform Flutter app for real-time golf swing analysis from wearable sensor data.</li>
-            <li>Led the Bluetooth streaming and metric layer; cut packet loss from tens to single digits per session.</li>
-            <li>Worked in a 6-person Agile team with Git and Jira.</li>
-            </ul>
-            <p class="vt-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>Bluetooth</span></p>
-          </div>
-          <article class="card vt-card">
-            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/extropian/plate-768.webp" alt="" data-viz="extropian"></div>
-            <div class="vt-copy"><h3>Backend software developer</h3><p>Golf app: Bluetooth sensors, swing metrics, Firebase.</p></div>
-          </article>
-        </li>
-        <li class="vt-item" data-theme="lock">
-          <span class="vt-dot" aria-hidden="true"></span>
-          <div class="vt-side">
-            <p class="vt-year">2022<small>Aug 2022 — Dec 2023</small></p>
-            <p class="vt-org">Sonic Locksmith · Hollywood, FL</p>
-            <ul class="vt-pts">
-            <li>Programmed and cut keys for push-to-start and traditional vehicles.</li>
-            <li>Resolved on-site lockouts under time pressure, with clear communication.</li>
-            <li>Kept the key-cutting and diagnostic tools stocked and calibrated.</li>
-            </ul>
-            <p class="vt-tags"><span>Key programming</span><span>Diagnostics</span></p>
-          </div>
-          <article class="card vt-card">
-            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/lock/plate-768.webp" alt="" data-viz="lock"></div>
-            <div class="vt-copy"><h3>Lockout technician</h3><p>Push-to-start keys and programming.</p></div>
-          </article>
-        </li>
-        <li class="vt-item" data-theme="it">
-          <span class="vt-dot" aria-hidden="true"></span>
-          <div class="vt-side">
-            <p class="vt-year">2018<small>Sep 2018 — Present</small></p>
-            <p class="vt-org">Freelance · Multiple locations</p>
-            <ul class="vt-pts">
-            <li>Designed and assembled desktops for gaming, editing and servers.</li>
-            <li>Set up small-business networks with virtual machines.</li>
-            <li>Diagnosed hardware and software issues and delivered stable builds.</li>
-            </ul>
-            <p class="vt-tags"><span>PC builds</span><span>Networking</span><span>VirtualBox</span><span>Windows admin</span></p>
-          </div>
-          <article class="card vt-card">
-            <div class="vt-vis"><canvas class="vt-emblem" aria-hidden="true"></canvas><img class="vt-plate" src="redesign/assets/projects/it/plate-768.webp" alt="" data-viz="it"></div>
-            <div class="vt-copy"><h3>Systems assembler &amp; IT</h3><p>Builds, networks, virtual machines.</p></div>
-          </article>
-        </li>
-        <li class="vt-item" data-theme="edit">
-          <span class="vt-dot" aria-hidden="true"></span>
-          <div class="vt-side">
-            <p class="vt-year">2014<small>2014 — 2020</small></p>
-            <p class="vt-org">Freelance · Remote</p>
-            <ul class="vt-pts">
-            <li>Edited with 3D elements, camera tracking and thumbnails.</li>
-            <li>Worked with organizations on large projects; coordinated up to four editors.</li>
-            <li>Kept in touch with clients so the result matched their vision.</li>
-            </ul>
-            <p class="vt-tags"><span>After Effects</span><span>Premiere Pro</span><span>Photoshop</span><span>Sony Vegas</span></p>
-          </div>
-          <article class="card vt-card">
-            <div class="vt-vis"><video class="vt-reel" src="redesign/assets/video/edit.mp4" poster="redesign/assets/video/edit-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="My video editing reel"></video></div>
-            <div class="vt-copy"><h3>Video editor</h3><p>COD edits, compositing, camera tracking. Led a team of 4 editors.</p></div>
-          </article>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="sec about" id="about">
-    <h2 class="lp-h" data-lp data-anchor="L">About</h2>
-    <div class="about-grid">
-      <div class="card about-card about-main">
-        <p class="about-lead">I'm a full-stack engineer addicted to learning new things and real progress. My focus has been machine learning and data science, but what I really enjoy is solving problems.</p>
-        <p>Whether it's with tools I've picked up or ones built from scratch, nothing beats putting the puzzle pieces together. Right now that means <b>Safe Ship Moving Services</b>, where I build the system that captures more than 40,000 calls a day and the AI that reviews them.</p>
-        <blockquote class="quote">“What the consumer sees is just as important as behind the scenes.”<cite>— six years as a video editor, 2014–2020</cite></blockquote>
-      </div>
-      <div class="card about-card about-facts">
-        <dl class="facts">
-          <div><dt>Education</dt><dd>B.S. Computer Science, University of Central Florida · 3.5 GPA</dd></div>
-          <div><dt>Coursework</dt><dd class="chips"><span>Data Structures &amp; Algorithms</span><span>Computer Organization</span><span>Machine Learning</span><span>Artificial Intelligence</span><span>Robot Vision</span><span>Object-Oriented Programming</span><span>Statistics</span></dd></div>
-          <div><dt>Languages</dt><dd>Hebrew</dd></div>
-          <div><dt>Skills</dt><dd class="chips"><span>Java</span><span>Dart</span><span>Python</span><span>Rust</span><span>JavaScript</span><span>React</span><span>Node</span><span>R</span><span>C/C++</span><span>Flutter</span><span>Firebase</span><span>AWS</span><span>MongoDB</span></dd></div>
-        </dl>
-        <p class="hint">p.s. my favorite song is hidden in the music note in the hero sky. Tap its glowing stars in order.</p>
-      </div>
-    </div>
-    <audio id="audio" src="tgrave.mp3" preload="none"></audio>
-  </section>
-
-  <footer class="sec contact" id="contact">
-    <h2 class="lp-h big" data-lp data-anchor="L">Say hello</h2>
-    <a class="pill solid" href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">let's talk →</a>
-    <div class="links"><a href="https://github.com/Danzran" target="_blank" rel="noopener">GitHub</a><a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">LinkedIn</a><a href="DanielAzranResume.pdf" target="_blank">Resume</a></div>
-    <div class="pool" id="pool" data-anchor="C"></div>
-    <p class="legal">© 2026 Daniel Azran</p>
-  </footer>
-</main>
-
-<button class="toggle" id="cloudToggle" aria-pressed="false" title="Moonlit cloud cards on/off"><span class="tg-ic" aria-hidden="true"></span>clouds</button>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
-<script src="redesign/assets/fonts/cloud-cloud-font.js"></script>
-<script src="redesign/assets/fonts/cloud-peachy-font.js"></script>
-<script src="redesign/assets/lettering/unchained-scribble.js"></script>
-<script src="redesign/drafts/v12-sky/scribblehead.js"></script>
-<script src="redesign/drafts/v12-sky/skytex.js"></script>
-<script src="redesign/drafts/v12-sky/sky.js"></script>
-<script src="redesign/assets/golf/swing.js"></script>
-<script src="redesign/assets/golf/club.js"></script>
-<script src="redesign/drafts/v12-sky/golf.js"></script>
-<script src="redesign/drafts/v12-sky/app.js"></script>
-<script>window.PV_NO_DOLLARS = true; window.PV_SSM_AI_TAGS = ['rubric check', 'coaching', 'score'];</script>
-<script src="redesign/assets/projects/data.js"></script>
-<script src="redesign/assets/projects/projectviz.js"></script>
-<script>document.querySelectorAll('canvas.viz').forEach(c => ProjectViz.mount(c, c.dataset.viz, (window.V9_BASE || '') + '../../assets/projects'));</script>
-<script src="redesign/drafts/v12-sky/spreed-demo.js"></script>
-<script src="redesign/drafts/v12-sky/experience.js"></script>
-<script src="redesign/drafts/v12-sky/starfall.js"></script>
-<script src="redesign/drafts/v12-sky/clouds.js"></script>
-</body>
-</html>
+<html lang="en"><head>
+<!-- generated from redesign/drafts/v13-observatory/index.html by redesign/tools/promote.py; edit the draft, not this file -->
+<script>window.V9_BASE = 'redesign/drafts/v13-observatory/';</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#101b2b">
+<title>Daniel Azran — Full-stack Engineer</title><meta name="description" content="Full-stack engineer building call ingestion, AI review, and useful products. Explore production systems, Spreed, and real-time swing analysis.">
+<meta property="og:title" content="Daniel Azran — Full-stack Engineer"><meta property="og:description" content="Full-stack engineer building call ingestion, AI review, and useful products. Explore production systems, Spreed, and real-time swing analysis.">
+<meta property="og:type" content="website"><meta property="og:image" content="https://danzran.github.io/redesign/drafts/v13-shared/assets/social.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="redesign/drafts/v13-shared/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="redesign/drafts/v13-shared/assets/font-0.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="redesign/drafts/v13-shared/assets/font-2.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="redesign/drafts/v13-shared/assets/font-1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="redesign/drafts/v13-shared/fonts.css"><link rel="stylesheet" href="redesign/drafts/v13-shared/style.css">
+</head><body class="theme-observatory" id="top">
+<noscript><style>.mobile-nav[hidden]{display:block!important}.menu-toggle,.demo-play,.swing-play,.reel-play,.copy-email{display:none!important}</style></noscript>
+<a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="nav-wrap wrap">
+<a class="brand" href="#top" aria-label="da · Daniel Azran, home"><span class="brand-mark" aria-hidden="true">da<span>·</span></span><span class="brand-name">Daniel Azran</span></a>
+<nav class="desktop-nav" aria-label="Main navigation"><a href="#work">Work</a><a href="#experience">Experience</a><a href="#about">About</a></nav>
+<div class="nav-actions"><a class="resume-link" href="DanielAzranResume.pdf" target="_blank" rel="noopener">Résumé <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a><a class="nav-contact" href="#contact">Let’s talk <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav"><span class="menu-icon" aria-hidden="true"></span><span class="sr-only">Menu</span></button></div>
+</div><nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="#work">Selected work</a><a href="#experience">Experience</a><a href="#about">About Daniel</a><a href="#contact">Contact</a><a href="DanielAzranResume.pdf" target="_blank" rel="noopener">Download résumé <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></nav></header><main id="main"><section class="hero wrap" id="hero"><div class="hero-copy">
+<p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> FULL-STACK ENGINEER · ML & DATA</p>
+<h1>Engineering with<br>a sense of <em>wonder.</em></h1><p class="hero-description">I’m Daniel. I build the systems behind 40,000+ daily calls, turn data into useful tools, and care about how it all feels to use.</p>
+<div class="hero-actions"><a class="button primary" href="#work">Explore my work <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 5l14 14M5 19h14V5"/></svg></span></a><a class="text-link" href="DanielAzranResume.pdf" target="_blank" rel="noopener">View résumé <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></div>
+<p class="hero-footnote">Currently building at <strong>Safe Ship Moving Services</strong></p></div>
+<div class="hero-art observatory-art" aria-hidden="true">
+<svg class="orbit-lines" viewBox="0 0 600 560" preserveAspectRatio="none"><ellipse cx="300" cy="280" rx="268" ry="180" transform="rotate(-25 300 280)"/><ellipse cx="300" cy="280" rx="278" ry="200" transform="rotate(35 300 280)"/></svg><span class="orbit-star"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/></svg></span>
+<div class="art-window"><picture><source media="(max-width: 600px)" srcset="redesign/drafts/v13-shared/assets/observatory-small.webp"><img src="redesign/drafts/v13-shared/assets/observatory.webp" alt="" width="1536" height="1024" fetchpriority="high"></picture><div class="art-glow"></div><canvas class="atmosphere"></canvas></div>
+<span class="art-coordinate">CURIOSITY <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h16m-7-7 7 7-7 7"/></svg> POSSIBILITY</span><div class="art-caption"><span class="tiny-star" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/></svg></span> There’s always more to discover.</div></div><div class="hero-bottom"><span>An open mind. A dependable system.</span><a href="#work">SCROLL TO EXPLORE <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16m-7-7 7 7 7-7"/></svg></span></a></div></section><section class="impact wrap" aria-label="Production engineering highlights"><div><strong>40,000<span>+</span></strong><p>calls captured daily</p></div><div><strong>Nearly ½</strong><p>reduction in MongoDB costs</p></div><div><strong>5 weeks</strong><p>to build a full-stack partner portal</p></div><a href="redesign/drafts/v13-observatory/safe-ship.html" class="impact-link">The work behind<br>the numbers <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></section><section class="section work-section wrap" id="work"><div class="section-heading"><div><p class="eyebrow">SELECTED WORK</p><h2>Built for a reason.</h2></div><p>Production systems, playful experiments,<br>and the thinking that connects them.</p></div>
+<article class="project project-spreed"><div class="project-copy"><p class="project-category"><span class="category-dot"></span> FEATURED PERSONAL PROJECT</p><h3 class="spreed-title">spreed<span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></h3><p class="project-lead">Read faster.<br>Understand more.</p><p>A competitive speed-reading game where words arrive one at a time. Race a friend, join a party, or take the daily challenge. Speed only scores if comprehension holds.</p><div class="project-detail"><h4>The interesting part</h4><p>Matchmaking, Elo, and scoring live in Postgres functions, so the client can’t award itself a win.</p></div><ul class="tags" aria-label="Technologies"><li>React</li><li>TypeScript</li><li>Supabase Realtime</li><li>WebAudio</li></ul><a class="button primary" href="https://spreed-ruby.vercel.app" target="_blank" rel="noopener">Play Spreed <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></div><div class="project-visual spreed-visual"><div class="spreed-screen"><div class="screen-top"><span class="spreed-wordmark">spreed</span><span class="demo-label">INTERACTIVE PREVIEW</span></div><div class="reader-progress"><i></i></div><div class="reader" aria-hidden="true"><i class="reader-tick top"></i><span class="reader-word"><span>bea</span><b>m</b><span>ed</span></span><i class="reader-tick bottom"></i></div><p class="reader-note">ONE WORD AT A TIME. ALL YOUR ATTENTION.</p><div class="demo-controls"><button class="demo-play" type="button" aria-pressed="false">Play reader <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m7 3 15 9-15 9Z"/></svg></span></button><span>375 words / min</span></div><div class="quiz"><div class="quiz-meta"><span>Comprehension check</span><span>01 / 04</span></div><h4>How did the text reach you?</h4><div class="quiz-options"><button type="button" data-answer="wrong"><span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 3 10 18H2Z"/></svg></span> All at once</button><button type="button" data-answer="correct"><span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 10 10-10 10L2 12Z"/></svg></span> One word at a time</button></div><p class="quiz-feedback" aria-live="polite">Speed only counts if you understand.</p></div><p class="sr-only">A demonstration of Spreed’s speed reader. Play animates words; pause stops them. Try the comprehension question below.</p></div></div></article>
+<article class="project project-systems"><div class="project-visual system-visual"><div class="diagram-title"><span class="live-dot"></span> FROM CALL TO CONTEXT</div><div class="pipeline" aria-label="Call ingestion architecture"><div class="pipe-node"><span class="pipe-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M1 12h3l3-8 5 16 4-12 3 4h4"/></svg></span><h4>RingCentral</h4><p>Call metadata & recordings</p></div><div class="pipe-connector" aria-hidden="true"><i></i><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16m-7-7 7 7 7-7"/></svg></span></div><div class="pipe-node"><span class="pipe-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18"/></svg></span><h4>Capture & transcribe</h4><p>Python · AssemblyAI</p></div><div class="pipe-connector" aria-hidden="true"><i></i><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16m-7-7 7 7 7-7"/></svg></span></div><div class="pipe-split"><div><span class="pipe-small-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 16l5 5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg></span><h4>Searchable calls</h4><p>Find the conversation</p></div><div><span class="pipe-small-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/></svg></span><h4>Sales call review</h4><p>Compliance & coaching</p></div></div></div><span class="diagram-caption">A simplified view of the systems I build.</span></div><div class="project-copy"><p class="project-category">PRODUCTION ENGINEERING · SAFE SHIP</p><h3>The systems<br>behind the phones.</h3><p>A call ingestion pipeline capturing 40,000+ calls a day, searchable recordings, and AI compliance review for sales calls.</p><div class="project-detail"><h4>Beyond the pipeline</h4><p>A partner portal built in five weeks, a 33,000-line API split into 61 modules, and a MongoDB bill cut nearly in half.</p></div><ul class="tags" aria-label="Technologies"><li>Python</li><li>TypeScript</li><li>React</li><li>MongoDB</li></ul><a class="button secondary" href="redesign/drafts/v13-observatory/safe-ship.html">Inside the work <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></div></article>
+<article class="project project-golf"><div class="project-copy"><p class="project-category">REAL-TIME SYSTEMS · EXTROPIAN</p><h3>From a swing<br>to a signal.</h3><p>A Flutter app turning wearable Bluetooth sensor data into real-time golf swing feedback. I led the streaming and metric layer in a six-person team.</p><div class="project-detail"><h4>A more dependable connection</h4><p>Cut packet loss from tens to single digits per session, keeping the feedback flowing.</p></div><ul class="tags" aria-label="Technologies"><li>Flutter</li><li>Dart</li><li>Firebase</li><li>Bluetooth</li></ul><a class="button secondary" href="redesign/drafts/v13-observatory/golf.html">Explore the case study <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></div><div class="project-visual golf-visual"><div class="golf-frame"><img class="swing-frame" src="redesign/assets/golf/g00.webp" alt="Daniel’s golf swing with an illustrative pose-tracking overlay" width="600" height="800"><canvas class="golf-overlay" aria-hidden="true"></canvas><span class="golf-label">POSE STUDY <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></span><button class="swing-play" type="button" aria-pressed="false">Play swing <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m7 3 15 9-15 9Z"/></svg></span></button></div><p class="visual-caption">My own swing. Illustrative 2D tracking, not calibrated biomechanics.</p></div></article>
+<div class="more-work"><div><p class="eyebrow">A FEW MORE EXPLORATIONS</p><h3>Curiosity, in practice.</h3></div><div class="explorations"><a href="https://github.com/Danzran/Optical-Flow-Tracker" target="_blank" rel="noopener"><span><strong>Optical Flow Tracker</strong><small>Lucas–Kanade point tracking · 30+ FPS</small></span><span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a><a href="https://github.com/Danzran/PL-0-Compiler" target="_blank" rel="noopener"><span><strong>PL/0 Compiler</strong><small>Lexer <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h16m-7-7 7 7-7 7"/></svg> parser <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h16m-7-7 7 7-7 7"/></svg> code generator · C</small></span><span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a><a href="https://github.com/Danzran/Mikal-Wix-Sync" target="_blank" rel="noopener"><span><strong>Mikal <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h16m-7-7 7 7-7 7"/></svg> Wix Sync</strong><small>Appointment reports into busy blocks</small></span><span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a></div></div></section><section class="section experience-section wrap" id="experience"><div class="section-heading"><div><p class="eyebrow">THE PATH SO FAR</p><h2>A few chapters.<br>One curious mind.</h2></div><p>I’ve worked with systems, signals, and stories.<br>Each taught me a different way to solve a problem.</p></div><div class="experience-list">
+<article class="experience-row"><div class="experience-date"><span class="live-dot"></span> CURRENT</div><div><h3>Safe Ship Moving Services</h3><p class="experience-role">Full-stack engineering · Call infrastructure & AI</p></div><p>Call ingestion and search, AI compliance and coaching, partner tooling, and a more maintainable core API.</p></article>
+<article class="experience-row"><div class="experience-date">SEP 2024 — MAY 2025</div><div><h3>Extropian</h3><p class="experience-role">Backend Software Developer</p></div><p>Real-time golf swing analysis. Bluetooth streaming, swing metrics, and a cross-platform Flutter app.</p></article>
+<article class="experience-row"><div class="experience-date">SEP 2018 — PRESENT</div><div><h3>Independent IT</h3><p class="experience-role">Systems Assembler & IT Technician</p></div><p>Custom desktop builds, small-business networks, and hands-on troubleshooting for real people.</p></article>
+<article class="experience-row"><div class="experience-date">AUG 2022 — DEC 2023</div><div><h3>Sonic Locksmith</h3><p class="experience-role">Lockout Technician</p></div><p>Vehicle key programming and on-site diagnostics. Clear thinking and communication under pressure.</p></article>
+<article class="experience-row"><div class="experience-date">2014 — 2020</div><div><h3>Independent video editor</h3><p class="experience-role">Editing, compositing & motion</p></div><p>Camera tracking, 3D elements, and a team of up to four editors. Where my eye for detail first found its rhythm.</p></article></div></section><section class="section about-section wrap" id="about"><div class="about-story"><p class="eyebrow">THE PERSON BEHIND THE WORK</p><h2>Serious about the craft.<br><em>Curious about everything.</em></h2><p>I’m a full-stack engineer with a computer science degree from UCF, a focus on machine learning and data, and a habit of following an interesting problem a little further.</p><p>Before software, I spent years editing video. It taught me that what someone experiences matters just as much as what happens behind the scenes. I bring that same care to the systems and interfaces I build.</p><a class="text-link" href="https://github.com/Danzran" target="_blank" rel="noopener">See what I’m working on <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a><dl class="about-facts"><div><dt>EDUCATION</dt><dd>B.S. Computer Science<br>University of Central Florida · 3.5 GPA</dd></div><div><dt>TOOLS I REACH FOR</dt><dd>TypeScript, Python, React, Node.js,<br>MongoDB, Flutter, and Firebase</dd></div></dl></div><div class="about-media"><div class="reel-wrap"><video poster="redesign/assets/video/edit-poster.jpg" preload="none" muted loop playsinline aria-label="Daniel’s original video editing reel"><source src="redesign/assets/video/edit.webm" type="video/webm"><source src="redesign/assets/video/edit.mp4" type="video/mp4"></video><button class="reel-play" type="button" aria-pressed="false">Play editing reel <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m7 3 15 9-15 9Z"/></svg></span></button><span class="reel-label">AN EARLIER CHAPTER</span></div><div class="personal-note"><span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/></svg></span><p>Still chasing that moment when<br>all the pieces click.</p></div></div></section></main><footer class="contact-section" id="contact"><div class="wrap"><p class="eyebrow">HAVE AN INTERESTING PROBLEM?</p><div class="contact-heading"><h2>Let’s build<br>something <em>good.</em></h2><a class="contact-arrow" href="mailto:dazran0929@gmail.com" aria-label="Email Daniel Azran"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div><div class="contact-links"><a class="email-link" href="mailto:dazran0929@gmail.com">dazran0929@gmail.com</a><button class="copy-email" type="button" data-email="dazran0929@gmail.com">Copy email</button><span class="copy-status sr-only" aria-live="polite"></span></div><div class="footer-bottom"><p>© 2026 Daniel Azran <span>Built with care. And curiosity.</span></p><div><a href="https://github.com/Danzran" target="_blank" rel="noopener">GitHub <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a><a href="https://linkedin.com/in/danielazran" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a><a href="DanielAzranResume.pdf" target="_blank" rel="noopener">Résumé <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a><a href="#top" aria-label="Back to top"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20V4m-7 7 7-7 7 7"/></svg></a></div></div></div></footer><script type="module" src="redesign/drafts/v13-shared/app.js"></script></body></html>
