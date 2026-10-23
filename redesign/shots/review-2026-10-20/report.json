@@ -1,0 +1,84 @@
+[
+  {
+    "name": "desktop",
+    "metrics": {
+      "height": 10858,
+      "width": 1440,
+      "viewport": 1440,
+      "sections": [
+        {
+          "id": "hero",
+          "y": 0,
+          "height": 900
+        },
+        {
+          "id": "now",
+          "y": 900,
+          "height": 1696
+        },
+        {
+          "id": "work",
+          "y": 2596,
+          "height": 2687
+        },
+        {
+          "id": "experience",
+          "y": 5282,
+          "height": 3763
+        },
+        {
+          "id": "about",
+          "y": 9046,
+          "height": 823
+        },
+        {
+          "id": "contact",
+          "y": 9868,
+          "height": 990
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "name": "phone",
+    "metrics": {
+      "height": 13430,
+      "width": 390,
+      "viewport": 390,
+      "sections": [
+        {
+          "id": "hero",
+          "y": 0,
+          "height": 844
+        },
+        {
+          "id": "now",
+          "y": 844,
+          "height": 2089
+        },
+        {
+          "id": "work",
+          "y": 2933,
+          "height": 4115
+        },
+        {
+          "id": "experience",
+          "y": 7048,
+          "height": 3953
+        },
+        {
+          "id": "about",
+          "y": 11001,
+          "height": 1500
+        },
+        {
+          "id": "contact",
+          "y": 12502,
+          "height": 928
+        }
+      ]
+    },
+    "errors": []
+  }
+]
