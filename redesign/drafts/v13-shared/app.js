@@ -1,4 +1,7 @@
 /* Small, dependency-free interactions. Content and links work without JavaScript. */
+(() => {
+// Classic scripts and JS-wrapped data also work when the owner opens HTML from disk.
+const scriptURL = document.currentScript.src;
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
 let ambientPaused = motion.matches;
 const visibilityListeners = new Set();
@@ -63,7 +66,7 @@ document.querySelector('.copy-email')?.addEventListener('click', async event => 
   }
 });
 
-// A user-initiated reader, not an endlessly flashing decorative video.
+// Preserve the original in-view reader demo, with explicit pause and reduced motion.
 document.querySelectorAll('.spreed-screen').forEach(screen => {
   const words = 'You are reading this one word at a time and it feels like the text is being beamed straight into your brain.'.split(' ');
   const word = screen.querySelector('.reader-word');
@@ -71,7 +74,11 @@ document.querySelectorAll('.spreed-screen').forEach(screen => {
   const progress = screen.querySelector('.reader-progress i');
   const button = screen.querySelector('.demo-play');
   const feedback = screen.querySelector('.quiz-feedback');
-  let index = 0, requested = false, visible = false, timer;
+  let index = 0, requested = !motion.matches, visible = false, timer;
+  function readerLabel() {
+    button.setAttribute('aria-pressed', String(requested));
+    button.innerHTML = requested ? 'Pause reader <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16M16 4v16"/></svg></span>' : 'Play reader <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 3 15 9-15 9Z"/></svg></span>';
+  }
   function show(i) {
     const w = words[i];
     const n = w.replace(/[^a-zA-Z]/g, '').length;
@@ -92,18 +99,17 @@ document.querySelectorAll('.spreed-screen').forEach(screen => {
   }
   button.addEventListener('click', () => {
     requested = !requested;
-    button.setAttribute('aria-pressed', String(requested));
-    button.innerHTML = requested ? 'Pause reader <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16M16 4v16"/></svg></span>' : 'Play reader <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 3 15 9-15 9Z"/></svg></span>';
+    readerLabel();
     update();
   });
   new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }).observe(screen);
   onVisibility(update);
   motion.addEventListener('change', () => {
-    requested = false;
-    button.setAttribute('aria-pressed', 'false');
-    button.innerHTML = 'Play reader <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 3 15 9-15 9Z"/></svg></span>';
+    requested = !motion.matches;
+    readerLabel();
     update();
   });
+  readerLabel();
   screen.querySelectorAll('[data-answer]').forEach(answer => answer.addEventListener('click', () => {
     screen.querySelectorAll('[data-answer]').forEach(other => other.classList.remove('wrong', 'correct'));
     const correct = answer.dataset.answer === 'correct';
@@ -114,13 +120,20 @@ document.querySelectorAll('.spreed-screen').forEach(screen => {
 });
 
 // Reuse the owner's original stylized swing and pose data, loading frames on demand.
-const swingURL = new URL('../../assets/golf/', import.meta.url);
+const swingURL = new URL('../../assets/golf/', scriptURL);
 let swingData;
 function getSwing() {
-  return swingData ||= fetch(new URL('swing.json', swingURL)).then(response => {
-    if (!response.ok) throw new Error('The swing study could not be loaded.');
-    return response.json();
-  }).catch(error => { swingData = undefined; throw error; });
+  if (window.SWING) return Promise.resolve(window.SWING);
+  return swingData ||= new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = new URL('swing.js', swingURL).href;
+    script.onload = () => {
+      if (window.SWING) resolve(window.SWING);
+      else { script.remove(); swingData = undefined; reject(new Error('Swing data is missing.')); }
+    };
+    script.onerror = () => { script.remove(); swingData = undefined; reject(new Error('The swing study could not be loaded.')); };
+    document.head.append(script);
+  });
 }
 document.querySelectorAll('.golf-frame').forEach(frame => {
   const img = frame.querySelector('.swing-frame');
@@ -129,7 +142,7 @@ document.querySelectorAll('.golf-frame').forEach(frame => {
   const button = frame.querySelector('.swing-play');
   const bones = [[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[24,26],[26,28]];
   const nodes = [11,12,13,14,15,16,23,24,25,26,27,28];
-  let data, index = 0, requested = false, visible = false, timer, loaded = false;
+  let data, index = 0, requested = !motion.matches, visible = false, timer, loaded = false;
   const images = [];
   function draw() {
     if (!data || !ctx) return;
@@ -177,30 +190,46 @@ document.querySelectorAll('.golf-frame').forEach(frame => {
     }
     tick();
   });
-  new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible&&!data)getSwing().then(s=>{data=s;draw();}).catch(()=>{});tick();},{rootMargin:'80px'}).observe(frame);
+  new IntersectionObserver(([entry])=>{
+    visible=entry.isIntersecting;
+    if(visible&&requested) load().then(tick).catch(()=>{requested=false;label();});
+    else if(visible&&!data) getSwing().then(s=>{data=s;draw();}).catch(()=>{});
+    tick();
+  }).observe(frame);
   new ResizeObserver(draw).observe(frame);
   onVisibility(tick);
-  motion.addEventListener('change',()=>{requested=false;label();tick();});
+  motion.addEventListener('change',()=>{
+    requested=!motion.matches;label();
+    if(requested&&visible) load().then(tick).catch(()=>{requested=false;label();});
+    tick();
+  });
+  label();
 });
 
-// Original editing reel: no video download until the viewer presses play.
+// The owner's original reel plays muted in view, with pause and reduced-motion support.
 document.querySelectorAll('.reel-wrap').forEach(wrap => {
   const video = wrap.querySelector('video');
   const button = wrap.querySelector('button');
+  let requested = !motion.matches, visible = false;
   function label() {
     button.setAttribute('aria-pressed',String(!video.paused));
     button.innerHTML=video.paused?'Play editing reel <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 3 15 9-15 9Z"/></svg></span>':'Pause editing reel <span aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16M16 4v16"/></svg></span>';
   }
   button.addEventListener('click',async()=>{
-    if (!video.paused) video.pause();
+    if (!video.paused) {requested=false;video.pause();}
     else {
+      requested=true;
       try { await video.play(); } catch { button.textContent='Couldn’t play reel. Try again.'; }
     }
   });
   video.addEventListener('play',label);video.addEventListener('pause',label);
-  new IntersectionObserver(([entry])=>{if(!entry.isIntersecting)video.pause();}).observe(wrap);
-  onVisibility(()=>{if(document.hidden)video.pause();});
-  motion.addEventListener('change',()=>video.pause());
+  function sync() {
+    if(requested&&visible&&!document.hidden) video.play().catch(label);
+    else video.pause();
+  }
+  new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();}).observe(wrap);
+  onVisibility(sync);
+  motion.addEventListener('change',()=>{requested=!motion.matches;sync();});
 });
 
 // Quiet, low-cost stars over the illustration. No continuous loop offscreen/hidden.
@@ -238,3 +267,4 @@ function applyMotion(){
 motionToggle.addEventListener('click',()=>{ambientPaused=!ambientPaused;applyMotion();});
 motion.addEventListener('change',()=>{ambientPaused=motion.matches;applyMotion();});
 applyMotion();
+})();

@@ -91,7 +91,8 @@ const report = {date: new Date().toISOString(), base, layouts: [], accessibility
     await page.goto(`${base}/`, {waitUntil: 'networkidle'});
     assert(await page.locator('h1').innerText().then(text => text.includes('wonder')), 'Root uses Observatory');
     const reader = page.locator('.demo-play');
-    await reader.click();
+    await reader.scrollIntoViewIfNeeded();
+    assert.equal(await reader.getAttribute('aria-pressed'), 'true', 'Reader automatically plays in view');
     const wordBefore = await page.locator('.reader-word').innerText();
     await page.waitForTimeout(800);
     assert.notEqual(await page.locator('.reader-word').innerText(), wordBefore, 'Reader changes words');
@@ -105,7 +106,7 @@ const report = {date: new Date().toISOString(), base, layouts: [], accessibility
     assert((await page.locator('.quiz-feedback').innerText()).includes('Exactly'));
     report.interactions.push('Root: reader play/pause, wrong/correct quiz answers');
     const swing = page.locator('.swing-play');
-    await swing.click(); await page.waitForTimeout(1300);
+    await swing.scrollIntoViewIfNeeded(); await page.waitForTimeout(1300);
     assert.equal(await swing.getAttribute('aria-pressed'), 'true');
     assert(!(await page.locator('.swing-frame').getAttribute('src')).endsWith('g00.webp'), 'Swing advances');
     await swing.click();
@@ -113,7 +114,7 @@ const report = {date: new Date().toISOString(), base, layouts: [], accessibility
     await page.waitForTimeout(300);
     assert.equal(await page.locator('.swing-frame').getAttribute('src'), pausedFrame, 'Swing stays paused');
     report.interactions.push('Root: golf swing loads, animates, and pauses');
-    await page.locator('.reel-play').click();
+    await page.locator('.reel-play').scrollIntoViewIfNeeded();
     await page.waitForFunction(() => !document.querySelector('video').paused);
     await page.locator('.reel-play').click();
     assert(await page.locator('video').evaluate(video => video.paused));

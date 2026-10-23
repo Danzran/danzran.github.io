@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-23T02:32:44.259Z",
+  "checks": [
+    "Observatory canvas pixels change over time",
+    "Reader autoplays and visibly pauses",
+    "Swing frames automatically advance, then hold on pause",
+    "Muted reel autoplays, currentTime advances, pause works",
+    "Studio waveform transform changes over time",
+    "Sky shader advances with time and camera responds to scroll",
+    "Reduced-motion stars and reader remain static",
+    "All ten pages use existing classic scripts; golf uses file-compatible JS data"
+  ],
+  "errors": [],
+  "fileBrowser": "NOT VERIFIED: managed Chromium blocks file:// navigation before loading HTML",
+  "result": "PASS"
+}

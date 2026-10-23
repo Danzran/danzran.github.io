@@ -127,7 +127,7 @@ def contact():
 
 
 def end(theme, sky=False):
-    scripts = f'<script type="module" src="{SHARED}/app.js"></script>'
+    scripts = f'<script defer src="{SHARED}/app.js"></script>'
     if sky:
         scripts += f'<script src="../v12-sky/skytex.js"></script><script src="{SHARED}/sky.js"></script>'
     return scripts + '</body></html>'
