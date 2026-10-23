@@ -1,0 +1,438 @@
+{
+  "date": "2026-10-20T14:06:38.307Z",
+  "base": "http://127.0.0.1:8000",
+  "layouts": [
+    {
+      "theme": "observatory",
+      "width": 320,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "observatory",
+      "width": 390,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "observatory",
+      "width": 768,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "observatory",
+      "width": 1024,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "observatory",
+      "width": 1440,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "observatory",
+      "width": 1920,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "observatory",
+      "kind": "safe-ship",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "theme": "observatory",
+      "kind": "safe-ship",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "theme": "observatory",
+      "kind": "golf",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "theme": "observatory",
+      "kind": "golf",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "theme": "studio",
+      "width": 320,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "studio",
+      "width": 390,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "studio",
+      "width": 768,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "studio",
+      "width": 1024,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "studio",
+      "width": 1440,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "studio",
+      "width": 1920,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "studio",
+      "kind": "safe-ship",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "theme": "studio",
+      "kind": "safe-ship",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "theme": "studio",
+      "kind": "golf",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "theme": "studio",
+      "kind": "golf",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "theme": "skyline",
+      "width": 320,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "skyline",
+      "width": 390,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "skyline",
+      "width": 768,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "skyline",
+      "width": 1024,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "skyline",
+      "width": 1440,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "skyline",
+      "width": 1920,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "skyline",
+      "kind": "safe-ship",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "theme": "skyline",
+      "kind": "safe-ship",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "theme": "skyline",
+      "kind": "golf",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "theme": "skyline",
+      "kind": "golf",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "theme": "root",
+      "width": 320,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "root",
+      "width": 390,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "root",
+      "width": 768,
+      "overflow": false,
+      "images": "decoded"
+    },
+    {
+      "theme": "root",
+      "width": 1440,
+      "overflow": false,
+      "images": "decoded"
+    }
+  ],
+  "accessibility": [
+    {
+      "theme": "observatory",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "observatory",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "theme": "observatory",
+      "kind": "safe-ship",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "observatory",
+      "kind": "safe-ship",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "theme": "observatory",
+      "kind": "golf",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "observatory",
+      "kind": "golf",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "theme": "studio",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "studio",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "theme": "studio",
+      "kind": "safe-ship",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "studio",
+      "kind": "safe-ship",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "theme": "studio",
+      "kind": "golf",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "studio",
+      "kind": "golf",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "theme": "skyline",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "skyline",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "theme": "skyline",
+      "kind": "safe-ship",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "skyline",
+      "kind": "safe-ship",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "theme": "skyline",
+      "kind": "golf",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "theme": "skyline",
+      "kind": "golf",
+      "width": 1440,
+      "violations": []
+    }
+  ],
+  "interactions": [
+    "observatory: mobile menu, Escape, section navigation",
+    "studio: mobile menu, Escape, section navigation",
+    "skyline: mobile menu, Escape, section navigation",
+    "Root: reader play/pause, wrong/correct quiz answers",
+    "Root: golf swing loads, animates, and pauses",
+    "Root: original editing reel plays and pauses",
+    "Root: copy email writes the correct address",
+    "Root: ambient motion pause, dynamic reduced-motion changes",
+    "Gallery: live direction switching and phone preview",
+    "Root: content, navigation, and contact work without JavaScript"
+  ],
+  "links": [
+    {
+      "url": "/redesign/drafts/v13-observatory/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-observatory/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-observatory/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-observatory/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-observatory/",
+      "status": 200
+    },
+    {
+      "url": "/DanielAzranResume.pdf",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-observatory/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-observatory/safe-ship.html",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-observatory/golf.html",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-studio/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-studio/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-studio/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-studio/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-studio/",
+      "status": 200
+    },
+    {
+      "url": "/DanielAzranResume.pdf",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-studio/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-studio/safe-ship.html",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-studio/golf.html",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-skyline/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-skyline/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-skyline/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-skyline/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-skyline/",
+      "status": 200
+    },
+    {
+      "url": "/DanielAzranResume.pdf",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-skyline/",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-skyline/safe-ship.html",
+      "status": 200
+    },
+    {
+      "url": "/redesign/drafts/v13-skyline/golf.html",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "result": "PASS"
+}
